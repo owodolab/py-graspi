@@ -74,13 +74,6 @@ def generateGraphAdj(file):
     g.add_vertices(1)
     g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
-
-    # edge_test = g.es[4]
-    # print(g.ecount())
-    # source_vertex = edge_test.source
-    # target_vertex = edge_test.target
-    # print(g.vs[source_vertex]["color"], g.vs[target_vertex]["color"])
-    print(g.ecount())
     for i in range(g.ecount()):
         current_edge = g.es[i]
         source_vertex = current_edge.source
@@ -89,7 +82,6 @@ def generateGraphAdj(file):
             '''connect both source and target to green meta vertex'''
             g.add_edge(green_vertex, source_vertex)
             g.add_edge(green_vertex, target_vertex)
-    print(g.ecount())
     return g
 '''Add green interface node'''
 
@@ -214,6 +206,5 @@ def main():
         visual3D(filteredGraph)
         shortest_path(filteredGraph)
     print("finished?")
-
 if __name__ == '__main__':
     main()
