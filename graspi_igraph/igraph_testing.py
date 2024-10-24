@@ -33,6 +33,8 @@ def adjList(fileName):
 
     adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
     adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
+    # green_vertex = adjacency_list[dimZ * dimY * dimX + 2]
+
 
     return adjacency_list
 
@@ -69,11 +71,27 @@ def generateGraphAdj(file):
     g.vs[int(line[0]) * int(line[1])]['color'] = 'blue'
     g.vs[int(line[0]) * int(line[1]) + 1]['color'] = 'red'
 
-    return g
+    g.add_vertices(1)
+    g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
+    green_vertex = g.vs[g.vcount() - 1]
 
+    # edge_test = g.es[4]
+    # print(g.ecount())
+    # source_vertex = edge_test.source
+    # target_vertex = edge_test.target
+    # print(g.vs[source_vertex]["color"], g.vs[target_vertex]["color"])
+    print(g.ecount())
+    for i in range(g.ecount()):
+        current_edge = g.es[i]
+        source_vertex = current_edge.source
+        target_vertex = current_edge.target
+        if(g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'):
+            '''connect both source and target to green meta vertex'''
+            g.add_edge(green_vertex, source_vertex)
+            g.add_edge(green_vertex, target_vertex)
+    print(g.ecount())
+    return g
 '''Add green interface node'''
-def add_green_node(graph):
-    return 0
 
 def visual2D(g):
     layout = g.layout('reingold_tilford')
@@ -144,6 +162,8 @@ def filterGraph(graph):
         elif (graph.vs[currentNode]['color'] == 'blue' or graph.vs[toNode]['color'] == 'blue'):
             keptEdges.append(edge)
         elif (graph.vs[currentNode]['color'] == 'red' or graph.vs[toNode]['color'] == 'red'):
+            keptEdges.append(edge)
+        elif(graph.vs[currentNode]['color'] == 'green' or graph.vs[toNode]['color'] == 'green'):
             keptEdges.append(edge)
 
     filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=False)
