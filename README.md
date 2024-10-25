@@ -68,7 +68,14 @@ Finally, run the following:
 ## Outputs
 After running this command, you should see
 ```
-<Test file name>: passed/failed
+<Test file name> results
 ```
-Followed by the descriptors of the given test files. This will print for all 33 morphologies
+Followed by the descriptors of the given test files, formatted in:
+```
+<Test file name>: <Descriptor> passed / - <result> is not the same as expected <value>
+```
+Afterwards, a dictonary of the calculated descriptors will print
+<br />
+<br />
+This will print for all 33 morphologies
 
