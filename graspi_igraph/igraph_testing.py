@@ -58,7 +58,36 @@ def graphe_generateGraphAdj(file):
     
     g = ig.Graph(edges, directed=False)
     g.vs["color"] = vertex_colors
+    g.add_vertices(1)
+    # print(len(adjacency_list))
 
+    # exit()
+    g.vs[len(adjacency_list)]['color'] = 'green'
+    green_vertex = g.vs[g.vcount() - 1]
+    exists = []
+    # print(g.get_edgelist())
+    # exit()
+    for i in range(g.ecount()):
+        current_edge = g.es[i]
+        source_vertex = current_edge.source
+        target_vertex = current_edge.target
+        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'):
+            '''connect both source and target to green meta vertex'''
+            if exists.count([green_vertex, source_vertex]) == 0:
+                g.add_edge(green_vertex, source_vertex)
+            if exists.count([green_vertex, target_vertex]) == 0:
+                g.add_edge(green_vertex, target_vertex)
+            exists.append([green_vertex, source_vertex])
+            exists.append([green_vertex, target_vertex])
+        if(g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
+            '''connect both source and target to green meta vertex'''
+            if exists.count([green_vertex, source_vertex]) == 0:
+                g.add_edge(green_vertex, source_vertex)
+            if exists.count([green_vertex, target_vertex]) == 0:
+                g.add_edge(green_vertex, target_vertex)
+            exists.append([green_vertex, source_vertex])
+            exists.append([green_vertex, target_vertex])
+    print(g.get_edgelist())
     return g
 
 def visual2D(g):
@@ -155,7 +184,7 @@ def shortest_path(graph):
 
     return listOfShortestPaths
 
-"""
+
 def main():
     is_2D = True
     correct_input = False
@@ -207,9 +236,7 @@ def test():
 if __name__ == '__main__':
     # main()
     test()
-"""
 
-g = graphe_generateGraphAdj("tests/2D-testFile/data_4_3.graphe")
-visual2D(g)
+
 
 
