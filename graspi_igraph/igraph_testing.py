@@ -153,7 +153,7 @@ def generateGraphAdj(file):
     return g
 
 def generateGraph(file):
-    if os.path.splitext(file)[1] == "txt":
+    if os.path.splitext(file)[1] == ".txt":
         return generateGraphAdj(file)
     else:
         return generateGraphGraphe(file)
