@@ -20,11 +20,11 @@ for test_file in test_files:
                 if stats.get(stat[0], -1) == int(stat[1]):
                     print(f"{test_file}: {stat[0]} passed")
                 elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != int(stat[1]):
-                    print(f"{test_file}: {stats.get(stat[0])} is not the same as {stat[1]}")
+                    print(f"{test_file}: {stat[0]} failed - {stats.get(stat[0])} is not the same as {stat[1]}")
             except ValueError:
                 if stats.get(stat[0], -1) == float(stat[1]):
                     print(f"{test_file}: {stat[0]} passed")
                 elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != float(stat[1]):
-                    print(f"{test_file}: {stats.get(stat[0])} is not the same as {stat[1]}")
+                    print(f"{test_file}: {stat[0]} failed - {stats.get(stat[0])} is not the same as {stat[1]}")
     print(stats)
-    print("\n")
+    print("")
