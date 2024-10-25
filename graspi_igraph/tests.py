@@ -18,13 +18,13 @@ for test_file in test_files:
             stat = line.strip().split(" ")
             try:
                 if stats.get(stat[0], -1) == int(stat[1]):
-                    print(f"{test_file}: {stat[0]} passed")
+                    print(f"{stat[0]} passed")
                 elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != int(stat[1]):
-                    print(f"{test_file}: {stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
+                    print(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
             except ValueError:
                 if stats.get(stat[0], -1) == float(stat[1]):
-                    print(f"{test_file}: {stat[0]} passed")
+                    print(f"{stat[0]} passed")
                 elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != float(stat[1]):
-                    print(f"{test_file}: {stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
+                    print(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
     print(stats)
     print("")
