@@ -11,37 +11,24 @@ def graphe_adjList(filename):
     with open(filename, "r") as file:
         header = file.readline().split()
         vertex_count = int(header[0])
-        # print(vertex_count)
-        for i in range(vertex_count):
+        for i in range(vertex_count-1):
             header = file.readline().split()
-            vertex_count = header
-            # print(vertex_count)
-            j = 2
-            current_node = header[0]
             neighbors = []
-            while j in range(len(header)):
-                neighbor_node = header[j]
-                # print(current_node)
-                neighbors.append(neighbor_node)
-                j += 3
-            adjacency_list[current_node] = neighbors
-        for i in range(2):
-            header = file.readline().split()
-            vertex_count = header
-            # print(vertex_count)
-            j = 2
-            current_node = header[0]
-            neighbors = []
-            while j < len(header):
-                neighbor_node = header[j]
-                # print(current_node)
-                neighbors.append(neighbor_node)
-                j += 3
-            adjacency_list[current_node] = neighbors
+            for j in range(2,len(header),3):
+                if header[j] in adjacency_list:
+                    if str(i) not in adjacency_list[header[j]]:
+                        neighbors.append(header[j])
+                else:
+                    neighbors.append(header[j])
+            adjacency_list[str(i)] = neighbors
     return adjacency_list
 
 
 
+# def duplicate_erase(adj_list):
+#     print(adj_list.values().mapping)
+#
+#     exit()
 def adjList(fileName):
     adjacency_list = {}
     dimX = dimY = dimZ = 0
@@ -103,18 +90,11 @@ def graphe_vertexColors(fileName):
             elif char == '0':
                 labels.append('black')
 
-        # lines = file.readlines()
-        # for line in lines[1:]:
-        #     for char in line[1]:
-        #         if char == '1':
-        #             labels.append('white')
-        #         elif char == '0':
-        #             labels.append('black')
-
 
     return labels
 
 '''********* Constructing the Graph **********'''
+
 
 def generateGraphAdj(file):
     edges = adjList(file)
@@ -142,36 +122,47 @@ def generateGraphAdj(file):
             g.add_edge(green_vertex, target_vertex)
     return g
 
+
+
 def graphe_generateGraphAdj(file):
     edges = graphe_adjList(file)
     labels = graphe_vertexColors(file)
-
+    # print(edges)
+    # exit()
     f = open(file, 'r')
     line = f.readline()
     line = line.split()
 
     g = ig.Graph.ListDict(edges=edges, directed=False)
+
     g.vs["color"] = labels
-    print(len(edges))
-    g.vs[len(edges) - 2]['color'] = 'blue'
-    g.vs[len(edges) - 1]['color'] = 'red'
+    # print(len(edges))
+    g.vs[len(edges) + 1]['color'] = 'blue'
+    g.vs[len(edges) + 2]['color'] = 'red'
 
     g.add_vertices(1)
-    g.vs[len(edges)]['color'] = 'green'
+    g.vs[len(edges)+3]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
+    exists = []
+
     for i in range(g.ecount()):
         current_edge = g.es[i]
         source_vertex = current_edge.source
         target_vertex = current_edge.target
         if(g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'):
             '''connect both source and target to green meta vertex'''
-            g.add_edge(green_vertex, source_vertex)
-            g.add_edge(green_vertex, target_vertex)
+            if exists.count([green_vertex, source_vertex]) == 0:
+                g.add_edge(green_vertex, source_vertex)
+            if exists.count([green_vertex, target_vertex]) == 0:
+                g.add_edge(green_vertex, target_vertex)
+            exists.append([green_vertex, source_vertex])
+            exists.append([green_vertex,target_vertex])
+    # print(exists)
     return g
 '''Add green interface node'''
 
 def visual2D(g):
-    layout = g.layout('reingold_tilford')
+    layout = g.layout('circle')
     # fig, ax = plt.subplots()
     # ax.invert_yaxis() # reverse starting point of graph (vertex 0)
     fig, ax = plt.subplots(figsize=(10, 10))
