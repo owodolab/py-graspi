@@ -1,8 +1,13 @@
-graspi\_igraph.csvFileMaker
+﻿graspi\_igraph.csvFileMaker
 ===========================
 
 .. automodule:: graspi_igraph.csvFileMaker
 
+   
+   
+   
+
+   
    
    .. rubric:: Functions
 
@@ -12,3 +17,15 @@ graspi\_igraph.csvFileMaker
       functionMemory
       functionRuntime
    
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

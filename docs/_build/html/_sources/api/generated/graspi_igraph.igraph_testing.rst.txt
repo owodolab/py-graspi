@@ -4,6 +4,11 @@
 .. automodule:: graspi_igraph.igraph_testing
 
    
+   
+   
+
+   
+   
    .. rubric:: Functions
 
    .. autosummary::
@@ -20,3 +25,15 @@
       visual2D
       visual3D
    
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+

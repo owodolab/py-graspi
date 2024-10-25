@@ -1,8 +1,13 @@
-graspi\_igraph.descriptors
+﻿graspi\_igraph.descriptors
 ==========================
 
 .. automodule:: graspi_igraph.descriptors
 
+   
+   
+   
+
+   
    
    .. rubric:: Functions
 
@@ -24,3 +29,15 @@ graspi\_igraph.descriptors
       desciptors
       descriptorsToTxt
    
+   
+
+   
+   
+   
+
+   
+   
+   
+
+
+
