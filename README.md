@@ -25,7 +25,7 @@ Next, you'd need to navigate to the cloned repo using terminal. An example would
 ```
 cd /path/py-graspi
 ```
-First, make sure you're on the memoryFix branch of the repo by running
+First, make sure you're on the sprint3-subtask5 branch of the repo by running
 ```
 git checkout sprint3-subtask5
 ```
