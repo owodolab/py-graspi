@@ -10,6 +10,7 @@ test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path)]
 for test_file in test_files:
     g = ig.generateGraph(data_path + test_file + ".txt")
     stats = ds.desciptors(g)
+    #ig.visual2D(g, 'graph')
 
     print(f"{test_file} Results")
 
