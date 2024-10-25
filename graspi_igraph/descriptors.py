@@ -60,7 +60,7 @@ def STAT_CC_D_An(graph):
     count = 0;
 
     for c in cc:
-        if graph.vs[c][0]['color'] == 'black':
+        if graph.vs[c][0]['color'] == 'black' and "red" in graph.vs[c]["color"]:
             count += 1
     
     return count

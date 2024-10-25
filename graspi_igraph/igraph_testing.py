@@ -2,6 +2,7 @@ import igraph as ig
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
+import os
 
 '''---------Function to create edges for graph in specified format --------'''
 
@@ -28,10 +29,32 @@ def graphe_adjList(filename):
     return adjacency_list
 
 
+def adjList(fileName):
+    adjacency_list = {}
+    dimX = dimY = 0
+    with open(fileName, "r") as file:
+        header = file.readline().split(' ')
+        dimX, dimY = int(header[0]), int(header[1])
+        offsets = [(-1, -1), (-1, 0), (0, -1), (1, -1)]
+        for y in range(dimY):
+            for x in range(dimX):
+                current_vertex = y * dimX + x
+                neighbors = []
+                for dx, dy in offsets:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < dimX and 0 <= ny < dimY:
+                        neighbor_vertex = ny * dimX + nx
+                        neighbors.append(neighbor_vertex)
+                adjacency_list[current_vertex] = neighbors
+    adjacency_list[dimY * dimX] = list(range(dimX))
+    adjacency_list[dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
+    return adjacency_list
+
+
 '''------- Labeling the color of the vertices -------'''
 
 
-def vertexColors(fileName):
+def adjVertexColors(fileName):
     labels = []
     with open(fileName, 'r') as file:
         line = file.readline().split()
@@ -51,10 +74,24 @@ def vertexColors(fileName):
     return labels
 
 
+def vertexColors(fileName):
+    labels = []
+    with open(fileName, 'r') as file:
+        lines = file.readlines()
+        for line in lines[1:]:
+            for char in line:
+                if char == '1':
+                    labels.append('white')
+                elif char == '0':
+                    labels.append('black')
+
+    return labels
+
+
 '''********* Constructing the Graph **********'''
 
 
-def generateGraph(file):
+def generateGraphGraphe(file):
     adjacency_list = graphe_adjList(file)
     vertex_colors = vertexColors(file)
 
@@ -91,6 +128,52 @@ def generateGraph(file):
 
     return g
 
+
+def generateGraphAdj(file):
+    adjacency_list = adjList(file)
+    labels = vertexColors(file)
+
+    f = open(file, 'r')
+    line = f.readline()
+    line = line.split()
+
+    g = ig.Graph.ListDict(edges=adjacency_list, directed=False)
+    g.vs["color"] = labels
+    g.vs[int(line[0]) * int(line[1])]['color'] = 'blue'
+    g.vs[int(line[0]) * int(line[1]) + 1]['color'] = 'red'
+
+    g.add_vertices(1)
+    g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
+    green_vertex = g.vs[g.vcount() - 1]
+    exists = []
+
+    for i in range(g.ecount()):
+        current_edge = g.es[i]
+        source_vertex = current_edge.source
+        target_vertex = current_edge.target
+        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'):
+            '''connect both source and target to green meta vertex'''
+            if exists.count([green_vertex, source_vertex]) == 0:
+                g.add_edge(green_vertex, source_vertex)
+            if exists.count([green_vertex, target_vertex]) == 0:
+                g.add_edge(green_vertex, target_vertex)
+            exists.append([green_vertex, source_vertex])
+            exists.append([green_vertex, target_vertex])
+        if (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
+            '''connect both source and target to green meta vertex'''
+            if exists.count([green_vertex, source_vertex]) == 0:
+                g.add_edge(green_vertex, source_vertex)
+            if exists.count([green_vertex, target_vertex]) == 0:
+                g.add_edge(green_vertex, target_vertex)
+            exists.append([green_vertex, source_vertex])
+
+    return g
+
+def generateGraph(file):
+    if os.path.splitext(file)[1] == ".txt":
+        return generateGraphAdj(file)
+    else:
+        return generateGraphGraphe(file)
 
 def visual2D(g, type):
     if type == 'graph':
