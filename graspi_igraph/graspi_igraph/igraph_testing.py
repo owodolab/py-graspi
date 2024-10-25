@@ -25,8 +25,37 @@ def graphe_adjList(filename):
     
     return adjacency_list
 
+def adjList(fileName):
+    adjacency_list = {}
+    dimX = dimY = dimZ = 0
+
+    with open(fileName, "r") as file:
+        header = file.readline().split(' ')
+        dimX, dimY, dimZ = int(header[0]), int(header[1]), int(header[2])
+
+        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (1, -1, 0)]
+
+        for z in range(dimZ):
+            for y in range(dimY):
+                for x in range(dimX):
+                    current_vertex = x * dimY * dimZ + y * dimZ + z
+                    neighbors = []
+
+                    for dx, dy, dz in offsets:
+                        nx, ny, nz = x + dx, y + dy, z + dz
+                        if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
+                            neighbor_vertex = nx * dimY * dimZ + ny * dimZ + nz
+                            neighbors.append(neighbor_vertex)
+
+                    adjacency_list[current_vertex] = neighbors
+
+    adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
+    adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
+
+    return adjacency_list
+
 '''------- Labeling the color of the vertices -------'''
-def vertexColors(fileName):
+def adjVertexColors(fileName):
     labels = []
     with open(fileName, 'r') as file:
         line = file.readline().split()
@@ -42,6 +71,19 @@ def vertexColors(fileName):
                 labels.append('blue')
             elif char == '20':
                 labels.append('red')
+
+    return labels
+
+def vertexColors(fileName):
+    labels = []
+    with open(fileName, 'r') as file:
+        lines = file.readlines()
+        for line in lines[1:]:
+            for char in line:
+                if char == '1':
+                    labels.append('white')
+                elif char == '0':
+                    labels.append('black')
 
     return labels
 
@@ -80,6 +122,21 @@ def generateGraph(file):
                 g.add_edge(green_vertex, target_vertex)
             exists.append([green_vertex, source_vertex])
             exists.append([green_vertex, target_vertex])
+
+    return g
+
+def generateGraphAdj(file):
+    edges = adjList(file)
+    labels = vertexColors(file)
+
+    f = open(file, 'r')
+    line = f.readline()
+    line = line.split()
+
+    g = ig.Graph.ListDict(edges=edges, directed=False)
+    g.vs["color"] = labels
+    g.vs[int(line[0]) * int(line[1])]['color'] = 'blue'
+    g.vs[int(line[0]) * int(line[1]) + 1]['color'] = 'red'
 
     return g
 
