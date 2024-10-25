@@ -3,8 +3,8 @@ import descriptors as ds
 import os
 
 current_dir = os.getcwd()
-data_path = f"{current_dir}/data/"
-descriptors_path = f"{current_dir}/descriptors/"
+data_path = f"{current_dir}/graspi_igraph/data/"
+descriptors_path = f"{current_dir}/graspi_igraph/descriptors/"
 test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path)]
 
 for test_file in test_files:
