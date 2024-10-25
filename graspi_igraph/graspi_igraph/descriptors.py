@@ -131,7 +131,6 @@ def desciptors(graph):
     dict["CT_f_conn_A_Ca"] = CT_f_conn_A_Ca(graph)
     dict["CT_n_D_adj_An"] = CT_n_D_adj_An(graph)
     dict["CT_n_A_adj_Ca"] = CT_n_A_adj_Ca(graph)
-    print(dict)
 
     return dict
 
