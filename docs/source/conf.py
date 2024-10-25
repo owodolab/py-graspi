@@ -35,7 +35,8 @@ exclude_patterns = [
 
 # -- Options for HTML output -------------------------------------------------
 html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_static_path = ['../_static']
+html_baseurl = 'https://owodolab.github.io/py-graspi/'
 
 # Autodoc options for generating detailed class/function documentation
 autodoc_default_options = {
