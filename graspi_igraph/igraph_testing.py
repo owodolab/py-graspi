@@ -6,6 +6,41 @@ import sys
 
 
 '''---------Function to create edges for graph in specified format --------'''
+def graphe_adjList(filename):
+    adjacency_list = {}
+    with open(filename, "r") as file:
+        header = file.readline().split()
+        vertex_count = int(header[0])
+        # print(vertex_count)
+        for i in range(vertex_count):
+            header = file.readline().split()
+            vertex_count = header
+            # print(vertex_count)
+            j = 2
+            current_node = header[0]
+            neighbors = []
+            while j in range(len(header)):
+                neighbor_node = header[j]
+                # print(current_node)
+                neighbors.append(neighbor_node)
+                j += 3
+            adjacency_list[current_node] = neighbors
+        for i in range(2):
+            header = file.readline().split()
+            vertex_count = header
+            # print(vertex_count)
+            j = 2
+            current_node = header[0]
+            neighbors = []
+            while j < len(header):
+                neighbor_node = header[j]
+                # print(current_node)
+                neighbors.append(neighbor_node)
+                j += 3
+            adjacency_list[current_node] = neighbors
+    return adjacency_list
+
+
 
 def adjList(fileName):
     adjacency_list = {}
@@ -55,6 +90,29 @@ def vertexColors(fileName):
 
     return labels
 
+def graphe_vertexColors(fileName):
+    labels = []
+    with open(fileName, 'r') as file:
+        line = file.readline().split()
+        vertex_count = int(line[0])
+        for i in range(vertex_count):
+            line = file.readline().split()
+            char = line[1]
+            if char == '1':
+                labels.append('white')
+            elif char == '0':
+                labels.append('black')
+
+        # lines = file.readlines()
+        # for line in lines[1:]:
+        #     for char in line[1]:
+        #         if char == '1':
+        #             labels.append('white')
+        #         elif char == '0':
+        #             labels.append('black')
+
+
+    return labels
 
 '''********* Constructing the Graph **********'''
 
@@ -73,6 +131,33 @@ def generateGraphAdj(file):
 
     g.add_vertices(1)
     g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
+    green_vertex = g.vs[g.vcount() - 1]
+    for i in range(g.ecount()):
+        current_edge = g.es[i]
+        source_vertex = current_edge.source
+        target_vertex = current_edge.target
+        if(g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'):
+            '''connect both source and target to green meta vertex'''
+            g.add_edge(green_vertex, source_vertex)
+            g.add_edge(green_vertex, target_vertex)
+    return g
+
+def graphe_generateGraphAdj(file):
+    edges = graphe_adjList(file)
+    labels = graphe_vertexColors(file)
+
+    f = open(file, 'r')
+    line = f.readline()
+    line = line.split()
+
+    g = ig.Graph.ListDict(edges=edges, directed=False)
+    g.vs["color"] = labels
+    print(len(edges))
+    g.vs[len(edges) - 2]['color'] = 'blue'
+    g.vs[len(edges) - 1]['color'] = 'red'
+
+    g.add_vertices(1)
+    g.vs[len(edges)]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
     for i in range(g.ecount()):
         current_edge = g.es[i]
@@ -206,5 +291,28 @@ def main():
         visual3D(filteredGraph)
         shortest_path(filteredGraph)
     print("finished?")
+
+def test():
+    is_2D = True
+    correct_input = False
+    if sys.argv[2] == '2d':
+        is_2D = True
+        correct_input = True
+    elif sys.argv[2] == '3d':
+        is_2D = False
+        correct_input = True
+
+    if correct_input == False:
+        print("Did not specify if 2d or 3d please try again")
+        return 1
+
+    g = graphe_generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
+    if is_2D:
+        visual2D(g)
+        filteredGraph = filterGraph(g)
+        visual2D(filteredGraph)
+        shortest_path(filteredGraph)
+
 if __name__ == '__main__':
-    main()
+    # main()
+    test()
