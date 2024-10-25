@@ -4,6 +4,17 @@ import tracemalloc
 import csv
 
 def functionRuntime(count,function, *argv):
+    """
+    Measures the average runtime of a function over a specified number of executions.
+
+    Args:
+        count (int): The number of times to execute the function.
+        function (Callable): The function to measure the runtime for.
+        *argv: Arguments to be passed to the function.
+
+    Returns:
+        float: The average execution time in seconds across the `count` executions.
+    """
     totaltime = 0
     
     for x in range(count):
@@ -18,6 +29,16 @@ def functionRuntime(count,function, *argv):
     return avgExecution
 
 def functionMemory(function, *argv):
+    """
+    Measures the peak memory usage of a function during its execution.
+
+    Args:
+        function (Callable): The function to measure memory usage for.
+        *argv: Arguments to be passed to the function.
+
+    Returns:
+        int: The memory used in bytes during the function's execution.
+    """
     tracemalloc.start()
     function(*argv)
     stats = tracemalloc.get_traced_memory()
@@ -27,6 +48,25 @@ def functionMemory(function, *argv):
     return stats
 
 def csvMaker(fileName, n, dim, count, graphGen, graphGenPar,graphFilt, graphFiltPar,shortPath, shortPathPar):
+    """
+    Runs multiple graph-related functions, records their runtime and memory usage,
+    and stores the results in a CSV file.
+
+    Args:
+        fileName (str): The name of the CSV file to write results to.
+        n (int): The base size parameter of the graph.
+        dim (int): The dimension to compute the total nodes as n^dim.
+        count (int): The number of times to run each function for benchmarking.
+        graphGen (Callable): Function to generate a graph.
+        graphGenPar (tuple): Parameters for the graph generation function.
+        graphFilt (Callable): Function to filter the graph.
+        graphFiltPar (tuple): Parameters for the graph filtering function.
+        shortPath (Callable): Function to compute the shortest path in the graph.
+        shortPathPar (tuple): Parameters for the shortest path function.
+
+    Returns:
+        None: The function writes results to the specified CSV file.
+    """
     row = [n,(n**dim)]
     totalTime = 0
     totalMem = 0
@@ -57,33 +97,3 @@ def csvMaker(fileName, n, dim, count, graphGen, graphGenPar,graphFilt, graphFilt
     with open(fileName, 'a', newline = "\n") as file:
         writer = csv.writer(file)
         writer.writerow(row)
-
-# fileName = "2D-testFile/testFile-10-2D.txt"
-# g = ig.generateGraph(fileName)
-# fg = ig.filterGraph(g)
-
-# csvMaker("out.csv",10,2,3,ig.generateGraph,[fileName],ig.filterGraph,[g],ig.shortest_path,[fg]);
-
-# fileName = "2D-testFile/testFile-50-2D.txt"
-# g = ig.generateGraph(fileName)
-# fg = ig.filterGraph(g)
-
-# csvMaker("out.csv",50,2,3,ig.generateGraph,[fileName],ig.filterGraph,[g],ig.shortest_path,[fg]);
-
-# fileName = "2D-testFile/testFile-100-2D.txt"
-# g = ig.generateGraph(fileName)
-# fg = ig.filterGraph(g)
-
-# csvMaker("out.csv",100,2,3,ig.generateGraph,[fileName],ig.filterGraph,[g],ig.shortest_path,[fg]);
-
-# fileName = "2D-testFile/testFile-500-2D.txt"
-# g = ig.generateGraph(fileName)
-# fg = ig.filterGraph(g)
-
-# csvMaker("out.csv",500,2,3,ig.generateGraph,[fileName],ig.filterGraph,[g],ig.shortest_path,[fg]);
-
-# fileName = "2D-testFile/testFile-1000-2D.txt"
-# g = ig.generateGraph(fileName)
-# fg = ig.filterGraph(g)
-
-# csvMaker("out.csv",1000,2,3,ig.generateGraph,[fileName],ig.filterGraph,[g],ig.shortest_path,[fg]);

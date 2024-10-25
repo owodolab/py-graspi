@@ -1,9 +1,27 @@
 import igraph_testing as ig
 
 def STAT_n(graph):
+    """
+    Calculates the number of vertices in the graph, excluding three specific nodes.
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        int: The number of vertices minus three.
+    """
     return graph.vcount()-3
 
 def STAT_e(graph):
+    """
+    Counts the edges connected to at least one 'green' vertex (interface edges).
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        int: The number of edges where at least one endpoint has the color 'green'.
+    """
     edgeList = graph.get_edgelist()
     count = 0
 
@@ -16,6 +34,15 @@ def STAT_e(graph):
     return count
 
 def STAT_n_D(graph):
+    """
+    Counts the number of vertices colored 'black'.
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        int: The number of vertices with the color 'black'.
+    """
     vertices = graph.vcount()
     count = 0;
 
@@ -26,6 +53,15 @@ def STAT_n_D(graph):
     return count
 
 def STAT_n_A(graph):
+    """
+    Counts the number of vertices colored 'white'.
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        int: The number of vertices with the color 'white'.
+    """
     vertices = graph.vcount()
     count = 0;
 
@@ -36,6 +72,15 @@ def STAT_n_A(graph):
     return count
 
 def STAT_CC_D(graph):
+    """
+    Counts the connected components that contain at least one 'black' vertex.
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        int: The number of connected components with at least one 'black' vertex.
+    """
     cc = ig.connectedComponents(graph);
     count = 0
 
@@ -46,6 +91,15 @@ def STAT_CC_D(graph):
     return count
 
 def STAT_CC_A(graph):
+    """
+    Counts the connected components that contain at least one 'white' vertex.
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        int: The number of connected components with at least one 'white' vertex.
+    """
     cc = ig.connectedComponents(graph);
     count = 0
 
@@ -56,6 +110,15 @@ def STAT_CC_A(graph):
     return count
     
 def STAT_CC_D_An(graph):
+    """
+    Counts the connected components containing 'black' vertices and 'red' vertex (top).
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        int: The number of connected components with 'black' and 'red' vertices (top).
+    """
     cc = ig.connectedComponents(graph);
     count = 0;
 
@@ -66,6 +129,15 @@ def STAT_CC_D_An(graph):
     return count
 
 def STAT_CC_A_Ca(graph):
+    """
+    Counts the connected components containing 'white' vertices and 'blue' vertex (bottom).
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        int: The number of connected components with 'white' and 'blue' vertices (bottom).
+    """
     cc = ig.connectedComponents(graph);
     count = 0;
 
@@ -76,21 +148,57 @@ def STAT_CC_A_Ca(graph):
     return count
 
 def ABS_f_D(graph):
+    """
+    Calculates the fraction of 'black' vertices out of the total vertices minus three (accounts for red, green, and blue vertices).
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        float: The fraction of 'black' vertices.
+    """
     fraction = STAT_n_D(graph) / STAT_n(graph)
 
     return fraction
 
 def CT_f_conn_D_An(graph):
+    """
+    Calculates the fraction of 'black' vertices in specific connected components with red and black vertices (top).
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        float: The fraction of 'black' vertices in connected components with 'black' vertices (top).
+    """
     fraction = CT_n_D_adj_An(graph) / STAT_n_D(graph)
  
     return fraction
 
 def CT_f_conn_A_Ca(graph):
+    """
+    Calculates the fraction of 'white' vertices in connected components with 'white' and 'blue' vertices (bottom).
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        float: The fraction of 'white' vertices in specific connected components (bottom).
+    """
     fraction = CT_n_A_adj_Ca(graph)/ STAT_n_A(graph)
 
     return fraction
 
 def CT_n_D_adj_An(graph):
+    """
+    Counts number of 'black' vertices in direct contact with the 'red' vertex (top).
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        int: The number of 'black' vertices direct contact with the 'red' vertex (top).
+    """
     cc = ig.connectedComponents(graph);
     count = 0
     
@@ -104,6 +212,15 @@ def CT_n_D_adj_An(graph):
     return count
 
 def CT_n_A_adj_Ca(graph):
+    """
+    Counts number of 'white' vertices in direct contact with the 'blue' vertex (bottom).
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        int: The number of 'white' vertices direct contact with the 'blue' vertex (bottom).
+    """
     cc = ig.connectedComponents(graph);
     count = 0
 
@@ -117,6 +234,15 @@ def CT_n_A_adj_Ca(graph):
     return count
 
 def desciptors(graph):
+    """
+    Generates a dictionary of all graph descriptors.
+
+    Args:
+        graph (igraph.Graph): The input graph.
+
+    Returns:
+        dict: A dictionary of descriptors and their calculated values.
+    """
     dict = {}
     dict["STAT_n"] =  STAT_n(graph)
     dict["STAT_e"] = STAT_e(graph)
@@ -131,12 +257,21 @@ def desciptors(graph):
     dict["CT_f_conn_A_Ca"] = CT_f_conn_A_Ca(graph)
     dict["CT_n_D_adj_An"] = CT_n_D_adj_An(graph)
     dict["CT_n_A_adj_Ca"] = CT_n_A_adj_Ca(graph)
-    #print(dict)
 
     return dict
 
 
 def descriptorsToTxt(dict, fileName):
+    """
+    Writes graph descriptors to a text file.
+
+    Args:
+        dict (dict): The dictionary of descriptors.
+        fileName (str): The name of the file to write to.
+
+    Returns:
+        None
+    """
 
     f = open(fileName,"x")
 
