@@ -29,3 +29,5 @@ for test_file in test_files:
         print(f"{test_file}: failed")
     else:
         print(f"{test_file}: passed")
+
+    print(stats)
