@@ -3,9 +3,80 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import sys
+def adjList(fileName):
+    adjacency_list = {}
+    dimX = dimY = dimZ = 0
+    with open(fileName, "r") as file:
+        header = file.readline().split(' ')
+        dimX, dimY, dimZ = int(header[0]), int(header[1]), int(header[2])
+        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (1, -1, 0)]
+        for z in range(dimZ):
+            for y in range(dimY):
+                for x in range(dimX):
+                    current_vertex = x * dimY * dimZ + y * dimZ + z
+                    neighbors = []
+                    for dx, dy, dz in offsets:
+                        nx, ny, nz = x + dx, y + dy, z + dz
+                        if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
+                            neighbor_vertex = nx * dimY * dimZ + ny * dimZ + nz
+                            neighbors.append(neighbor_vertex)
+                    adjacency_list[current_vertex] = neighbors
+    adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
+    adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
+    return adjacency_list
+'''------- Labeling the color of the vertices -------'''
+def vertexColors(fileName):
+    labels = []
+    with open(fileName, 'r') as file:
+        lines = file.readlines()
+        for line in lines[1:]:
+            for char in line:
+                if char == '1':
+                    labels.append('white')
+                elif char == '0':
+                    labels.append('black')
+    return labels
+'''********* Constructing the Graph **********'''
+def generateGraphAdj(file):
+    edges = adjList(file)
+    labels = vertexColors(file)
+    f = open(file, 'r')
+    line = f.readline()
+    line = line.split()
+    g = ig.Graph.ListDict(edges=edges, directed=False)
+    g.vs["color"] = labels
+    g.vs[int(line[0]) * int(line[1])]['color'] = 'blue'
+    g.vs[int(line[0]) * int(line[1]) + 1]['color'] = 'red'
+
+    g.add_vertices(1)
+    g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
+    green_vertex = g.vs[g.vcount() - 1]
+    # edge_test = g.es[4]
+    # print(g.ecount())
+    # source_vertex = edge_test.source
+    # target_vertex = edge_test.target
+    # print(g.vs[source_vertex]["color"], g.vs[target_vertex]["color"])
+    print(g.ecount())
+    exists = []
+    for i in range(g.ecount()):
+        current_edge = g.es[i]
+        source_vertex = current_edge.source
+        target_vertex = current_edge.target
+        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (
+                g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
+            '''connect both source and target to green meta vertex'''
+            if exists.count([green_vertex, source_vertex]) == 0:
+                g.add_edge(green_vertex, source_vertex)
+            if exists.count([green_vertex, target_vertex]) == 0:
+                g.add_edge(green_vertex, target_vertex)
+            exists.append([green_vertex, source_vertex])
+            exists.append([green_vertex, target_vertex])
+    print(g.ecount())
+    return g
 
 
 '''---------Function to create edges for graph in specified format --------'''
+
 def graphe_adjList(filename):
     adjacency_list = []
     with open(filename, "r") as file:
@@ -71,17 +142,9 @@ def graphe_generateGraphAdj(file):
         current_edge = g.es[i]
         source_vertex = current_edge.source
         target_vertex = current_edge.target
-        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'):
+        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
             '''connect both source and target to green meta vertex'''
-            if exists.count([green_vertex, source_vertex]) == 0:
-                g.add_edge(green_vertex, source_vertex)
-            if exists.count([green_vertex, target_vertex]) == 0:
-                g.add_edge(green_vertex, target_vertex)
-            exists.append([green_vertex, source_vertex])
-            exists.append([green_vertex, target_vertex])
-        if(g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
-            '''connect both source and target to green meta vertex'''
-            if exists.count([green_vertex, source_vertex]) == 0:
+            if exists.count([green_vertex, source_vertex]) ==0:
                 g.add_edge(green_vertex, source_vertex)
             if exists.count([green_vertex, target_vertex]) == 0:
                 g.add_edge(green_vertex, target_vertex)
@@ -234,8 +297,8 @@ def test():
         shortest_path(filteredGraph)
 
 if __name__ == '__main__':
-    # main()
-    test()
+    main()
+    # test()
 
 
 
