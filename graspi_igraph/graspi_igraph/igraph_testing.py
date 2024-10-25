@@ -4,111 +4,88 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 '''---------Function to create edges for graph in specified format --------'''
-def edge(fileName):
-    line = []
-    n = ""
-    d = ""
-    dimension = 0
-    with open(fileName,'r') as file:
-        line = file.readline()
-        splitLine = line.split()
-        numBottomLayers = int(splitLine[2])
-        numBottomRowVertices = int(splitLine[0])
-        for i in line:
-            if i != ' ':
-                n += i
-            elif i == ' ':
-                break
-        for i in reversed(line):
-            if i != ' ' and i != '\n':
-                d += i
-            elif i == ' ':
-                break
-            
-        dimension = int(d[::-1])
-  
-    num = int(n)
-    edge = []
-    secondToLastRow = num**2 - num
-    offset = 0
-    blueVertex = num**2
-    redVertex = num**2 + 1
-    topOffset = (num**2) - num
+def graphe_adjList(filename):
+    adjacency_list = []
+    with open(filename, "r") as file:
+        header = file.readline().split()
+        vertex_count = int(header[0])
+        for i in range(vertex_count):
+            header = file.readline().split()
+            neighbors = []
+            for j in range(2,len(header),3):
+                if int(header[j]) < len(adjacency_list):
+                    if i not in adjacency_list[int(header[j])]:
+                        neighbors.append(int(header[j]))
+                else:
+                    neighbors.append(int(header[j]))
+            adjacency_list.append(neighbors)
 
-
-    for x in range(numBottomLayers):
-        offset = x * numBottomLayers
-        for i in range(numBottomRowVertices):
-            edge.append([blueVertex,i+offset])
-
-    for x in range(numBottomLayers):
-        offset = x * numBottomLayers
-        
-        for i in range(numBottomRowVertices):
-            edge.append([redVertex,i+offset+topOffset])
-
-    for z in range(dimension):
-        offset = z * (num**2)
-        for y in range(num**2):
-            if z < (dimension - 1):
-                edge.append([y+offset,(y+offset+(num**2))])
-
-
-        for x in range(0,secondToLastRow,num):
-            x_num = x + num + offset
-            x_offset = x+offset
-
-            edge.append([x_offset,x_num])
-            edge.append([x_offset,x_num+1])
-            edge.append([x_offset,(x_offset+1)])
-
-            for i in range(1,num):
-                xi = x+i+offset
-                edge.append([xi,(xi+num)])
-                edge.append([(xi),(xi+(num-1))]) # right to left diagonals
-
-                if i < num-1:
-                    edge.append([xi,xi+1+num]) # left to right diagonals bottom row
-                    edge.append([xi,xi+1]) # horizontal except first column
-                    if x == secondToLastRow - num:
-                        edge.append([secondToLastRow+i+offset,secondToLastRow+offset+i+1]) # horizontal last row except first column
-            
-    edge.append([(secondToLastRow+offset),(secondToLastRow+1+offset)]) # horizontal last row first column
-
-    return edge
+    adjacency_list.append([])
+    adjacency_list.append([])
+    
+    return adjacency_list
 
 '''------- Labeling the color of the vertices -------'''
 def vertexColors(fileName):
     labels = []
     with open(fileName, 'r') as file:
-        lines = file.readlines()
-        for line in lines[1:]:
-            for char in line:
-                if char == '1':
-                    labels.append('white')
-                elif char == '0':
-                    labels.append('black')
+        line = file.readline().split()
+        vertex_count = int(line[0])
+        for i in range(vertex_count+2):
+            line = file.readline().split()
+            char = line[1]
+            if char == '1':
+                labels.append('white')
+            elif char == '0':
+                labels.append('black')
+            elif char == '10':
+                labels.append('blue')
+            elif char == '20':
+                labels.append('red')
 
     return labels
 
 '''********* Constructing the Graph **********'''
 def generateGraph(file):
-    edges = edge(file)
-    labels = vertexColors(file)
+    adjacency_list = graphe_adjList(file)
+    vertex_colors = vertexColors(file)
 
-    f = open(file,'r')
-    line = f.readline()
-    line = line.split()
+    edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
     
-    g = ig.Graph(n = int(line[0])*int(line[1]),edges=edges, directed=False, vertex_attrs={'color':labels})
-    g.vs[int(line[0])*int(line[1])]['color'] = 'blue'
-    g.vs[int(line[0])*int(line[1])+1]['color'] = 'red'
+    g = ig.Graph(edges, directed=False)
+    g.vs["color"] = vertex_colors
+    g.add_vertices(1)
+
+    g.vs[len(adjacency_list)]['color'] = 'green'
+    green_vertex = g.vs[g.vcount() - 1]
+    exists = []
+
+    for i in range(g.ecount()):
+        current_edge = g.es[i]
+        source_vertex = current_edge.source
+        target_vertex = current_edge.target
+        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'):
+            '''connect both source and target to green meta vertex'''
+            if exists.count([green_vertex, source_vertex]) == 0:
+                g.add_edge(green_vertex, source_vertex)
+            if exists.count([green_vertex, target_vertex]) == 0:
+                g.add_edge(green_vertex, target_vertex)
+            exists.append([green_vertex, source_vertex])
+            exists.append([green_vertex, target_vertex])
+        if(g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
+            '''connect both source and target to green meta vertex'''
+            if exists.count([green_vertex, source_vertex]) == 0:
+                g.add_edge(green_vertex, source_vertex)
+            if exists.count([green_vertex, target_vertex]) == 0:
+                g.add_edge(green_vertex, target_vertex)
+            exists.append([green_vertex, source_vertex])
+            exists.append([green_vertex, target_vertex])
 
     return g
 
 def visual2D(g,type):
     if type == 'graph' :
-        layout = g.layout('reingold_tilford')  
+        layout = g.layout('fr')  
     else:
         layout = g.layout('grid')  
     # fig, ax = plt.subplots()
@@ -173,10 +150,6 @@ def filterGraph(graph):
         toNode = edge[1]
         if(graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
             keptEdges.append(edge)
-        # elif(graph.vs[currentNode]['color'] == 'blue' or graph.vs[toNode]['color'] == 'blue'):
-        #     keptEdges.append(edge)
-        # elif(graph.vs[currentNode]['color'] == 'red' or graph.vs[toNode]['color'] == 'red'):
-        #     keptEdges.append(edge)
    
     filteredGraph = graph.subgraph_edges(keptEdges,delete_vertices = True)
 

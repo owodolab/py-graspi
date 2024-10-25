@@ -23,5 +23,3 @@ def testFileMaker(num,depth,textFileName):
     f.close()
 
     return "success"
-
-testFileMaker(4,1,"t.txt")

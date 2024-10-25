@@ -143,4 +143,3 @@ def descriptorsToTxt(dict, fileName):
     with open(fileName,'a') as f:
         for d in dict:
             f.write(d + " " + str(dict[d]) + '\n')
-
