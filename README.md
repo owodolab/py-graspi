@@ -66,16 +66,27 @@ Finally, run the following:
 ./run.sh
 ```
 ## Outputs
-After running this command, you should see
-```
-<Test file name> results
-```
-Followed by each descriptor of the given test files, formatted in:
-```
-<Descriptor> passed / - <result> is not the same as expected <value>
-```
-Afterwards, a dictonary of the calculated descriptors will print
+After running this command, the automatic pdf generation will begin. 
 <br />
-<br />
-This will print for all 33 morphologies
-
+<br /> 
+After a few minutes, the following will print once your pdf has been created
+```
+PDF Generated
+```
+If the pdf does not automatically pop up, use the following commands:
+### On Windows
+```
+start graspi_igraph/test_results.pdf
+```
+### On MacOS
+```
+open graspi_igraph/test_results.pdf
+```
+### On Linux
+```
+evince graspi_igraph/test_results.pdf
+```
+If evince is not installed, run this first:
+```
+sudo apt install evince
+```
