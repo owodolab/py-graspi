@@ -68,4 +68,5 @@ for test_file in test_files:
     pdf.image(image_file)
 
 pdf.output("test_results.pdf")
+print("PDF Generated")
 webbrowser.open_new_tab(f"{current_dir}/graspi_igraph/test_results.pdf")
