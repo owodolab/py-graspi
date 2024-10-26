@@ -70,9 +70,9 @@ After running this command, you should see
 ```
 <Test file name> results
 ```
-Followed by the descriptors of the given test files, formatted in:
+Followed by each descriptor of the given test files, formatted in:
 ```
-<Test file name>: <Descriptor> passed / - <result> is not the same as expected <value>
+<Descriptor> passed / - <result> is not the same as expected <value>
 ```
 Afterwards, a dictonary of the calculated descriptors will print
 <br />
