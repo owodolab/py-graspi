@@ -67,6 +67,6 @@ for test_file in test_files:
     image_file = image_path + test_file + ".png"
     pdf.image(image_file)
 
-pdf.output("test_results.pdf")
+pdf.output(f"{current_dir}/graspi_igraph/test_results.pdf")
 print("PDF Generated")
 webbrowser.open_new_tab(f"{current_dir}/graspi_igraph/test_results.pdf")
