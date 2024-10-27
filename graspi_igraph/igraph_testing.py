@@ -1,11 +1,12 @@
 import igraph as ig
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+# from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import sys
+
+'''Returns an adjacency list of a .txt file in the form of a dict.'''
 def adjList(fileName):
     adjacency_list = {}
-    dimX = dimY = dimZ = 0
     with open(fileName, "r") as file:
         header = file.readline().split(' ')
         dimX, dimY, dimZ = int(header[0]), int(header[1]), int(header[2])
@@ -51,15 +52,12 @@ def generateGraphAdj(file):
     g.add_vertices(1)
     g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
-    # edge_test = g.es[4]
-    # print(g.ecount())
-    # source_vertex = edge_test.source
-    # target_vertex = edge_test.target
-    # print(g.vs[source_vertex]["color"], g.vs[target_vertex]["color"])
     print(g.ecount())
     exists = []
     for i in range(g.ecount()):
         current_edge = g.es[i]
+        # print(current_edge)
+        # exit()
         source_vertex = current_edge.source
         target_vertex = current_edge.target
         if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (
@@ -77,6 +75,12 @@ def generateGraphAdj(file):
 
 '''---------Function to create edges for graph in specified format --------'''
 
+'''Takes in filename and reads given .graphe file.
+    Creates an adjacency list of each vertex with no duplicates (this makes it so graph does not have cycles).
+    Also creates a "first_order_neighbors" list, this list returns the pairing of first order neighbors which is used
+    later when checking for nodes to connect to the green interface node. (only first order neighbors are allowed to connect to the green interface) '''
+'''RETURNS: [Adjacency list, first_order_neighbors list]'''
+
 def graphe_adjList(filename):
     adjacency_list = []
     first_order_neighbors = []
@@ -87,26 +91,26 @@ def graphe_adjList(filename):
             header = file.readline().split()
             neighbors = []
             for j in range(2,len(header),3):
-                order_neighbor = header[j + 2]
+                order_neighbor_type = header[j + 2]
                 if int(header[j]) < len(adjacency_list):
                     if i not in adjacency_list[int(header[j])]:
                         neighbors.append(int(header[j]))
-                        if order_neighbor == 'f':
+                        if order_neighbor_type == 'f':
                             first_order_neighbors.append([int(header[j]), i])
-
                 else:
                     neighbors.append(int(header[j]))
-                    if order_neighbor == 'f':
+                    if order_neighbor_type == 'f':
                         first_order_neighbors.append([int(header[j]), i])
             adjacency_list.append(neighbors)
 
     adjacency_list.append([])
     adjacency_list.append([])
-    # print(first_order_neighbors)
+    # print(adjacency_list)
+    # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     # exit()
     return adjacency_list, first_order_neighbors
 
-'''------- Labeling the color of the vertices -------'''
+'''------- Labeling the color of the vertices-------'''
 def graphe_vertexColors(fileName):
     labels = []
     with open(fileName, 'r') as file:
@@ -127,12 +131,12 @@ def graphe_vertexColors(fileName):
 
     return labels
 
-'''********* Constructing the Graph **********'''
+'''********* Constructing the Graph for .graphe files **********'''
 
+'''Creates graph and adds green interface node to black and white First Order vertices that share an edge.
+    RETURNS: graph created'''
 def graphe_generateGraphAdj(file):
-    adj_firstOrders = graphe_adjList(file)
-    adjacency_list = adj_firstOrders[0]
-    first_order_neighbors = adj_firstOrders[1]
+    adjacency_list, first_order_neighbors = graphe_adjList(file)
     vertex_colors = graphe_vertexColors(file)
 
     edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
@@ -146,36 +150,50 @@ def graphe_generateGraphAdj(file):
     g.vs[len(adjacency_list)]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
     exists = []
-    for i in range(len(first_order_neighbors)):
-        current_edge = first_order_neighbors[i]
-        source_vertex = first_order_neighbors[i][0]
-        target_vertex = first_order_neighbors[i][1]
-        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
+    exists_2 = [0] * (g.vcount()-3)
+    for pair in first_order_neighbors:
+        # current_edge = first_order_neighbors[i]
+        source_vertex = pair[0]
+        target_vertex = pair[1]
+
+        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'):
+            # or (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black')
             '''connect both source and target to green meta vertex'''
-            if exists.count([green_vertex, source_vertex]) ==0:
+            # if(first_order_neighbors.count([source_vertex, target_vertex]) != 0):
+            if exists_2[pair[0]] == 0:
                 g.add_edge(green_vertex, source_vertex)
-            if exists.count([green_vertex, target_vertex]) == 0:
+                exists_2[pair[0]] += 1
+            if exists_2[pair[1]] == 0:
                 g.add_edge(green_vertex, target_vertex)
-            exists.append([green_vertex, source_vertex])
-            exists.append([green_vertex, target_vertex])
+                exists_2[pair[1]] += 1
+            # if exists.count([green_vertex, source_vertex]) == 0:
+            #         g.add_edge(green_vertex, source_vertex)
+            # if exists.count([green_vertex, target_vertex]) == 0:
+            #     g.add_edge(green_vertex, target_vertex)
+            # exists.append([green_vertex, source_vertex])
+            # exists.append([green_vertex, target_vertex])
+
     print(g.get_edgelist())
-    # for i in range(g.ecount()):
-    #     current_edge = g.es[i]
-    #     source_vertex = current_edge.source
-    #     target_vertex = current_edge.target
-    #     if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
-    #         '''connect both source and target to green meta vertex'''
-    #         if exists.count([green_vertex, source_vertex]) ==0:
-    #             g.add_edge(green_vertex, source_vertex)
-    #         if exists.count([green_vertex, target_vertex]) == 0:
-    #             g.add_edge(green_vertex, target_vertex)
-    #         exists.append([green_vertex, source_vertex])
-    #         exists.append([green_vertex, target_vertex])
-    # print(g.get_edgelist())
+    print("XXXXXXXXXXXXXXXX")
+    testing = []
+    for pair in first_order_neighbors:
+        vertex1 = pair[0]
+        vertex2 = pair[1]
+        testing.append([g.vs[vertex1]['color'], g.vs[vertex2]['color']])
+
+    green_n = g.neighbors(green_vertex)
+    green_vertex_neighbors = []
+    for pair in green_n:
+        green_vertex_neighbors.append(pair)
+
+    print(first_order_neighbors)
+    print(testing)
+    print(green_vertex_neighbors)
+    # print(exists_2)
     return g
 
 def visual2D(g):
-    layout = g.layout('fr')
+    layout = g.layout('grid')
     # fig, ax = plt.subplots()
     # ax.invert_yaxis() # reverse starting point of graph (vertex 0)
     fig, ax = plt.subplots(figsize=(10, 10))
@@ -238,13 +256,13 @@ def filterGraph(graph):
     for edge in edgeList:
         currentNode = edge[0]
         toNode = edge[1]
-        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
+        if graph.vs[currentNode]['color'] == graph.vs[toNode]['color']:
             keptEdges.append(edge)
-        elif (graph.vs[currentNode]['color'] == 'blue' or graph.vs[toNode]['color'] == 'blue'):
+        elif graph.vs[currentNode]['color'] == 'blue' or graph.vs[toNode]['color'] == 'blue':
             keptEdges.append(edge)
-        elif (graph.vs[currentNode]['color'] == 'red' or graph.vs[toNode]['color'] == 'red'):
+        elif graph.vs[currentNode]['color'] == 'red' or graph.vs[toNode]['color'] == 'red':
             keptEdges.append(edge)
-        elif(graph.vs[currentNode]['color'] == 'green' or graph.vs[toNode]['color'] == 'green'):
+        elif graph.vs[currentNode]['color'] == 'green' or graph.vs[toNode]['color'] == 'green':
             keptEdges.append(edge)
 
     filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=False)
@@ -268,8 +286,7 @@ def shortest_path(graph):
 
     return listOfShortestPaths
 
-
-def main():
+def check_if_correct_input():
     is_2D = True
     correct_input = False
     if sys.argv[2] == '2d':
@@ -279,10 +296,13 @@ def main():
         is_2D = False
         correct_input = True
 
-    if correct_input == False:
+    if not correct_input:
         print("Did not specify if 2d or 3d please try again")
         return 1
+    return is_2D
 
+def main():
+    is_2D = check_if_correct_input()
     g = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
     if is_2D:
         visual2D(g)
@@ -297,19 +317,7 @@ def main():
     print("finished?")
 
 def test():
-    is_2D = True
-    correct_input = False
-    if sys.argv[2] == '2d':
-        is_2D = True
-        correct_input = True
-    elif sys.argv[2] == '3d':
-        is_2D = False
-        correct_input = True
-
-    if correct_input == False:
-        print("Did not specify if 2d or 3d please try again")
-        return 1
-
+    is_2D = check_if_correct_input()
     g = graphe_generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
     if is_2D:
         visual2D(g)
