@@ -8,6 +8,15 @@ import os
 
 
 def graphe_adjList(filename):
+    """
+    Creates an adjacency list from a given file.
+
+    Args:
+        filename (str): The name of the file containing the graph data.
+
+    Returns:
+        list: The adjacency list representing the graph.
+    """
     adjacency_list = []
     with open(filename, "r") as file:
         header = file.readline().split()
@@ -53,8 +62,16 @@ def adjList(fileName):
 
 '''------- Labeling the color of the vertices -------'''
 
+def vertexColors(fileName):
+    """
+    Labels the colors of vertices based on a given file.
 
-def adjVertexColors(fileName):
+    Args:
+        fileName (str): The name of the file containing the vertex color data.
+
+    Returns:
+        list: A list of vertex colors.
+    """
     labels = []
     with open(fileName, 'r') as file:
         line = file.readline().split()
@@ -92,6 +109,16 @@ def vertexColors(fileName):
 
 
 def generateGraphGraphe(file):
+
+    """
+    Constructs a graph from an adjacency list and assigns vertex colors.
+
+    Args:
+        file (str): The name of the file containing graph data.
+
+    Returns:
+        ig.Graph: The constructed graph with assigned vertex colors.
+    """
     adjacency_list = graphe_adjList(file)
     vertex_colors = vertexColors(file)
 
@@ -176,6 +203,16 @@ def generateGraph(file):
         return generateGraphGraphe(file)
 
 def visual2D(g, type):
+    """
+    Visualizes the graph in 2D.
+
+    Args:
+        g (ig.Graph): The input graph to visualize.
+        type (str): The layout type ('graph' or 'grid').
+
+    Returns:
+        None
+    """
     if type == 'graph':
         layout = g.layout('fr')
     else:
@@ -203,6 +240,15 @@ def visual2D(g, type):
 
 
 def visual3D(g):
+    """
+    Visualizes the graph in 3D.
+
+    Args:
+        g (ig.Graph): The input graph to visualize.
+
+    Returns:
+        None
+    """
     edges = g.get_edgelist()
     num_vertices = len(g.vs)
     grid_size = int(np.round(num_vertices ** (1 / 3)))
@@ -236,6 +282,15 @@ def visual3D(g):
 
 
 def filterGraph(graph):
+    """
+    Filters the graph by keeping only edges between vertices of the same color.
+
+    Args:
+        graph (ig.Graph): The input graph.
+
+    Returns:
+        ig.Graph: The filtered graph.
+    """
     edgeList = graph.get_edgelist()
     keptEdges = []
 
@@ -254,6 +309,15 @@ def filterGraph(graph):
 
 
 def connectedComponents(graph):
+    """
+    Identifies the connected components of the filtered graph.
+
+    Args:
+        graph (ig.Graph): The input graph.
+
+    Returns:
+        list: A list of connected components.
+    """
     vertices = graph.vcount()
     edgeList = set(graph.get_edgelist())
     fg = filterGraph(graph)
@@ -314,6 +378,18 @@ def connectedComponents(graph):
 
 
 def shortest_path(graph, vertices, toVertex, fileName):
+    """
+    Finds the shortest paths from vertices to a target vertex and writes them to a file.
+
+    Args:
+        graph (ig.Graph): The input graph.
+        vertices (str): The source vertex color.
+        toVertex (str): The target vertex color.
+        fileName (str): The name of the output file.
+
+    Returns:
+        dict: A dictionary of shortest paths.
+    """
     numVertices = graph.vcount()
     ccp = graph.connected_components()
     listOfShortestPaths = {}

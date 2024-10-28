@@ -1,0 +1,523 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>graspi_igraph.igraph_testing &mdash; py-graspi  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://owodolab.github.io/py-graspi/_modules/graspi_igraph/igraph_testing.html" />
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js?v=b3ba4146"></script>
+      <script src="../../_static/doctools.js?v=888ff710"></script>
+      <script src="../../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            py-graspi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">API Modules:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/graspi_igraph.csvFileMaker.html">csvFileMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/graspi_igraph.descriptors.html">descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/graspi_igraph.igraph_testing.html">testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api/graspi_igraph.testFileMaker.html">testFileMaker</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Overview:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/api_overview.html">API Overview</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">py-graspi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">graspi_igraph.igraph_testing</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for graspi_igraph.igraph_testing</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">igraph</span> <span class="k">as</span> <span class="nn">ig</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="sd">&#39;&#39;&#39;---------Function to create edges for graph in specified format --------&#39;&#39;&#39;</span>
+
+
+<div class="viewcode-block" id="graphe_adjList"><a class="viewcode-back" href="../../api/graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.graphe_adjList">[docs]</a><span class="k">def</span> <span class="nf">graphe_adjList</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates an adjacency list from a given file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        filename (str): The name of the file containing the graph data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: The adjacency list representing the graph.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">adjacency_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">vertex_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vertex_count</span><span class="p">):</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">),</span> <span class="mi">3</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">adjacency_list</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">adjacency_list</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">j</span><span class="p">])]:</span>
+                        <span class="n">neighbors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">neighbors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+            <span class="n">adjacency_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span>
+
+    <span class="n">adjacency_list</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+    <span class="n">adjacency_list</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+
+    <span class="k">return</span> <span class="n">adjacency_list</span></div>
+
+
+<div class="viewcode-block" id="adjList"><a class="viewcode-back" href="../../api/graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.adjList">[docs]</a><span class="k">def</span> <span class="nf">adjList</span><span class="p">(</span><span class="n">fileName</span><span class="p">):</span>
+    <span class="n">adjacency_list</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">dimX</span> <span class="o">=</span> <span class="n">dimY</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">dimX</span><span class="p">,</span> <span class="n">dimY</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">offsets</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimY</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimX</span><span class="p">):</span>
+                <span class="n">current_vertex</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">dimX</span> <span class="o">+</span> <span class="n">x</span>
+                <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="ow">in</span> <span class="n">offsets</span><span class="p">:</span>
+                    <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span>
+                    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nx</span> <span class="o">&lt;</span> <span class="n">dimX</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ny</span> <span class="o">&lt;</span> <span class="n">dimY</span><span class="p">:</span>
+                        <span class="n">neighbor_vertex</span> <span class="o">=</span> <span class="n">ny</span> <span class="o">*</span> <span class="n">dimX</span> <span class="o">+</span> <span class="n">nx</span>
+                        <span class="n">neighbors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neighbor_vertex</span><span class="p">)</span>
+                <span class="n">adjacency_list</span><span class="p">[</span><span class="n">current_vertex</span><span class="p">]</span> <span class="o">=</span> <span class="n">neighbors</span>
+    <span class="n">adjacency_list</span><span class="p">[</span><span class="n">dimY</span> <span class="o">*</span> <span class="n">dimX</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">dimX</span><span class="p">))</span>
+    <span class="n">adjacency_list</span><span class="p">[</span><span class="n">dimY</span> <span class="o">*</span> <span class="n">dimX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">dimX</span> <span class="o">*</span> <span class="p">(</span><span class="n">dimY</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimX</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">adjacency_list</span></div>
+
+
+<span class="sd">&#39;&#39;&#39;------- Labeling the color of the vertices -------&#39;&#39;&#39;</span>
+
+<span class="k">def</span> <span class="nf">vertexColors</span><span class="p">(</span><span class="n">fileName</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Labels the colors of vertices based on a given file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        fileName (str): The name of the file containing the vertex color data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of vertex colors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">vertex_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vertex_count</span> <span class="o">+</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="n">char</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+                <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;10&#39;</span><span class="p">:</span>
+                <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;20&#39;</span><span class="p">:</span>
+                <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">labels</span>
+
+
+<div class="viewcode-block" id="vertexColors"><a class="viewcode-back" href="../../api/graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.vertexColors">[docs]</a><span class="k">def</span> <span class="nf">vertexColors</span><span class="p">(</span><span class="n">fileName</span><span class="p">):</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span><span class="p">:</span>
+                    <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;0&#39;</span><span class="p">:</span>
+                    <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">labels</span></div>
+
+
+<span class="sd">&#39;&#39;&#39;********* Constructing the Graph **********&#39;&#39;&#39;</span>
+
+
+<div class="viewcode-block" id="generateGraphGraphe"><a class="viewcode-back" href="../../api/graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.generateGraphGraphe">[docs]</a><span class="k">def</span> <span class="nf">generateGraphGraphe</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constructs a graph from an adjacency list and assigns vertex colors.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        file (str): The name of the file containing graph data.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ig.Graph: The constructed graph with assigned vertex colors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">adjacency_list</span> <span class="o">=</span> <span class="n">graphe_adjList</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">vertex_colors</span> <span class="o">=</span> <span class="n">vertexColors</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">neighbors</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">adjacency_list</span><span class="p">)</span> <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">neighbors</span><span class="p">]</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vertex_colors</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_vertices</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">adjacency_list</span><span class="p">)][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span>
+    <span class="n">green_vertex</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">vcount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">exists</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">ecount</span><span class="p">()):</span>
+        <span class="n">current_edge</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">es</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">source_vertex</span> <span class="o">=</span> <span class="n">current_edge</span><span class="o">.</span><span class="n">source</span>
+        <span class="n">target_vertex</span> <span class="o">=</span> <span class="n">current_edge</span><span class="o">.</span><span class="n">target</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">source_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span> <span class="ow">and</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">target_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&#39;&#39;&#39;connect both source and target to green meta vertex&#39;&#39;&#39;</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">)</span>
+            <span class="n">exists</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span>
+            <span class="n">exists</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">source_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span> <span class="ow">and</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">target_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&#39;&#39;&#39;connect both source and target to green meta vertex&#39;&#39;&#39;</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">)</span>
+            <span class="n">exists</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span>
+            <span class="n">exists</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">g</span></div>
+
+
+<div class="viewcode-block" id="generateGraphAdj"><a class="viewcode-back" href="../../api/graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.generateGraphAdj">[docs]</a><span class="k">def</span> <span class="nf">generateGraphAdj</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="n">adjacency_list</span> <span class="o">=</span> <span class="n">adjList</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">labels</span> <span class="o">=</span> <span class="n">vertexColors</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+    <span class="n">g</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="o">.</span><span class="n">ListDict</span><span class="p">(</span><span class="n">edges</span><span class="o">=</span><span class="n">adjacency_list</span><span class="p">,</span> <span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">labels</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">])][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;blue&#39;</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span>
+
+    <span class="n">g</span><span class="o">.</span><span class="n">add_vertices</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span>
+    <span class="n">green_vertex</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">vcount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">exists</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">ecount</span><span class="p">()):</span>
+        <span class="n">current_edge</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">es</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">source_vertex</span> <span class="o">=</span> <span class="n">current_edge</span><span class="o">.</span><span class="n">source</span>
+        <span class="n">target_vertex</span> <span class="o">=</span> <span class="n">current_edge</span><span class="o">.</span><span class="n">target</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">source_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span> <span class="ow">and</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">target_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&#39;&#39;&#39;connect both source and target to green meta vertex&#39;&#39;&#39;</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">)</span>
+            <span class="n">exists</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span>
+            <span class="n">exists</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">source_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span> <span class="ow">and</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">target_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&#39;&#39;&#39;connect both source and target to green meta vertex&#39;&#39;&#39;</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">)</span>
+            <span class="n">exists</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">g</span></div>
+
+<div class="viewcode-block" id="generateGraph"><a class="viewcode-back" href="../../api/graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.generateGraph">[docs]</a><span class="k">def</span> <span class="nf">generateGraph</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;.txt&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">generateGraphAdj</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">generateGraphGraphe</span><span class="p">(</span><span class="n">file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="visual2D"><a class="viewcode-back" href="../../api/graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.visual2D">[docs]</a><span class="k">def</span> <span class="nf">visual2D</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Visualizes the graph in 2D.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g (ig.Graph): The input graph to visualize.</span>
+<span class="sd">        type (str): The layout type (&#39;graph&#39; or &#39;grid&#39;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s1">&#39;graph&#39;</span><span class="p">:</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="s1">&#39;fr&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">layout</span><span class="p">(</span><span class="s1">&#39;grid&#39;</span><span class="p">)</span>
+        <span class="c1"># fig, ax = plt.subplots()</span>
+    <span class="c1"># ax.invert_yaxis() # reverse starting point of graph (vertex 0)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+    <span class="n">ig</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">,</span> <span class="n">vertex_size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="w">    </span><span class="sd">&#39;&#39;&#39; ---- generate the labels of each vertex value ---- &#39;&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layout</span><span class="p">):</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">))]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">,</span>
+            <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">],</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span>
+            <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span>  <span class="c1"># Horizontal alignment</span>
+            <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span>  <span class="c1"># Vertical alignment</span>
+            <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="visual3D"><a class="viewcode-back" href="../../api/graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.visual3D">[docs]</a><span class="k">def</span> <span class="nf">visual3D</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Visualizes the graph in 3D.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        g (ig.Graph): The input graph to visualize.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">get_edgelist</span><span class="p">()</span>
+    <span class="n">num_vertices</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">)</span>
+    <span class="n">grid_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">num_vertices</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)))</span>
+
+    <span class="c1"># Generate 3D coordinates (layout) for the vertices</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">grid_size</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">grid_size</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">grid_size</span><span class="p">))</span>
+    <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">z</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">T</span>
+
+    <span class="c1"># Plot the graph in 3D using matplotlib</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Plot vertices</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">coords</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+
+    <span class="c1"># Plot edges</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+        <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">e</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">coords</span><span class="p">[</span><span class="n">start</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="n">end</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span>
+                <span class="p">[</span><span class="n">coords</span><span class="p">[</span><span class="n">start</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="n">end</span><span class="p">][</span><span class="mi">1</span><span class="p">]],</span>
+                <span class="p">[</span><span class="n">coords</span><span class="p">[</span><span class="n">start</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">coords</span><span class="p">[</span><span class="n">end</span><span class="p">][</span><span class="mi">2</span><span class="p">]],</span> <span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Add labels to the vertices</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+<span class="sd">&#39;&#39;&#39;********* Filtering the Graph **********&#39;&#39;&#39;</span>
+
+
+<div class="viewcode-block" id="filterGraph"><a class="viewcode-back" href="../../api/graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.filterGraph">[docs]</a><span class="k">def</span> <span class="nf">filterGraph</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Filters the graph by keeping only edges between vertices of the same color.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        graph (ig.Graph): The input graph.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        ig.Graph: The filtered graph.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">edgeList</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">get_edgelist</span><span class="p">()</span>
+    <span class="n">keptEdges</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edgeList</span><span class="p">:</span>
+        <span class="n">currentNode</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">toNode</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">currentNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">toNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]):</span>
+            <span class="n">keptEdges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
+
+    <span class="n">filteredGraph</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">subgraph_edges</span><span class="p">(</span><span class="n">keptEdges</span><span class="p">,</span> <span class="n">delete_vertices</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">filteredGraph</span></div>
+
+
+<span class="sd">&#39;&#39;&#39;**************** Connected Components *******************&#39;&#39;&#39;</span>
+
+
+<div class="viewcode-block" id="connectedComponents"><a class="viewcode-back" href="../../api/graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.connectedComponents">[docs]</a><span class="k">def</span> <span class="nf">connectedComponents</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identifies the connected components of the filtered graph.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        graph (ig.Graph): The input graph.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        list: A list of connected components.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">vertices</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">vcount</span><span class="p">()</span>
+    <span class="n">edgeList</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">get_edgelist</span><span class="p">())</span>
+    <span class="n">fg</span> <span class="o">=</span> <span class="n">filterGraph</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="n">cc</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span>
+    <span class="n">redVertex</span> <span class="o">=</span> <span class="kc">None</span><span class="p">;</span>
+    <span class="n">blueVertex</span> <span class="o">=</span> <span class="kc">None</span><span class="p">;</span>
+    <span class="n">blackCCList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">whiteCCList</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vertices</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;blue&#39;</span><span class="p">:</span>
+            <span class="n">blueVertex</span> <span class="o">=</span> <span class="n">vertex</span>
+        <span class="k">elif</span> <span class="n">color</span> <span class="o">==</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span>
+            <span class="n">redVertex</span> <span class="o">=</span> <span class="n">vertex</span>
+        <span class="k">if</span> <span class="n">blueVertex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">redVertex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="n">blackCCList</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cc</span> <span class="k">if</span> <span class="n">fg</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span><span class="p">]</span>
+    <span class="n">whiteCCList</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cc</span> <span class="k">if</span> <span class="n">fg</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">blackCCList</span><span class="p">:</span>
+        <span class="n">passedRed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">passedBlue</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">passedRed</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">redVertex</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edgeList</span> <span class="ow">or</span> <span class="p">(</span><span class="n">redVertex</span><span class="p">,</span> <span class="n">vertex</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edgeList</span><span class="p">:</span>
+                    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">redVertex</span><span class="p">)</span>
+                    <span class="n">passedRed</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">passedBlue</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">blueVertex</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edgeList</span> <span class="ow">or</span> <span class="p">(</span><span class="n">blueVertex</span><span class="p">,</span> <span class="n">vertex</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edgeList</span><span class="p">:</span>
+                    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">blueVertex</span><span class="p">)</span>
+                    <span class="n">passedBlue</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">passedBlue</span> <span class="ow">and</span> <span class="n">passedRed</span><span class="p">:</span>
+                <span class="k">break</span>
+
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">whiteCCList</span><span class="p">:</span>
+        <span class="n">passedRed</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">passedBlue</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">passedRed</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">redVertex</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edgeList</span> <span class="ow">or</span> <span class="p">(</span><span class="n">redVertex</span><span class="p">,</span> <span class="n">vertex</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edgeList</span><span class="p">:</span>
+                    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">redVertex</span><span class="p">)</span>
+                    <span class="n">passedRed</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">passedBlue</span><span class="p">:</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">vertex</span><span class="p">,</span> <span class="n">blueVertex</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edgeList</span> <span class="ow">or</span> <span class="p">(</span><span class="n">blueVertex</span><span class="p">,</span> <span class="n">vertex</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edgeList</span><span class="p">:</span>
+                    <span class="n">c</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">blueVertex</span><span class="p">)</span>
+                    <span class="n">passedBlue</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">passedBlue</span> <span class="ow">and</span> <span class="n">passedRed</span><span class="p">:</span>
+                <span class="k">break</span>
+
+    <span class="n">connected_comp</span> <span class="o">=</span> <span class="n">whiteCCList</span> <span class="o">+</span> <span class="n">blackCCList</span>
+
+    <span class="k">return</span> <span class="n">connected_comp</span></div>
+
+
+<span class="sd">&#39;&#39;&#39;********* Shortest Path **********&#39;&#39;&#39;</span>
+
+
+<div class="viewcode-block" id="shortest_path"><a class="viewcode-back" href="../../api/graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.shortest_path">[docs]</a><span class="k">def</span> <span class="nf">shortest_path</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">vertices</span><span class="p">,</span> <span class="n">toVertex</span><span class="p">,</span> <span class="n">fileName</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Finds the shortest paths from vertices to a target vertex and writes them to a file.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        graph (ig.Graph): The input graph.</span>
+<span class="sd">        vertices (str): The source vertex color.</span>
+<span class="sd">        toVertex (str): The target vertex color.</span>
+<span class="sd">        fileName (str): The name of the output file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        dict: A dictionary of shortest paths.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">numVertices</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">vcount</span><span class="p">()</span>
+    <span class="n">ccp</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span>
+    <span class="n">listOfShortestPaths</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">vertex</span> <span class="o">=</span> <span class="n">numVertices</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="n">toVertex</span> <span class="o">==</span> <span class="s1">&#39;blue&#39;</span><span class="p">:</span>
+        <span class="n">vertex</span> <span class="o">=</span> <span class="n">numVertices</span> <span class="o">-</span> <span class="mi">2</span>
+    <span class="k">elif</span> <span class="n">toVertex</span> <span class="o">==</span> <span class="s1">&#39;red&#39;</span><span class="p">:</span>
+        <span class="n">vertex</span> <span class="o">=</span> <span class="n">numVertices</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s2">&quot;x&quot;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ccp</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">vertices</span> <span class="ow">or</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">toVertex</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">vertices</span> <span class="ow">or</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">toVertex</span><span class="p">:</span>
+                        <span class="n">listOfShortestPaths</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">get_shortest_paths</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;vpath&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;: &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span>
+                            <span class="nb">len</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">get_shortest_paths</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="s2">&quot;vpath&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">listOfShortestPaths</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

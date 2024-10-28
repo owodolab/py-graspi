@@ -1,5 +1,5 @@
 Metadata-Version: 2.1
-Name: graspi_igraph
+Name: graspi-igraph
 Version: 0.0.1.11
 Summary: Utilize Python-igraph to produce similar functionality as GraSPI
 Author: Wenqi Zheng

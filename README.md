@@ -15,6 +15,7 @@ The basic algorithm requirements include:
 First, you'd need to clone the repo by running the following command in your command line:
 ```
 git clone git@github.com:wenqizheng326/graspi_igraph.git
+
 ```
 **Note: You'd need git installed on your system first**
 <br />
@@ -24,6 +25,7 @@ git clone git@github.com:wenqizheng326/graspi_igraph.git
 <br />
 Next, you'd need to navigate to the cloned repo using terminal. An example would be:
 ```
+
 cd /path/graspi_igraph
 ```
 First, make sure you're on the memoryFix branch of the repo by running
@@ -31,6 +33,7 @@ First, make sure you're on the memoryFix branch of the repo by running
 git checkout memoryFix
 ```
 Once navigated to the branch, downloads needed can be found in requirements.txt and can be installed by:
+
 ```
 pip install -r requirements.txt
 ```
@@ -58,10 +61,12 @@ python main.py n dimension function
 <br />**An example of a correct command would be:**
 ```
 python main.py 10 2D generate
+
 ```
 ## Outputs
 After running this command, you should see
 ```
+
 Generating results
 ```
 Followed by the memory usage and runtime results after some time.
