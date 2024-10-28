@@ -25,12 +25,12 @@ templates_path = ['_templates']
 
 # Exclude setup.py and other irrelevant files
 exclude_patterns = [
-    '**/setup.py',         # Exclude setup.py everywhere
-    'api/setup.rst',       # Exclude generated setup.rst
-    '**/test.py',         # Exclude setup.py everywhere
-    'api/graspi_igraph.tests.rst',       # Exclude generated setup.rst
-    '_build',              # Exclude the build directory
-    'Thumbs.db', '.DS_Store',  # Ignore OS-specific files
+    '**/setup.py',
+    'api/setup.rst',
+    '**/test.py',
+    'api/graspi_igraph.tests.rst',
+    '_build',
+    'Thumbs.db', '.DS_Store',
 ]
 
 # -- Options for HTML output -------------------------------------------------
