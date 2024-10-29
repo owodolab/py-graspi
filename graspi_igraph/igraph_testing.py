@@ -95,12 +95,16 @@ def graphe_adjList(filename):
                 if int(header[j]) < len(adjacency_list):
                     if i not in adjacency_list[int(header[j])]:
                         neighbors.append(int(header[j]))
-                        if order_neighbor_type == 'f':
-                            first_order_neighbors.append([int(header[j]), i])
+                        # if order_neighbor_type == 'f':
+                        #     first_order_neighbors.append([int(header[j]), i])
+
                 else:
                     neighbors.append(int(header[j]))
-                    if order_neighbor_type == 'f':
-                        first_order_neighbors.append([int(header[j]), i])
+                    # if order_neighbor_type == 'f':
+                    #     first_order_neighbors.append([int(header[j]), i])
+                if order_neighbor_type == 'f':
+                    first_order_neighbors.append([int(header[j]), i])
+
             adjacency_list.append(neighbors)
 
     adjacency_list.append([])
@@ -140,38 +144,39 @@ def graphe_generateGraphAdj(file):
     vertex_colors = graphe_vertexColors(file)
 
     edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
-    
+
     g = ig.Graph(edges, directed=False)
     g.vs["color"] = vertex_colors
     g.add_vertices(1)
-    # print(len(adjacency_list))
 
-    # exit()
     g.vs[len(adjacency_list)]['color'] = 'green'
+    # print(g.vs["color"])
+    # exit()
     green_vertex = g.vs[g.vcount() - 1]
-    exists = []
     exists_2 = [0] * (g.vcount()-3)
+    '''For loop makes sure all black and white pairings are labeled black as first and white as second in pairing'''
+    for pair in first_order_neighbors:
+        if g.vs[pair[0]]['color'] == 'white' and g.vs[pair[1]]['color'] == 'black':
+            temp = pair[0]
+            pair[0] = pair[1]
+            pair[1] = temp
+
+    '''Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added'''
     for pair in first_order_neighbors:
         # current_edge = first_order_neighbors[i]
         source_vertex = pair[0]
         target_vertex = pair[1]
 
-        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'):
+        if g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white':
             # or (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black')
             '''connect both source and target to green meta vertex'''
-            # if(first_order_neighbors.count([source_vertex, target_vertex]) != 0):
             if exists_2[pair[0]] == 0:
                 g.add_edge(green_vertex, source_vertex)
                 exists_2[pair[0]] += 1
             if exists_2[pair[1]] == 0:
                 g.add_edge(green_vertex, target_vertex)
                 exists_2[pair[1]] += 1
-            # if exists.count([green_vertex, source_vertex]) == 0:
-            #         g.add_edge(green_vertex, source_vertex)
-            # if exists.count([green_vertex, target_vertex]) == 0:
-            #     g.add_edge(green_vertex, target_vertex)
-            # exists.append([green_vertex, source_vertex])
-            # exists.append([green_vertex, target_vertex])
+
 
     print(g.get_edgelist())
     print("XXXXXXXXXXXXXXXX")
@@ -189,6 +194,7 @@ def graphe_generateGraphAdj(file):
     print(first_order_neighbors)
     print(testing)
     print(green_vertex_neighbors)
+    print(len(green_vertex_neighbors))
     # print(exists_2)
     return g
 
