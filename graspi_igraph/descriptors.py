@@ -1,4 +1,5 @@
-import igraph_testing as ig
+from . import igraph_testing as ig
+# import igraph_testing as ig
 
 def STAT_n(graph):
     """
@@ -159,7 +160,7 @@ def ABS_f_D(graph):
     """
     fraction = STAT_n_D(graph) / STAT_n(graph)
 
-    return fraction
+    return round(fraction,6)
 
 def CT_f_conn_D_An(graph):
     """
@@ -173,7 +174,7 @@ def CT_f_conn_D_An(graph):
     """
     fraction = CT_n_D_adj_An(graph) / STAT_n_D(graph)
  
-    return fraction
+    return round(fraction,6)
 
 def CT_f_conn_A_Ca(graph):
     """
@@ -187,7 +188,7 @@ def CT_f_conn_A_Ca(graph):
     """
     fraction = CT_n_A_adj_Ca(graph)/ STAT_n_A(graph)
 
-    return fraction
+    return round(fraction,6)
 
 def CT_n_D_adj_An(graph):
     """

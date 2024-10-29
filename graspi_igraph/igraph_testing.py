@@ -138,7 +138,7 @@ def generateGraphGraphe(file):
     """
     #gets an adjacency list and first order pairs list from the file input
     adjacency_list, first_order_neighbors = graphe_adjList(file)
-    vertex_colors = graphe_vertexColors(file)
+    vertex_colors = adjvertexColors(file)
 
     edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
     #creates graph using Igraph API
@@ -343,7 +343,7 @@ def filterGraph(graph):
         if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
             keptEdges.append(edge)
 
-    filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=True)
+    filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=False)
 
     return filteredGraph
 
@@ -369,6 +369,7 @@ def connectedComponents(graph):
     blueVertex = None;
     blackCCList = []
     whiteCCList = []
+    # print(len(cc))
 
     for vertex in range(vertices - 1, -1, -1):
         color = graph.vs[vertex]['color']
@@ -378,9 +379,9 @@ def connectedComponents(graph):
             redVertex = vertex
         if blueVertex is not None and redVertex is not None:
             break
-
-    blackCCList = [c for c in cc if fg.vs[c[0]]['color'] == 'black']
-    whiteCCList = [c for c in cc if fg.vs[c[0]]['color'] == 'white']
+        
+    blackCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'black']
+    whiteCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'white']
 
     for c in blackCCList:
         passedRed = False
