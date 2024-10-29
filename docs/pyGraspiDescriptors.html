@@ -9,9 +9,6 @@
   <title>Descriptors &mdash; py-graspi  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
-      <link rel="stylesheet" type="text/css" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
-      <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
-      <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
 
   
     <link rel="canonical" href="https://owodolab.github.io/py-graspi/pyGraspiDescriptors.html" />
@@ -100,7 +97,7 @@
              
   <section id="descriptors">
 <span id="pygraspidescriptors"></span><h1>Descriptors<a class="headerlink" href="#descriptors" title="Permalink to this heading"></a></h1>
-<p>For two-phase morphology, current <strong>py-graspi</strong> computes the following descriptos:</p>
+<p>For two-phase morphology, current <strong>py-graspi</strong> computes the following descriptors:</p>
 <ul class="simple">
 <li><p><strong>STAT_n</strong> - Number of vertices</p></li>
 <li><p><strong>STAT_e</strong> - Number of interface edges</p></li>
@@ -114,29 +111,24 @@
 <li><p><strong>CT_f_conn_D_An</strong> - Fraction of black vertices connected to the top</p></li>
 <li><p><strong>CT_f_conn_A_Ca</strong> - Fraction of white vertices connected to bottom</p></li>
 <li><p><strong>CT_n_D_adj_An</strong> - Number of black vertices in direct contact with top (An - top/anode)</p></li>
-<li><p><strong>CT_n_A_adj_Ca</strong> - NUmber of white vertices in direct contact with bottom (Ca - bottom/cathode)</p></li>
+<li><p><strong>CT_n_A_adj_Ca</strong> - Number of white vertices in direct contact with bottom (Ca - bottom/cathode)</p></li>
 </ul>
 <p>Below we provide the definition of all above descriptors and their code implementations.</p>
-<details class="sphinx-bs dropdown card mb-3">
-<summary class="summary-title card-header">
-View Descriptors<div class="summary-down docutils">
-<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
-<div class="summary-up docutils">
-<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
-</summary><div class="summary-content card-body docutils">
-<span class="target" id="module-graspi_igraph.descriptors"></span><dl class="py function">
+<details open="open">
+<summary>
+Click me to toggle visibility of detailed content</summary><span class="target" id="module-graspi_igraph.descriptors"></span><dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.ABS_f_D">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">ABS_f_D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#ABS_f_D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.ABS_f_D" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Calculates the fraction of ‘black’ vertices out of the total vertices minus three (accounts for red, green, and blue vertices).</p>
+<dd><p>Calculates the fraction of ‘black’ vertices out of the total vertices minus three (accounts for red, green, and blue vertices).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The fraction of ‘black’ vertices.</p>
+<dd class="field-even"><p>The fraction of ‘black’ vertices.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">float</p>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -144,16 +136,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.CT_f_conn_A_Ca">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">CT_f_conn_A_Ca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#CT_f_conn_A_Ca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.CT_f_conn_A_Ca" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Calculates the fraction of ‘white’ vertices in connected components with ‘white’ and ‘blue’ vertices (bottom).</p>
+<dd><p>Calculates the fraction of ‘white’ vertices in connected components with ‘white’ and ‘blue’ vertices (bottom).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The fraction of ‘white’ vertices in specific connected components (bottom).</p>
+<dd class="field-even"><p>The fraction of ‘white’ vertices in specific connected components (bottom).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">float</p>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -161,16 +153,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.CT_f_conn_D_An">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">CT_f_conn_D_An</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#CT_f_conn_D_An"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.CT_f_conn_D_An" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Calculates the fraction of ‘black’ vertices in specific connected components with red and black vertices (top).</p>
+<dd><p>Calculates the fraction of ‘black’ vertices in specific connected components with red and black vertices (top).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The fraction of ‘black’ vertices in connected components with ‘black’ vertices (top).</p>
+<dd class="field-even"><p>The fraction of ‘black’ vertices in connected components with ‘black’ vertices (top).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">float</p>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -178,16 +170,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.CT_n_A_adj_Ca">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">CT_n_A_adj_Ca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#CT_n_A_adj_Ca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.CT_n_A_adj_Ca" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Counts number of ‘white’ vertices in direct contact with the ‘blue’ vertex (bottom).</p>
+<dd><p>Counts number of ‘white’ vertices in direct contact with the ‘blue’ vertex (bottom).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The number of ‘white’ vertices direct contact with the ‘blue’ vertex (bottom).</p>
+<dd class="field-even"><p>The number of ‘white’ vertices direct contact with the ‘blue’ vertex (bottom).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">int</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -195,16 +187,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.CT_n_D_adj_An">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">CT_n_D_adj_An</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#CT_n_D_adj_An"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.CT_n_D_adj_An" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Counts number of ‘black’ vertices in direct contact with the ‘red’ vertex (top).</p>
+<dd><p>Counts number of ‘black’ vertices in direct contact with the ‘red’ vertex (top).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The number of ‘black’ vertices direct contact with the ‘red’ vertex (top).</p>
+<dd class="field-even"><p>The number of ‘black’ vertices direct contact with the ‘red’ vertex (top).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">int</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -212,16 +204,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_CC_A">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_CC_A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#STAT_CC_A"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_CC_A" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Counts the connected components that contain at least one ‘white’ vertex.</p>
+<dd><p>Counts the connected components that contain at least one ‘white’ vertex.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The number of connected components with at least one ‘white’ vertex.</p>
+<dd class="field-even"><p>The number of connected components with at least one ‘white’ vertex.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">int</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -229,16 +221,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_CC_A_Ca">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_CC_A_Ca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#STAT_CC_A_Ca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_CC_A_Ca" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Counts the connected components containing ‘white’ vertices and ‘blue’ vertex (bottom).</p>
+<dd><p>Counts the connected components containing ‘white’ vertices and ‘blue’ vertex (bottom).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The number of connected components with ‘white’ and ‘blue’ vertices (bottom).</p>
+<dd class="field-even"><p>The number of connected components with ‘white’ and ‘blue’ vertices (bottom).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">int</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -246,16 +238,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_CC_D">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_CC_D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#STAT_CC_D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_CC_D" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Counts the connected components that contain at least one ‘black’ vertex.</p>
+<dd><p>Counts the connected components that contain at least one ‘black’ vertex.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The number of connected components with at least one ‘black’ vertex.</p>
+<dd class="field-even"><p>The number of connected components with at least one ‘black’ vertex.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">int</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -263,16 +255,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_CC_D_An">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_CC_D_An</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#STAT_CC_D_An"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_CC_D_An" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Counts the connected components containing ‘black’ vertices and ‘red’ vertex (top).</p>
+<dd><p>Counts the connected components containing ‘black’ vertices and ‘red’ vertex (top).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The number of connected components with ‘black’ and ‘red’ vertices (top).</p>
+<dd class="field-even"><p>The number of connected components with ‘black’ and ‘red’ vertices (top).</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">int</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -280,16 +272,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_e">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_e</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#STAT_e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_e" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Counts the edges connected to at least one ‘green’ vertex (interface edges).</p>
+<dd><p>Counts the edges connected to at least one ‘green’ vertex (interface edges).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The number of edges where at least one endpoint has the color ‘green’.</p>
+<dd class="field-even"><p>The number of edges where at least one endpoint has the color ‘green’.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">int</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -297,16 +289,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_n">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#STAT_n"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_n" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Calculates the number of vertices in the graph, excluding three specific nodes.</p>
+<dd><p>Calculates the number of vertices in the graph, excluding three specific nodes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The number of vertices minus three.</p>
+<dd class="field-even"><p>The number of vertices minus three.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">int</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -314,16 +306,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_n_A">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_n_A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#STAT_n_A"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_n_A" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Counts the number of vertices colored ‘white’.</p>
+<dd><p>Counts the number of vertices colored ‘white’.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The number of vertices with the color ‘white’.</p>
+<dd class="field-even"><p>The number of vertices with the color ‘white’.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">int</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -331,16 +323,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_n_D">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_n_D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#STAT_n_D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_n_D" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Counts the number of vertices colored ‘black’.</p>
+<dd><p>Counts the number of vertices colored ‘black’.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">The number of vertices with the color ‘black’.</p>
+<dd class="field-even"><p>The number of vertices with the color ‘black’.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">int</p>
+<dd class="field-odd"><p>int</p>
 </dd>
 </dl>
 </dd></dl>
@@ -348,16 +340,16 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.desciptors">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">desciptors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#desciptors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.desciptors" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Generates a dictionary of all graph descriptors.</p>
+<dd><p>Generates a dictionary of all graph descriptors.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">A dictionary of descriptors and their calculated values.</p>
+<dd class="field-even"><p>A dictionary of descriptors and their calculated values.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p class="card-text">dict</p>
+<dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -365,21 +357,20 @@ View Descriptors<div class="summary-down docutils">
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.descriptors.descriptorsToTxt">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">descriptorsToTxt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/graspi_igraph/descriptors.html#descriptorsToTxt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.descriptorsToTxt" title="Permalink to this definition"></a></dt>
-<dd><p class="card-text">Writes graph descriptors to a text file.</p>
+<dd><p>Writes graph descriptors to a text file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p class="card-text"><strong>dict</strong> (<em>dict</em>) – The dictionary of descriptors.</p></li>
-<li><p class="card-text"><strong>fileName</strong> (<em>str</em>) – The name of the file to write to.</p></li>
+<li><p><strong>dict</strong> (<em>dict</em>) – The dictionary of descriptors.</p></li>
+<li><p><strong>fileName</strong> (<em>str</em>) – The name of the file to write to.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p class="card-text">None</p>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
 </details></section>
 
 
