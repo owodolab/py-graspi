@@ -62,7 +62,7 @@ def adjList(fileName):
 
 '''------- Labeling the color of the vertices -------'''
 
-def vertexColors(fileName):
+def adjvertexColors(fileName):
     """
     Labels the colors of vertices based on a given file.
 
@@ -92,6 +92,15 @@ def vertexColors(fileName):
 
 
 def vertexColors(fileName):
+    """
+    Labels the colors of vertices based on a given file.
+
+    Args:
+        fileName (str): The name of the file containing the vertex color data.
+
+    Returns:
+        list: A list of vertex colors.
+    """
     labels = []
     with open(fileName, 'r') as file:
         lines = file.readlines()
@@ -157,6 +166,15 @@ def generateGraphGraphe(file):
 
 
 def generateGraphAdj(file):
+    """
+    Generates Graph using an adjacency list.
+
+    Args:
+        file (str): The name of the file containing graph data.
+
+    Returns:
+        Generated graph using an adjacency list.
+    """
     adjacency_list = adjList(file)
     labels = vertexColors(file)
 
@@ -197,6 +215,15 @@ def generateGraphAdj(file):
     return g
 
 def generateGraph(file):
+    """
+    Generates graph based on file input.
+
+    Args:
+        file (str): The name of the file containing graph data.
+
+    Returns:
+        Generated graph based on input
+    """
     if os.path.splitext(file)[1] == ".txt":
         return generateGraphAdj(file)
     else:

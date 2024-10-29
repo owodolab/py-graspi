@@ -3,16 +3,31 @@ API Overview
 
 Below is the list of all functions available in **py-graspi**:
 
-.. autosummary::
-   :toctree: false
-   :nosignatures:
+.. dropdown:: Descriptor Functions
 
-   graspi_igraph.csvFileMaker.csvMaker
-   graspi_igraph.csvFileMaker.functionMemory
-   graspi_igraph.csvFileMaker.functionRuntime
-   graspi_igraph.igraph_testing.generateGraph
-   graspi_igraph.igraph_testing.filterGraph
-   graspi_igraph.igraph_testing.visual2D
-   graspi_igraph.igraph_testing.visual3D
-   graspi_igraph.descriptors.descriptorsToTxt
-   graspi_igraph.testFileMaker.testFileMaker
+   .. automodule:: graspi_igraph.descriptors
+      :members:
+      :undoc-members:
+      :show-inheritance:
+
+.. dropdown:: py-graspi Functions
+
+   .. automodule:: graspi_igraph.igraph_testing
+      :members:
+      :undoc-members:
+      :show-inheritance:
+
+.. dropdown:: CSV File Making
+
+   .. automodule:: graspi_igraph.csvFileMaker
+      :members:
+      :undoc-members:
+      :show-inheritance:
+
+.. dropdown:: Test Files Generation
+
+   .. automodule:: graspi_igraph.testFileMaker
+      :members:
+      :undoc-members:
+      :show-inheritance:
+

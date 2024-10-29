@@ -5,11 +5,24 @@ Welcome to the documentation for **py-graspi**, a library for GraSPI and graph o
 
 .. contents::
    :local:
-   :depth: 2
+   :depth: 10
 
 Introduction
 ------------
 This project provides tools for creating, filtering, and analyzing graphs, with benchmarks for runtime and memory performance.
+
+.. toctree::
+   :maxdepth: 10
+   :caption: Contents:
+   :includehidden:
+
+   pyGraspiFunctionality
+   pyGraspiDescriptors
+   pyGraspiInputs
+   pyGraspiExamples
+   pyGraspiRepresentation
+   pyGraspiDefinitions
+   api_overview
 
 Installation
 ------------
@@ -46,27 +59,4 @@ Below is a quick example of how to use the package to generate a graph and perfo
    # Produce a list of descriptors
    ig.descriptorsToTxt(ig.desciptors(g), "descriptors_list.txt")
 
-Library API
------------
-Below is a detailed overview of the modules available in **py-graspi**.
 
-.. toctree::
-   :maxdepth: 1
-   :caption: API Modules:
-
-   api/graspi_igraph.csvFileMaker
-   api/graspi_igraph.descriptors
-   api/graspi_igraph.igraph_testing
-   api/graspi_igraph.testFileMaker
-   api/graspi_igraph.tests
-
-
-API Reference
--------------
-Click on the "API Overview" in the sidebar to view all available functions.
-
-.. toctree::
-   :maxdepth: 1
-   :caption: API Overview:
-
-   api/api_overview

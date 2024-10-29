@@ -9,6 +9,9 @@
   <title>py-graspi Documentation &mdash; py-graspi  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
+      <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+      <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
 
   
     <link rel="canonical" href="https://owodolab.github.io/py-graspi/index.html" />
@@ -20,7 +23,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="csvFileMaker" href="api/graspi_igraph.csvFileMaker.html" /> 
+    <link rel="next" title="Functionality" href="pyGraspiFunctionality.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,16 +45,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">API Modules:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="api/graspi_igraph.csvFileMaker.html">csvFileMaker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/graspi_igraph.descriptors.html">descriptors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/graspi_igraph.igraph_testing.html">testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/graspi_igraph.testFileMaker.html">testFileMaker</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">API Overview:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api/api_overview.html">API Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiExamples.html">Example of Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_overview.html">API Overview</a></li>
 </ul>
 
         </div>
@@ -86,13 +88,80 @@
 <li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p></li>
 <li><p><a class="reference internal" href="#installation" id="id2">Installation</a></p></li>
 <li><p><a class="reference internal" href="#usage" id="id3">Usage</a></p></li>
-<li><p><a class="reference internal" href="#library-api" id="id4">Library API</a></p></li>
-<li><p><a class="reference internal" href="#api-reference" id="id5">API Reference</a></p></li>
 </ul>
 </nav>
 <section id="introduction">
 <h2><a class="toc-backref" href="#id1" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
 <p>This project provides tools for creating, filtering, and analyzing graphs, with benchmarks for runtime and memory performance.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDescriptors.html">Descriptors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.ABS_f_D"><code class="docutils literal notranslate"><span class="pre">ABS_f_D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.CT_f_conn_A_Ca"><code class="docutils literal notranslate"><span class="pre">CT_f_conn_A_Ca()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.CT_f_conn_D_An"><code class="docutils literal notranslate"><span class="pre">CT_f_conn_D_An()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.CT_n_A_adj_Ca"><code class="docutils literal notranslate"><span class="pre">CT_n_A_adj_Ca()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.CT_n_D_adj_An"><code class="docutils literal notranslate"><span class="pre">CT_n_D_adj_An()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.STAT_CC_A"><code class="docutils literal notranslate"><span class="pre">STAT_CC_A()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.STAT_CC_A_Ca"><code class="docutils literal notranslate"><span class="pre">STAT_CC_A_Ca()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.STAT_CC_D"><code class="docutils literal notranslate"><span class="pre">STAT_CC_D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.STAT_CC_D_An"><code class="docutils literal notranslate"><span class="pre">STAT_CC_D_An()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.STAT_e"><code class="docutils literal notranslate"><span class="pre">STAT_e()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.STAT_n"><code class="docutils literal notranslate"><span class="pre">STAT_n()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.STAT_n_A"><code class="docutils literal notranslate"><span class="pre">STAT_n_A()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.STAT_n_D"><code class="docutils literal notranslate"><span class="pre">STAT_n_D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.desciptors"><code class="docutils literal notranslate"><span class="pre">desciptors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiDescriptors.html#graspi_igraph.descriptors.descriptorsToTxt"><code class="docutils literal notranslate"><span class="pre">descriptorsToTxt()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiExamples.html">Example of Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiExamples.html#running-memory-tests">Running Memory Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiExamples.html#testing-algorithms">Testing Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiExamples.html#get-the-list-of-descriptors">Get the List of Descriptors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiExamples.html#visualize-graphs">Visualize Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_overview.html">API Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.ABS_f_D"><code class="docutils literal notranslate"><span class="pre">ABS_f_D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.CT_f_conn_A_Ca"><code class="docutils literal notranslate"><span class="pre">CT_f_conn_A_Ca()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.CT_f_conn_D_An"><code class="docutils literal notranslate"><span class="pre">CT_f_conn_D_An()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.CT_n_A_adj_Ca"><code class="docutils literal notranslate"><span class="pre">CT_n_A_adj_Ca()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.CT_n_D_adj_An"><code class="docutils literal notranslate"><span class="pre">CT_n_D_adj_An()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.STAT_CC_A"><code class="docutils literal notranslate"><span class="pre">STAT_CC_A()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.STAT_CC_A_Ca"><code class="docutils literal notranslate"><span class="pre">STAT_CC_A_Ca()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.STAT_CC_D"><code class="docutils literal notranslate"><span class="pre">STAT_CC_D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.STAT_CC_D_An"><code class="docutils literal notranslate"><span class="pre">STAT_CC_D_An()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.STAT_e"><code class="docutils literal notranslate"><span class="pre">STAT_e()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.STAT_n"><code class="docutils literal notranslate"><span class="pre">STAT_n()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.STAT_n_A"><code class="docutils literal notranslate"><span class="pre">STAT_n_A()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.STAT_n_D"><code class="docutils literal notranslate"><span class="pre">STAT_n_D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.desciptors"><code class="docutils literal notranslate"><span class="pre">desciptors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.descriptors.descriptorsToTxt"><code class="docutils literal notranslate"><span class="pre">descriptorsToTxt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.adjList"><code class="docutils literal notranslate"><span class="pre">adjList()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.adjvertexColors"><code class="docutils literal notranslate"><span class="pre">adjvertexColors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.connectedComponents"><code class="docutils literal notranslate"><span class="pre">connectedComponents()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.filterGraph"><code class="docutils literal notranslate"><span class="pre">filterGraph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.generateGraph"><code class="docutils literal notranslate"><span class="pre">generateGraph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.generateGraphAdj"><code class="docutils literal notranslate"><span class="pre">generateGraphAdj()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.generateGraphGraphe"><code class="docutils literal notranslate"><span class="pre">generateGraphGraphe()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.graphe_adjList"><code class="docutils literal notranslate"><span class="pre">graphe_adjList()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.shortest_path"><code class="docutils literal notranslate"><span class="pre">shortest_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.vertexColors"><code class="docutils literal notranslate"><span class="pre">vertexColors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.visual2D"><code class="docutils literal notranslate"><span class="pre">visual2D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.igraph_testing.visual3D"><code class="docutils literal notranslate"><span class="pre">visual3D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.csvFileMaker.csvMaker"><code class="docutils literal notranslate"><span class="pre">csvMaker()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.csvFileMaker.functionMemory"><code class="docutils literal notranslate"><span class="pre">functionMemory()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.csvFileMaker.functionRuntime"><code class="docutils literal notranslate"><span class="pre">functionRuntime()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.testFileMaker.run_test_file_maker"><code class="docutils literal notranslate"><span class="pre">run_test_file_maker()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_overview.html#graspi_igraph.testFileMaker.testFileMaker"><code class="docutils literal notranslate"><span class="pre">testFileMaker()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div>
 </section>
 <section id="installation">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Installation</a><a class="headerlink" href="#installation" title="Permalink to this heading"></a></h2>
@@ -127,42 +196,19 @@ pip<span class="w"> </span>install<span class="w"> </span>matplotlib
 </pre></div>
 </div>
 </section>
-<section id="library-api">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Library API</a><a class="headerlink" href="#library-api" title="Permalink to this heading"></a></h2>
-<p>Below is a detailed overview of the modules available in <strong>py-graspi</strong>.</p>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">API Modules:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api/graspi_igraph.csvFileMaker.html">csvFileMaker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/graspi_igraph.descriptors.html">descriptors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/graspi_igraph.igraph_testing.html">testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api/graspi_igraph.testFileMaker.html">testFileMaker</a></li>
-</ul>
-</div>
-</section>
-<section id="api-reference">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">API Reference</a><a class="headerlink" href="#api-reference" title="Permalink to this heading"></a></h2>
-<p>Click on the “API Overview” in the sidebar to view all available functions.</p>
-<div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">API Overview:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api/api_overview.html">API Overview</a></li>
-</ul>
-</div>
-</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="api/graspi_igraph.csvFileMaker.html" class="btn btn-neutral float-right" title="csvFileMaker" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="pyGraspiFunctionality.html" class="btn btn-neutral float-right" title="Functionality" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
