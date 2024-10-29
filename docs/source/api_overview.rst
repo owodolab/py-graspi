@@ -6,28 +6,32 @@ API Overview
 
 Below is the list of all functions available in **py-graspi**:
 
-.. dropdown:: Descriptor Functions
+.. details:: Descriptor Functions
+   :open:
 
    .. automodule:: graspi_igraph.descriptors
       :members:
       :undoc-members:
       :show-inheritance:
 
-.. dropdown:: py-graspi Functions
+.. details:: py-graspi Functions
+   :open:
 
    .. automodule:: graspi_igraph.igraph_testing
       :members:
       :undoc-members:
       :show-inheritance:
 
-.. dropdown:: CSV File Making
+.. details:: CSV File Making
+   :open:
 
    .. automodule:: graspi_igraph.csvFileMaker
       :members:
       :undoc-members:
       :show-inheritance:
 
-.. dropdown:: Test Files Generation
+.. details:: Test Files Generation
+   :open:
 
    .. automodule:: graspi_igraph.testFileMaker
       :members:
