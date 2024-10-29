@@ -1,4 +1,4 @@
-﻿# py-graspi
+# graspi_igraph
 
 Python-Igraph is a graph-based library contender for the library that works with the GraSPI package. 
 
@@ -7,36 +7,52 @@ The basic algorithm requirements include:
   -  Construction of graphs
   -  Graph Filtering
   -  Determine the number of connected components
-  -  Determine the shortest path from the bottom boundary to all black vertices until the white vertices are met
+  -  Determine the shortest path from some meta-vertices to all specified vertices
+  -  Provide a list of descriptors
   -  Graph visualization
-  -  Computation of Descriptors
 
 ## Installation
-First, you'd need to clone the repo by running the following command in your command line:
+Download the packages found in requirements.txt after you have set up your virtual environment. 
+Cone the repo by:
 ```
-git clone git@github.com:wenqizheng326/graspi_igraph.git
-
-```
-**Note: You'd need git installed on your system first**
-<br />
-<br />
-  If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
-<br />
-<br />
-Next, you'd need to navigate to the cloned repo using terminal. An example would be:
+git clone https://github.com/wenqizheng326/graspi_igraph.git
 ```
 
-cd /path/graspi_igraph
+Install the graspi_igraph package by:
 ```
-First, make sure you're on the memoryFix branch of the repo by running
+pip install graspi-igraph
 ```
-git checkout memoryFix
+Once installed, to utilize the package remember to import the package:
 ```
-Once navigated to the branch, downloads needed can be found in requirements.txt and can be installed by:
+import graspi_igraph as ig
+```
 
+## Example of Utilizing graspi_igraph via Jupyter Notebook
+There is an example of how to utilize the code and how it works in a Jupyter Notebook that can be found in the notebook folder, called graspi_igraph_notebook.ipynb.
+
+To run all code snippets
+If using an text editor such as VSCode:
+- click the Run All button at the top of notebook
+
+If using a command line for jupyter notebook:
+- install jupyter notebook
 ```
-pip install -r requirements.txt
+pip install notebook
 ```
+- run the command
+```
+jupyter notebook
+```
+- once the command has run, it opens up a Jupyter notebook in a browser, then:
+  1.  make sure you are currently in the graspi-igraph folder, if not, open folder called graspi-igraph
+  3.  open the folder called notebook
+  4.  open the file called _graspi_igraph_notebook.ipynb_
+  5.  click the Run tab bringing you to a drop-down menu
+  6.  click Run All Cells
+ 
+If running each code snippet separately: 
+
+**** _**Make sure to run each code segment in the notebook in order as it may be dependent on the one before**_ ****
 **Note: you must have Python and pip installed onto your system**
 <br />
 <br />
@@ -77,7 +93,26 @@ Followed by the memory usage and runtime results after some time.
 Completed
 ```
 To know that the tests have been completed
-## To Test Algorithms
+## Further Explanation of Functionalities
+### To Generate Test Files
+Test-input-files can be generated via the testFileMaker.py by calling the function testFileMaker(_num_,_depth_,_textFileName_)
+  - the function takes in a number of rows for the test graph, the depth of the graph, and the output file name
+  - to generate 2D graphs, set the depth to 1
+  
+There are existing test files that can be accessed in the 2D-testFile and 3D-testFile folders
+
+2D Testfile Example
+```
+# generates a 10x10 2D graph input-file
+ig.testFileMaker(10,1,"output.txt")
+```
+3D Testfile Example
+```
+# generates a 10x10x5 3D graph input-file
+ig.testFileMaker(10,5,"output.txt")
+```
+
+### To Test Algorithms
 
 To **generate graphs**, call the generateGraph(_file_) function which takes in a input-file name
   -  returns a graph
@@ -120,7 +155,7 @@ ig.descriptors(g)      # g is a graph object
 ```
 A **list of descriptors in a text file** can be found by calling the function descriptorsToTxt(_dictionary_,_filename_)
 ```
-ig.descriptorsToTxt(dict,"descriptors_list.txt")
+ig.descriptorsToTxt(dict,"descriptors.txt")
 ```
 
 ### To visualize graphs
@@ -136,3 +171,5 @@ g = ig.generateGraph("3D-testFile/testFile-10-3D.txt")     # utilizing the test 
 ig.visual3D(g)
 Finally, the following message will be printed out:
 ```
+
+
