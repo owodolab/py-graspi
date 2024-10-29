@@ -1,3 +1,5 @@
+from os.path import exists
+
 import igraph as ig
 import matplotlib.pyplot as plt
 # from mpl_toolkits.mplot3d import Axes3D
@@ -52,12 +54,9 @@ def generateGraphAdj(file):
     g.add_vertices(1)
     g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
-    print(g.ecount())
     exists = []
     for i in range(g.ecount()):
         current_edge = g.es[i]
-        # print(current_edge)
-        # exit()
         source_vertex = current_edge.source
         target_vertex = current_edge.target
         if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (
@@ -69,7 +68,6 @@ def generateGraphAdj(file):
                 g.add_edge(green_vertex, target_vertex)
             exists.append([green_vertex, source_vertex])
             exists.append([green_vertex, target_vertex])
-    print(g.ecount())
     return g
 
 
@@ -84,34 +82,30 @@ def generateGraphAdj(file):
 def graphe_adjList(filename):
     adjacency_list = []
     first_order_neighbors = []
+    #Opens File
     with open(filename, "r") as file:
         header = file.readline().split()
         vertex_count = int(header[0])
+        #loops through all vertices except red and blue meta vertices at the end
         for i in range(vertex_count):
             header = file.readline().split()
             neighbors = []
+            #adds all vertex neighbors to current "header" vertex being checked
+            #makes sure no edge duplicates exist with prior vertices already checked
             for j in range(2,len(header),3):
                 order_neighbor_type = header[j + 2]
                 if int(header[j]) < len(adjacency_list):
                     if i not in adjacency_list[int(header[j])]:
                         neighbors.append(int(header[j]))
-                        # if order_neighbor_type == 'f':
-                        #     first_order_neighbors.append([int(header[j]), i])
-
                 else:
                     neighbors.append(int(header[j]))
-                    # if order_neighbor_type == 'f':
-                    #     first_order_neighbors.append([int(header[j]), i])
+                #if edge is a first order edge, adds this pairing to a list
                 if order_neighbor_type == 'f':
                     first_order_neighbors.append([int(header[j]), i])
-
             adjacency_list.append(neighbors)
 
     adjacency_list.append([])
     adjacency_list.append([])
-    # print(adjacency_list)
-    # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    # exit()
     return adjacency_list, first_order_neighbors
 
 '''------- Labeling the color of the vertices-------'''
@@ -140,62 +134,42 @@ def graphe_vertexColors(fileName):
 '''Creates graph and adds green interface node to black and white First Order vertices that share an edge.
     RETURNS: graph created'''
 def graphe_generateGraphAdj(file):
+    #gets an adjacency list and first order pairs list from the file input
     adjacency_list, first_order_neighbors = graphe_adjList(file)
     vertex_colors = graphe_vertexColors(file)
 
     edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
-
+    #creates graph using Igraph API
     g = ig.Graph(edges, directed=False)
+    #adds color label to each vertex
     g.vs["color"] = vertex_colors
-    g.add_vertices(1)
 
+    #adds green vertex and its color
+    g.add_vertices(1)
     g.vs[len(adjacency_list)]['color'] = 'green'
-    # print(g.vs["color"])
-    # exit()
     green_vertex = g.vs[g.vcount() - 1]
-    exists_2 = [0] * (g.vcount()-3)
-    '''For loop makes sure all black and white pairings are labeled black as first and white as second in pairing'''
+
+    exists = [0] * (g.vcount()-3)
+    #For loop makes sure all black and white pairings are labeled black as first and white as second in pairing
     for pair in first_order_neighbors:
         if g.vs[pair[0]]['color'] == 'white' and g.vs[pair[1]]['color'] == 'black':
             temp = pair[0]
             pair[0] = pair[1]
             pair[1] = temp
 
-    '''Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added'''
+    #Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added
     for pair in first_order_neighbors:
-        # current_edge = first_order_neighbors[i]
         source_vertex = pair[0]
         target_vertex = pair[1]
 
         if g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white':
-            # or (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black')
-            '''connect both source and target to green meta vertex'''
-            if exists_2[pair[0]] == 0:
+            #connect both source and target to green meta vertex
+            if exists[pair[0]] == 0:
                 g.add_edge(green_vertex, source_vertex)
-                exists_2[pair[0]] += 1
-            if exists_2[pair[1]] == 0:
+                exists[pair[0]] += 1
+            if exists[pair[1]] == 0:
                 g.add_edge(green_vertex, target_vertex)
-                exists_2[pair[1]] += 1
-
-
-    print(g.get_edgelist())
-    print("XXXXXXXXXXXXXXXX")
-    testing = []
-    for pair in first_order_neighbors:
-        vertex1 = pair[0]
-        vertex2 = pair[1]
-        testing.append([g.vs[vertex1]['color'], g.vs[vertex2]['color']])
-
-    green_n = g.neighbors(green_vertex)
-    green_vertex_neighbors = []
-    for pair in green_n:
-        green_vertex_neighbors.append(pair)
-
-    print(first_order_neighbors)
-    print(testing)
-    print(green_vertex_neighbors)
-    print(len(green_vertex_neighbors))
-    # print(exists_2)
+                exists[pair[1]] += 1
     return g
 
 def visual2D(g):
@@ -292,13 +266,19 @@ def shortest_path(graph):
 
     return listOfShortestPaths
 
-def check_if_correct_input():
+'''Returns file is a 2D or 3D file (needed for visualization)'''
+def check_if_correct_input(file_type):
+    is_2D_index = 3
+
+    if file_type != "g":
+        is_2D_index = 2
+
     is_2D = True
     correct_input = False
-    if sys.argv[2] == '2d':
+    if sys.argv[is_2D_index] == '2d':
         is_2D = True
         correct_input = True
-    elif sys.argv[2] == '3d':
+    elif sys.argv[is_2D_index] == '3d':
         is_2D = False
         correct_input = True
 
@@ -307,33 +287,41 @@ def check_if_correct_input():
         return 1
     return is_2D
 
-def main():
-    is_2D = check_if_correct_input()
-    g = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-    if is_2D:
-        visual2D(g)
-        filteredGraph = filterGraph(g)
-        visual2D(filteredGraph)
-        shortest_path(filteredGraph)
-    else:
-        visual3D(g)
-        filteredGraph = filterGraph(g)
-        visual3D(filteredGraph)
-        shortest_path(filteredGraph)
-    print("finished?")
+''''runs functions for visualizing, filtering, and finding shortest_paths for 2D inputs'''
+def for_2D_graphs(graph):
+    visual2D(graph)
+    filteredGraph = filterGraph(graph)
+    visual2D(filteredGraph)
+    shortest_path(filteredGraph)
 
-def test():
-    is_2D = check_if_correct_input()
-    g = graphe_generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-    if is_2D:
-        visual2D(g)
-        filteredGraph = filterGraph(g)
-        visual2D(filteredGraph)
-        shortest_path(filteredGraph)
+''''runs functions for visualizing, filtering, and finding shortest_paths for 3D inputs'''
+
+def for_3D_graphs(graph):
+    visual3D(graph)
+    filteredGraph = filterGraph(graph)
+    visual3D(filteredGraph)
+    shortest_path(filteredGraph)
+
+def main():
+    # print(sys.argv[2])
+    # exit()
+    if sys.argv[1] == "g":
+        is_2D = check_if_correct_input('g')
+        g = graphe_generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+        if is_2D:
+            for_2D_graphs(g)
+        else:
+            for_3D_graphs(g)
+    elif sys.argv[1] != "g":
+        is_2D = check_if_correct_input(1)
+        g = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
+        if is_2D:
+            for_2D_graphs(g)
+        else:
+            for_3D_graphs(g)
 
 if __name__ == '__main__':
-    # main()
-    test()
+    main()
 
 
 
