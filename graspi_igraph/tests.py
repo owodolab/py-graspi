@@ -31,6 +31,7 @@ def generate_image(filename):
     bw_image = image.convert("1")
     bw_image.save(image_path + filename + ".png")
 
+print("Generating PDF")
 for test_file in test_files:
     pdf.add_page()
     g = ig.generateGraph(data_path + test_file + ".txt")
