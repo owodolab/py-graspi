@@ -1,3 +1,4 @@
+from calendar import firstweekday
 from os.path import exists
 
 import igraph as ig
@@ -6,27 +7,41 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
+from fontTools.merge.util import first
+
 '''Returns an adjacency list of a .txt file in the form of a dict.'''
 def adjList(fileName):
     adjacency_list = {}
+    first_order_pairs = []
+
     with open(fileName, "r") as file:
         header = file.readline().split(' ')
         dimX, dimY, dimZ = int(header[0]), int(header[1]), int(header[2])
         offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (1, -1, 0)]
         for z in range(dimZ):
-            for y in range(dimY):
-                for x in range(dimX):
+            for x in range(dimX):
+                for y in range(dimY):
                     current_vertex = x * dimY * dimZ + y * dimZ + z
                     neighbors = []
                     for dx, dy, dz in offsets:
                         nx, ny, nz = x + dx, y + dy, z + dz
                         if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
+
                             neighbor_vertex = nx * dimY * dimZ + ny * dimZ + nz
+                            if (dx, dy, dz) == offsets[1] or (dx, dy, dz) == offsets[2] or (dx, dy, dz) == offsets[3]:
+                                first_order_pairs.append([current_vertex, neighbor_vertex])
+
                             neighbors.append(neighbor_vertex)
+
                     adjacency_list[current_vertex] = neighbors
+                # print(neighbors)
+                # exit()
     adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
     adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
-    return adjacency_list
+    print(adjacency_list)
+    print(first_order_pairs)
+    # exit()
+    return adjacency_list, first_order_pairs
 '''------- Labeling the color of the vertices -------'''
 def vertexColors(fileName):
     labels = []
@@ -41,7 +56,7 @@ def vertexColors(fileName):
     return labels
 '''********* Constructing the Graph **********'''
 def generateGraphAdj(file):
-    edges = adjList(file)
+    edges, first_order_pairs = adjList(file)
     labels = vertexColors(file)
     f = open(file, 'r')
     line = f.readline()
@@ -55,19 +70,18 @@ def generateGraphAdj(file):
     g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
     exists = []
-    for i in range(g.ecount()):
-        current_edge = g.es[i]
-        source_vertex = current_edge.source
-        target_vertex = current_edge.target
+    edge_list = g.get_edgelist()
+    for pair in first_order_pairs:
+        source_vertex = pair[0]
+        target_vertex = pair[1]
         if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (
                 g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
-            '''connect both source and target to green meta vertex'''
-            if exists.count([green_vertex, source_vertex]) == 0:
+            if [source_vertex, target_vertex] in first_order_pairs or [target_vertex,source_vertex] in first_order_pairs:
                 g.add_edge(green_vertex, source_vertex)
-            if exists.count([green_vertex, target_vertex]) == 0:
                 g.add_edge(green_vertex, target_vertex)
-            exists.append([green_vertex, source_vertex])
-            exists.append([green_vertex, target_vertex])
+
+    print(g.neighbors(green_vertex))
+    exit()
     return g
 
 
@@ -157,6 +171,7 @@ def graphe_generateGraphAdj(file):
             pair[0] = pair[1]
             pair[1] = temp
 
+    # test = []
     #Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added
     for pair in first_order_neighbors:
         source_vertex = pair[0]
@@ -167,9 +182,14 @@ def graphe_generateGraphAdj(file):
             if exists[pair[0]] == 0:
                 g.add_edge(green_vertex, source_vertex)
                 exists[pair[0]] += 1
+                # test.append(pair[0])
+
             if exists[pair[1]] == 0:
                 g.add_edge(green_vertex, target_vertex)
                 exists[pair[1]] += 1
+                # test.append(pair[1])
+
+    # print(test)
     return g
 
 def visual2D(g):
