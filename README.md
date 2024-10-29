@@ -136,3 +136,36 @@ g = ig.generateGraph("3D-testFile/testFile-10-3D.txt")     # utilizing the test 
 ig.visual3D(g)
 Finally, the following message will be printed out:
 ```
+
+## Testing from Command Line
+
+
+\*\*\*First and foremost make sure you are in the py-graspi directory. If not you may run into some errors\*\*\*
+
+In this GitHub Repo, all the tests are in the test directory. Furthermore, within this directory are two more directories: 2D-testFile and 3D-testFile.
+Inside these directories, some files hold information about either 2d or 3d graphs based on the directory name. 
+When running from command lines you will need to know the complete pathname of the test file you are trying to run.
+
+There are 2 type of input file formats: *.txt & *.graphe
+### _*.txt input format:_
+
+
+The command line input to run a graph creation for *.txt files will have the following format:
+```
+python graspi_igraph/igraph_testing.py {total pathname of test file} {2d or 3d}
+```
+If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 10x10 graph.
+```
+python graspi_igraph/igraph_testing.py graspi_igraph/tests/2D-testFile/testFile-10-2D.txt 2d
+```
+### _*.graphe input format:_
+*.graphe input format is not that different, only extra parameter you need to input is a 'g' before the total pathname of the test file.
+
+The command line input to run a graph creation for *.graphe files will have the following format:
+````
+python graspi_igraph/igraph_testing.py g {total pathname of test file} {2d or 3d}
+````
+If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
+```
+python graspi_igraph/igraph_testing.py g graspi_igraph/tests/2D-testFile/data_4_3.graphe 2d 
+```
