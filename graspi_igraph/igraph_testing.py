@@ -56,7 +56,10 @@ def adjList(fileName):
         if len(header) < 3:
             dimZ = 1
         else:
-            dimZ = int(header[2])
+            if (int(header[2]) == 0):
+                dimZ = 1
+            else:
+                dimZ = int(header[2])
 
         offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (1, -1, 0)]
 
