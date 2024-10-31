@@ -117,6 +117,15 @@ def generateGraphAdj(file):
 '''RETURNS: [Adjacency list, first_order_neighbors list]'''
 
 def graphe_adjList(filename):
+    """
+    Creates an adjacency list from a given file.
+
+    Args:
+        filename (str): The name of the file containing the graph data.
+
+    Returns:
+        list: The adjacency list representing the graph.
+    """
     adjacency_list = []
     first_order_neighbors = []
     #Opens File
@@ -145,13 +154,51 @@ def graphe_adjList(filename):
     adjacency_list.append([])
     return adjacency_list, first_order_neighbors
 
-'''------- Labeling the color of the vertices-------'''
+'''WENQI CODE FROM MERGE'''
+# def adjList(fileName):
+#     adjacency_list = {}
+#     dimX = dimY = dimZ = 0
+# 
+#     with open(fileName, "r") as file:
+#         header = file.readline().split(' ')
+#         dimX, dimY = int(header[0]), int(header[1])
+#         if len(header) < 3:
+#             dimZ = 1
+#         else:
+#             if (int(header[2]) == 0):
+#                 dimZ = 1
+#             else:
+#                 dimZ = int(header[2])
+# 
+#         offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (1, -1, 0)]
+# 
+#         for z in range(dimZ):
+#             for y in range(dimY):
+#                 for x in range(dimX):
+#                     current_vertex = z * dimY * dimX + y * dimX + x
+#                     neighbors = []
+# 
+#                     for dx, dy, dz in offsets:
+#                         nx, ny, nz = x + dx, y + dy, z + dz
+#                         if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
+#                             neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
+#                             neighbors.append(neighbor_vertex)
+# 
+#                     adjacency_list[current_vertex] = neighbors
+# 
+#     adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
+#     adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
+# 
+#     return adjacency_list
+
+'''------- Labeling the color of the vertices -------'''
 def graphe_vertexColors(fileName):
+    
     labels = []
     with open(fileName, 'r') as file:
         line = file.readline().split()
         vertex_count = int(line[0])
-        for i in range(vertex_count+2):
+        for i in range(vertex_count + 2):
             line = file.readline().split()
             char = line[1]
             if char == '1':
@@ -166,14 +213,47 @@ def graphe_vertexColors(fileName):
 
     return labels
 
-'''********* Constructing the Graph for .graphe files **********'''
 
-'''Creates graph and adds green interface node to black and white First Order vertices that share an edge.
-    RETURNS: graph created'''
-def graphe_generateGraphAdj(file):
+def vertexColors(fileName):
+    """
+    Labels the colors of vertices based on a given file.
+
+    Args:
+        fileName (str): The name of the file containing the vertex color data.
+
+    Returns:
+        list: A list of vertex colors.
+    """
+    labels = []
+    with open(fileName, 'r') as file:
+        lines = file.readlines()
+        for line in lines[1:]:
+            for char in line:
+                if char == '1':
+                    labels.append('white')
+                elif char == '0':
+                    labels.append('black')
+
+    return labels
+
+
+'''********* Constructing the Graph **********'''
+
+
+def generateGraphGraphe(file):
+
+    """
+    Constructs a graph from an adjacency list and assigns vertex colors.
+
+    Args:
+        file (str): The name of the file containing graph data.
+
+    Returns:
+        ig.Graph: The constructed graph with assigned vertex colors.
+    """
     #gets an adjacency list and first order pairs list from the file input
     adjacency_list, first_order_neighbors = graphe_adjList(file)
-    vertex_colors = graphe_vertexColors(file)
+    vertex_colors = adjvertexColors(file)
 
     edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
     #creates graph using Igraph API
@@ -183,6 +263,9 @@ def graphe_generateGraphAdj(file):
 
     #adds green vertex and its color
     g.add_vertices(1)
+    # print(len(adjacency_list))
+
+    # exit()
     g.vs[len(adjacency_list)]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
 
@@ -216,7 +299,7 @@ def graphe_generateGraphAdj(file):
     return g
 
 def visual2D(g):
-    layout = g.layout('grid')
+    layout = g.layout('fr')
     # fig, ax = plt.subplots()
     # ax.invert_yaxis() # reverse starting point of graph (vertex 0)
     fig, ax = plt.subplots(figsize=(10, 10))
@@ -240,6 +323,15 @@ def visual2D(g):
 
 
 def visual3D(g):
+    """
+    Visualizes the graph in 3D.
+
+    Args:
+        g (ig.Graph): The input graph to visualize.
+
+    Returns:
+        None
+    """
     edges = g.get_edgelist()
     num_vertices = len(g.vs)
     grid_size = int(np.round(num_vertices ** (1 / 3)))
@@ -273,6 +365,15 @@ def visual3D(g):
 
 
 def filterGraph(graph):
+    """
+    Filters the graph by keeping only edges between vertices of the same color.
+
+    Args:
+        graph (ig.Graph): The input graph.
+
+    Returns:
+        ig.Graph: The filtered graph.
+    """
     edgeList = graph.get_edgelist()
     keptEdges = []
 
@@ -293,19 +394,112 @@ def filterGraph(graph):
     return filteredGraph
 
 
+'''**************** Connected Components *******************'''
+
+
+def connectedComponents(graph):
+    """
+    Identifies the connected components of the filtered graph.
+
+    Args:
+        graph (ig.Graph): The input graph.
+
+    Returns:
+        list: A list of connected components.
+    """
+    vertices = graph.vcount()
+    edgeList = set(graph.get_edgelist())
+    fg = filterGraph(graph)
+    cc = fg.connected_components()
+    redVertex = None;
+    blueVertex = None;
+    blackCCList = []
+    whiteCCList = []
+    # print(len(cc))
+
+    for vertex in range(vertices - 1, -1, -1):
+        color = graph.vs[vertex]['color']
+        if color == 'blue':
+            blueVertex = vertex
+        elif color == 'red':
+            redVertex = vertex
+        if blueVertex is not None and redVertex is not None:
+            break
+        
+    blackCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'black']
+    whiteCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'white']
+
+    for c in blackCCList:
+        passedRed = False
+        passedBlue = False
+        for vertex in c:
+            if not passedRed:
+                if (vertex, redVertex) in edgeList or (redVertex, vertex) in edgeList:
+                    c.append(redVertex)
+                    passedRed = True
+            if not passedBlue:
+                if (vertex, blueVertex) in edgeList or (blueVertex, vertex) in edgeList:
+                    c.append(blueVertex)
+                    passedBlue = True
+            if passedBlue and passedRed:
+                break
+
+    for c in whiteCCList:
+        passedRed = False
+        passedBlue = False
+        for vertex in c:
+            if not passedRed:
+                if (vertex, redVertex) in edgeList or (redVertex, vertex) in edgeList:
+                    c.append(redVertex)
+                    passedRed = True
+            if not passedBlue:
+                if (vertex, blueVertex) in edgeList or (blueVertex, vertex) in edgeList:
+                    c.append(blueVertex)
+                    passedBlue = True
+            if passedBlue and passedRed:
+                break
+
+    connected_comp = whiteCCList + blackCCList
+
+    return connected_comp
+
+
 '''********* Shortest Path **********'''
 
-def shortest_path(graph):
+
+def shortest_path(graph, vertices, toVertex, fileName):
+    """
+    Finds the shortest paths from vertices to a target vertex and writes them to a file.
+
+    Args:
+        graph (ig.Graph): The input graph.
+        vertices (str): The source vertex color.
+        toVertex (str): The target vertex color.
+        fileName (str): The name of the output file.
+
+    Returns:
+        dict: A dictionary of shortest paths.
+    """
     numVertices = graph.vcount()
     ccp = graph.connected_components()
     listOfShortestPaths = {}
-    greenVertex = numVertices - 1
+    vertex = numVertices;
 
-    for c in ccp:
-        if graph.vs[c]['color'] == 'black':
-            for x in c:
-                if graph.vs[x]['color'] == 'black' or graph.vs[x]['color'] == 'green':
-                    listOfShortestPaths[x] = graph.get_shortest_paths(greenVertex, x, output="vpath")[0]
+    if toVertex == 'blue':
+        vertex = numVertices - 2
+    elif toVertex == 'red':
+        vertex = numVertices - 1
+
+    f = open(fileName, "x")
+
+    with open(fileName, 'a') as f:
+        for c in ccp:
+            if graph.vs[c][0]['color'] == vertices or graph.vs[c][0]['color'] == toVertex:
+                for x in c:
+                    if graph.vs[x]['color'] == vertices or graph.vs[x]['color'] == toVertex:
+                        listOfShortestPaths[x] = graph.get_shortest_paths(x, vertex, output="vpath")[0]
+                        f.write(str(x) + ": " + str(
+                            len(graph.get_shortest_paths(x, vertex, output="vpath")[0]) - 1) + '\n');
 
     return listOfShortestPaths
 

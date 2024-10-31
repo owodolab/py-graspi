@@ -1,0 +1,15 @@
+README.md
+setup.py
+graspi_igraph/__init__.py
+graspi_igraph/bugfix_descriptors.py
+graspi_igraph/csvFileMaker.py
+graspi_igraph/csvFileTest.py
+graspi_igraph/descriptors.py
+graspi_igraph/igraph_testing.py
+graspi_igraph/testFileMaker.py
+graspi_igraph/tests.py
+graspi_igraph.egg-info/PKG-INFO
+graspi_igraph.egg-info/SOURCES.txt
+graspi_igraph.egg-info/dependency_links.txt
+graspi_igraph.egg-info/requires.txt
+graspi_igraph.egg-info/top_level.txt
