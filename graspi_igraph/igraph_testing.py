@@ -7,17 +7,25 @@ import matplotlib.pyplot as plt
 # from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import sys
-DEBUG = False
+
+
+DEBUG = True
 from fontTools.merge.util import first
 
 '''Returns an adjacency list of a .txt file in the form of a dict.'''
 def adjList(fileName):
     adjacency_list = {}
     first_order_pairs = []
-
+    second_order_pairs = []
+    is_2d = True
     with open(fileName, "r") as file:
         header = file.readline().split(' ')
         dimX, dimY, dimZ = int(header[0]), int(header[1]), int(header[2])
+        if dimZ == 0 or dimZ == 1:
+            dimz = 1
+        else:
+            dimZ = dimX * dimY
+            is_2d = False
         offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (1, -1, 0)]
         for z in range(dimZ):
             for x in range(dimX):
@@ -40,10 +48,13 @@ def adjList(fileName):
                 # exit()
     adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
     adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
-    print(adjacency_list)
-    print(first_order_pairs)
-    # exit()
-    return adjacency_list, first_order_pairs
+    if DEBUG:
+        print("Adjacency List: ", adjacency_list)
+        print("Adjacency List LENGTH: ", len(adjacency_list))
+        print("First Order Pairs: ", first_order_pairs)
+        print("First Order Pairs LENGTH: ", len(first_order_pairs))
+        #exit()
+    return adjacency_list, first_order_pairs, is_2d
 '''------- Labeling the color of the vertices -------'''
 def vertexColors(fileName):
     labels = []
@@ -58,7 +69,7 @@ def vertexColors(fileName):
     return labels
 '''********* Constructing the Graph **********'''
 def generateGraphAdj(file):
-    edges, first_order_pairs = adjList(file)
+    edges, first_order_pairs, is_2D = adjList(file)
     labels = vertexColors(file)
     f = open(file, 'r')
     line = f.readline()
@@ -73,22 +84,28 @@ def generateGraphAdj(file):
     green_vertex = g.vs[g.vcount() - 1]
     exists = []
     edge_list = g.get_edgelist()
+    for edge in edge_list:
+        if edge in first_order_pairs:
+            g.es[edge[0]][edge[1]]['label'] = 'f'
+
     for pair in first_order_pairs:
         source_vertex = pair[0]
         target_vertex = pair[1]
         if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (
                 g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
             if [source_vertex, target_vertex] in first_order_pairs or [target_vertex, source_vertex] in first_order_pairs:
-                if(source_vertex not in exists):
+                if source_vertex not in exists:
                     g.add_edge(green_vertex, source_vertex)
                     exists.append(source_vertex)
-                if(target_vertex not in exists):
+                if target_vertex not in exists:
                     g.add_edge(green_vertex, target_vertex)
                     exists.append(target_vertex)
     if DEBUG:
-        print(len(g.neighbors(green_vertex)))
+        print("Number of nodes: ", g.vcount())
+        print("Green vertex neighbors: ", g.neighbors(green_vertex))
+        print("Green vertex neighbors LENGTH: " ,len(g.neighbors(green_vertex)))
         exit()
-    return g
+    return g, is_2D
 
 
 '''---------Function to create edges for graph in specified format --------'''
@@ -332,15 +349,15 @@ def main():
     # print(sys.argv[2])
     # exit()
     if sys.argv[1] == "g":
-        is_2D = check_if_correct_input('g')
-        g = graphe_generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+        # is_2D = check_if_correct_input('g')
+        g, is_2D = graphe_generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
         if is_2D:
             for_2D_graphs(g)
         else:
             for_3D_graphs(g)
     elif sys.argv[1] != "g":
-        is_2D = check_if_correct_input(1)
-        g = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
+        #is_2D = check_if_correct_input(1)
+        g, is_2D = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
         if is_2D:
             for_2D_graphs(g)
         else:
