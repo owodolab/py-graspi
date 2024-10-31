@@ -1,5 +1,5 @@
-from . import igraph_testing as ig
-# import igraph_testing as ig
+# from . import igraph_testing as ig
+import igraph_testing as ig
 
 def STAT_n(graph):
     """
@@ -29,8 +29,10 @@ def STAT_e(graph):
     for edge in edgeList:
         currentNode = edge[0]
         toNode = edge[1]
+        # neighbor of green, only with only blacks and if first neighbor
         if(graph.vs[currentNode]['color'] == 'green' or graph.vs[toNode]['color'] == 'green'):
-            count += 1
+            if(graph.vs[currentNode]['color'] == 'green' and graph.vs[toNode] == 'black') or (graph.vs[currentNode]['color'] == 'black' and graph.vs[toNode]['color'] == 'green'):
+                count += 1
 
     return count
 
