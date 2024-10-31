@@ -1,4 +1,5 @@
 from calendar import firstweekday
+from logging import DEBUG
 from os.path import exists
 
 import igraph as ig
@@ -6,7 +7,7 @@ import matplotlib.pyplot as plt
 # from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import sys
-
+DEBUG = False
 from fontTools.merge.util import first
 
 '''Returns an adjacency list of a .txt file in the form of a dict.'''
@@ -34,6 +35,7 @@ def adjList(fileName):
                             neighbors.append(neighbor_vertex)
 
                     adjacency_list[current_vertex] = neighbors
+
                 # print(neighbors)
                 # exit()
     adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
@@ -76,12 +78,16 @@ def generateGraphAdj(file):
         target_vertex = pair[1]
         if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (
                 g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
-            if [source_vertex, target_vertex] in first_order_pairs or [target_vertex,source_vertex] in first_order_pairs:
-                g.add_edge(green_vertex, source_vertex)
-                g.add_edge(green_vertex, target_vertex)
-
-    print(g.neighbors(green_vertex))
-    exit()
+            if [source_vertex, target_vertex] in first_order_pairs or [target_vertex, source_vertex] in first_order_pairs:
+                if(source_vertex not in exists):
+                    g.add_edge(green_vertex, source_vertex)
+                    exists.append(source_vertex)
+                if(target_vertex not in exists):
+                    g.add_edge(green_vertex, target_vertex)
+                    exists.append(target_vertex)
+    if DEBUG:
+        print(len(g.neighbors(green_vertex)))
+        exit()
     return g
 
 
