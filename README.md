@@ -25,15 +25,13 @@ git clone git@github.com:wenqizheng326/graspi_igraph.git
 <br />
 Next, you'd need to navigate to the cloned repo using terminal. An example would be:
 ```
-
-cd /path/graspi_igraph
+cd /path/py-graspi
 ```
-First, make sure you're on the memoryFix branch of the repo by running
+Once navigated to the branch, access the following directory:
 ```
-git checkout memoryFix
+cd graspi_igraph
 ```
-Once navigated to the branch, downloads needed can be found in requirements.txt and can be installed by:
-
+Next, the downloads needed can be found in requirements.txt and can be installed by:
 ```
 pip install -r requirements.txt
 ```
@@ -48,35 +46,48 @@ pip install -r requirements.txt
 <br />
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
-## Running memory tests
-To run memory tests, run the following command in terminal:
+## Running all 33 morphologies tests
+To run the morphologies tests, return to the previous directory of "/py-graspi" by running:
 ```
-python main.py n dimension function
+cd ..
 ```
-**Make sure of the following:**
-  -  Replace "n" with the size of the graph you want. Note: n should be between 1-1000 for 2D graphs and 1-100 for 3D graphs
-  -  Replace "dimension" with 2D or 3D to specify if you want a 2D or 3D graph
-  -  Replace "function" with either generate, filter, or shortest_path, to choose which function you want to test memory for
- 
-<br />**An example of a correct command would be:**
+Next, make sure you're on bash first by running:
 ```
-python main.py 10 2D generate
-
+bash
+```
+Next, run the following:
+```
+chmod +x run.sh
+```
+Finally, run the following: 
+```
+./run.sh
 ```
 ## Outputs
-After running this command, you should see
-```
-
-Generating results
-```
-Followed by the memory usage and runtime results after some time.
+After running this command, the automatic pdf generation will begin. 
 <br />
-<br />
- The following will print:
+<br /> 
+After a few minutes, the following will print once your pdf has been created
 ```
-Completed
+PDF Generated
 ```
-To know that the tests have been completed
+If the pdf does not automatically pop up, use the following commands:
+### On Windows
+```
+start graspi_igraph/test_results.pdf
+```
+### On MacOS
+```
+open graspi_igraph/test_results.pdf
+```
+### On Linux
+```
+evince graspi_igraph/test_results.pdf
+```
+If evince is not installed, run this first:
+```
+sudo apt install evince
+```
 ## To Test Algorithms
 
 To **generate graphs**, call the generateGraph(_file_) function which takes in a input-file name
