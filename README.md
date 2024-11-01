@@ -184,6 +184,11 @@ In order to generate an API using sphinx, you just need to follow these two comm
 
 **Make sure your current directory is py-graspi**
 
+In order to create an API with sphinx, you need to download sphinx with this command in the command line interface:
+```
+pip install sphinx
+```
+
 In the command line interface, run this command:
 ```
 sphinx-build -b html ./docs/source/ ./docs/ 
