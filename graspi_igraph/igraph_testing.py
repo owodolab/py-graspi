@@ -253,16 +253,16 @@ def generateGraphAdj(file):
     #     g.add_edge(g.vs[i], g.vs[i + (int(dimX) - 1)])
     #     edge_index_f = g.get_eid(g.vs[i], g.vs[i + (int(dimX) - 1)])
     #     g.es[edge_index_f]['label'] = 'f'
-    #
+    
     #     #only add one wrap around since other wouldn't exist in this case
     #     if i == 0:
     #         g.add_edge(g.vs[i], g.vs[int(dimX)-1 + int(dimX)])
     #         edge_index_s = g.get_eid(g.vs[i], g.vs[int(dimX)-1 + int(dimX)])
     #         g.es[edge_index_s]['label'] = 's'
-    #
+    
     #     elif i + int(dimX) >= g.vcount()-2:
     #         g.add_edge(g.vs[i], g.vs[i -1])
-    #
+    
     #     #add diagnol wrap arounds
     #     else:
     #         g.add_edge(g.vs[i], g.vs[i+ int(dimX) - 1 + int(dimX)])

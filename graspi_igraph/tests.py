@@ -34,7 +34,7 @@ def generate_image(filename):
 print("Generating PDF")
 for test_file in test_files:
     pdf.add_page()
-    g = ig.generateGraph(data_path + test_file + ".txt")
+    g,is_2d = ig.generateGraph(data_path + test_file + ".txt")
     stats = ds.desciptors(g)
     #ig.visual2D(g, 'graph')
 

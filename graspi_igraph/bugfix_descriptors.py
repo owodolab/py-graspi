@@ -9,23 +9,23 @@ import sys
 def main():
 
     filename = sys.argv[1]
-    dimension = sys.argv[2]
-    graph_type = sys.argv[3]
-    functionality = sys.argv[4]
+    # dimension = sys.argv[2]
+    graph_type = sys.argv[2]
+    functionality = sys.argv[3]
 
-    g = ig.generateGraph(filename)
+    g,is_2D = ig.generateGraph(filename)
     fg = ig.filterGraph(g)
 
 
     if functionality == 'visuals':
-        if dimension == '2d':
+        if is_2D == True:
             if graph_type == 'g':
                 ig.visual2D(g,'graph')
                 print("Plot displayed.")
             if graph_type == 'fg':
                 ig.visual2D(fg,'filtered')
                 print("Plot displayed.")
-        if dimension == '3d':
+        else:
             if graph_type == 'g':
                 ig.visual3D(g)
             if graph_type == 'fg':

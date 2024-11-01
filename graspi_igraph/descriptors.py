@@ -174,7 +174,17 @@ def CT_f_conn_D_An(graph):
     Returns:
         float: The fraction of 'black' vertices in connected components with 'black' vertices (top).
     """
-    fraction = CT_n_D_adj_An(graph) / STAT_n_D(graph)
+    cc = ig.connectedComponents(graph);
+    count = 0
+    
+    if cc is not None:
+        for c in cc:
+            if graph.vs[c][0]['color'] == 'black' and 'red' in graph.vs[c]['color']:
+                for vertex in c:
+                    if graph.vs[vertex]['color'] == 'black':
+                        count += 1
+
+    fraction = count / STAT_n_D(graph)
  
     return round(fraction,6)
 
@@ -188,7 +198,17 @@ def CT_f_conn_A_Ca(graph):
     Returns:
         float: The fraction of 'white' vertices in specific connected components (bottom).
     """
-    fraction = CT_n_A_adj_Ca(graph)/ STAT_n_A(graph)
+    cc = ig.connectedComponents(graph);
+    count = 0
+
+    if cc is not None:
+        for c in cc:
+            if graph.vs[c][0]['color'] == 'white' and 'blue' in graph.vs[c]['color']:
+                for vertex in c:
+                    if graph.vs[vertex]['color'] == 'white':
+                        count += 1
+
+    fraction = count / STAT_n_A(graph)
 
     return round(fraction,6)
 
@@ -202,15 +222,16 @@ def CT_n_D_adj_An(graph):
     Returns:
         int: The number of 'black' vertices direct contact with the 'red' vertex (top).
     """
-    cc = ig.connectedComponents(graph);
+    edgeList = graph.get_edgelist()
     count = 0
-    
-    if cc is not None:
-        for c in cc:
-            if graph.vs[c][0]['color'] == 'black' and 'red' in graph.vs[c]['color']:
-                for vertex in c:
-                    if graph.vs[vertex]['color'] == 'black':
-                        count += 1
+
+    for edge in edgeList:
+        currentNode = edge[0]
+        toNode = edge[1]
+
+        if(graph.vs[currentNode]['color'] == 'red' or graph.vs[toNode]['color'] == 'red'):
+            if(graph.vs[currentNode]['color'] == 'red' and graph.vs[toNode] == 'black') or (graph.vs[currentNode]['color'] == 'black' and graph.vs[toNode]['color'] == 'red'):
+                count += 1
 
     return count
 
@@ -224,15 +245,19 @@ def CT_n_A_adj_Ca(graph):
     Returns:
         int: The number of 'white' vertices direct contact with the 'blue' vertex (bottom).
     """
-    cc = ig.connectedComponents(graph);
+    
+    edgeList = graph.get_edgelist()
     count = 0
 
-    if cc is not None:
-        for c in cc:
-            if graph.vs[c][0]['color'] == 'white' and 'blue' in graph.vs[c]['color']:
-                for vertex in c:
-                    if graph.vs[vertex]['color'] == 'white':
-                        count += 1
+    for edge in edgeList:
+        currentNode = edge[0]
+        toNode = edge[1]
+
+        if(graph.vs[currentNode]['color'] == 'blue' or graph.vs[toNode]['color'] == 'blue'):
+            if(graph.vs[currentNode]['color'] == 'blue' and graph.vs[toNode] == 'white') or (graph.vs[currentNode]['color'] == 'white' and graph.vs[toNode]['color'] == 'blue'):
+                count += 1
+
+    
 
     return count
 
