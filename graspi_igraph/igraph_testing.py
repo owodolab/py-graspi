@@ -158,9 +158,15 @@ def generateGraphAdj(file):
     f = open(file, 'r')
     line = f.readline()
     line = line.split()
+    dimX = line[0]
+    dimY = line[1]
     g = ig.Graph.ListDict(edges=edges, directed=False)
     g.vs["color"] = labels
     g.es['label'] = edgeLabels(g, first_order_pairs)
+    for i in range(0,g.vcount()-2,int(dimX)):
+        g.add_edge(g.vs[i],g.vs[i+ (int(dimX) - 1)])
+        # i += int(dimX) - 1
+
     g.vs[int(line[0]) * int(line[1])]['color'] = 'blue'
     g.vs[int(line[0]) * int(line[1]) + 1]['color'] = 'red'
 
