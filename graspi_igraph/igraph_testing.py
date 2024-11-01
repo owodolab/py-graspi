@@ -11,7 +11,7 @@ import sys
 from graspi_igraph import descriptors
 
 import descriptors as d
-DEBUG = True
+DEBUG = False
 from fontTools.merge.util import first
 
 '''Returns an adjacency list of a .txt file in the form of a dict.'''
@@ -128,7 +128,7 @@ def generateGraphAdj(file):
     #         g.add_edge(g.vs[i], g.vs[i - 1])
     #         edge_index2 = g.get_eid(g.vs[i], g.vs[i - 1])
     #         g.es[edge_index2]['label'] = 's'
-    #
+
     g.vs[int(line[0]) * int(line[1])]['color'] = 'blue'
     g.vs[int(line[0]) * int(line[1]) + 1]['color'] = 'red'
 
@@ -158,15 +158,15 @@ def generateGraphAdj(file):
                 g.add_edge(green_vertex, target_vertex)
 
     if DEBUG:
-        print(g.vs['color'])
+        # print(g.vs['color'])
         print("Number of nodes: ", g.vcount())
-        print("Green vertex neighbors: ", g.neighbors(green_vertex))
+        # print("Green vertex neighbors: ", g.neighbors(green_vertex))
         print("Green vertex neighbors LENGTH: ", len(g.neighbors(green_vertex)))
-        print("Black/Green Neighbors: ", black_green_neighbors)
+        # print("Black/Green Neighbors: ", black_green_neighbors)
         print("Black/Green Neighbors LENGTH: ", len(black_green_neighbors))
-        print("Nodes connected to blue: ", g.vs[g.vcount()-3]['color'], g.neighbors(g.vcount()-3))
+        # print("Nodes connected to blue: ", g.vs[g.vcount()-3]['color'], g.neighbors(g.vcount()-3))
         print("Length: ", len(g.neighbors(g.vcount()-3)))
-        print("Nodes connected to red: ", g.vs[g.vcount()-2]['color'],g.neighbors(g.vcount()-2))
+        # print("Nodes connected to red: ", g.vs[g.vcount()-2]['color'],g.neighbors(g.vcount()-2))
         print("Length: ", len(g.neighbors(g.vcount()-2)))
         # exit()
     return g, is_2D
@@ -256,9 +256,7 @@ def vertexColors(fileName):
     labels = []
     with open(fileName, 'r') as file:
         lines = file.readlines()
-        lines.pop(0)
-        lines.reverse()
-        for line in lines:
+        for line in lines[1:]:
             for char in line:
                 if char == '1':
                     labels.append('white')
@@ -532,15 +530,15 @@ def shortest_path(graph, vertices, toVertex, fileName):
 
 
 def for_2D_graphs(graph):
-    visual2D(graph)
+    # visual2D(graph)
     filteredGraph = filterGraph(graph)
 
     if DEBUG:
-        print(connectedComponents(filteredGraph))
+        # print(connectedComponents(filteredGraph))
         dic = d.desciptors(filteredGraph)
         for key, value in dic.items():
             print(key, value)
-    visual2D(filteredGraph)
+    # visual2D(filteredGraph)
 
 
 ''''runs functions for visualizing, filtering, and finding shortest_paths for 3D inputs'''
@@ -565,7 +563,7 @@ def main():
         # is_2D = check_if_correct_input(1)
         g, is_2D = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
         dic = d.desciptors(g)
-        print("Connected Components: ", connectedComponents(g))
+        # print("Connected Components: ", connectedComponents(g))
         # d.descriptorsToTxt(dic, "test_descriptors_outpu.txt")
         for key, value in dic.items():
             print(key, value)
