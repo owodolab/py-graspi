@@ -1,3 +1,4 @@
+# from . import igraph_testing as ig
 import igraph_testing as ig
 
 def STAT_n(graph):
@@ -28,8 +29,10 @@ def STAT_e(graph):
     for edge in edgeList:
         currentNode = edge[0]
         toNode = edge[1]
+        # neighbor of green, only with only blacks and if first neighbor
         if(graph.vs[currentNode]['color'] == 'green' or graph.vs[toNode]['color'] == 'green'):
-            count += 1
+            if(graph.vs[currentNode]['color'] == 'green' and graph.vs[toNode] == 'black') or (graph.vs[currentNode]['color'] == 'black' and graph.vs[toNode]['color'] == 'green'):
+                count += 1
 
     return count
 
@@ -159,7 +162,7 @@ def ABS_f_D(graph):
     """
     fraction = STAT_n_D(graph) / STAT_n(graph)
 
-    return fraction
+    return round(fraction,6)
 
 def CT_f_conn_D_An(graph):
     """
@@ -173,7 +176,7 @@ def CT_f_conn_D_An(graph):
     """
     fraction = CT_n_D_adj_An(graph) / STAT_n_D(graph)
  
-    return fraction
+    return round(fraction,6)
 
 def CT_f_conn_A_Ca(graph):
     """
@@ -187,7 +190,7 @@ def CT_f_conn_A_Ca(graph):
     """
     fraction = CT_n_A_adj_Ca(graph)/ STAT_n_A(graph)
 
-    return fraction
+    return round(fraction,6)
 
 def CT_n_D_adj_An(graph):
     """

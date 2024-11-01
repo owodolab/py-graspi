@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="21da6ccd-3b54-4132-9da6-9e6d845692fb" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/.doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/docs/.doctrees/environment.pickle" afterDir="false" />
@@ -17,6 +18,11 @@
       <change beforePath="$PROJECT_DIR$/docs/pyGraspiDescriptors.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/pyGraspiDescriptors.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/searchindex.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/source/pyGraspiDescriptors.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/source/pyGraspiDescriptors.rst" afterDir="false" />
+=======
+    <list default="true" id="21da6ccd-3b54-4132-9da6-9e6d845692fb" name="Changes" comment="Fixed 3D implementation for adjacency lists. Card #109">
+      <change beforePath="$PROJECT_DIR$/.idea/py-graspi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/py-graspi.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> 5f18a8075c8392e0844ee9cf6130879084850e11
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,11 +40,12 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/manla/PycharmProjects/py-graspi/docs/source/imgs&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "dev",
+    "last_opened_file_path": "C:/Users/manla/PycharmProjects/py-graspi/docs/source/imgs"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\manla\PycharmProjects\py-graspi\docs\source\imgs" />
@@ -65,5 +72,8 @@
       <updated>1729879482811</updated>
     </task>
     <servers />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/py_graspi$igraph_testing.coverage" NAME="igraph_testing Coverage Results" MODIFIED="1730241993709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graspi_igraph" />
   </component>
 </project>

@@ -48,23 +48,38 @@ def graphe_adjList(filename):
 
 def adjList(fileName):
     adjacency_list = {}
-    dimX = dimY = 0
+    dimX = dimY = dimZ = 0
+
     with open(fileName, "r") as file:
         header = file.readline().split(' ')
         dimX, dimY = int(header[0]), int(header[1])
-        offsets = [(-1, -1), (-1, 0), (0, -1), (1, -1)]
-        for y in range(dimY):
-            for x in range(dimX):
-                current_vertex = y * dimX + x
-                neighbors = []
-                for dx, dy in offsets:
-                    nx, ny = x + dx, y + dy
-                    if 0 <= nx < dimX and 0 <= ny < dimY:
-                        neighbor_vertex = ny * dimX + nx
-                        neighbors.append(neighbor_vertex)
-                adjacency_list[current_vertex] = neighbors
-    adjacency_list[dimY * dimX] = list(range(dimX))
-    adjacency_list[dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
+        if len(header) < 3:
+            dimZ = 1
+        else:
+            if (int(header[2]) == 0):
+                dimZ = 1
+            else:
+                dimZ = int(header[2])
+
+        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (1, -1, 0)]
+
+        for z in range(dimZ):
+            for y in range(dimY):
+                for x in range(dimX):
+                    current_vertex = z * dimY * dimX + y * dimX + x
+                    neighbors = []
+
+                    for dx, dy, dz in offsets:
+                        nx, ny, nz = x + dx, y + dy, z + dz
+                        if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
+                            neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
+                            neighbors.append(neighbor_vertex)
+
+                    adjacency_list[current_vertex] = neighbors
+
+    adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
+    adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
+
     return adjacency_list
 
 
@@ -138,7 +153,7 @@ def generateGraphGraphe(file):
     """
     #gets an adjacency list and first order pairs list from the file input
     adjacency_list, first_order_neighbors = graphe_adjList(file)
-    vertex_colors = graphe_vertexColors(file)
+    vertex_colors = adjvertexColors(file)
 
     edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
     #creates graph using Igraph API
@@ -343,7 +358,7 @@ def filterGraph(graph):
         if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
             keptEdges.append(edge)
 
-    filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=True)
+    filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=False)
 
     return filteredGraph
 
@@ -369,6 +384,7 @@ def connectedComponents(graph):
     blueVertex = None;
     blackCCList = []
     whiteCCList = []
+    # print(len(cc))
 
     for vertex in range(vertices - 1, -1, -1):
         color = graph.vs[vertex]['color']
@@ -378,9 +394,9 @@ def connectedComponents(graph):
             redVertex = vertex
         if blueVertex is not None and redVertex is not None:
             break
-
-    blackCCList = [c for c in cc if fg.vs[c[0]]['color'] == 'black']
-    whiteCCList = [c for c in cc if fg.vs[c[0]]['color'] == 'white']
+        
+    blackCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'black']
+    whiteCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'white']
 
     for c in blackCCList:
         passedRed = False
