@@ -8,7 +8,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
-DEBUG = False
+from graspi_igraph import descriptors
+
+import descriptors as d
+DEBUG = True
 from fontTools.merge.util import first
 
 '''Returns an adjacency list of a .txt file in the form of a dict.'''
@@ -18,16 +21,26 @@ def adjList(fileName):
     adjacency_list = {}
     first_order_pairs = []
     second_order_pairs = []
+    third_order_pairs = []
     is_2d = True
     with open(fileName, "r") as file:
         header = file.readline().split(' ')
-        dimX, dimY, dimZ = int(header[0]), int(header[1]), int(header[2])
+        dimX, dimY = int(header[0]), int(header[1])
+        if len(header) < 3:
+            dimZ = 1
+        else:
+            if int(header[2]) == 0:
+                dimZ = 1
+            else:
+                dimZ = int(header[2])
+
         if dimZ == 0 or dimZ == 1:
             dimZ = 1
         else:
             dimZ = dimX * dimY
             is_2d = False
-        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (1, -1, 0)]
+        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1)]
+
         for z in range(dimZ):
             for y in range(dimY):
                 for x in range(dimX):
@@ -39,17 +52,25 @@ def adjList(fileName):
                             neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
                             if (dx, dy, dz) == offsets[1] or (dx, dy, dz) == offsets[2] or (dx, dy, dz) == offsets[3]:
                                 first_order_pairs.append([current_vertex, neighbor_vertex])
+                            elif (dx, dy, dz) == offsets[4] or (dx, dy, dz) == offsets[5] or (dx, dy, dz) == offsets[6] or (dx, dy, dz) == offsets[7]:
+                                third_order_pairs.append([current_vertex, neighbor_vertex])
+                            else:
+                                second_order_pairs.append([current_vertex, neighbor_vertex])
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
     adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
     adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
     if DEBUG:
-        print("Adjacency List: ", adjacency_list)
+        # print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
-        print("First Order Pairs: ", first_order_pairs)
+        # print("First Order Pairs: ", first_order_pairs)
         print("First Order Pairs LENGTH: ", len(first_order_pairs))
-        # exit()
+        # print("Second Order Pairs: ", second_order_pairs)
+        print("Second Order Pairs LENGTH: ", len(second_order_pairs))
+        # print("Third Order Pairs: ", third_order_pairs)
+        print("Third Order Pairs LENGTH: ", len(third_order_pairs))
+        #exit()
     return adjacency_list, first_order_pairs, is_2d
 
 
@@ -72,7 +93,6 @@ def edgeLabels(g, first_order_pairs):
 
 
 def generateGraphAdj(file):
-    # adjList2(file)
     edges, first_order_pairs, is_2D = adjList(file)
     labels = vertexColors(file)
     f = open(file, 'r')
@@ -83,10 +103,32 @@ def generateGraphAdj(file):
     g = ig.Graph.ListDict(edges=edges, directed=False)
     g.vs["color"] = labels
     g.es['label'] = edgeLabels(g, first_order_pairs)
-    for i in range(0, g.vcount() - 2, int(dimX)):
-        g.add_edge(g.vs[i], g.vs[i + (int(dimX) - 1)])
-        # i += int(dimX) - 1
 
+    # add wrap around edges.
+    # for i in range(0, g.vcount() - 2, int(dimX)):
+    #     #first add first neighbor wrap around
+    #     g.add_edge(g.vs[i], g.vs[i + (int(dimX) - 1)])
+    #     edge_index_f = g.get_eid(g.vs[i], g.vs[i + (int(dimX) - 1)])
+    #     g.es[edge_index_f]['label'] = 'f'
+    #
+    #     #only add one wrap around since other wouldn't exist in this case
+    #     if i == 0:
+    #         g.add_edge(g.vs[i], g.vs[int(dimX)-1 + int(dimX)])
+    #         edge_index_s = g.get_eid(g.vs[i], g.vs[int(dimX)-1 + int(dimX)])
+    #         g.es[edge_index_s]['label'] = 's'
+    #
+    #     elif i + int(dimX) >= g.vcount()-2:
+    #         g.add_edge(g.vs[i], g.vs[i -1])
+    #
+    #     #add diagnol wrap arounds
+    #     else:
+    #         g.add_edge(g.vs[i], g.vs[i+ int(dimX) - 1 + int(dimX)])
+    #         edge_index1 = g.get_eid(g.vs[i], g.vs[i+ int(dimX) - 1 + int(dimX)])
+    #         g.es[edge_index1]['label'] = 's'
+    #         g.add_edge(g.vs[i], g.vs[i - 1])
+    #         edge_index2 = g.get_eid(g.vs[i], g.vs[i - 1])
+    #         g.es[edge_index2]['label'] = 's'
+    #
     g.vs[int(line[0]) * int(line[1])]['color'] = 'blue'
     g.vs[int(line[0]) * int(line[1]) + 1]['color'] = 'red'
 
@@ -97,6 +139,7 @@ def generateGraphAdj(file):
     if DEBUG:
         black_green_neighbors = []
 
+ 
     for edge in g.es:
         source_vertex = edge.source
         target_vertex = edge.target
@@ -121,8 +164,11 @@ def generateGraphAdj(file):
         print("Green vertex neighbors LENGTH: ", len(g.neighbors(green_vertex)))
         print("Black/Green Neighbors: ", black_green_neighbors)
         print("Black/Green Neighbors LENGTH: ", len(black_green_neighbors))
-
-        exit()
+        print("Nodes connected to blue: ", g.vs[g.vcount()-3]['color'], g.neighbors(g.vcount()-3))
+        print("Length: ", len(g.neighbors(g.vcount()-3)))
+        print("Nodes connected to red: ", g.vs[g.vcount()-2]['color'],g.neighbors(g.vcount()-2))
+        print("Length: ", len(g.neighbors(g.vcount()-2)))
+        # exit()
     return g, is_2D
 
 
@@ -237,7 +283,7 @@ def generateGraphGraphe(file):
     """
     # gets an adjacency list and first order pairs list from the file input
     adjacency_list, first_order_neighbors = graphe_adjList(file)
-    vertex_colors = adjvertexColors(file)
+    vertex_colors = graphe_vertexColors(file)
 
     edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
     # creates graph using Igraph API
@@ -367,12 +413,6 @@ def filterGraph(graph):
         toNode = edge[1]
         if graph.vs[currentNode]['color'] == graph.vs[toNode]['color']:
             keptEdges.append(edge)
-        elif graph.vs[currentNode]['color'] == 'blue' or graph.vs[toNode]['color'] == 'blue':
-            keptEdges.append(edge)
-        elif graph.vs[currentNode]['color'] == 'red' or graph.vs[toNode]['color'] == 'red':
-            keptEdges.append(edge)
-        elif graph.vs[currentNode]['color'] == 'green' or graph.vs[toNode]['color'] == 'green':
-            keptEdges.append(edge)
 
     filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=False)
 
@@ -448,7 +488,6 @@ def connectedComponents(graph):
 
     return connected_comp
 
-
 '''********* Shortest Path **********'''
 
 
@@ -495,6 +534,12 @@ def shortest_path(graph, vertices, toVertex, fileName):
 def for_2D_graphs(graph):
     visual2D(graph)
     filteredGraph = filterGraph(graph)
+
+    if DEBUG:
+        print(connectedComponents(filteredGraph))
+        dic = d.desciptors(filteredGraph)
+        for key, value in dic.items():
+            print(key, value)
     visual2D(filteredGraph)
 
 
@@ -504,6 +549,7 @@ def for_2D_graphs(graph):
 def for_3D_graphs(graph):
     visual3D(graph)
     filteredGraph = filterGraph(graph)
+
     visual3D(filteredGraph)
 
 
@@ -518,14 +564,24 @@ def main():
     elif sys.argv[1] != "g":
         # is_2D = check_if_correct_input(1)
         g, is_2D = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
+        dic = d.desciptors(g)
+        print("Connected Components: ", connectedComponents(g))
+        # d.descriptorsToTxt(dic, "test_descriptors_outpu.txt")
+        for key, value in dic.items():
+            print(key, value)
+
         if is_2D:
             for_2D_graphs(g)
+
+
         else:
             for_3D_graphs(g)
 
 
 if __name__ == '__main__':
     main()
+
+
 
 
 
