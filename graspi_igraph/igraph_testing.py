@@ -12,78 +12,6 @@ import sys
 DEBUG = False
 from fontTools.merge.util import first
 
-'''WENQI CODE FROM MERGE'''
-# def adjList(fileName):
-#     adjacency_list = {}
-#     dimX = dimY = dimZ = 0
-#
-#     with open(fileName, "r") as file:
-#         header = file.readline().split(' ')
-#         dimX, dimY = int(header[0]), int(header[1])
-#         if len(header) < 3:
-#             dimZ = 1
-#         else:
-#             if (int(header[2]) == 0):
-#                 dimZ = 1
-#             else:
-#                 dimZ = int(header[2])
-#
-#         offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (1, -1, 0)]
-#
-#         for z in range(dimZ):
-#             for y in range(dimY):
-#                 for x in range(dimX):
-#                     current_vertex = z * dimY * dimX + y * dimX + x
-#                     neighbors = []
-#
-#                     for dx, dy, dz in offsets:
-#                         nx, ny, nz = x + dx, y + dy, z + dz
-#                         if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
-#                             neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
-#                             neighbors.append(neighbor_vertex)
-#
-#                     adjacency_list[current_vertex] = neighbors
-#
-#     adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
-#     adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
-#
-#     return adjacency_list
-
-# def adjList2(filename):
-#     adjacency_list = {}
-#     first_order_pairs = []
-#     second_order_pairs = []
-#     is_2d = True
-#     with open(filename, "r") as file:
-#         header = file.readline().split(' ')
-#         dimX, dimY, dimZ = int(header[0]), int(header[1]), int(header[2])
-#         if dimZ == 0 or dimZ == 1:
-#             dimZ = 1
-#         else:
-#             dimZ = dimX * dimY
-#             is_2d = False
-#         grid = []
-#         layer = []
-#         for line in file:
-#             if line.strip() == '':
-#                 grid.append(layer)
-#                 layer = []
-#             else:
-#                 layer.append(list(map(int, line.split())))
-#         if layer:
-#             grid.append(layer)
-#         neighbors = []
-#         layers, rows, cols = len(grid), len(grid[0]), len(grid[0][0])
-#         directions = {'N': (0, -1, 0), 'NW': (0, -1, -1), 'NE': (0, -1, 1), 'W': (0, 0, -1), 'E': (0, 0, 1),
-#                       'S': (0, 1, 0), 'SW': (0, 1, -1), 'SE': (0, 1, 1), 'U': (-1, 0, 0), 'D': (1, 0, 0)}
-#         for direction, (dz, dy, dx) in directions.items():
-#             nz, ny, nx = dim + dz, y + dy, x + dx
-#             if 0 <= nz < layers and 0 <= ny < rows and 0 <= nx < cols:
-#                 neighbors[direction] = grid[nz][ny][nx]
-#             else:
-#                 neighbors[direction] = None
-#     print(grid)
-#     exit()
 '''Returns an adjacency list of a .txt file in the form of a dict.'''
 def adjList(fileName):
     adjacency_list = {}
@@ -113,8 +41,6 @@ def adjList(fileName):
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
-                # print(neighbors)
-                # exit()
     adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
     adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
     if DEBUG:
@@ -126,18 +52,6 @@ def adjList(fileName):
     return adjacency_list, first_order_pairs, is_2d
 
 ''''''
-# '''------- Labeling the color of the vertices -------'''
-# def vertexColors(fileName):
-#     labels = []
-#     with open(fileName, 'r') as file:
-#         lines = file.readlines()
-#         for line in lines:
-#             for char in line:
-#                 if char == '1':
-#                     labels.append('white')
-#                 elif char == '0':
-#                     labels.append('black')
-#     return labels
 
 def edgeLabels(g, first_order_pairs):
     order_pair_label = []
@@ -173,12 +87,9 @@ def generateGraphAdj(file):
     g.add_vertices(1)
     g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
-    exists = []
-    edge_list = g.get_edgelist()
+    # exists = []
+    # edge_list = g.get_edgelist()
 
-    # for edge in g.es:
-    #     print(edge['label'])
-    # exit()
     if DEBUG:
         black_green_neighbors = []
 
@@ -193,13 +104,13 @@ def generateGraphAdj(file):
                     if DEBUG:
                         if g.vs[source_vertex]['color'] == 'black':
                             black_green_neighbors.append(source_vertex)
-                    exists.append(source_vertex)
+                    # exists.append(source_vertex)
                 if target_vertex not in exists:
                     if DEBUG:
                         if g.vs[target_vertex]['color'] == 'black':
                             black_green_neighbors.append(target_vertex)
                     g.add_edge(green_vertex, target_vertex)
-                    exists.append(target_vertex)
+                    # exists.append(target_vertex)
 
     if DEBUG:
         print(g.vs['color'])
