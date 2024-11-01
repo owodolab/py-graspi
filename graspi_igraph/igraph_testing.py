@@ -37,7 +37,7 @@ def adjList(fileName):
         if dimZ == 0 or dimZ == 1:
             dimZ = 1
         else:
-            dimZ = dimX * dimY
+            # dimZ = dimX * dimY
             is_2d = False
         offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1)]
 
@@ -59,8 +59,18 @@ def adjList(fileName):
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
-    adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
-    adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
+    # adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
+    adjacency_list[dimZ * dimY * dimX] = []
+    for z in range(dimZ):
+        for y in range(0,dimY, dimY):
+            for x in range(dimX):
+                adjacency_list[dimZ * dimY * dimX].append(z  * (dimY * dimX) + y * dimX + x)
+    # adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
+    adjacency_list[dimZ * dimY * dimX + 1] = []
+    for z in range(dimZ):
+        for y in range(0,dimY, dimY):
+            for x in range(dimX):
+                adjacency_list[dimZ * dimY * dimX + 1].append(z  * (dimY * dimX) + (dimY - 1) * dimX + x)
     if DEBUG:
         # print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
@@ -70,22 +80,24 @@ def adjList(fileName):
         print("Second Order Pairs LENGTH: ", len(second_order_pairs))
         # print("Third Order Pairs: ", third_order_pairs)
         print("Third Order Pairs LENGTH: ", len(third_order_pairs))
-        #exit()
-    return adjacency_list, first_order_pairs, is_2d
+        # exit()
+    return adjacency_list, first_order_pairs, second_order_pairs, third_order_pairs, is_2d
 
 
 ''''''
 
 
-def edgeLabels(g, first_order_pairs):
+def edgeLabels(g, first_order_pairs, second_order_pairs, third_order_pairs):
     order_pair_label = []
 
     edges = g.es
     for edge in edges:
         if [edge.source, edge.target] in first_order_pairs or [edge.target, edge.source] in first_order_pairs:
             order_pair_label.append('f')
-        else:
+        elif [edge.source, edge.target] in first_order_pairs or [edge.target, edge.source] in second_order_pairs:
             order_pair_label.append('s')
+        elif [edge.source, edge.target] in first_order_pairs or [edge.target, edge.source] in third_order_pairs:
+            order_pair_label.append('t')
     return order_pair_label
 
 
@@ -93,7 +105,7 @@ def edgeLabels(g, first_order_pairs):
 
 
 def generateGraphAdj(file):
-    edges, first_order_pairs, is_2D = adjList(file)
+    edges, first_order_pairs, second_order_pairs, third_order_pairs,is_2D = adjList(file)
     labels = vertexColors(file)
     f = open(file, 'r')
     line = f.readline()
@@ -102,32 +114,32 @@ def generateGraphAdj(file):
     dimY = line[1]
     g = ig.Graph.ListDict(edges=edges, directed=False)
     g.vs["color"] = labels
-    g.es['label'] = edgeLabels(g, first_order_pairs)
+    g.es['label'] = edgeLabels(g, first_order_pairs, second_order_pairs, third_order_pairs)
 
     # add wrap around edges.
-    # for i in range(0, g.vcount() - 2, int(dimX)):
-    #     #first add first neighbor wrap around
-    #     g.add_edge(g.vs[i], g.vs[i + (int(dimX) - 1)])
-    #     edge_index_f = g.get_eid(g.vs[i], g.vs[i + (int(dimX) - 1)])
-    #     g.es[edge_index_f]['label'] = 'f'
-    #
-    #     #only add one wrap around since other wouldn't exist in this case
-    #     if i == 0:
-    #         g.add_edge(g.vs[i], g.vs[int(dimX)-1 + int(dimX)])
-    #         edge_index_s = g.get_eid(g.vs[i], g.vs[int(dimX)-1 + int(dimX)])
-    #         g.es[edge_index_s]['label'] = 's'
-    #
-    #     elif i + int(dimX) >= g.vcount()-2:
-    #         g.add_edge(g.vs[i], g.vs[i -1])
-    #
-    #     #add diagnol wrap arounds
-    #     else:
-    #         g.add_edge(g.vs[i], g.vs[i+ int(dimX) - 1 + int(dimX)])
-    #         edge_index1 = g.get_eid(g.vs[i], g.vs[i+ int(dimX) - 1 + int(dimX)])
-    #         g.es[edge_index1]['label'] = 's'
-    #         g.add_edge(g.vs[i], g.vs[i - 1])
-    #         edge_index2 = g.get_eid(g.vs[i], g.vs[i - 1])
-    #         g.es[edge_index2]['label'] = 's'
+    for i in range(0, g.vcount() - 2, int(dimX)):
+        #first add first neighbor wrap around
+        g.add_edge(g.vs[i], g.vs[i + (int(dimX) - 1)])
+        edge_index_f = g.get_eid(g.vs[i], g.vs[i + (int(dimX) - 1)])
+        g.es[edge_index_f]['label'] = 'f'
+
+        #only add one wrap around since other wouldn't exist in this case
+        if i == 0:
+            g.add_edge(g.vs[i], g.vs[int(dimX)-1 + int(dimX)])
+            edge_index_s = g.get_eid(g.vs[i], g.vs[int(dimX)-1 + int(dimX)])
+            g.es[edge_index_s]['label'] = 's'
+
+        elif i + int(dimX) >= g.vcount()-2:
+            g.add_edge(g.vs[i], g.vs[i -1])
+
+        #add diagnol wrap arounds
+        else:
+            g.add_edge(g.vs[i], g.vs[i+ int(dimX) - 1 + int(dimX)])
+            edge_index1 = g.get_eid(g.vs[i], g.vs[i+ int(dimX) - 1 + int(dimX)])
+            g.es[edge_index1]['label'] = 's'
+            g.add_edge(g.vs[i], g.vs[i - 1])
+            edge_index2 = g.get_eid(g.vs[i], g.vs[i - 1])
+            g.es[edge_index2]['label'] = 's'
 
     g.vs[int(line[0]) * int(line[1])]['color'] = 'blue'
     g.vs[int(line[0]) * int(line[1]) + 1]['color'] = 'red'
@@ -151,7 +163,6 @@ def generateGraphAdj(file):
                 if DEBUG:
                     if g.vs[source_vertex]['color'] == 'black':
                         black_green_neighbors.append(source_vertex)
-
                 if DEBUG:
                     if g.vs[target_vertex]['color'] == 'black':
                         black_green_neighbors.append(target_vertex)
@@ -545,10 +556,14 @@ def for_2D_graphs(graph):
 
 
 def for_3D_graphs(graph):
-    visual3D(graph)
+    # visual3D(graph)
     filteredGraph = filterGraph(graph)
-
-    visual3D(filteredGraph)
+    if DEBUG:
+        # print(connectedComponents(filteredGraph))
+        dic = d.desciptors(filteredGraph)
+        # for key, value in dic.items():
+        #     print(key, value)
+    # visual3D(filteredGraph)
 
 
 def main():
