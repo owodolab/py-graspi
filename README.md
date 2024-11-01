@@ -62,7 +62,7 @@ Finally, run the following:
 ```
 ./run.sh
 ```
-## Outputs
+## 33 Morphologies Output
 After running this command, the automatic pdf generation will begin. 
 <br />
 <br /> 
