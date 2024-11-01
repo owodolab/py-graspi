@@ -1,4 +1,5 @@
 from calendar import firstweekday
+from fileinput import filename
 from logging import DEBUG
 from os.path import exists
 
@@ -11,7 +12,9 @@ import argparse
 from graspi_igraph import descriptors
 
 import descriptors as d
-DEBUG = False
+DEBUG = True
+global PERIODICITY
+PERIODICITY = False
 from fontTools.merge.util import first
 
 '''Returns an adjacency list of a .txt file in the form of a dict.'''
@@ -81,17 +84,22 @@ def adjList(fileName):
         for y in range(0,dimY, dimY):
             for x in range(dimX):
                 adjacency_list[dimZ * dimY * dimX + 1].append(z  * (dimY * dimX) + (dimY - 1) * dimX + x)
+
+    blue_neighbors = adjacency_list[dimZ * dimY * dimX]
+    red_neighbors = adjacency_list[dimZ * dimY * dimX + 1]
     if DEBUG:
-        # print("Adjacency List: ", adjacency_list)
+        print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
-        # print("First Order Pairs: ", first_order_pairs)
+        print("First Order Pairs: ", first_order_pairs)
         print("First Order Pairs LENGTH: ", len(first_order_pairs))
-        # print("Second Order Pairs: ", second_order_pairs)
+        print("Second Order Pairs: ", second_order_pairs)
         print("Second Order Pairs LENGTH: ", len(second_order_pairs))
-        # print("Third Order Pairs: ", third_order_pairs)
+        print("Third Order Pairs: ", third_order_pairs)
         print("Third Order Pairs LENGTH: ", len(third_order_pairs))
+        print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
+        print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
-    return adjacency_list, first_order_pairs, second_order_pairs, third_order_pairs, is_2d
+    return adjacency_list, first_order_pairs, second_order_pairs, third_order_pairs, blue_neighbors, red_neighbors, is_2d
 
 
 ''''''
@@ -137,7 +145,7 @@ def generateGraphAdj(file):
             graph: the graph that holds all the edges and vertices based on file input
             boolean: returns  a boolean to signal if graph is 2D or not
         """
-    edges, first_order_pairs, second_order_pairs, third_order_pairs,is_2D = adjList(file)
+    edges, first_order_pairs, second_order_pairs, third_order_pairs, blue_neighbors, red_neighbors, is_2D = adjList(file)
     labels = vertexColors(file)
     f = open(file, 'r')
     line = f.readline()
@@ -148,33 +156,40 @@ def generateGraphAdj(file):
     g.vs["color"] = labels
     g.es['label'] = edgeLabels(g, first_order_pairs, second_order_pairs, third_order_pairs)
 
-    # add wrap around edges.
-    for i in range(0, g.vcount() - 2, int(dimX)):
-        #first add first neighbor wrap around
-        g.add_edge(g.vs[i], g.vs[i + (int(dimX) - 1)])
-        edge_index_f = g.get_eid(g.vs[i], g.vs[i + (int(dimX) - 1)])
-        g.es[edge_index_f]['label'] = 'f'
+    # add wrap around edges if periodicity boolean is set to True.
+    if PERIODICITY:
+        for i in range(0, g.vcount() - 2, int(dimX)):
+            # first add first neighbor wrap around
+            g.add_edge(g.vs[i], g.vs[i + (int(dimX) - 1)])
+            edge_index_f = g.get_eid(g.vs[i], g.vs[i + (int(dimX) - 1)])
+            g.es[edge_index_f]['label'] = 'f'
 
-        #only add one wrap around since other wouldn't exist in this case
-        if i == 0:
-            g.add_edge(g.vs[i], g.vs[int(dimX)-1 + int(dimX)])
-            edge_index_s = g.get_eid(g.vs[i], g.vs[int(dimX)-1 + int(dimX)])
-            g.es[edge_index_s]['label'] = 's'
+            # only add one wrap around since other wouldn't exist in this case
+            if i == 0:
+                g.add_edge(g.vs[i], g.vs[int(dimX) - 1 + int(dimX)])
+                edge_index_s = g.get_eid(g.vs[i], g.vs[int(dimX) - 1 + int(dimX)])
+                g.es[edge_index_s]['label'] = 's'
 
-        elif i + int(dimX) >= g.vcount()-2:
-            g.add_edge(g.vs[i], g.vs[i -1])
+            elif i + int(dimX) >= g.vcount() - 2:
+                g.add_edge(g.vs[i], g.vs[i - 1])
 
-        #add diagnol wrap arounds
-        else:
-            g.add_edge(g.vs[i], g.vs[i+ int(dimX) - 1 + int(dimX)])
-            edge_index1 = g.get_eid(g.vs[i], g.vs[i+ int(dimX) - 1 + int(dimX)])
-            g.es[edge_index1]['label'] = 's'
-            g.add_edge(g.vs[i], g.vs[i - 1])
-            edge_index2 = g.get_eid(g.vs[i], g.vs[i - 1])
-            g.es[edge_index2]['label'] = 's'
+            # add diagnol wrap arounds
+            else:
+                g.add_edge(g.vs[i], g.vs[i + int(dimX) - 1 + int(dimX)])
+                edge_index1 = g.get_eid(g.vs[i], g.vs[i + int(dimX) - 1 + int(dimX)])
+                g.es[edge_index1]['label'] = 's'
+                g.add_edge(g.vs[i], g.vs[i - 1])
+                edge_index2 = g.get_eid(g.vs[i], g.vs[i - 1])
+                g.es[edge_index2]['label'] = 's'
 
     g.vs[int(line[0]) * int(line[1])]['color'] = 'blue'
+    blue_vertex =  g.vs[int(line[0]) * int(line[1])]
     g.vs[int(line[0]) * int(line[1]) + 1]['color'] = 'red'
+    red_vertex = g.vs[int(line[0]) * int(line[1]) + 1]
+    for i in blue_neighbors:
+        g.add_edge(blue_vertex, g.vs[i])
+    for i in red_neighbors:
+        g.add_edge(red_vertex, g.vs[i])
 
     g.add_vertices(1)
     g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
@@ -183,7 +198,7 @@ def generateGraphAdj(file):
     if DEBUG:
         black_green_neighbors = []
 
- 
+
     for edge in g.es:
         source_vertex = edge.source
         target_vertex = edge.target
@@ -201,15 +216,15 @@ def generateGraphAdj(file):
                 g.add_edge(green_vertex, target_vertex)
 
     if DEBUG:
-        # print(g.vs['color'])
+        print(g.vs['color'])
         print("Number of nodes: ", g.vcount())
-        # print("Green vertex neighbors: ", g.neighbors(green_vertex))
+        print("Green vertex neighbors: ", g.neighbors(green_vertex))
         print("Green vertex neighbors LENGTH: ", len(g.neighbors(green_vertex)))
-        # print("Black/Green Neighbors: ", black_green_neighbors)
+        print("Black/Green Neighbors: ", black_green_neighbors)
         print("Black/Green Neighbors LENGTH: ", len(black_green_neighbors))
-        # print("Nodes connected to blue: ", g.vs[g.vcount()-3]['color'], g.neighbors(g.vcount()-3))
+        print("Nodes connected to blue: ", g.vs[g.vcount()-3]['color'], g.neighbors(g.vcount()-3))
         print("Length: ", len(g.neighbors(g.vcount()-3)))
-        # print("Nodes connected to red: ", g.vs[g.vcount()-2]['color'],g.neighbors(g.vcount()-2))
+        print("Nodes connected to red: ", g.vs[g.vcount()-2]['color'],g.neighbors(g.vcount()-2))
         print("Length: ", len(g.neighbors(g.vcount()-2)))
         # exit()
     return g, is_2D
@@ -602,21 +617,45 @@ def shortest_path(graph, vertices, toVertex, fileName):
 
 
 def main():
-    if sys.argv[1] == "-g":
-        g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-        visualize(g,is_2D)
-        filteredGraph = filterGraph(g)
-        visualize(filteredGraph,is_2D)
+    if sys.argv[1] == "-p":
+        global PERIODICITY
+        PERIODICITY = True
+        if sys.argv[2] == "-g":
+            g, is_2D = generateGraphGraphe(sys.argv[3])  # utilizing the test file found in 2D-testFiles folder
+            visualize(g, is_2D)
+            filteredGraph = filterGraph(g)
+            visualize(filteredGraph, is_2D)
+            dic = d.desciptors(g)
 
-    elif sys.argv[1] != "-g":
-        g, is_2D = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-        visualize(g, is_2D)
-        filteredGraph = filterGraph(g)
-        visualize(filteredGraph, is_2D)
-        dic = d.desciptors(g)
+            for key, value in dic.items():
+                print(key, value)
 
-        for key, value in dic.items():
-            print(key, value)
+        elif sys.argv[1] != "-g":
+            g, is_2D = generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+            visualize(g, is_2D)
+            filteredGraph = filterGraph(g)
+            visualize(filteredGraph, is_2D)
+            dic = d.desciptors(g)
+
+            for key, value in dic.items():
+                print(key, value)
+    else:
+        if sys.argv[1] == "-g":
+            g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+            visualize(g, is_2D)
+            filteredGraph = filterGraph(g)
+            visualize(filteredGraph, is_2D)
+
+        elif sys.argv[1] != "-g":
+            g, is_2D = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
+            visualize(g, is_2D)
+            filteredGraph = filterGraph(g)
+            visualize(filteredGraph, is_2D)
+            dic = d.desciptors(g)
+
+            for key, value in dic.items():
+                print(key, value)
+
 
 
 if __name__ == '__main__':
