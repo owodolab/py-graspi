@@ -96,45 +96,68 @@
 <span class="sd">        list: The adjacency list representing the graph.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">adjacency_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">first_order_neighbors</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1">#Opens File</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">header</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
         <span class="n">vertex_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1">#loops through all vertices except red and blue meta vertices at the end</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vertex_count</span><span class="p">):</span>
             <span class="n">header</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
             <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[]</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">),</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="c1">#adds all vertex neighbors to current &quot;header&quot; vertex being checked</span>
+            <span class="c1">#makes sure no edge duplicates exist with prior vertices already checked</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">),</span><span class="mi">3</span><span class="p">):</span>
+                <span class="n">order_neighbor_type</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
                 <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">adjacency_list</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">i</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">adjacency_list</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">j</span><span class="p">])]:</span>
                         <span class="n">neighbors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">neighbors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+                <span class="c1">#if edge is a first order edge, adds this pairing to a list</span>
+                <span class="k">if</span> <span class="n">order_neighbor_type</span> <span class="o">==</span> <span class="s1">&#39;f&#39;</span><span class="p">:</span>
+                    <span class="n">first_order_neighbors</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="n">j</span><span class="p">]),</span> <span class="n">i</span><span class="p">])</span>
             <span class="n">adjacency_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)</span>
 
     <span class="n">adjacency_list</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
     <span class="n">adjacency_list</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
-
-    <span class="k">return</span> <span class="n">adjacency_list</span></div>
+    <span class="k">return</span> <span class="n">adjacency_list</span><span class="p">,</span> <span class="n">first_order_neighbors</span></div>
 
 
 <div class="viewcode-block" id="adjList"><a class="viewcode-back" href="../../api_overview.html#graspi_igraph.igraph_testing.adjList">[docs]</a><span class="k">def</span> <span class="nf">adjList</span><span class="p">(</span><span class="n">fileName</span><span class="p">):</span>
     <span class="n">adjacency_list</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">dimX</span> <span class="o">=</span> <span class="n">dimY</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dimX</span> <span class="o">=</span> <span class="n">dimY</span> <span class="o">=</span> <span class="n">dimZ</span> <span class="o">=</span> <span class="mi">0</span>
+
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">header</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
         <span class="n">dimX</span><span class="p">,</span> <span class="n">dimY</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-        <span class="n">offsets</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
-        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimY</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimX</span><span class="p">):</span>
-                <span class="n">current_vertex</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">dimX</span> <span class="o">+</span> <span class="n">x</span>
-                <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[]</span>
-                <span class="k">for</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="ow">in</span> <span class="n">offsets</span><span class="p">:</span>
-                    <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span>
-                    <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nx</span> <span class="o">&lt;</span> <span class="n">dimX</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ny</span> <span class="o">&lt;</span> <span class="n">dimY</span><span class="p">:</span>
-                        <span class="n">neighbor_vertex</span> <span class="o">=</span> <span class="n">ny</span> <span class="o">*</span> <span class="n">dimX</span> <span class="o">+</span> <span class="n">nx</span>
-                        <span class="n">neighbors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neighbor_vertex</span><span class="p">)</span>
-                <span class="n">adjacency_list</span><span class="p">[</span><span class="n">current_vertex</span><span class="p">]</span> <span class="o">=</span> <span class="n">neighbors</span>
-    <span class="n">adjacency_list</span><span class="p">[</span><span class="n">dimY</span> <span class="o">*</span> <span class="n">dimX</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">dimX</span><span class="p">))</span>
-    <span class="n">adjacency_list</span><span class="p">[</span><span class="n">dimY</span> <span class="o">*</span> <span class="n">dimX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">dimX</span> <span class="o">*</span> <span class="p">(</span><span class="n">dimY</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimX</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">dimZ</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+                <span class="n">dimZ</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dimZ</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="n">offsets</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+
+        <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimZ</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimY</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimX</span><span class="p">):</span>
+                    <span class="n">current_vertex</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">dimY</span> <span class="o">*</span> <span class="n">dimX</span> <span class="o">+</span> <span class="n">y</span> <span class="o">*</span> <span class="n">dimX</span> <span class="o">+</span> <span class="n">x</span>
+                    <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[]</span>
+
+                    <span class="k">for</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span> <span class="ow">in</span> <span class="n">offsets</span><span class="p">:</span>
+                        <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span><span class="p">,</span> <span class="n">nz</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">dy</span><span class="p">,</span> <span class="n">z</span> <span class="o">+</span> <span class="n">dz</span>
+                        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nx</span> <span class="o">&lt;</span> <span class="n">dimX</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">ny</span> <span class="o">&lt;</span> <span class="n">dimY</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nz</span> <span class="o">&lt;</span> <span class="n">dimZ</span><span class="p">:</span>
+                            <span class="n">neighbor_vertex</span> <span class="o">=</span> <span class="n">nz</span> <span class="o">*</span> <span class="n">dimY</span> <span class="o">*</span> <span class="n">dimX</span> <span class="o">+</span> <span class="n">ny</span> <span class="o">*</span> <span class="n">dimX</span> <span class="o">+</span> <span class="n">nx</span>
+                            <span class="n">neighbors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neighbor_vertex</span><span class="p">)</span>
+
+                    <span class="n">adjacency_list</span><span class="p">[</span><span class="n">current_vertex</span><span class="p">]</span> <span class="o">=</span> <span class="n">neighbors</span>
+
+    <span class="n">adjacency_list</span><span class="p">[</span><span class="n">dimZ</span> <span class="o">*</span> <span class="n">dimY</span> <span class="o">*</span> <span class="n">dimX</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">dimX</span><span class="p">))</span>
+    <span class="n">adjacency_list</span><span class="p">[</span><span class="n">dimZ</span> <span class="o">*</span> <span class="n">dimY</span> <span class="o">*</span> <span class="n">dimX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="n">dimX</span> <span class="o">*</span> <span class="p">(</span><span class="n">dimY</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">dimX</span><span class="p">)]</span>
+
     <span class="k">return</span> <span class="n">adjacency_list</span></div>
 
 
@@ -206,40 +229,48 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        ig.Graph: The constructed graph with assigned vertex colors.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">adjacency_list</span> <span class="o">=</span> <span class="n">graphe_adjList</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
-    <span class="n">vertex_colors</span> <span class="o">=</span> <span class="n">vertexColors</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="c1">#gets an adjacency list and first order pairs list from the file input</span>
+    <span class="n">adjacency_list</span><span class="p">,</span> <span class="n">first_order_neighbors</span> <span class="o">=</span> <span class="n">graphe_adjList</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">vertex_colors</span> <span class="o">=</span> <span class="n">adjvertexColors</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
 
     <span class="n">edges</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">neighbor</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">neighbors</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">adjacency_list</span><span class="p">)</span> <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">neighbors</span><span class="p">]</span>
-
+    <span class="c1">#creates graph using Igraph API</span>
     <span class="n">g</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">edges</span><span class="p">,</span> <span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="c1">#adds color label to each vertex</span>
     <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vertex_colors</span>
-    <span class="n">g</span><span class="o">.</span><span class="n">add_vertices</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
+    <span class="c1">#adds green vertex and its color</span>
+    <span class="n">g</span><span class="o">.</span><span class="n">add_vertices</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">adjacency_list</span><span class="p">)][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span>
     <span class="n">green_vertex</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">vcount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="n">exists</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">ecount</span><span class="p">()):</span>
-        <span class="n">current_edge</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">es</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">source_vertex</span> <span class="o">=</span> <span class="n">current_edge</span><span class="o">.</span><span class="n">source</span>
-        <span class="n">target_vertex</span> <span class="o">=</span> <span class="n">current_edge</span><span class="o">.</span><span class="n">target</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">source_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span> <span class="ow">and</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">target_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">&#39;&#39;&#39;connect both source and target to green meta vertex&#39;&#39;&#39;</span>
-            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">)</span>
-            <span class="n">exists</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span>
-            <span class="n">exists</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">])</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">source_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span> <span class="ow">and</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">target_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span><span class="p">):</span>
-<span class="w">            </span><span class="sd">&#39;&#39;&#39;connect both source and target to green meta vertex&#39;&#39;&#39;</span>
-            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">exists</span><span class="o">.</span><span class="n">count</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">)</span>
-            <span class="n">exists</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">])</span>
-            <span class="n">exists</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">])</span>
+    <span class="n">exists</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vcount</span><span class="p">()</span><span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+    <span class="c1">#For loop makes sure all black and white pairings are labeled black as first and white as second in pairing</span>
+    <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">first_order_neighbors</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span> <span class="ow">and</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span><span class="p">:</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
 
+    <span class="c1"># test = []</span>
+    <span class="c1">#Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added</span>
+    <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">first_order_neighbors</span><span class="p">:</span>
+        <span class="n">source_vertex</span> <span class="o">=</span> <span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">target_vertex</span> <span class="o">=</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">source_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span> <span class="ow">and</span> <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">target_vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">:</span>
+            <span class="c1">#connect both source and target to green meta vertex</span>
+            <span class="k">if</span> <span class="n">exists</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">source_vertex</span><span class="p">)</span>
+                <span class="n">exists</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># test.append(pair[0])</span>
+
+            <span class="k">if</span> <span class="n">exists</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add_edge</span><span class="p">(</span><span class="n">green_vertex</span><span class="p">,</span> <span class="n">target_vertex</span><span class="p">)</span>
+                <span class="n">exists</span><span class="p">[</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="c1"># test.append(pair[1])</span>
+
+    <span class="c1"># print(test)</span>
     <span class="k">return</span> <span class="n">g</span></div>
 
 
@@ -405,7 +436,7 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">currentNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">toNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]):</span>
             <span class="n">keptEdges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">edge</span><span class="p">)</span>
 
-    <span class="n">filteredGraph</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">subgraph_edges</span><span class="p">(</span><span class="n">keptEdges</span><span class="p">,</span> <span class="n">delete_vertices</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">filteredGraph</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">subgraph_edges</span><span class="p">(</span><span class="n">keptEdges</span><span class="p">,</span> <span class="n">delete_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">filteredGraph</span></div>
 
@@ -431,6 +462,7 @@
     <span class="n">blueVertex</span> <span class="o">=</span> <span class="kc">None</span><span class="p">;</span>
     <span class="n">blackCCList</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">whiteCCList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># print(len(cc))</span>
 
     <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vertices</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="n">color</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span>
@@ -440,9 +472,9 @@
             <span class="n">redVertex</span> <span class="o">=</span> <span class="n">vertex</span>
         <span class="k">if</span> <span class="n">blueVertex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">redVertex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">break</span>
-
-    <span class="n">blackCCList</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cc</span> <span class="k">if</span> <span class="n">fg</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span><span class="p">]</span>
-    <span class="n">whiteCCList</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cc</span> <span class="k">if</span> <span class="n">fg</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">]</span>
+        
+    <span class="n">blackCCList</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cc</span> <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span><span class="p">]</span>
+    <span class="n">whiteCCList</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cc</span> <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">]</span>
 
     <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">blackCCList</span><span class="p">:</span>
         <span class="n">passedRed</span> <span class="o">=</span> <span class="kc">False</span>

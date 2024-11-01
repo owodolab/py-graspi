@@ -179,3 +179,23 @@ If you have the same test directories as this GitHub Repo you should be able to 
 ```
 python graspi_igraph/igraph_testing.py g graspi_igraph/tests/2D-testFile/data_4_3.graphe 2d 
 ```
+### Generate and Run Files for py-graspi API
+In order to generate an API using sphinx, you just need to follow these two commands in the command line interface.
+
+**Make sure your current directory is py-graspi**
+
+In the command line interface, run this command:
+```
+sphinx-build -b html ./docs/source/ ./docs/ 
+```
+* **sphinx-build**: This is the main command for building Sphinx documentation. It generates documentation from reStructuredText (.rst) or Markdown (.md) source files.
+* **-b html**: This specifies the output format. Here, -b html tells Sphinx to build the documentation in HTML format, which is typically used for web-based documentation.
+* **./docs/source/**: This is the path to the source directory where Sphinx looks for the documentation source files. In this example, it’s in the source subdirectory inside docs.
+* **./docs/**: This is the output directory where the built HTML files will be saved. In this example, it’s the main docs folder. After running this command, you’ll find the generated HTML files here.
+
+In order to see the py-graspi API, run this command in the command line interface:
+```
+start docs/index.html
+```
+This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
+
