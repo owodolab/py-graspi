@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 # from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import sys
-
+import argparse
 from graspi_igraph import descriptors
 
 import descriptors as d
@@ -204,6 +204,8 @@ def graphe_adjList(filename):
     """
     adjacency_list = []
     first_order_neighbors = []
+    second_order_neighbors = []
+    third_order_neighbors = []
     # Opens File
     with open(filename, "r") as file:
         header = file.readline().split()
@@ -224,11 +226,18 @@ def graphe_adjList(filename):
                 # if edge is a first order edge, adds this pairing to a list
                 if order_neighbor_type == 'f':
                     first_order_neighbors.append([int(header[j]), i])
+                elif order_neighbor_type == 's':
+                    second_order_neighbors.append([int(header[j]), i])
+                elif order_neighbor_type == 't':
+                    third_order_neighbors.append([int(header[j]), i])
             adjacency_list.append(neighbors)
 
     adjacency_list.append([])
     adjacency_list.append([])
-    return adjacency_list, first_order_neighbors
+    is_2D = False
+    if len(third_order_neighbors) <= 0:
+        is_2D = True
+    return adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2D
 
 
 '''------- Labeling the color of the vertices -------'''
@@ -291,7 +300,7 @@ def generateGraphGraphe(file):
         ig.Graph: The constructed graph with assigned vertex colors.
     """
     # gets an adjacency list and first order pairs list from the file input
-    adjacency_list, first_order_neighbors = graphe_adjList(file)
+    adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2d = graphe_adjList(file)
     vertex_colors = graphe_vertexColors(file)
 
     edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
@@ -302,9 +311,9 @@ def generateGraphGraphe(file):
 
     # adds green vertex and its color
     g.add_vertices(1)
-    # print(len(adjacency_list))
-
-    # exit()
+    if DEBUG:
+        print(len(adjacency_list))
+        # exit()
     g.vs[len(adjacency_list)]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
 
@@ -316,7 +325,7 @@ def generateGraphGraphe(file):
             pair[0] = pair[1]
             pair[1] = temp
 
-    # test = []
+
     # Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added
     for pair in first_order_neighbors:
         source_vertex = pair[0]
@@ -327,79 +336,79 @@ def generateGraphGraphe(file):
             if exists[pair[0]] == 0:
                 g.add_edge(green_vertex, source_vertex)
                 exists[pair[0]] += 1
-                # test.append(pair[0])
-
             if exists[pair[1]] == 0:
                 g.add_edge(green_vertex, target_vertex)
                 exists[pair[1]] += 1
-                # test.append(pair[1])
+
 
     # print(test)
-    return g
+    return g, is_2d
 
+def visualize(graph,is_2D):
+    g= graph
+    if is_2D:
+        layout = g.layout('fr')
+        # fig, ax = plt.subplots()
+        # ax.invert_yaxis() # reverse starting point of graph (vertex 0)
+        fig, ax = plt.subplots(figsize=(10, 10))
 
-def visual2D(g):
-    layout = g.layout('fr')
-    # fig, ax = plt.subplots()
-    # ax.invert_yaxis() # reverse starting point of graph (vertex 0)
-    fig, ax = plt.subplots(figsize=(10, 10))
+        ig.plot(g, target=ax, layout=layout, vertex_size=15, margin=5)
 
-    ig.plot(g, target=ax, layout=layout, vertex_size=15, margin=5)
+        ''' ---- generate the labels of each vertex value ---- '''
+        for i, (x, y) in enumerate(layout):
+            g.vs['label'] = [i for i in range(len(g.vs))]
+            ax.text(
+                x, y - 0.2,
+                g.vs['label'][i],
+                fontsize=10,
+                color='black',
+                ha='right',  # Horizontal alignment
+                va='top',  # Vertical alignment
+                bbox=dict(facecolor='white', edgecolor='none', alpha=0.3)
+            )
 
-    ''' ---- generate the labels of each vertex value ---- '''
-    for i, (x, y) in enumerate(layout):
-        g.vs['label'] = [i for i in range(len(g.vs))]
-        ax.text(
-            x, y - 0.2,
-            g.vs['label'][i],
-            fontsize=10,
-            color='black',
-            ha='right',  # Horizontal alignment
-            va='top',  # Vertical alignment
-            bbox=dict(facecolor='white', edgecolor='none', alpha=0.3)
-        )
+        plt.show()
+    else:
+        """
+            Visualizes the graph in 3D.
 
-    plt.show()
+            Args:
+                g (ig.Graph): The input graph to visualize.
 
+            Returns:
+                None
+            """
 
-def visual3D(g):
-    """
-    Visualizes the graph in 3D.
+        edges = g.get_edgelist()
+        num_vertices = len(g.vs)
+        grid_size = int(np.round(num_vertices ** (1 / 3)))
 
-    Args:
-        g (ig.Graph): The input graph to visualize.
+        # Generate 3D coordinates (layout) for the vertices
+        x, y, z = np.meshgrid(range(grid_size), range(grid_size), range(grid_size))
+        coords = np.vstack([x.ravel(), y.ravel(), z.ravel()]).T
 
-    Returns:
-        None
-    """
-    edges = g.get_edgelist()
-    num_vertices = len(g.vs)
-    grid_size = int(np.round(num_vertices ** (1 / 3)))
+        # Plot the graph in 3D using matplotlib
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
 
-    # Generate 3D coordinates (layout) for the vertices
-    x, y, z = np.meshgrid(range(grid_size), range(grid_size), range(grid_size))
-    coords = np.vstack([x.ravel(), y.ravel(), z.ravel()]).T
+        color = []
+        for vertex in range(g.vcount()):
+            color.append(str(g.vs[vertex]['color']))
+        # Plot vertices
+        ax.scatter(coords[:, 0], coords[:, 1], coords[:, 2], c=color, s=100)
 
-    # Plot the graph in 3D using matplotlib
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
+        # Plot edges
+        for e in edges:
+            start, end = e
+            ax.plot([coords[start][0], coords[end][0]],
+                    [coords[start][1], coords[end][1]],
+                    [coords[start][2], coords[end][2]], 'black')
 
-    # Plot vertices
-    ax.scatter(coords[:, 0], coords[:, 1], coords[:, 2], c=g.vs['color'], s=100)
+        # Add labels to the vertices
+        for i, (x, y, z) in enumerate(coords):
+            ax.text(x, y, z, str(i), color='black')
 
-    # Plot edges
-    for e in edges:
-        start, end = e
-        ax.plot([coords[start][0], coords[end][0]],
-                [coords[start][1], coords[end][1]],
-                [coords[start][2], coords[end][2]], 'black')
-
-    # Add labels to the vertices
-    for i, (x, y, z) in enumerate(coords):
-        ax.text(x, y, z, str(i), color='black')
-
-    plt.show()
-
+        plt.show()
 
 '''********* Filtering the Graph **********'''
 
@@ -537,58 +546,24 @@ def shortest_path(graph, vertices, toVertex, fileName):
     return listOfShortestPaths
 
 
-''''runs functions for visualizing, filtering, and finding shortest_paths for 2D inputs'''
-
-
-def for_2D_graphs(graph):
-    # visual2D(graph)
-    filteredGraph = filterGraph(graph)
-
-    if DEBUG:
-        # print(connectedComponents(filteredGraph))
-        dic = d.desciptors(filteredGraph)
-        for key, value in dic.items():
-            print(key, value)
-    # visual2D(filteredGraph)
-
-
-''''runs functions for visualizing, filtering, and finding shortest_paths for 3D inputs'''
-
-
-def for_3D_graphs(graph):
-    # visual3D(graph)
-    filteredGraph = filterGraph(graph)
-    if DEBUG:
-        # print(connectedComponents(filteredGraph))
-        dic = d.desciptors(filteredGraph)
-        # for key, value in dic.items():
-        #     print(key, value)
-    # visual3D(filteredGraph)
 
 
 def main():
-    if sys.argv[1] == "g":
-        # is_2D = check_if_correct_input('g')
+    if sys.argv[1] == "-g":
         g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-        if is_2D:
-            for_2D_graphs(g)
-        else:
-            for_3D_graphs(g)
-    elif sys.argv[1] != "g":
-        # is_2D = check_if_correct_input(1)
+        visualize(g,is_2D)
+        filteredGraph = filterGraph(g)
+        visualize(filteredGraph,is_2D)
+
+    elif sys.argv[1] != "-g":
         g, is_2D = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
+        visualize(g, is_2D)
+        filteredGraph = filterGraph(g)
+        visualize(filteredGraph, is_2D)
         dic = d.desciptors(g)
-        # print("Connected Components: ", connectedComponents(g))
-        # d.descriptorsToTxt(dic, "test_descriptors_outpu.txt")
+
         for key, value in dic.items():
             print(key, value)
-
-        if is_2D:
-            for_2D_graphs(g)
-
-
-        else:
-            for_3D_graphs(g)
 
 
 if __name__ == '__main__':
