@@ -18,6 +18,16 @@ from fontTools.merge.util import first
 
 
 def adjList(fileName):
+    """
+        Creates an adjacency list from a given file.
+
+        Args:
+            filename (str): The name of the file containing the graph data.
+
+        Returns:
+            list: The adjacency list representing the graph, lists for first, second, and third, ordered pairs
+                  as well as a bool to signal if the graph is a 2D or 3D graph.
+        """
     adjacency_list = {}
     first_order_pairs = []
     second_order_pairs = []
@@ -88,6 +98,18 @@ def adjList(fileName):
 
 
 def edgeLabels(g, first_order_pairs, second_order_pairs, third_order_pairs):
+    """
+        Creates a edge label list from a given graph.
+
+        Args:
+            graph (igraph): The name of the graph containing graph data such as edges and vertices.
+            first_order_pairs (list): A list of tuples containing the first order pairings.
+            second_order_pairs (list): A list of tuples containing the second order pairings.
+            third_order_pairs (list): A list of tuples containing the third order pairings.
+
+        Returns:
+            order_pair_label (list): returns a list containing the correct label ordering for the edges in the graph.
+        """
     order_pair_label = []
 
     edges = g.es
@@ -105,6 +127,16 @@ def edgeLabels(g, first_order_pairs, second_order_pairs, third_order_pairs):
 
 
 def generateGraphAdj(file):
+    """
+        Creates an adjacency list from a given file.
+
+        Args:
+            filename (str): The name of the file containing the graph data.
+
+        Returns:
+            graph: the graph that holds all the edges and vertices based on file input
+            boolean: returns  a boolean to signal if graph is 2D or not
+        """
     edges, first_order_pairs, second_order_pairs, third_order_pairs,is_2D = adjList(file)
     labels = vertexColors(file)
     f = open(file, 'r')
@@ -200,7 +232,8 @@ def graphe_adjList(filename):
         filename (str): The name of the file containing the graph data.
 
     Returns:
-        list: The adjacency list representing the graph.
+        list: The adjacency list representing the graph, lists for first, second, and third, ordered pairs
+                  as well as a bool to signal if the graph is a 2D or 3D graph.
     """
     adjacency_list = []
     first_order_neighbors = []
@@ -244,6 +277,15 @@ def graphe_adjList(filename):
 
 
 def graphe_vertexColors(fileName):
+    """
+       Creates a color label list from a given file.
+
+       Args:
+           filename (str): The name of the file containing the graph data.
+
+       Returns:
+           list: the label list containing the correct color for its complementary index in the list
+       """
     labels = []
     with open(fileName, 'r') as file:
         line = file.readline().split()
@@ -298,6 +340,7 @@ def generateGraphGraphe(file):
 
     Returns:
         ig.Graph: The constructed graph with assigned vertex colors.
+        boolean: a boolean to signal if grpah is 2D or not
     """
     # gets an adjacency list and first order pairs list from the file input
     adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2d = graphe_adjList(file)
@@ -345,6 +388,16 @@ def generateGraphGraphe(file):
     return g, is_2d
 
 def visualize(graph,is_2D):
+    """
+       Creates a visualization from the given graph
+
+       Args:
+           graph (ig.Graph): The graph to visualize
+           is_2D (bool): A boolean to signal if the graph is 2D or not
+
+       Returns:
+           NONE: but outputs visualization of graph.
+       """
     g= graph
     if is_2D:
         layout = g.layout('fr')
