@@ -12,7 +12,7 @@ import argparse
 from graspi_igraph import descriptors
 
 import descriptors as d
-DEBUG = True
+DEBUG = False
 global PERIODICITY
 PERIODICITY = False
 from fontTools.merge.util import first
@@ -36,7 +36,7 @@ def adjList(fileName):
     second_order_pairs = []
     third_order_pairs = []
     is_2d = True
-    with open(fileName, "r") as file:
+    with (open(fileName, "r") as file):
         header = file.readline().split(' ')
         dimX, dimY = int(header[0]), int(header[1])
         if len(header) < 3:
@@ -52,7 +52,7 @@ def adjList(fileName):
         else:
             # dimZ = dimX * dimY
             is_2d = False
-        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1)]
+        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1), (1,0,-1)]
 
         for z in range(dimZ):
             for y in range(dimY):
@@ -65,7 +65,7 @@ def adjList(fileName):
                             neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
                             if (dx, dy, dz) == offsets[1] or (dx, dy, dz) == offsets[2] or (dx, dy, dz) == offsets[3]:
                                 first_order_pairs.append([current_vertex, neighbor_vertex])
-                            elif (dx, dy, dz) == offsets[4] or (dx, dy, dz) == offsets[5] or (dx, dy, dz) == offsets[6] or (dx, dy, dz) == offsets[7]:
+                            elif (dx, dy, dz) == offsets[4] or (dx, dy, dz) == offsets[5] or (dx, dy, dz) == offsets[6] or (dx, dy, dz) == offsets[7] or (dx, dy, dz) == offsets[8]:
                                 third_order_pairs.append([current_vertex, neighbor_vertex])
                             else:
                                 second_order_pairs.append([current_vertex, neighbor_vertex])
@@ -124,9 +124,9 @@ def edgeLabels(g, first_order_pairs, second_order_pairs, third_order_pairs):
     for edge in edges:
         if [edge.source, edge.target] in first_order_pairs or [edge.target, edge.source] in first_order_pairs:
             order_pair_label.append('f')
-        elif [edge.source, edge.target] in first_order_pairs or [edge.target, edge.source] in second_order_pairs:
+        elif [edge.source, edge.target] in second_order_pairs or [edge.target, edge.source] in second_order_pairs:
             order_pair_label.append('s')
-        elif [edge.source, edge.target] in first_order_pairs or [edge.target, edge.source] in third_order_pairs:
+        elif [edge.source, edge.target] in third_order_pairs or [edge.target, edge.source] in third_order_pairs:
             order_pair_label.append('t')
     return order_pair_label
 
@@ -183,17 +183,7 @@ def generateGraphAdj(file):
                 g.es[edge_index2]['label'] = 's'
 
     g.vs[g.vcount()-2]['color'] = 'blue'
-    blue_vertex =  g.vs[g.vcount()-2]
     g.vs[g.vcount()-1]['color'] = 'red'
-    red_vertex = g.vs[g.vcount()-1]
-    for i in blue_neighbors:
-        g.add_edge(blue_vertex, g.vs[i])
-        edge_index = g.get_eid(blue_vertex, g.vs[i])
-        g.es[edge_index]['label'] = 's'
-    for i in red_neighbors:
-        g.add_edge(red_vertex, g.vs[i])
-        edge_index = g.get_eid(red_vertex, g.vs[i])
-        g.es[edge_index]['label'] = 's'
 
     g.add_vertices(1)
     g.vs[g.vcount()-1]['color'] = 'green'
@@ -211,13 +201,13 @@ def generateGraphAdj(file):
                     g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
 
                 g.add_edge(green_vertex, source_vertex)
+                g.add_edge(green_vertex, target_vertex)
                 if DEBUG:
                     if g.vs[source_vertex]['color'] == 'black':
                         black_green_neighbors.append(source_vertex)
                 if DEBUG:
                     if g.vs[target_vertex]['color'] == 'black':
                         black_green_neighbors.append(target_vertex)
-                g.add_edge(green_vertex, target_vertex)
 
     if DEBUG:
         print(g.vs['color'])
@@ -638,39 +628,46 @@ def main():
         PERIODICITY = True
         if sys.argv[2] == "-g":
             g, is_2D = generateGraphGraphe(sys.argv[3])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
+            # visualize(g, is_2D)
             filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+            # visualize(filteredGraph, is_2D)
             dic = d.desciptors(g)
 
+            # print(connectedComponents(filteredGraph))
             for key, value in dic.items():
                 print(key, value)
 
         elif sys.argv[1] != "-g":
             g, is_2D = generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
+            # visualize(g, is_2D)
             filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+            # visualize(filteredGraph, is_2D)
             dic = d.desciptors(g)
 
+            # print(connectedComponents(filteredGraph))
             for key, value in dic.items():
                 print(key, value)
+
     else:
         if sys.argv[1] == "-g":
             g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
+            # visualize(g, is_2D)
             filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+            # visualize(filteredGraph, is_2D)
+            # print(connectedComponents(filteredGraph))
+
 
         elif sys.argv[1] != "-g":
             g, is_2D = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
+            # visualize(g, is_2D)
             filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+            # visualize(filteredGraph, is_2D)
             dic = d.desciptors(g)
+            # print(connectedComponents(filteredGraph))
 
             for key, value in dic.items():
                 print(key, value)
+
 
 
 
