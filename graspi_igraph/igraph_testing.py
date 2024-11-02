@@ -182,17 +182,21 @@ def generateGraphAdj(file):
                 edge_index2 = g.get_eid(g.vs[i], g.vs[i - 1])
                 g.es[edge_index2]['label'] = 's'
 
-    g.vs[int(line[0]) * int(line[1])]['color'] = 'blue'
-    blue_vertex =  g.vs[int(line[0]) * int(line[1])]
-    g.vs[int(line[0]) * int(line[1]) + 1]['color'] = 'red'
-    red_vertex = g.vs[int(line[0]) * int(line[1]) + 1]
+    g.vs[g.vcount()-2]['color'] = 'blue'
+    blue_vertex =  g.vs[g.vcount()-2]
+    g.vs[g.vcount()-1]['color'] = 'red'
+    red_vertex = g.vs[g.vcount()-1]
     for i in blue_neighbors:
         g.add_edge(blue_vertex, g.vs[i])
+        edge_index = g.get_eid(blue_vertex, g.vs[i])
+        g.es[edge_index]['label'] = 's'
     for i in red_neighbors:
         g.add_edge(red_vertex, g.vs[i])
+        edge_index = g.get_eid(red_vertex, g.vs[i])
+        g.es[edge_index]['label'] = 's'
 
     g.add_vertices(1)
-    g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
+    g.vs[g.vcount()-1]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
 
     if DEBUG:
@@ -341,6 +345,18 @@ def vertexColors(fileName):
                     labels.append('black')
 
     return labels
+
+    # labels = []
+    # with open(fileName, 'r') as file:
+    #     lines = file.readlines()
+    #     for line in lines[1:]:
+    #         for char in line:
+    #             if char == '1':
+    #                 labels.append('white')
+    #             elif char == '0':
+    #                 labels.append('black')
+    #
+    # return labels
 
 
 '''********* Constructing the Graph **********'''
