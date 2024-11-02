@@ -5,6 +5,86 @@ import numpy as np
 import os
 DEBUG = False
 '''---------Function to create edges for graph in specified format --------'''
+def adjList(fileName):
+    """
+        Creates an adjacency list from a given file.
+
+        Args:
+            filename (str): The name of the file containing the graph data.
+
+        Returns:
+            list: The adjacency list representing the graph, lists for first, second, and third, ordered pairs
+                  as well as a bool to signal if the graph is a 2D or 3D graph.
+        """
+    adjacency_list = {}
+    first_order_pairs = []
+    second_order_pairs = []
+    third_order_pairs = []
+    is_2d = True
+    with open(fileName, "r") as file:
+        header = file.readline().split(' ')
+        dimX, dimY = int(header[0]), int(header[1])
+        if len(header) < 3:
+            dimZ = 1
+        else:
+            if int(header[2]) == 0:
+                dimZ = 1
+            else:
+                dimZ = int(header[2])
+
+        if dimZ == 0 or dimZ == 1:
+            dimZ = 1
+        else:
+            # dimZ = dimX * dimY
+            is_2d = False
+        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1)]
+
+        for z in range(dimZ):
+            for y in range(dimY):
+                for x in range(dimX):
+                    current_vertex = z * dimY * dimX + y * dimX + x
+                    neighbors = []
+                    for dx, dy, dz in offsets:
+                        nx, ny, nz = x + dx, y + dy, z + dz
+                        if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
+                            neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
+                            if (dx, dy, dz) == offsets[1] or (dx, dy, dz) == offsets[2] or (dx, dy, dz) == offsets[3]:
+                                first_order_pairs.append([current_vertex, neighbor_vertex])
+                            elif (dx, dy, dz) == offsets[4] or (dx, dy, dz) == offsets[5] or (dx, dy, dz) == offsets[6] or (dx, dy, dz) == offsets[7]:
+                                third_order_pairs.append([current_vertex, neighbor_vertex])
+                            else:
+                                second_order_pairs.append([current_vertex, neighbor_vertex])
+                            neighbors.append(neighbor_vertex)
+                    adjacency_list[current_vertex] = neighbors
+
+    # adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
+    adjacency_list[dimZ * dimY * dimX] = []
+    for z in range(dimZ):
+        for y in range(0,dimY, dimY):
+            for x in range(dimX):
+                adjacency_list[dimZ * dimY * dimX].append(z  * (dimY * dimX) + y * dimX + x)
+    # adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
+    adjacency_list[dimZ * dimY * dimX + 1] = []
+    for z in range(dimZ):
+        for y in range(0,dimY, dimY):
+            for x in range(dimX):
+                adjacency_list[dimZ * dimY * dimX + 1].append(z  * (dimY * dimX) + (dimY - 1) * dimX + x)
+
+    blue_neighbors = adjacency_list[dimZ * dimY * dimX]
+    red_neighbors = adjacency_list[dimZ * dimY * dimX + 1]
+    if DEBUG:
+        print("Adjacency List: ", adjacency_list)
+        print("Adjacency List LENGTH: ", len(adjacency_list))
+        print("First Order Pairs: ", first_order_pairs)
+        print("First Order Pairs LENGTH: ", len(first_order_pairs))
+        print("Second Order Pairs: ", second_order_pairs)
+        print("Second Order Pairs LENGTH: ", len(second_order_pairs))
+        print("Third Order Pairs: ", third_order_pairs)
+        print("Third Order Pairs LENGTH: ", len(third_order_pairs))
+        print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
+        print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
+        # exit()
+    return adjacency_list, first_order_pairs, second_order_pairs, third_order_pairs, blue_neighbors, red_neighbors, is_2d
 
 
 def graphe_adjList(filename):
