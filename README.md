@@ -179,10 +179,15 @@ If you have the same test directories as this GitHub Repo you should be able to 
 ```
 python graspi_igraph/igraph_testing.py g graspi_igraph/tests/2D-testFile/data_4_3.graphe 2d 
 ```
-### Generate and Run Files for py-graspi API
+## Generate and Run Files for py-graspi API
 In order to generate an API using sphinx, you just need to follow these two commands in the command line interface.
 
 **Make sure your current directory is py-graspi**
+
+In order to create an API with sphinx, you need to download sphinx with this command in the command line interface:
+```
+pip install sphinx
+```
 
 In the command line interface, run this command:
 ```
