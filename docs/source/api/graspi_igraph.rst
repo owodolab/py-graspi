@@ -5,7 +5,7 @@ Submodules
 ----------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 10
 
    graspi_igraph.csvFileMaker
    graspi_igraph.descriptors

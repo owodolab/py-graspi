@@ -1,0 +1,21 @@
+.details-summary {
+  cursor: pointer;
+  padding: 0.5em;
+  color: #007BFF;
+  background-color: #F8F9FA;
+  border: 1px solid #DEE2E6;
+}
+
+.details-summary:hover {
+  background-color: #E2E6EA;
+}
+
+.details-content {
+  padding: 15px;
+  border-top: none;
+  display: none;
+}
+
+.details-open .details-content {
+  display: block;
+}

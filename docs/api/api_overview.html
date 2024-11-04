@@ -9,6 +9,9 @@
   <title>API Overview &mdash; py-graspi  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-bootstrap.5fd3999ee7762ccc51105388f4a9d115.css?v=45cf7dbc" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css?v=2a6c4383" />
+      <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css?v=d290406d" />
 
   
     <link rel="canonical" href="https://owodolab.github.io/py-graspi/api/api_overview.html" />
@@ -20,8 +23,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="graspi_igraph.csvFileMaker.csvMaker" href="false/graspi_igraph.csvFileMaker.csvMaker.html" />
-    <link rel="prev" title="testFileMaker" href="graspi_igraph.testFileMaker.html" /> 
+    <link rel="prev" title="Example of Usage" href="../pyGraspiExamples.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,25 +45,48 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">API Modules:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="graspi_igraph.csvFileMaker.html">csvFileMaker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="graspi_igraph.descriptors.html">descriptors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="graspi_igraph.igraph_testing.html">testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="graspi_igraph.testFileMaker.html">testFileMaker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pyGraspiExamples.html">Example of Usage</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">API Overview:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">API Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="false/graspi_igraph.csvFileMaker.csvMaker.html">graspi_igraph.csvFileMaker.csvMaker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="false/graspi_igraph.csvFileMaker.functionMemory.html">graspi_igraph.csvFileMaker.functionMemory</a></li>
-<li class="toctree-l2"><a class="reference internal" href="false/graspi_igraph.csvFileMaker.functionRuntime.html">graspi_igraph.csvFileMaker.functionRuntime</a></li>
-<li class="toctree-l2"><a class="reference internal" href="false/graspi_igraph.igraph_testing.generateGraph.html">graspi_igraph.igraph_testing.generateGraph</a></li>
-<li class="toctree-l2"><a class="reference internal" href="false/graspi_igraph.igraph_testing.filterGraph.html">graspi_igraph.igraph_testing.filterGraph</a></li>
-<li class="toctree-l2"><a class="reference internal" href="false/graspi_igraph.igraph_testing.visual2D.html">graspi_igraph.igraph_testing.visual2D</a></li>
-<li class="toctree-l2"><a class="reference internal" href="false/graspi_igraph.igraph_testing.visual3D.html">graspi_igraph.igraph_testing.visual3D</a></li>
-<li class="toctree-l2"><a class="reference internal" href="false/graspi_igraph.descriptors.descriptorsToTxt.html">graspi_igraph.descriptors.descriptorsToTxt</a></li>
-<li class="toctree-l2"><a class="reference internal" href="false/graspi_igraph.testFileMaker.testFileMaker.html">graspi_igraph.testFileMaker.testFileMaker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.ABS_f_D"><code class="docutils literal notranslate"><span class="pre">ABS_f_D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.CT_f_conn_A_Ca"><code class="docutils literal notranslate"><span class="pre">CT_f_conn_A_Ca()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.CT_f_conn_D_An"><code class="docutils literal notranslate"><span class="pre">CT_f_conn_D_An()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.CT_n_A_adj_Ca"><code class="docutils literal notranslate"><span class="pre">CT_n_A_adj_Ca()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.CT_n_D_adj_An"><code class="docutils literal notranslate"><span class="pre">CT_n_D_adj_An()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.STAT_CC_A"><code class="docutils literal notranslate"><span class="pre">STAT_CC_A()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.STAT_CC_A_Ca"><code class="docutils literal notranslate"><span class="pre">STAT_CC_A_Ca()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.STAT_CC_D"><code class="docutils literal notranslate"><span class="pre">STAT_CC_D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.STAT_CC_D_An"><code class="docutils literal notranslate"><span class="pre">STAT_CC_D_An()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.STAT_e"><code class="docutils literal notranslate"><span class="pre">STAT_e()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.STAT_n"><code class="docutils literal notranslate"><span class="pre">STAT_n()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.STAT_n_A"><code class="docutils literal notranslate"><span class="pre">STAT_n_A()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.STAT_n_D"><code class="docutils literal notranslate"><span class="pre">STAT_n_D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.desciptors"><code class="docutils literal notranslate"><span class="pre">desciptors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.descriptors.descriptorsToTxt"><code class="docutils literal notranslate"><span class="pre">descriptorsToTxt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.adjList"><code class="docutils literal notranslate"><span class="pre">adjList()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.adjvertexColors"><code class="docutils literal notranslate"><span class="pre">adjvertexColors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.connectedComponents"><code class="docutils literal notranslate"><span class="pre">connectedComponents()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.filterGraph"><code class="docutils literal notranslate"><span class="pre">filterGraph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.generateGraph"><code class="docutils literal notranslate"><span class="pre">generateGraph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.generateGraphAdj"><code class="docutils literal notranslate"><span class="pre">generateGraphAdj()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.generateGraphGraphe"><code class="docutils literal notranslate"><span class="pre">generateGraphGraphe()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.graphe_adjList"><code class="docutils literal notranslate"><span class="pre">graphe_adjList()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.shortest_path"><code class="docutils literal notranslate"><span class="pre">shortest_path()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.vertexColors"><code class="docutils literal notranslate"><span class="pre">vertexColors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.visual2D"><code class="docutils literal notranslate"><span class="pre">visual2D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.igraph_testing.visual3D"><code class="docutils literal notranslate"><span class="pre">visual3D()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.csvFileMaker.csvMaker"><code class="docutils literal notranslate"><span class="pre">csvMaker()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.csvFileMaker.functionMemory"><code class="docutils literal notranslate"><span class="pre">functionMemory()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.csvFileMaker.functionRuntime"><code class="docutils literal notranslate"><span class="pre">functionRuntime()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.testFileMaker.run_test_file_maker"><code class="docutils literal notranslate"><span class="pre">run_test_file_maker()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#graspi_igraph.testFileMaker.testFileMaker"><code class="docutils literal notranslate"><span class="pre">testFileMaker()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -93,51 +118,590 @@
   <section id="api-overview">
 <h1>API Overview<a class="headerlink" href="#api-overview" title="Permalink to this heading"></a></h1>
 <p>Below is the list of all functions available in <strong>py-graspi</strong>:</p>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="graspi_igraph.csvFileMaker.html#graspi_igraph.csvFileMaker.csvMaker" title="graspi_igraph.csvFileMaker.csvMaker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graspi_igraph.csvFileMaker.csvMaker</span></code></a></p></td>
-<td><p>Runs multiple graph-related functions, records their runtime and memory usage, and stores the results in a CSV file.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="graspi_igraph.csvFileMaker.html#graspi_igraph.csvFileMaker.functionMemory" title="graspi_igraph.csvFileMaker.functionMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graspi_igraph.csvFileMaker.functionMemory</span></code></a></p></td>
-<td><p>Measures the peak memory usage of a function during its execution.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="graspi_igraph.csvFileMaker.html#graspi_igraph.csvFileMaker.functionRuntime" title="graspi_igraph.csvFileMaker.functionRuntime"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graspi_igraph.csvFileMaker.functionRuntime</span></code></a></p></td>
-<td><p>Measures the average runtime of a function over a specified number of executions.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.generateGraph" title="graspi_igraph.igraph_testing.generateGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graspi_igraph.igraph_testing.generateGraph</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.filterGraph" title="graspi_igraph.igraph_testing.filterGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graspi_igraph.igraph_testing.filterGraph</span></code></a></p></td>
-<td><p>Filters the graph by keeping only edges between vertices of the same color.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.visual2D" title="graspi_igraph.igraph_testing.visual2D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graspi_igraph.igraph_testing.visual2D</span></code></a></p></td>
-<td><p>Visualizes the graph in 2D.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.visual3D" title="graspi_igraph.igraph_testing.visual3D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graspi_igraph.igraph_testing.visual3D</span></code></a></p></td>
-<td><p>Visualizes the graph in 3D.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="graspi_igraph.descriptors.html#graspi_igraph.descriptors.descriptorsToTxt" title="graspi_igraph.descriptors.descriptorsToTxt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graspi_igraph.descriptors.descriptorsToTxt</span></code></a></p></td>
-<td><p>Writes graph descriptors to a text file.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="graspi_igraph.testFileMaker.html#graspi_igraph.testFileMaker.testFileMaker" title="graspi_igraph.testFileMaker.testFileMaker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graspi_igraph.testFileMaker.testFileMaker</span></code></a></p></td>
-<td><p>Creates a text file containing a structured grid of binary values based on the given parameters.</p></td>
-</tr>
-</tbody>
-</table>
-</section>
+<details class="sphinx-bs dropdown card mb-3">
+<summary class="summary-title card-header">
+Descriptor Functions<div class="summary-down docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="summary-up docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="summary-content card-body docutils">
+<span class="target" id="module-graspi_igraph.descriptors"></span><dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.ABS_f_D">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">ABS_f_D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#ABS_f_D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.ABS_f_D" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Calculates the fraction of ‘black’ vertices out of the total vertices minus three (accounts for red, green, and blue vertices).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The fraction of ‘black’ vertices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.CT_f_conn_A_Ca">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">CT_f_conn_A_Ca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#CT_f_conn_A_Ca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.CT_f_conn_A_Ca" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Calculates the fraction of ‘white’ vertices in connected components with ‘white’ and ‘blue’ vertices (bottom).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The fraction of ‘white’ vertices in specific connected components (bottom).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.CT_f_conn_D_An">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">CT_f_conn_D_An</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#CT_f_conn_D_An"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.CT_f_conn_D_An" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Calculates the fraction of ‘black’ vertices in specific connected components with red and black vertices (top).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The fraction of ‘black’ vertices in connected components with ‘black’ vertices (top).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.CT_n_A_adj_Ca">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">CT_n_A_adj_Ca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#CT_n_A_adj_Ca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.CT_n_A_adj_Ca" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Counts number of ‘white’ vertices in direct contact with the ‘blue’ vertex (bottom).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The number of ‘white’ vertices direct contact with the ‘blue’ vertex (bottom).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.CT_n_D_adj_An">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">CT_n_D_adj_An</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#CT_n_D_adj_An"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.CT_n_D_adj_An" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Counts number of ‘black’ vertices in direct contact with the ‘red’ vertex (top).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The number of ‘black’ vertices direct contact with the ‘red’ vertex (top).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_CC_A">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_CC_A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#STAT_CC_A"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_CC_A" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Counts the connected components that contain at least one ‘white’ vertex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The number of connected components with at least one ‘white’ vertex.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_CC_A_Ca">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_CC_A_Ca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#STAT_CC_A_Ca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_CC_A_Ca" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Counts the connected components containing ‘white’ vertices and ‘blue’ vertex (bottom).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The number of connected components with ‘white’ and ‘blue’ vertices (bottom).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_CC_D">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_CC_D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#STAT_CC_D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_CC_D" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Counts the connected components that contain at least one ‘black’ vertex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The number of connected components with at least one ‘black’ vertex.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_CC_D_An">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_CC_D_An</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#STAT_CC_D_An"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_CC_D_An" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Counts the connected components containing ‘black’ vertices and ‘red’ vertex (top).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The number of connected components with ‘black’ and ‘red’ vertices (top).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_e">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_e</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#STAT_e"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_e" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Counts the edges connected to at least one ‘green’ vertex (interface edges).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The number of edges where at least one endpoint has the color ‘green’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_n">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#STAT_n"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_n" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Calculates the number of vertices in the graph, excluding three specific nodes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The number of vertices minus three.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_n_A">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_n_A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#STAT_n_A"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_n_A" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Counts the number of vertices colored ‘white’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The number of vertices with the color ‘white’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.STAT_n_D">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">STAT_n_D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#STAT_n_D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.STAT_n_D" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Counts the number of vertices colored ‘black’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The number of vertices with the color ‘black’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.desciptors">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">desciptors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#desciptors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.desciptors" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Generates a dictionary of all graph descriptors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>igraph.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">A dictionary of descriptors and their calculated values.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.descriptors.descriptorsToTxt">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.descriptors.</span></span><span class="sig-name descname"><span class="pre">descriptorsToTxt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/descriptors.html#descriptorsToTxt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.descriptors.descriptorsToTxt" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Writes graph descriptors to a text file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p class="card-text"><strong>dict</strong> (<em>dict</em>) – The dictionary of descriptors.</p></li>
+<li><p class="card-text"><strong>fileName</strong> (<em>str</em>) – The name of the file to write to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</details><details class="sphinx-bs dropdown card mb-3">
+<summary class="summary-title card-header">
+py-graspi Functions<div class="summary-down docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="summary-up docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="summary-content card-body docutils">
+<span class="target" id="module-graspi_igraph.igraph_testing"></span><dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.adjList">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">adjList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#adjList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.adjList" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.adjvertexColors">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">adjvertexColors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#adjvertexColors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.adjvertexColors" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Labels the colors of vertices based on a given file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>fileName</strong> (<em>str</em>) – The name of the file containing the vertex color data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">A list of vertex colors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.connectedComponents">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">connectedComponents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#connectedComponents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.connectedComponents" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Identifies the connected components of the filtered graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">A list of connected components.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.filterGraph">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">filterGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#filterGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.filterGraph" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Filters the graph by keeping only edges between vertices of the same color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The filtered graph.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">ig.Graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.generateGraph">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">generateGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#generateGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.generateGraph" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Generates graph based on file input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>file</strong> (<em>str</em>) – The name of the file containing graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">Generated graph based on input</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.generateGraphAdj">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">generateGraphAdj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#generateGraphAdj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.generateGraphAdj" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Generates Graph using an adjacency list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>file</strong> (<em>str</em>) – The name of the file containing graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">Generated graph using an adjacency list.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.generateGraphGraphe">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">generateGraphGraphe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#generateGraphGraphe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.generateGraphGraphe" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Constructs a graph from an adjacency list and assigns vertex colors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>file</strong> (<em>str</em>) – The name of the file containing graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The constructed graph with assigned vertex colors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">ig.Graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.graphe_adjList">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">graphe_adjList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#graphe_adjList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.graphe_adjList" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Creates an adjacency list from a given file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>filename</strong> (<em>str</em>) – The name of the file containing the graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The adjacency list representing the graph.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.shortest_path">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">shortest_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">toVertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#shortest_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.shortest_path" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Finds the shortest paths from vertices to a target vertex and writes them to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p class="card-text"><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p></li>
+<li><p class="card-text"><strong>vertices</strong> (<em>str</em>) – The source vertex color.</p></li>
+<li><p class="card-text"><strong>toVertex</strong> (<em>str</em>) – The target vertex color.</p></li>
+<li><p class="card-text"><strong>fileName</strong> (<em>str</em>) – The name of the output file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">A dictionary of shortest paths.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.vertexColors">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">vertexColors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#vertexColors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.vertexColors" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Labels the colors of vertices based on a given file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>fileName</strong> (<em>str</em>) – The name of the file containing the vertex color data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">A list of vertex colors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.visual2D">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">visual2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#visual2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.visual2D" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Visualizes the graph in 2D.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p class="card-text"><strong>g</strong> (<em>ig.Graph</em>) – The input graph to visualize.</p></li>
+<li><p class="card-text"><strong>type</strong> (<em>str</em>) – The layout type (‘graph’ or ‘grid’).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.visual3D">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">visual3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">g</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/igraph_testing.html#visual3D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.visual3D" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Visualizes the graph in 3D.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text"><strong>g</strong> (<em>ig.Graph</em>) – The input graph to visualize.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</details><details class="sphinx-bs dropdown card mb-3">
+<summary class="summary-title card-header">
+CSV File Making<div class="summary-down docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="summary-up docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="summary-content card-body docutils">
+<span class="target" id="module-graspi_igraph.csvFileMaker"></span><dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.csvFileMaker.csvMaker">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.csvFileMaker.</span></span><span class="sig-name descname"><span class="pre">csvMaker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphGen</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphGenPar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphFilt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graphFiltPar</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shortPath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shortPathPar</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/csvFileMaker.html#csvMaker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.csvFileMaker.csvMaker" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Runs multiple graph-related functions, records their runtime and memory usage,
+and stores the results in a CSV file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p class="card-text"><strong>fileName</strong> (<em>str</em>) – The name of the CSV file to write results to.</p></li>
+<li><p class="card-text"><strong>n</strong> (<em>int</em>) – The base size parameter of the graph.</p></li>
+<li><p class="card-text"><strong>dim</strong> (<em>int</em>) – The dimension to compute the total nodes as n^dim.</p></li>
+<li><p class="card-text"><strong>count</strong> (<em>int</em>) – The number of times to run each function for benchmarking.</p></li>
+<li><p class="card-text"><strong>graphGen</strong> (<em>Callable</em>) – Function to generate a graph.</p></li>
+<li><p class="card-text"><strong>graphGenPar</strong> (<em>tuple</em>) – Parameters for the graph generation function.</p></li>
+<li><p class="card-text"><strong>graphFilt</strong> (<em>Callable</em>) – Function to filter the graph.</p></li>
+<li><p class="card-text"><strong>graphFiltPar</strong> (<em>tuple</em>) – Parameters for the graph filtering function.</p></li>
+<li><p class="card-text"><strong>shortPath</strong> (<em>Callable</em>) – Function to compute the shortest path in the graph.</p></li>
+<li><p class="card-text"><strong>shortPathPar</strong> (<em>tuple</em>) – Parameters for the shortest path function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The function writes results to the specified CSV file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.csvFileMaker.functionMemory">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.csvFileMaker.</span></span><span class="sig-name descname"><span class="pre">functionMemory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">argv</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/csvFileMaker.html#functionMemory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.csvFileMaker.functionMemory" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Measures the peak memory usage of a function during its execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p class="card-text"><strong>function</strong> (<em>Callable</em>) – The function to measure memory usage for.</p></li>
+<li><p class="card-text"><strong>*argv</strong> – Arguments to be passed to the function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The memory used in bytes during the function’s execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.csvFileMaker.functionRuntime">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.csvFileMaker.</span></span><span class="sig-name descname"><span class="pre">functionRuntime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">argv</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/csvFileMaker.html#functionRuntime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.csvFileMaker.functionRuntime" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Measures the average runtime of a function over a specified number of executions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p class="card-text"><strong>count</strong> (<em>int</em>) – The number of times to execute the function.</p></li>
+<li><p class="card-text"><strong>function</strong> (<em>Callable</em>) – The function to measure the runtime for.</p></li>
+<li><p class="card-text"><strong>*argv</strong> – Arguments to be passed to the function.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">The average execution time in seconds across the <cite>count</cite> executions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</details><details class="sphinx-bs dropdown card mb-3">
+<summary class="summary-title card-header">
+Test Files Generation<div class="summary-down docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="summary-up docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="summary-content card-body docutils">
+<span class="target" id="module-graspi_igraph.testFileMaker"></span><dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.testFileMaker.run_test_file_maker">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.testFileMaker.</span></span><span class="sig-name descname"><span class="pre">run_test_file_maker</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/testFileMaker.html#run_test_file_maker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.testFileMaker.run_test_file_maker" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.testFileMaker.testFileMaker">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.testFileMaker.</span></span><span class="sig-name descname"><span class="pre">testFileMaker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">textFileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/graspi_igraph/testFileMaker.html#testFileMaker"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.testFileMaker.testFileMaker" title="Permalink to this definition"></a></dt>
+<dd><p class="card-text">Creates a text file containing a structured grid of binary values based on the given parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p class="card-text"><strong>num</strong> (<em>int</em>) – The number of rows and columns (grid size).</p></li>
+<li><p class="card-text"><strong>depth</strong> (<em>int</em>) – The number of layers to generate.</p></li>
+<li><p class="card-text"><strong>textFileName</strong> (<em>str</em>) – The name of the output text file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p class="card-text">“success” if the file is created successfully.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p class="card-text">str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</details></section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="graspi_igraph.testFileMaker.html" class="btn btn-neutral float-left" title="testFileMaker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="false/graspi_igraph.csvFileMaker.csvMaker.html" class="btn btn-neutral float-right" title="graspi_igraph.csvFileMaker.csvMaker" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../pyGraspiExamples.html" class="btn btn-neutral float-left" title="Example of Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

@@ -1,58 +1,73 @@
 import igraph_testing as ig
 import descriptors as ds
 import os
+import fpdf
+import numpy as np
+from PIL import Image
+import webbrowser
 
-# Define paths to data and descriptors directories
 current_dir = os.getcwd()
 data_path = f"{current_dir}/graspi_igraph/data/"
 descriptors_path = f"{current_dir}/graspi_igraph/descriptors/"
-
-# Extract the list of test file names without extensions
+image_path = f"{current_dir}/graspi_igraph/images/"
 test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path)]
 
-for test_file in test_files:
-    """
-    Generates a graph from a test file, calculates its descriptors, and compares them to expected values.
+pdf = fpdf.FPDF()
+pdf.set_font("Arial", size=12)
 
-    Each graph's descriptors are validated against a corresponding log file. If any discrepancies are found,
-    the test is marked as failed; otherwise, it is marked as passed.
-    """
+def generate_image(filename):
+    file_path = data_path + filename + ".txt"
+    matrix = []
+    with open(file_path, "r") as f:
+        lines = f.readlines()
+        for line in lines[1:]:
+            row = []
+            line = line.strip().split(" ")
+            for char in line:
+                row.append(int(char))
+            matrix.append(row)
+    matrix_array = np.array(matrix, dtype=np.uint8)
+    image = Image.fromarray(matrix_array * 255, mode="L")
+    bw_image = image.convert("1")
+    bw_image.save(image_path + filename + ".png")
+
+print("Generating PDF")
+for test_file in test_files:
+    pdf.add_page()
     g = ig.generateGraph(data_path + test_file + ".txt")
     stats = ds.desciptors(g)
     #ig.visual2D(g, 'graph')
 
-    print(f"{test_file} Results")
+    pdf.cell(200, 10, txt=f"{test_file} Results", ln=True, align="L")
+    #print(f"{test_file} Results")
 
-<<<<<<< Updated upstream
-=======
-    errorFlag = 0  # Flag to track if any errors are found
-
-    # Open and read the log file containing expected descriptor values
->>>>>>> Stashed changes
     with open(descriptors_path + "descriptors." + test_file + ".log") as f:
         for line in f:
             stat = line.strip().split(" ")
-
-            # Compare calculated descriptors with expected values
             try:
                 if stats.get(stat[0], -1) == int(stat[1]):
-                    print(f"{stat[0]} passed")
+                    pdf.cell(200, 10, txt=f"{stat[0]} passed", ln=True, align="L")
+                    #print(f"{stat[0]} passed")
                 elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != int(stat[1]):
-                    print(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
+                    pdf.cell(200, 10, txt=f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}", ln=True, align="L")
+                    #print(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
             except ValueError:
                 if stats.get(stat[0], -1) == float(stat[1]):
-                    print(f"{stat[0]} passed")
+                    pdf.cell(200, 10, txt=f"{stat[0]} passed", ln=True, align="L")
+                    #print(f"{stat[0]} passed")
                 elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != float(stat[1]):
-<<<<<<< Updated upstream
-                    print(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
-    print(stats)
-    print("")
-=======
-                    errorFlag = 1
+                    pdf.cell(200, 10,
+                             txt=f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}",
+                             ln=True, align="L")
+                    #print(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
+    #print(stats)
+    #print("")
+    pdf.cell(200, 10, txt=f"{stats}", ln=True, align="L")
 
-    # Print the result of the test based on the error flag
-    if errorFlag == 1:
-        print(f"{test_file}: failed")
-    else:
-        print(f"{test_file}: passed")
->>>>>>> Stashed changes
+    generate_image(test_file)
+    image_file = image_path + test_file + ".png"
+    pdf.image(image_file)
+
+pdf.output(f"{current_dir}/graspi_igraph/test_results.pdf")
+print("PDF Generated")
+webbrowser.open_new_tab(f"{current_dir}/graspi_igraph/test_results.pdf")

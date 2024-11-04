@@ -1,4 +1,4 @@
-# graspi_igraph
+# py-graspi
 
 Python-Igraph is a graph-based library contender for the library that works with the GraSPI package. 
 
@@ -15,27 +15,24 @@ The basic algorithm requirements include:
 Download the packages found in requirements.txt after you have set up your virtual environment. 
 Cone the repo by:
 ```
-git clone https://github.com/wenqizheng326/graspi_igraph.git
-```
 
-Install the graspi_igraph package by:
+git@github.com:owodolab/py-graspi.git
 ```
-pip install graspi-igraph
+**Note: You'd need git installed on your system first**
+<br />
+<br />
+  If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
+<br />
+<br />
+Next, you'd need to navigate to the cloned repo using terminal. An example would be:
 ```
-Once installed, to utilize the package remember to import the package:
+cd /path/py-graspi
 ```
-import graspi_igraph as ig
+Once navigated to the branch, access the following directory:
 ```
-
-## Example of Utilizing graspi_igraph via Jupyter Notebook
-There is an example of how to utilize the code and how it works in a Jupyter Notebook that can be found in the notebook folder, called graspi_igraph_notebook.ipynb.
-
-To run all code snippets
-If using an text editor such as VSCode:
-- click the Run All button at the top of notebook
-
-If using a command line for jupyter notebook:
-- install jupyter notebook
+cd graspi_igraph
+```
+Next, the downloads needed can be found in requirements.txt and can be installed by:
 ```
 pip install notebook
 ```
@@ -64,55 +61,49 @@ If running each code snippet separately:
 <br />
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
-## Running memory tests
-To run memory tests, run the following command in terminal:
+## Running all 33 morphologies tests
+To run the morphologies tests, return to the previous directory of "/py-graspi" by running:
 ```
-python main.py n dimension function
+cd ..
 ```
-**Make sure of the following:**
-  -  Replace "n" with the size of the graph you want. Note: n should be between 1-1000 for 2D graphs and 1-100 for 3D graphs
-  -  Replace "dimension" with 2D or 3D to specify if you want a 2D or 3D graph
-  -  Replace "function" with either generate, filter, or shortest_path, to choose which function you want to test memory for
- 
-<br />**An example of a correct command would be:**
+Next, make sure you're on bash first by running:
 ```
-python main.py 10 2D generate
-
+bash
 ```
-## Outputs
-After running this command, you should see
+Next, run the following:
 ```
-
-Generating results
+chmod +x run.sh
 ```
-Followed by the memory usage and runtime results after some time.
+Finally, run the following: 
+```
+./run.sh
+```
+## 33 Morphologies Output
+After running this command, the automatic pdf generation will begin. 
 <br />
-<br />
- The following will print:
+<br /> 
+After a few minutes, the following will print once your pdf has been created
 ```
-Completed
+PDF Generated
 ```
-To know that the tests have been completed
-## Further Explanation of Functionalities
-### To Generate Test Files
-Test-input-files can be generated via the testFileMaker.py by calling the function testFileMaker(_num_,_depth_,_textFileName_)
-  - the function takes in a number of rows for the test graph, the depth of the graph, and the output file name
-  - to generate 2D graphs, set the depth to 1
-  
-There are existing test files that can be accessed in the 2D-testFile and 3D-testFile folders
-
-2D Testfile Example
+If the pdf does not automatically pop up, use the following commands:
+### On Windows
 ```
-# generates a 10x10 2D graph input-file
-ig.testFileMaker(10,1,"output.txt")
+start graspi_igraph/test_results.pdf
 ```
-3D Testfile Example
+### On MacOS
 ```
-# generates a 10x10x5 3D graph input-file
-ig.testFileMaker(10,5,"output.txt")
+open graspi_igraph/test_results.pdf
 ```
-
-### To Test Algorithms
+### On Linux
+```
+evince graspi_igraph/test_results.pdf
+```
+If evince is not installed, run this first:
+```
+sudo apt install evince
+```
+## To Test Algorithms
 
 To **generate graphs**, call the generateGraph(_file_) function which takes in a input-file name
   -  returns a graph
@@ -172,4 +163,60 @@ ig.visual3D(g)
 Finally, the following message will be printed out:
 ```
 
+## Testing from Command Line
+
+
+\*\*\*First and foremost make sure you are in the py-graspi directory. If not you may run into some errors\*\*\*
+
+In this GitHub Repo, all the tests are in the test directory. Furthermore, within this directory are two more directories: 2D-testFile and 3D-testFile.
+Inside these directories, some files hold information about either 2d or 3d graphs based on the directory name. 
+When running from command lines you will need to know the complete pathname of the test file you are trying to run.
+
+There are 2 type of input file formats: *.txt & *.graphe
+### _*.txt input format:_
+
+
+The command line input to run a graph creation for *.txt files will have the following format:
+```
+python graspi_igraph/igraph_testing.py {total pathname of test file} {2d or 3d}
+```
+If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 10x10 graph.
+```
+python graspi_igraph/igraph_testing.py graspi_igraph/tests/2D-testFile/testFile-10-2D.txt 2d
+```
+### _*.graphe input format:_
+*.graphe input format is not that different, only extra parameter you need to input is a 'g' before the total pathname of the test file.
+
+The command line input to run a graph creation for *.graphe files will have the following format:
+````
+python graspi_igraph/igraph_testing.py g {total pathname of test file} {2d or 3d}
+````
+If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
+```
+python graspi_igraph/igraph_testing.py g graspi_igraph/tests/2D-testFile/data_4_3.graphe 2d 
+```
+## Generate and Run Files for py-graspi API
+In order to generate an API using sphinx, you just need to follow these two commands in the command line interface.
+
+**Make sure your current directory is py-graspi**
+
+In order to create an API with sphinx, you need to download sphinx with this command in the command line interface:
+```
+pip install sphinx
+```
+
+In the command line interface, run this command:
+```
+sphinx-build -b html ./docs/source/ ./docs/ 
+```
+* **sphinx-build**: This is the main command for building Sphinx documentation. It generates documentation from reStructuredText (.rst) or Markdown (.md) source files.
+* **-b html**: This specifies the output format. Here, -b html tells Sphinx to build the documentation in HTML format, which is typically used for web-based documentation.
+* **./docs/source/**: This is the path to the source directory where Sphinx looks for the documentation source files. In this example, it’s in the source subdirectory inside docs.
+* **./docs/**: This is the output directory where the built HTML files will be saved. In this example, it’s the main docs folder. After running this command, you’ll find the generated HTML files here.
+
+In order to see the py-graspi API, run this command in the command line interface:
+```
+start docs/index.html
+```
+This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
 

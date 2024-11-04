@@ -4,268 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="21da6ccd-3b54-4132-9da6-9e6d845692fb" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/py-graspi.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/api_overview.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/csvFileTest.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/false/graspi_igraph.csvFileMaker.csvMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/false/graspi_igraph.csvFileMaker.functionMemory.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/false/graspi_igraph.csvFileMaker.functionRuntime.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/false/graspi_igraph.descriptors.descriptorsToTxt.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/false/graspi_igraph.igraph_testing.filterGraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/false/graspi_igraph.igraph_testing.generateGraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/false/graspi_igraph.igraph_testing.visual2D.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/false/graspi_igraph.igraph_testing.visual3D.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/false/graspi_igraph.testFileMaker.testFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.csvFileMaker.csvMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.csvFileMaker.functionMemory.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.csvFileMaker.functionRuntime.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.csvFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.descriptors.descriptorsToTxt.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.descriptors.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.igraph_testing.filterGraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.igraph_testing.generateGraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.igraph_testing.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.igraph_testing.visual2D.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.igraph_testing.visual3D.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.testFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/generated/graspi_igraph.testFileMaker.testFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/graspi_igraph.csvFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/graspi_igraph.descriptors.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/graspi_igraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/graspi_igraph.igraph_testing.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/graspi_igraph.testFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api/modules.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.buildinfo" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/api_overview.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/csvFileTest.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/false/graspi_igraph.csvFileMaker.csvMaker.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/false/graspi_igraph.csvFileMaker.functionMemory.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/false/graspi_igraph.csvFileMaker.functionRuntime.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/false/graspi_igraph.descriptors.descriptorsToTxt.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/false/graspi_igraph.igraph_testing.filterGraph.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/false/graspi_igraph.igraph_testing.generateGraph.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/false/graspi_igraph.igraph_testing.visual2D.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/false/graspi_igraph.igraph_testing.visual3D.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/false/graspi_igraph.testFileMaker.testFileMaker.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.csvFileMaker.csvMaker.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.csvFileMaker.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.csvFileMaker.functionMemory.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.csvFileMaker.functionRuntime.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.descriptors.descriptorsToTxt.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.descriptors.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.igraph_testing.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.igraph_testing.filterGraph.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.igraph_testing.generateGraph.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.igraph_testing.visual2D.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.igraph_testing.visual3D.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.testFileMaker.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/generated/graspi_igraph.testFileMaker.testFileMaker.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/graspi_igraph.csvFileMaker.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/graspi_igraph.descriptors.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/graspi_igraph.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/graspi_igraph.igraph_testing.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/graspi_igraph.testFileMaker.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/api/modules.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/environment.pickle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.doctrees/index.doctree" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/.nojekyll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_modules/graspi_igraph/csvFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_modules/graspi_igraph/descriptors.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_modules/graspi_igraph/igraph_testing.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_modules/graspi_igraph/testFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_modules/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/api_overview.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/csvFileTest.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/false/graspi_igraph.csvFileMaker.csvMaker.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/false/graspi_igraph.csvFileMaker.functionMemory.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/false/graspi_igraph.csvFileMaker.functionRuntime.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/false/graspi_igraph.descriptors.descriptorsToTxt.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/false/graspi_igraph.igraph_testing.filterGraph.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/false/graspi_igraph.igraph_testing.generateGraph.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/false/graspi_igraph.igraph_testing.visual2D.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/false/graspi_igraph.igraph_testing.visual3D.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/false/graspi_igraph.testFileMaker.testFileMaker.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.csvFileMaker.csvMaker.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.csvFileMaker.functionMemory.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.csvFileMaker.functionRuntime.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.csvFileMaker.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.descriptors.descriptorsToTxt.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.descriptors.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.igraph_testing.filterGraph.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.igraph_testing.generateGraph.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.igraph_testing.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.igraph_testing.visual2D.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.igraph_testing.visual3D.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.testFileMaker.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/generated/graspi_igraph.testFileMaker.testFileMaker.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/graspi_igraph.csvFileMaker.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/graspi_igraph.descriptors.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/graspi_igraph.igraph_testing.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/graspi_igraph.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/graspi_igraph.testFileMaker.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/api/modules.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_sources/index.rst.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/_sphinx_javascript_frameworks_compat.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/basic.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/badge_only.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/Roboto-Slab-Bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/Roboto-Slab-Bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/Roboto-Slab-Regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/Roboto-Slab-Regular.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/fontawesome-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/lato-bold-italic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/lato-bold-italic.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/lato-bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/lato-bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/lato-normal-italic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/lato-normal-italic.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/lato-normal.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/fonts/lato-normal.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/css/theme.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/doctools.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/documentation_options.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/file.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bold.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bolditalic.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bolditalic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bolditalic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-bolditalic.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-italic.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-italic.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-italic.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-italic.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-regular.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/Lato/lato-regular.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-bold.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-regular.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/fonts/RobotoSlab/roboto-slab-v7-regular.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/jquery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/js/badge_only.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/js/theme.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/js/versions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/language_data.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/minus.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/plus.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/pygments.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/searchtools.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/_static/sphinx_highlight.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/api_overview.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/csvFileTest.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/csvFileTest.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/false/graspi_igraph.csvFileMaker.csvMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/false/graspi_igraph.csvFileMaker.functionMemory.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/false/graspi_igraph.csvFileMaker.functionRuntime.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/false/graspi_igraph.descriptors.descriptorsToTxt.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/false/graspi_igraph.igraph_testing.filterGraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/false/graspi_igraph.igraph_testing.generateGraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/false/graspi_igraph.igraph_testing.visual2D.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/false/graspi_igraph.igraph_testing.visual3D.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/false/graspi_igraph.testFileMaker.testFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.csvFileMaker.csvMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.csvFileMaker.functionMemory.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.csvFileMaker.functionRuntime.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.csvFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.descriptors.descriptorsToTxt.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.descriptors.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.igraph_testing.filterGraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.igraph_testing.generateGraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.igraph_testing.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.igraph_testing.visual2D.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.igraph_testing.visual3D.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.testFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.testFileMaker.testFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/graspi_igraph.csvFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/graspi_igraph.descriptors.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/graspi_igraph.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/graspi_igraph.igraph_testing.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/graspi_igraph.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/graspi_igraph.testFileMaker.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/modules.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/modules.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/api/setup.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/genindex.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/objects.inv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/py-modindex.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/search.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/searchindex.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/api_overview.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/csvFileTest.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/false/graspi_igraph.csvFileMaker.csvMaker.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/false/graspi_igraph.csvFileMaker.functionMemory.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/false/graspi_igraph.csvFileMaker.functionRuntime.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/false/graspi_igraph.descriptors.descriptorsToTxt.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/false/graspi_igraph.igraph_testing.filterGraph.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/false/graspi_igraph.igraph_testing.generateGraph.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/false/graspi_igraph.igraph_testing.visual2D.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/false/graspi_igraph.igraph_testing.visual3D.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/false/graspi_igraph.testFileMaker.testFileMaker.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.csvFileMaker.csvMaker.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.csvFileMaker.functionMemory.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.csvFileMaker.functionRuntime.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.csvFileMaker.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.descriptors.descriptorsToTxt.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.descriptors.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.igraph_testing.filterGraph.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.igraph_testing.generateGraph.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.igraph_testing.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.igraph_testing.visual2D.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.igraph_testing.visual3D.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.testFileMaker.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/generated/graspi_igraph.testFileMaker.testFileMaker.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/graspi_igraph.csvFileMaker.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/graspi_igraph.descriptors.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/graspi_igraph.igraph_testing.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/graspi_igraph.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/graspi_igraph.testFileMaker.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/graspi_igraph.tests.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/modules.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/api/setup.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/conf.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docs/source/index.rst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sprint3-subtask5_results.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python-Igraph_3D_New_Test_Results.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/csvFileTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/csvFileTest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/d.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/graspi_igraph.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/graspi_igraph.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graspi_igraph.egg-info/SOURCES.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graspi_igraph.egg-info/SOURCES.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graspi_igraph.egg-info/dependency_links.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graspi_igraph.egg-info/dependency_links.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graspi_igraph.egg-info/requires.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graspi_igraph.egg-info/requires.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graspi_igraph.egg-info/top_level.txt" beforeDir="false" afterPath="$PROJECT_DIR$/graspi_igraph.egg-info/top_level.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graspi_igraph/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/graspi_igraph/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graspi_igraph/csvFileMaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/graspi_igraph/csvFileMaker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graspi_igraph/descriptors.py" beforeDir="false" afterPath="$PROJECT_DIR$/graspi_igraph/descriptors.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graspi_igraph/igraph_testing.py" beforeDir="false" afterPath="$PROJECT_DIR$/graspi_igraph/igraph_testing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graspi_igraph/testFileMaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/graspi_igraph/testFileMaker.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graspi_igraph/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/graspi_igraph/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/.doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/docs/.doctrees/environment.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/.doctrees/pyGraspiDescriptors.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/.doctrees/pyGraspiDescriptors.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_modules/graspi_igraph/igraph_testing.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_modules/graspi_igraph/igraph_testing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_sources/pyGraspiDescriptors.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_sources/pyGraspiDescriptors.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.igraph_testing.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.igraph_testing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/docs/objects.inv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/py-modindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/py-modindex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pyGraspiDescriptors.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/pyGraspiDescriptors.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/searchindex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/source/pyGraspiDescriptors.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/source/pyGraspiDescriptors.rst" afterDir="false" />
+=======
+    <list default="true" id="21da6ccd-3b54-4132-9da6-9e6d845692fb" name="Changes" comment="Fixed 3D implementation for adjacency lists. Card #109">
+      <change beforePath="$PROJECT_DIR$/.idea/py-graspi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/py-graspi.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> 5f18a8075c8392e0844ee9cf6130879084850e11
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -283,109 +40,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
-      <module name="py-graspi" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="Tox" factoryName="Tox">
-      <module name="py-graspi" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="docs" factoryName="Docutils task">
-      <module name="py-graspi" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="docutils_input_file" value="" />
-      <option name="docutils_output_file" value="" />
-      <option name="docutils_params" value="" />
-      <option name="docutils_task" value="" />
-      <option name="docutils_open_in_browser" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="docs" factoryName="Sphinx task">
-      <module name="py-graspi" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="docutils_input_file" value="" />
-      <option name="docutils_output_file" value="" />
-      <option name="docutils_params" value="" />
-      <option name="docutils_task" value="" />
-      <option name="docutils_open_in_browser" value="false" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Autodetect">
-      <module name="py-graspi" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration default="true" type="tests" factoryName="Doctests">
-      <module name="py-graspi" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <method v="2" />
-    </configuration>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "git-widget-placeholder": "dev",
+    "last_opened_file_path": "C:/Users/manla/PycharmProjects/py-graspi/docs/source/imgs"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\manla\PycharmProjects\py-graspi\docs\source\imgs" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\manla\PycharmProjects\py-graspi\docs\source" />
+      <recent name="C:\Users\manla\PycharmProjects\py-graspi\docs\source\api" />
+    </key>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -404,5 +72,8 @@
       <updated>1729879482811</updated>
     </task>
     <servers />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/py_graspi$igraph_testing.coverage" NAME="igraph_testing Coverage Results" MODIFIED="1730241993709" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/graspi_igraph" />
   </component>
 </project>

@@ -41,16 +41,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">API Modules:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../graspi_igraph.csvFileMaker.html">csvFileMaker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../graspi_igraph.descriptors.html">descriptors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../graspi_igraph.igraph_testing.html">testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../graspi_igraph.testFileMaker.html">testFileMaker</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">API Overview:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../api_overview.html">API Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiExamples.html">Example of Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_overview.html">API Overview</a></li>
 </ul>
 
         </div>
@@ -82,37 +81,40 @@
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.adjList" title="graspi_igraph.igraph_testing.adjList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adjList</span></code></a>(fileName)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.adjList" title="graspi_igraph.igraph_testing.adjList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adjList</span></code></a>(fileName)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.connectedComponents" title="graspi_igraph.igraph_testing.connectedComponents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connectedComponents</span></code></a>(graph)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.adjvertexColors" title="graspi_igraph.igraph_testing.adjvertexColors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">adjvertexColors</span></code></a>(fileName)</p></td>
+<td><p>Labels the colors of vertices based on a given file.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.connectedComponents" title="graspi_igraph.igraph_testing.connectedComponents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connectedComponents</span></code></a>(graph)</p></td>
 <td><p>Identifies the connected components of the filtered graph.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.filterGraph" title="graspi_igraph.igraph_testing.filterGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filterGraph</span></code></a>(graph)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.filterGraph" title="graspi_igraph.igraph_testing.filterGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filterGraph</span></code></a>(graph)</p></td>
 <td><p>Filters the graph by keeping only edges between vertices of the same color.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.generateGraph" title="graspi_igraph.igraph_testing.generateGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generateGraph</span></code></a>(file)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.generateGraph" title="graspi_igraph.igraph_testing.generateGraph"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generateGraph</span></code></a>(file)</p></td>
+<td><p>Generates graph based on file input.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.generateGraphAdj" title="graspi_igraph.igraph_testing.generateGraphAdj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generateGraphAdj</span></code></a>(file)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.generateGraphAdj" title="graspi_igraph.igraph_testing.generateGraphAdj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generateGraphAdj</span></code></a>(file)</p></td>
+<td><p>Generates Graph using an adjacency list.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.generateGraphGraphe" title="graspi_igraph.igraph_testing.generateGraphGraphe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generateGraphGraphe</span></code></a>(file)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.generateGraphGraphe" title="graspi_igraph.igraph_testing.generateGraphGraphe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generateGraphGraphe</span></code></a>(file)</p></td>
 <td><p>Constructs a graph from an adjacency list and assigns vertex colors.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.graphe_adjList" title="graspi_igraph.igraph_testing.graphe_adjList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graphe_adjList</span></code></a>(filename)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.graphe_adjList" title="graspi_igraph.igraph_testing.graphe_adjList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">graphe_adjList</span></code></a>(filename)</p></td>
 <td><p>Creates an adjacency list from a given file.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.shortest_path" title="graspi_igraph.igraph_testing.shortest_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shortest_path</span></code></a>(graph, vertices, toVertex, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.shortest_path" title="graspi_igraph.igraph_testing.shortest_path"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shortest_path</span></code></a>(graph, vertices, toVertex, ...)</p></td>
 <td><p>Finds the shortest paths from vertices to a target vertex and writes them to a file.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.vertexColors" title="graspi_igraph.igraph_testing.vertexColors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertexColors</span></code></a>(fileName)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.vertexColors" title="graspi_igraph.igraph_testing.vertexColors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vertexColors</span></code></a>(fileName)</p></td>
+<td><p>Labels the colors of vertices based on a given file.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.visual2D" title="graspi_igraph.igraph_testing.visual2D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">visual2D</span></code></a>(g, type)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.visual2D" title="graspi_igraph.igraph_testing.visual2D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">visual2D</span></code></a>(g, type)</p></td>
 <td><p>Visualizes the graph in 2D.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../graspi_igraph.igraph_testing.html#graspi_igraph.igraph_testing.visual3D" title="graspi_igraph.igraph_testing.visual3D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">visual3D</span></code></a>(g)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../api_overview.html#graspi_igraph.igraph_testing.visual3D" title="graspi_igraph.igraph_testing.visual3D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">visual3D</span></code></a>(g)</p></td>
 <td><p>Visualizes the graph in 3D.</p></td>
 </tr>
 </tbody>
@@ -121,6 +123,23 @@
 <dt class="sig sig-object py" id="graspi_igraph.igraph_testing.adjList">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">adjList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graspi_igraph/igraph_testing.html#adjList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.adjList" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="graspi_igraph.igraph_testing.adjvertexColors">
+<span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">adjvertexColors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graspi_igraph/igraph_testing.html#adjvertexColors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.adjvertexColors" title="Permalink to this definition"></a></dt>
+<dd><p>Labels the colors of vertices based on a given file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fileName</strong> (<em>str</em>) – The name of the file containing the vertex color data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of vertex colors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.igraph_testing.connectedComponents">
@@ -159,12 +178,30 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.igraph_testing.generateGraph">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">generateGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graspi_igraph/igraph_testing.html#generateGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.generateGraph" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Generates graph based on file input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – The name of the file containing graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated graph based on input</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.igraph_testing.generateGraphAdj">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">generateGraphAdj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graspi_igraph/igraph_testing.html#generateGraphAdj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.generateGraphAdj" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Generates Graph using an adjacency list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – The name of the file containing graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Generated graph using an adjacency list.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.igraph_testing.generateGraphGraphe">
@@ -225,7 +262,19 @@
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.igraph_testing.vertexColors">
 <span class="sig-prename descclassname"><span class="pre">graspi_igraph.igraph_testing.</span></span><span class="sig-name descname"><span class="pre">vertexColors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/graspi_igraph/igraph_testing.html#vertexColors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#graspi_igraph.igraph_testing.vertexColors" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Labels the colors of vertices based on a given file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fileName</strong> (<em>str</em>) – The name of the file containing the vertex color data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A list of vertex colors.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="graspi_igraph.igraph_testing.visual2D">
@@ -268,7 +317,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

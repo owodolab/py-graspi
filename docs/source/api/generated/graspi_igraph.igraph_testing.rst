@@ -14,6 +14,7 @@
    .. autosummary::
    
       adjList
+      adjvertexColors
       connectedComponents
       filterGraph
       generateGraph

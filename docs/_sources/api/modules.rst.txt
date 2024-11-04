@@ -2,6 +2,6 @@ graspi_igraph
 =============
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 10
 
    graspi_igraph
