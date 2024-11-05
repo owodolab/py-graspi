@@ -159,8 +159,9 @@ A **descriptors stored in a dictionary** can be found by calling the function de
 ig.descriptors(g)      # g is a graph object
 ```
 A **list of descriptors in a text file** can be found by calling the function descriptorsToTxt(_dictionary_,_filename_)
+  -  _dict_ is a dictionary of descriptors that is returned by calling ig.descriptors(g)
 ```
-ig.descriptorsToTxt(dict,"descriptors_list.txt")
+ig.descriptorsToTxt(dict,"descriptors_list.txt") 
 ```
 
 ### To visualize graphs
