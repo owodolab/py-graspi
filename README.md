@@ -1,4 +1,4 @@
-﻿# py-graspi
+# py-graspi
 
 Python-Igraph is a graph-based library contender for the library that works with the GraSPI package. 
 
@@ -7,12 +7,13 @@ The basic algorithm requirements include:
   -  Construction of graphs
   -  Graph Filtering
   -  Determine the number of connected components
-  -  Determine the shortest path from the bottom boundary to all black vertices until the white vertices are met
+  -  Determine the shortest path from some meta-vertices to all specified vertices
+  -  Provide a list of descriptors
   -  Graph visualization
-  -  Computation of Descriptors
 
 ## Installation
-First, you'd need to clone the repo by running the following command in your command line:
+Download the packages found in requirements.txt after you have set up your virtual environment. 
+Cone the repo by:
 ```
 git clone https://github.com/owodolab/py-graspi.git
 ```
@@ -32,7 +33,7 @@ cd graspi_igraph
 ```
 Next, the downloads needed can be found in requirements.txt and can be installed by:
 ```
-pip install -r requirements.txt
+pip install notebook
 ```
 Install the graspi_igraph package by:
 ```
@@ -235,7 +236,7 @@ In order to generate an API using sphinx, you need to follow the installation of
 
 Cloning the repository:
 ```
-git clone git@github.com:owodolab/py-graspi.git
+git clone https://github.com/owodolab/py-graspi.git
 ```
 
 **Make sure your current directory is py-graspi**
@@ -244,6 +245,19 @@ In order to create an API with sphinx, you need to download sphinx with this com
 ```
 pip install sphinx
 ```
+Additional dependencies needed for installed Sphinx Extension:
+```
+pip install sphinxcontrib-details-directive
+```
+Provides additional details (dropdowns) for each submodle listed.
+```
+pip install sphinx_rtd_theme
+```
+Uses the rtf theme for the API
+```
+pip install --upgrade setuptools
+```
+Used by python to handle resources and files
 
 In the command line interface, run this command:
 ```
@@ -255,8 +269,15 @@ sphinx-build -b html ./docs/source/ ./docs/
 * **./docs/**: This is the output directory where the built HTML files will be saved. In this example, it’s the main docs folder. After running this command, you’ll find the generated HTML files here.
 
 In order to see the py-graspi API, run this command in the command line interface:
+
+**FOR WINDOWS:**
 ```
 start docs/index.html
+```
+
+**FOR MACOS:**
+```
+open docs/index.html
 ```
 This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
 
@@ -281,7 +302,7 @@ Finally, you will be able to use the command:
 jupyter notebook
 ```
 This will bring you into the testing filing on jupyter.
-
+Navigate to the directory 3d_2d_tests.
 Navigate to the file graspi_igraph_notebook.ipynb.
 
 On this file you will be able to run and view the 2d and 3d morphologies for subtask 4, card 104.

@@ -252,7 +252,17 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        float: The fraction of &#39;black&#39; vertices in connected components with &#39;black&#39; vertices (top).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fraction</span> <span class="o">=</span> <span class="n">CT_n_D_adj_An</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span> <span class="o">/</span> <span class="n">STAT_n_D</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="n">cc</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">connectedComponents</span><span class="p">(</span><span class="n">graph</span><span class="p">);</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="k">if</span> <span class="n">cc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span> <span class="ow">and</span> <span class="s1">&#39;red&#39;</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]:</span>
+                <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span><span class="p">:</span>
+                        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">fraction</span> <span class="o">=</span> <span class="n">count</span> <span class="o">/</span> <span class="n">STAT_n_D</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
  
     <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">fraction</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span></div>
 
@@ -266,7 +276,17 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        float: The fraction of &#39;white&#39; vertices in specific connected components (bottom).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fraction</span> <span class="o">=</span> <span class="n">CT_n_A_adj_Ca</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span><span class="o">/</span> <span class="n">STAT_n_A</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
+    <span class="n">cc</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">connectedComponents</span><span class="p">(</span><span class="n">graph</span><span class="p">);</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">cc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cc</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span> <span class="ow">and</span> <span class="s1">&#39;blue&#39;</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]:</span>
+                <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">:</span>
+                        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">fraction</span> <span class="o">=</span> <span class="n">count</span> <span class="o">/</span> <span class="n">STAT_n_A</span><span class="p">(</span><span class="n">graph</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">fraction</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span></div>
 
@@ -280,15 +300,16 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        int: The number of &#39;black&#39; vertices direct contact with the &#39;red&#39; vertex (top).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">cc</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">connectedComponents</span><span class="p">(</span><span class="n">graph</span><span class="p">);</span>
+    <span class="n">edgeList</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">get_edgelist</span><span class="p">()</span>
     <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-    
-    <span class="k">if</span> <span class="n">cc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cc</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span> <span class="ow">and</span> <span class="s1">&#39;red&#39;</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]:</span>
-                <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span><span class="p">:</span>
-                        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edgeList</span><span class="p">:</span>
+        <span class="n">currentNode</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">toNode</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">currentNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;red&#39;</span> <span class="ow">or</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">toNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;red&#39;</span><span class="p">):</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">currentNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;red&#39;</span> <span class="ow">and</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">toNode</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">currentNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;black&#39;</span> <span class="ow">and</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">toNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;red&#39;</span><span class="p">):</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
 
     <span class="k">return</span> <span class="n">count</span></div>
 
@@ -302,15 +323,19 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        int: The number of &#39;white&#39; vertices direct contact with the &#39;blue&#39; vertex (bottom).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">cc</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">connectedComponents</span><span class="p">(</span><span class="n">graph</span><span class="p">);</span>
+    
+    <span class="n">edgeList</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">get_edgelist</span><span class="p">()</span>
     <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
 
-    <span class="k">if</span> <span class="n">cc</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cc</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span> <span class="ow">and</span> <span class="s1">&#39;blue&#39;</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">c</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]:</span>
-                <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">vertex</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">:</span>
-                        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edgeList</span><span class="p">:</span>
+        <span class="n">currentNode</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">toNode</span> <span class="o">=</span> <span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">currentNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;blue&#39;</span> <span class="ow">or</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">toNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;blue&#39;</span><span class="p">):</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">currentNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;blue&#39;</span> <span class="ow">and</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">toNode</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">currentNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;white&#39;</span> <span class="ow">and</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">toNode</span><span class="p">][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;blue&#39;</span><span class="p">):</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    
 
     <span class="k">return</span> <span class="n">count</span></div>
 
