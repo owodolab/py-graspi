@@ -1,0 +1,13 @@
+STAT_n: 24
+STAT_e: 1
+STAT_n_D: 11
+STAT_n_A: 12
+STAT_CC_D: 1
+STAT_CC_A: 1
+STAT_CC_D_An: 1
+STAT_CC_A_Ca: 1
+ABS_f_D: 0.458333
+CT_f_conn_D_An: 1.0
+CT_f_conn_A_Ca: 1.0
+CT_n_D_adj_An: 0
+CT_n_A_adj_Ca: 1
