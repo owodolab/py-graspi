@@ -14,7 +14,7 @@ The basic algorithm requirements include:
 ## Installation
 First, you'd need to clone the repo by running the following command in your command line:
 ```
-git@github.com:owodolab/py-graspi.git
+git clone git@github.com:owodolab/py-graspi.git
 ```
 **Note: You'd need git installed on your system first**
 <br />
