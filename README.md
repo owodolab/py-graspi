@@ -174,6 +174,17 @@ A **list of descriptors in a text file** can be found by calling the function de
 ig.descriptorsToTxt(dict,"descriptors_list.txt") 
 ```
 
+To test if descriptors are computed correctly, you can run the following script in the terminal to check.
+  -  make sure you are in the py-graspi directory after git cloning
+  -  if not in directory, in the terminal, run the command
+     ```
+     cd py-graspi
+     ```
+
+```
+python graspi_igraph/simple-test.py graspi_igraph/data/data_0.5_2.2_001900.txt
+```
+
 ### To visualize graphs
 
 To visualize graphs, call visualize(_graph_, _is_2D_)
