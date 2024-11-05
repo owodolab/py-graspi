@@ -161,18 +161,7 @@ Example:
 ig.shortest_path(fg,'black','blue',"black_to_blue_paths.txt")    #fg is a filtered graph object
 ```
 
-### To get list of descriptors (WZ)
-
-A **descriptors stored in a dictionary** can be found by calling the function descriptors(_graph_)
-
-```
-ig.descriptors(g)      # g is a graph object
-```
-A **list of descriptors in a text file** can be found by calling the function descriptorsToTxt(_dictionary_,_filename_)
-  -  _dict_ is a dictionary of descriptors that is returned by calling ig.descriptors(g)
-```
-ig.descriptorsToTxt(dict,"descriptors_list.txt") 
-```
+### To get dictionary of descriptors (WZ)
 
 To test if descriptors are computed correctly, you can run the following script in the terminal to check.
   -  make sure you are in the py-graspi directory after git cloning
@@ -185,6 +174,18 @@ To test if descriptors are computed correctly, you can run the following script 
 python graspi_igraph/simple-test.py graspi_igraph/data/data_0.5_2.2_001900.txt
 ```
 This will print out whether the descriptor computation is correct and should take around 10-15 seconds.
+
+The **descriptors stored in a dictionary** can be computed by calling the function descriptors(_graph_)
+
+```
+ig.descriptors(g)      # g is a graph object
+```
+The ** descriptors in a text file** can be computed by calling the function descriptorsToTxt(_dictionary_,_filename_)
+  -  _dict_ is a dictionary of descriptors that is returned by calling ig.descriptors(g)
+```
+ig.descriptorsToTxt(dict,"descriptors_list.txt") 
+```
+
 
 ### To visualize graphs
 
