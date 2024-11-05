@@ -50,6 +50,7 @@ def main():
     print("Generating Text Files")
 
     for test_file in test_files:
+        print(f"Executing {test_file}")
         if PDF:
             pdf.add_page()
 
@@ -59,22 +60,22 @@ def main():
         if PDF:
             pdf.cell(200, 8, txt=f"{test_file} Results", ln=True, align="L")
 
-        with open(results_path + test_file + ".txt", "w") as txt:
+        with open(results_path + "descriptors-" + test_file + ".txt", "w") as txt:
             txt.write(f"{test_file} Results\n")
             with open(descriptors_path + "descriptors." + test_file + ".log") as f:
                 for line in f:
                     stat = line.strip().split(" ")
                     try:
-                        if stats.get(stat[0], -1) == int(stat[1]):
+                        if stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) == int(stat[1]):
                             txt.write(f"{stat[0]} passed - {stats.get(stat[0])} is the same as expected {stat[1]}\n")
                             if PDF:
                                 pdf.cell(200, 8, txt=f"{stat[0]} passed - {stats.get(stat[0])} is the same as expected {stat[1]}", ln=True, align="L")
-                        elif stats.get(stat[0]) != -1 and stats.get(stat[0], -1) != int(stat[1]):
+                        elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != int(stat[1]):
                             txt.write(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}\n")
                             if PDF:
                                 pdf.cell(200, 8, txt=f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}", ln=True, align="L")
                     except ValueError:
-                        if abs(stats.get(stat[0], -1) - float(stat[1])) < epsilon:
+                        if stats.get(stat[0], -1) != -1 and abs(stats.get(stat[0], -1) - float(stat[1])) < epsilon:
                             txt.write(f"{stat[0]} passed - {stats.get(stat[0])} is the same as expected {stat[1]}\n")
                             if PDF:
                                 pdf.cell(200, 8, txt=f"{stat[0]} passed - {stats.get(stat[0])} is the same as expected {stat[1]}", ln=True, align="L")
