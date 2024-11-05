@@ -151,7 +151,7 @@ Example:
 ig.shortest_path(fg,'black','blue',"black_to_blue_paths.txt")    #fg is a filtered graph object
 ```
 
-### To get list of descriptors
+### To get list of descriptors (WZ)
 
 A **descriptors stored in a dictionary** can be found by calling the function descriptors(_graph_)
 
