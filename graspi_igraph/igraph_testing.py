@@ -4,6 +4,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import os
 DEBUG = False
+PERIODICITY = True
 '''---------Function to create edges for graph in specified format --------'''
 def adjList(fileName):
     """
@@ -20,6 +21,7 @@ def adjList(fileName):
     first_order_pairs = []
     second_order_pairs = []
     third_order_pairs = []
+    edge_labels = []
     is_2d = True
     with open(fileName, "r") as file:
         header = file.readline().split(' ')
@@ -32,12 +34,10 @@ def adjList(fileName):
             else:
                 dimZ = int(header[2])
 
-        if dimZ == 0 or dimZ == 1:
-            dimZ = 1
-        else:
+        if dimZ > 1:
             # dimZ = dimX * dimY
             is_2d = False
-        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1)]
+        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (1, -1, 0), (0, 0, -1), (-1, -1, -1), (-1, 0, -1), (0, -1, -1), (1, -1, -1)]
 
         for z in range(dimZ):
             for y in range(dimY):
@@ -50,28 +50,26 @@ def adjList(fileName):
                             neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
                             if (dx, dy, dz) == offsets[1] or (dx, dy, dz) == offsets[2] or (dx, dy, dz) == offsets[3]:
                                 first_order_pairs.append([current_vertex, neighbor_vertex])
+                                edge_labels.append("f")
                             elif (dx, dy, dz) == offsets[4] or (dx, dy, dz) == offsets[5] or (dx, dy, dz) == offsets[6] or (dx, dy, dz) == offsets[7]:
                                 third_order_pairs.append([current_vertex, neighbor_vertex])
+                                edge_labels.append("t")
                             else:
                                 second_order_pairs.append([current_vertex, neighbor_vertex])
+                                edge_labels.append("s")
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
     # adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
     adjacency_list[dimZ * dimY * dimX] = []
     for z in range(dimZ):
-        for y in range(0,dimY, dimY):
-            for x in range(dimX):
-                adjacency_list[dimZ * dimY * dimX].append(z  * (dimY * dimX) + y * dimX + x)
+        for x in range(dimX):
+            adjacency_list[dimZ * dimY * dimX].append(z * (dimY * dimX) + x)
     # adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
     adjacency_list[dimZ * dimY * dimX + 1] = []
     for z in range(dimZ):
-        for y in range(0,dimY, dimY):
-            for x in range(dimX):
-                adjacency_list[dimZ * dimY * dimX + 1].append(z  * (dimY * dimX) + (dimY - 1) * dimX + x)
-
-    blue_neighbors = adjacency_list[dimZ * dimY * dimX]
-    red_neighbors = adjacency_list[dimZ * dimY * dimX + 1]
+        for x in range(dimX):
+            adjacency_list[dimZ * dimY * dimX + 1].append(z * (dimY * dimX) + (dimY - 1) * dimX + x)
     if DEBUG:
         print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
@@ -84,7 +82,7 @@ def adjList(fileName):
         print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
-    return adjacency_list, first_order_pairs, second_order_pairs, third_order_pairs, blue_neighbors, red_neighbors, is_2d
+    return adjacency_list, edge_labels, is_2d
 
 
 def graphe_adjList(filename):
@@ -220,7 +218,7 @@ def edgeLabels(g, first_order_pairs, second_order_pairs, third_order_pairs):
 
 
 def generateGraphGraphe(file):
-"""
+    """
     Constructs a graph from an adjacency list and assigns vertex colors.
 
     Args:
@@ -287,75 +285,63 @@ def generateGraphAdj(file):
             graph: the graph that holds all the edges and vertices based on file input
             boolean: returns  a boolean to signal if graph is 2D or not
         """
-    edges, first_order_pairs, second_order_pairs, third_order_pairs, blue_neighbors, red_neighbors, is_2D = adjList(file)
+    edges, edge_labels, is_2D = adjList(file)
     labels = vertexColors(file)
     f = open(file, 'r')
     line = f.readline()
     line = line.split()
-    dimX = line[0]
-    dimY = line[1]
+    dimX = int(line[0])
+    dimY = int(line[1])
     g = ig.Graph.ListDict(edges=edges, directed=False)
     g.vs["color"] = labels
-    g.es['label'] = edgeLabels(g, first_order_pairs, second_order_pairs, third_order_pairs)
+    g.es['label'] = edge_labels
 
     # add wrap around edges if periodicity boolean is set to True.
     if PERIODICITY:
-        for i in range(0, g.vcount() - 2, int(dimX)):
+        for i in range(0, g.vcount() - 2, dimX):
             # first add first neighbor wrap around
-            g.add_edge(g.vs[i], g.vs[i + (int(dimX) - 1)])
-            edge_index_f = g.get_eid(g.vs[i], g.vs[i + (int(dimX) - 1)])
+            g.add_edge(g.vs[i], g.vs[i + (dimX - 1)])
+            edge_index_f = g.get_eid(g.vs[i], g.vs[i + (dimX - 1)])
             g.es[edge_index_f]['label'] = 'f'
 
-            # only add one wrap around since other wouldn't exist in this case
-            if i == 0:
-                g.add_edge(g.vs[i], g.vs[int(dimX) - 1 + int(dimX)])
-                edge_index_s = g.get_eid(g.vs[i], g.vs[int(dimX) - 1 + int(dimX)])
-                g.es[edge_index_s]['label'] = 's'
-
-            elif i + int(dimX) >= g.vcount() - 2:
+            if i - 1 >= 0:
                 g.add_edge(g.vs[i], g.vs[i - 1])
 
             # add diagnol wrap arounds
-            else:
-                g.add_edge(g.vs[i], g.vs[i + int(dimX) - 1 + int(dimX)])
-                edge_index1 = g.get_eid(g.vs[i], g.vs[i + int(dimX) - 1 + int(dimX)])
+            if i + (dimX * 2 - 1) <= dimX * dimY:
+                g.add_edge(g.vs[i], g.vs[i + (dimX * 2 - 1)])
+                edge_index1 = g.get_eid(g.vs[i], g.vs[i + (dimX * 2 - 1)])
                 g.es[edge_index1]['label'] = 's'
-                g.add_edge(g.vs[i], g.vs[i - 1])
-                edge_index2 = g.get_eid(g.vs[i], g.vs[i - 1])
-                g.es[edge_index2]['label'] = 's'
 
-    g.vs[int(line[0]) * int(line[1])]['color'] = 'blue'
-    blue_vertex =  g.vs[int(line[0]) * int(line[1])]
-    g.vs[int(line[0]) * int(line[1]) + 1]['color'] = 'red'
-    red_vertex = g.vs[int(line[0]) * int(line[1]) + 1]
-    for i in blue_neighbors:
-        g.add_edge(blue_vertex, g.vs[i])
-    for i in red_neighbors:
-        g.add_edge(red_vertex, g.vs[i])
+    g.vs[dimX * dimY]['color'] = 'blue'
+    g.vs[dimX * dimY + 1]['color'] = 'red'
 
     g.add_vertices(1)
-    g.vs[int(line[0]) * int(line[1]) + 2]['color'] = 'green'
+    g.vs[dimX * dimY + 2]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
 
     if DEBUG:
         black_green_neighbors = []
 
-
+    green_neighbors = []
     for edge in g.es:
         source_vertex = edge.source
         target_vertex = edge.target
         if edge['label'] == 'f':
             if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (
                     g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
-
-                g.add_edge(green_vertex, source_vertex)
+                if source_vertex not in green_neighbors:
+                    g.add_edge(green_vertex, source_vertex)
+                    green_neighbors.append(source_vertex)
                 if DEBUG:
                     if g.vs[source_vertex]['color'] == 'black':
                         black_green_neighbors.append(source_vertex)
                 if DEBUG:
                     if g.vs[target_vertex]['color'] == 'black':
                         black_green_neighbors.append(target_vertex)
-                g.add_edge(green_vertex, target_vertex)
+                if target_vertex not in green_neighbors:
+                    g.add_edge(green_vertex, target_vertex)
+                    green_neighbors.append(target_vertex)
 
     if DEBUG:
         print(g.vs['color'])

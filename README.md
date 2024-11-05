@@ -196,7 +196,12 @@ If you have the same test directories as this GitHub Repo you should be able to 
 python graspi_igraph/igraph_testing.py g graspi_igraph/tests/2D-testFile/data_4_3.graphe 2d 
 ```
 ## Generate and Run Files for py-graspi API
-In order to generate an API using sphinx, you just need to follow these two commands in the command line interface.
+In order to generate an API using sphinx, you need to follow the installation of py-graspi:
+
+Cloning the repository:
+```
+git clone git@github.com:owodolab/py-graspi.git
+```
 
 **Make sure your current directory is py-graspi**
 
