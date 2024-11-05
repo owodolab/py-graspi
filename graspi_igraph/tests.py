@@ -50,6 +50,7 @@ def main():
     print("Generating Text Files")
 
     for test_file in test_files:
+        print(f"Executing {test_file}")
         if PDF:
             pdf.add_page()
 

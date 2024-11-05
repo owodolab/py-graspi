@@ -1,1 +1,16 @@
-data_0.528_4.0_001100 ResultsSTAT_n passed - 65536 is the same as expected 65536STAT_e failed - 2221 is not the same as expected 2798STAT_n_D passed - 31059 is the same as expected 31059STAT_n_A passed - 34477 is the same as expected 34477STAT_CC_D passed - 2 is the same as expected 2STAT_CC_A passed - 2 is the same as expected 2STAT_CC_D_An passed - 1 is the same as expected 1STAT_CC_A_Ca passed - 1 is the same as expected 1ABS_f_D passed - 0.473923 is the same as expected 0.473923CT_f_conn_D_An passed - 0.937506 is the same as expected 0.937506CT_f_conn_A_Ca passed - 0.851843 is the same as expected 0.851843CT_e_conn failed - None is not the same as expected 2092CT_e_D_An failed - None is not the same as expected 2574CT_e_A_Ca failed - None is not the same as expected 2324{'STAT_n': 65536, 'STAT_e': 2221, 'STAT_n_D': 31059, 'STAT_n_A': 34477, 'STAT_CC_D': 2, 'STAT_CC_A': 2, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.473923, 'CT_f_conn_D_An': 0.937506, 'CT_f_conn_A_Ca': 0.851843, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512}
+data_0.528_4.0_001100 Results
+STAT_n passed - 65536 is the same as expected 65536
+STAT_e failed - 2546 is not the same as expected 2798
+STAT_n_D passed - 31059 is the same as expected 31059
+STAT_n_A passed - 34477 is the same as expected 34477
+STAT_CC_D passed - 2 is the same as expected 2
+STAT_CC_A passed - 2 is the same as expected 2
+STAT_CC_D_An passed - 1 is the same as expected 1
+STAT_CC_A_Ca passed - 1 is the same as expected 1
+ABS_f_D passed - 0.473923 is the same as expected 0.473923
+CT_f_conn_D_An passed - 0.937506 is the same as expected 0.937506
+CT_f_conn_A_Ca passed - 0.851843 is the same as expected 0.851843
+CT_e_conn failed - None is not the same as expected 2092
+CT_e_D_An failed - None is not the same as expected 2574
+CT_e_A_Ca failed - None is not the same as expected 2324
+{'STAT_n': 65536, 'STAT_e': 2546, 'STAT_n_D': 31059, 'STAT_n_A': 34477, 'STAT_CC_D': 2, 'STAT_CC_A': 2, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.473923, 'CT_f_conn_D_An': 0.937506, 'CT_f_conn_A_Ca': 0.851843, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512}
