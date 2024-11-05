@@ -45,7 +45,7 @@ pip install -r requirements.txt
 <br />
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
-## Running All 33 Morphologies Tests
+## Running All 33 Morphologies Tests (JZ)
 To run the morphologies tests, return to the previous directory of "/py-graspi" by running:
 ```
 cd ..
@@ -63,7 +63,7 @@ Finally, run the following:
 ./run.sh <file_type>
 ```
 Substitute <file_type> with either txt or pdf for the desired output type.
-## 33 Morphologies Output
+## 33 Morphologies Output (JZ)
 After running the command, the automatic report generation will begin. 
 <br />
 <br /> 
@@ -81,7 +81,7 @@ After a few minutes, the following will print once the report has been created
 Text Files Generated
 PDF Generated (If on pdf mode)
 ```
-## Viewing 33 Morphologies Output
+## Viewing 33 Morphologies Output (JZ)
 For text files, navigate to the results directory by using the following command:
 ```
 cd graspi_igraph/results
