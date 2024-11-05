@@ -1,6 +1,6 @@
 data_0.514_4.0_000040 Results
 STAT_n passed - 65536 is the same as expected 65536
-STAT_e failed - 6472 is not the same as expected 7060
+STAT_e passed - 7060 is the same as expected 7060
 STAT_n_D passed - 31979 is the same as expected 31979
 STAT_n_A passed - 33557 is the same as expected 33557
 STAT_CC_D passed - 11 is the same as expected 11
@@ -10,4 +10,4 @@ STAT_CC_A_Ca passed - 1 is the same as expected 1
 ABS_f_D passed - 0.487961 is the same as expected 0.487961
 CT_f_conn_D_An passed - 0.855999 is the same as expected 0.855999
 CT_f_conn_A_Ca passed - 0.617248 is the same as expected 0.617248
-{'STAT_n': 65536, 'STAT_e': 6472, 'STAT_n_D': 31979, 'STAT_n_A': 33557, 'STAT_CC_D': 11, 'STAT_CC_A': 9, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.487961, 'CT_f_conn_D_An': 0.855999, 'CT_f_conn_A_Ca': 0.617248, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512}
+{'STAT_n': 65536, 'STAT_e': 7060, 'STAT_n_D': 31979, 'STAT_n_A': 33557, 'STAT_CC_D': 11, 'STAT_CC_A': 9, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.487961, 'CT_f_conn_D_An': 0.855999, 'CT_f_conn_A_Ca': 0.617248, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512}
