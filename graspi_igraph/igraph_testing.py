@@ -73,19 +73,37 @@ def adjList(fileName):
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
-    #add edges to Blue Node
-    adjacency_list[dimZ * dimY * dimX] = []
-    for z in range(dimZ):
-        for x in range(dimX):
-            adjacency_list[dimZ * dimY * dimX].append(z * (dimY * dimX) + x)
-            edge_labels.append("s")
+        if not is_2d:
+        # add edges to Blue Node for 3D
+        adjacency_list[dimZ * dimY * dimX] = []
+        for y in range(dimY):
+            for x in range(dimX):
+                vertex_index = y * dimX + x
+                adjacency_list[dimZ * dimY * dimX].append(vertex_index)
+                edge_labels.append("s")
+                
+        #add edges to Red Node for 3D
+        adjacency_list[dimZ * dimY * dimX + 1] = []
+        for y in range(dimY):
+            for x in range(dimX):
+                vertex_index = (dimZ - 1) * (dimY * dimX) + y * dimX + x
+                adjacency_list[dimZ * dimY * dimX + 1].append(vertex_index)
+                edge_labels.append("s")
+    
+    elif is_2d:
+        # add edges to Blue Node for 2D
+        adjacency_list[dimZ * dimY * dimX] = []
+        for z in range(dimZ):
+            for x in range(dimX):
+                adjacency_list[dimZ * dimY * dimX].append(z * (dimY * dimX) + x)
+                edge_labels.append("s")
 
-    #add edges to Red Node
-    adjacency_list[dimZ * dimY * dimX + 1] = []
-    for z in range(dimZ):
-        for x in range(dimX):
-            adjacency_list[dimZ * dimY * dimX + 1].append(z * (dimY * dimX) + (dimY - 1) * dimX + x)
-            edge_labels.append("s")
+        #add edges to Red Node for 2D
+        adjacency_list[dimZ * dimY * dimX + 1] = []
+        for z in range(dimZ):
+            for x in range(dimX):
+                adjacency_list[dimZ * dimY * dimX + 1].append(z * (dimY * dimX) + (dimY - 1) * dimX + x)
+                edge_labels.append("s")
     if DEBUG:
         print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
