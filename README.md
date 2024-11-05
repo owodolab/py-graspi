@@ -45,7 +45,7 @@ pip install -r requirements.txt
 <br />
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
-## Running all 33 morphologies tests
+## Running All 33 Morphologies Tests
 To run the morphologies tests, return to the previous directory of "/py-graspi" by running:
 ```
 cd ..
@@ -60,16 +60,46 @@ chmod +x run.sh
 ```
 Finally, run the following: 
 ```
-./run.sh
+./run.sh <file_type>
 ```
+Substitute <file_type> with either txt or pdf for the desired output type.
 ## 33 Morphologies Output
-After running this command, the automatic pdf generation will begin. 
+After running the command, the automatic report generation will begin. 
 <br />
 <br /> 
-After a few minutes, the following will print once your pdf has been created
+The following will print when the report generation begins:
 ```
-PDF Generated
+Generating PDF (If on pdf mode)
+Generating Text Files
 ```
+As the script is running, the following will print for which microstructure it is on
+```
+Executing <test_file>
+```
+After a few minutes, the following will print once the report has been created
+```
+Text Files Generated
+PDF Generated (If on pdf mode)
+```
+## Viewing 33 Morphologies Output
+For text files, navigate to the results directory by using the following command:
+```
+cd graspi_igraph/results
+```
+Use the following command to view the list of text files generated:
+```
+ls
+```
+To view the result in each file, run the following command:
+```
+cat <result_file_name>
+```
+Replace <result_file_name> with any of the files outputted by "ls"
+<br />
+<br />
+If using pdf mode, the pdf should automattically open upon completion.
+<br />
+<br />
 If the pdf does not automatically pop up, use the following commands:
 ### On Windows
 ```
