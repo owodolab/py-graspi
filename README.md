@@ -28,7 +28,7 @@ cd /path/py-graspi
 ```
 Once navigated to the branch, move to this branch of the repo using the following:
 ```
-git branch Card#108-Create-Automated-PDF-Report
+git checkout Card#108-Create-Automated-PDF-Report
 ```
 Once on the correct branch, access the "graspi_igraph" directory by using the following:
 ```
