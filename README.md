@@ -34,6 +34,15 @@ Next, the downloads needed can be found in requirements.txt and can be installed
 ```
 pip install -r requirements.txt
 ```
+Install the graspi_igraph package by:
+```
+pip install graspi-igraph
+```
+Once installed, to utilize the package remember to import the package:
+```
+import graspi_igraph as ig
+```
+
 **Note: you must have Python and pip installed onto your system**
 <br />
 <br />
