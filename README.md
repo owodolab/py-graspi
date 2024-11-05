@@ -254,6 +254,10 @@ Provides additional details (dropdowns) for each submodle listed.
 pip install sphinx_rtd_theme
 ```
 Uses the rtf theme for the API
+```
+pip install --upgrade setuptools
+```
+Used by python to handle resources and files
 
 In the command line interface, run this command:
 ```
