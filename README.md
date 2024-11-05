@@ -1,7 +1,7 @@
 ## 2D & 3D Morphologies Tests
 To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
 
-First you will need to git clone the current repo, make sure that you are in the ""dev branch"" or testing branch:
+First you will need to git clone the current repo, make sure that you are in the "card-#-113-2D_3D_tests" branch:
 ```
 git clone https://github.com/owodolab/py-graspi.git
 ```
