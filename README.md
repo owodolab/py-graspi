@@ -287,6 +287,7 @@ Finally, you will be able to use the command:
 jupyter notebook
 ```
 This will bring you into the testing filing on jupyter.
+Navigate to the notebook/ directory.
 Navigate to the directory 3d_2d_tests.
 Navigate to the file graspi_igraph_notebook.ipynb.
 
