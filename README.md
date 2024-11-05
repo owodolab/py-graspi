@@ -45,7 +45,7 @@ pip install -r requirements.txt
 <br />
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
-## Running all 33 morphologies tests
+## Running All 33 Morphologies Tests (JZ)
 To run the morphologies tests, return to the previous directory of "/py-graspi" by running:
 ```
 cd ..
@@ -60,16 +60,46 @@ chmod +x run.sh
 ```
 Finally, run the following: 
 ```
-./run.sh
+./run.sh <file_type>
 ```
-## 33 Morphologies Output
-After running this command, the automatic pdf generation will begin. 
+Substitute <file_type> with either txt or pdf for the desired output type.
+## 33 Morphologies Output (JZ)
+After running the command, the automatic report generation will begin. 
 <br />
 <br /> 
-After a few minutes, the following will print once your pdf has been created
+The following will print when the report generation begins:
 ```
-PDF Generated
+Generating PDF (If on pdf mode)
+Generating Text Files
 ```
+As the script is running, the following will print for which microstructure it is on
+```
+Executing <test_file>
+```
+After a few minutes, the following will print once the report has been created
+```
+Text Files Generated
+PDF Generated (If on pdf mode)
+```
+## Viewing 33 Morphologies Output (JZ)
+For text files, navigate to the results directory by using the following command:
+```
+cd graspi_igraph/results
+```
+Use the following command to view the list of text files generated:
+```
+ls
+```
+To view the result in each file, run the following command:
+```
+cat <result_file_name>
+```
+Replace <result_file_name> with any of the files outputted by "ls"
+<br />
+<br />
+If using pdf mode, the pdf should automattically open upon completion.
+<br />
+<br />
 If the pdf does not automatically pop up, use the following commands:
 ### On Windows
 ```
@@ -121,7 +151,7 @@ Example:
 ig.shortest_path(fg,'black','blue',"black_to_blue_paths.txt")    #fg is a filtered graph object
 ```
 
-### To get list of descriptors
+### To get list of descriptors (WZ)
 
 A **descriptors stored in a dictionary** can be found by calling the function descriptors(_graph_)
 
@@ -147,10 +177,12 @@ ig.visual3D(g)
 Finally, the following message will be printed out:
 ```
 
-## Testing from Command Line
+## Testing from Command Line (Kevin)
 
 
-\*\*\*First and foremost make sure you are in the py-graspi directory. If not you may run into some errors\*\*\*
+Now that we have cloned the REPO lets talk about testing.
+
+\*\*\*First and foremost make sure you are in te py-graspi directory. If not you may run into some errors\*\*\*
 
 In this GitHub Repo, all the tests are in the test directory. Furthermore, within this directory are two more directories: 2D-testFile and 3D-testFile.
 Inside these directories, some files hold information about either 2d or 3d graphs based on the directory name. 
@@ -162,25 +194,43 @@ There are 2 type of input file formats: *.txt & *.graphe
 
 The command line input to run a graph creation for *.txt files will have the following format:
 ```
-python graspi_igraph/igraph_testing.py {total pathname of test file} {2d or 3d}
+python graspi_igraph/igraph_testing.py {total pathname of test file}
 ```
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 10x10 graph.
 ```
-python graspi_igraph/igraph_testing.py graspi_igraph/tests/2D-testFile/testFile-10-2D.txt 2d
+python graspi_igraph/igraph_testing.py graspi_igraph/tests/2D-testFile/testFile-10-2D.txt 
 ```
 ### _*.graphe input format:_
 *.graphe input format is not that different, only extra parameter you need to input is a 'g' before the total pathname of the test file.
 
 The command line input to run a graph creation for *.graphe files will have the following format:
 ````
-python graspi_igraph/igraph_testing.py g {total pathname of test file} {2d or 3d}
+python graspi_igraph/igraph_testing.py -g {total pathname of test file} 
 ````
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
 ```
-python graspi_igraph/igraph_testing.py g graspi_igraph/tests/2D-testFile/data_4_3.graphe 2d 
+python graspi_igraph/igraph_testing.py g graspi_igraph/tests/2D-testFile/data_4_3.graphe
 ```
+### _Running with Periodicity:_
+We include the option of running any test case with periodicity turned on ONLY for *.txt input files. This 
+is done with an added '-p' parameter. This parameter is added first before inputting the test case
+format.
+
+For example, for *.txt cases with periodicity turned on will look like the following:
+```
+python graspi_igraph/igraph_testing.py -p {total pathname of test file}
+```
+
+To test this out run the example test case above but with the added '-p' parameter
+to turn periodicity on.
+
 ## Generate and Run Files for py-graspi API
-In order to generate an API using sphinx, you just need to follow these two commands in the command line interface.
+In order to generate an API using sphinx, you need to follow the installation of py-graspi:
+
+Cloning the repository:
+```
+git clone git@github.com:owodolab/py-graspi.git
+```
 
 **Make sure your current directory is py-graspi**
 
@@ -204,3 +254,28 @@ start docs/index.html
 ```
 This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
 
+## 2D & 3D Morphologies Tests
+To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
+
+First you will need to git clone the current repo, make sure that you are in the ""dev branch"":
+```
+git clone https://github.com/owodolab/py-graspi.git
+```
+Then, you will need to install the igraph package:
+```
+pip install graspi-igraph
+```
+Install jupyter notebook in order to view the test file:
+```
+pip install notebook
+```
+
+Finally, you will be able to use the command:
+```
+jupyter notebook
+```
+This will bring you into the testing filing on jupyter.
+
+Navigate to the file graspi_igraph_notebook.ipynb.
+
+On this file you will be able to run and view the 2d and 3d morphologies for subtask 4, card 104.
