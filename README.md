@@ -5,6 +5,10 @@ First you will need to git clone the current repo, make sure that you are in the
 ```
 git clone https://github.com/owodolab/py-graspi.git
 ```
+Then, will need to get to the testing repo:
+```
+git checkout card-#-113-2D_3D_tests
+```
 Then, you will need to install the igraph package:
 ```
 pip install graspi-igraph
