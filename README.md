@@ -269,7 +269,7 @@ This would create a local view. You can see the official API on Github pages at:
 ## 2D & 3D Morphologies Tests
 To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
 
-First you will need to git clone the current repo, make sure that you are in the ""dev branch"":
+First you will need to git clone the current repo, make sure that you are in the ""dev branch"" or testing branch:
 ```
 git clone https://github.com/owodolab/py-graspi.git
 ```
