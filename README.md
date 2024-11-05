@@ -269,8 +269,15 @@ sphinx-build -b html ./docs/source/ ./docs/
 * **./docs/**: This is the output directory where the built HTML files will be saved. In this example, it’s the main docs folder. After running this command, you’ll find the generated HTML files here.
 
 In order to see the py-graspi API, run this command in the command line interface:
+
+**FOR WINDOWS:**
 ```
 start docs/index.html
+```
+
+**FOR MACOS:**
+```
+open docs/index.html
 ```
 This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
 
