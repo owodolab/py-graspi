@@ -245,7 +245,7 @@ In order to create an API with sphinx, you need to download sphinx with this com
 ```
 pip install sphinx
 ```
-Additional dependency needed for uninstalled Sphinx Extension:
+Additional dependency needed for installed Sphinx Extension:
 ```
 pip install sphinxcontrib-details-directive
 ```
