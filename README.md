@@ -236,7 +236,7 @@ In order to generate an API using sphinx, you need to follow the installation of
 
 Cloning the repository:
 ```
-git clone git@github.com:owodolab/py-graspi.git
+git clone https://github.com/owodolab/py-graspi.git
 ```
 
 **Make sure your current directory is py-graspi**
