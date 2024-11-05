@@ -245,11 +245,15 @@ In order to create an API with sphinx, you need to download sphinx with this com
 ```
 pip install sphinx
 ```
-Additional dependency needed for installed Sphinx Extension:
+Additional dependencies needed for installed Sphinx Extension:
 ```
 pip install sphinxcontrib-details-directive
 ```
 Provides additional details (dropdowns) for each submodle listed.
+```
+pip install sphinx_rtd_theme
+```
+Uses the rtf theme for the API
 
 In the command line interface, run this command:
 ```
