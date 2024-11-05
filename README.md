@@ -224,7 +224,7 @@ python graspi_igraph/igraph_testing.py -p {total pathname of test file}
 To test this out run the example test case above but with the added '-p' parameter
 to turn periodicity on.
 
-## Generate and Run Files for py-graspi API
+## Generate and Run Files for py-graspi API (ML)
 In order to generate an API using sphinx, you need to follow the installation of py-graspi:
 
 Cloning the repository:
