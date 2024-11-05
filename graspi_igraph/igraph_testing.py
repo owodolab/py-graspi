@@ -6,8 +6,8 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import os
 import descriptors as d
-DEBUG = True
-PERIODICITY = False
+DEBUG = False
+PERIODICITY = True
 '''---------Function to create edges for graph in specified format --------'''
 
 
