@@ -1,5 +1,5 @@
-# from . import igraph_testing as ig
-import igraph_testing as ig
+from . import igraph_testing as ig
+# import igraph_testing as ig
 
 def STAT_n(graph):
     """
@@ -261,7 +261,7 @@ def CT_n_A_adj_Ca(graph):
 
     return count
 
-def desciptors(graph):
+def descriptors(graph):
     """
     Generates a dictionary of all graph descriptors.
 
