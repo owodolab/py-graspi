@@ -52,7 +52,8 @@ def adjList(fileName):
         else:
             # dimZ = dimX * dimY
             is_2d = False
-        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1), (1,0,-1)]
+        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1),
+                   (1,0,-1), (1,-1,0)]
 
         for z in range(dimZ):
             for y in range(dimY):
@@ -75,15 +76,18 @@ def adjList(fileName):
     # adjacency_list[dimZ * dimY * dimX] = list(range(dimX))
     adjacency_list[dimZ * dimY * dimX] = []
     for z in range(dimZ):
-        for y in range(0,dimY, dimY):
-            for x in range(dimX):
-                adjacency_list[dimZ * dimY * dimX].append(z  * (dimY * dimX) + y * dimX + x)
+        for x in range(dimX):
+            adjacency_list[dimZ * dimY * dimX].append(z  * (dimY * dimX) + y * dimX + x)
+            second_order_pairs.append([dimZ * dimY * dimX, z  * (dimY * dimX) + y * dimX + x])
+    # for y in range(0,dimY, dimY):
     # adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
     adjacency_list[dimZ * dimY * dimX + 1] = []
     for z in range(dimZ):
-        for y in range(0,dimY, dimY):
-            for x in range(dimX):
-                adjacency_list[dimZ * dimY * dimX + 1].append(z  * (dimY * dimX) + (dimY - 1) * dimX + x)
+        for x in range(dimX):
+            adjacency_list[dimZ * dimY * dimX + 1].append(z  * (dimY * dimX) + (dimY - 1) * dimX + x)
+            second_order_pairs.append([dimZ * dimY * dimX + 1, z  * (dimY * dimX) + (dimY - 1) * dimX + x])
+        # for y in range(0,dimY, dimY):
+        #     pass
 
     blue_neighbors = adjacency_list[dimZ * dimY * dimX]
     red_neighbors = adjacency_list[dimZ * dimY * dimX + 1]
@@ -458,6 +462,11 @@ def visualize(graph,is_2D):
         grid_size = int(np.round(num_vertices ** (1 / 3)))
 
         # Generate 3D coordinates (layout) for the vertices
+        # f = open(file, 'r') //USE THIS INSTEAD TO FIND DIMENSIONS
+        # line = f.readline()
+        # line = line.split()
+        # dimX = line[0]
+        # dimY = line[1]
         x, y, z = np.meshgrid(range(grid_size), range(grid_size), range(grid_size))
         coords = np.vstack([x.ravel(), y.ravel(), z.ravel()]).T
 
