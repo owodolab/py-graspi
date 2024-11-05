@@ -177,7 +177,7 @@ ig.visual3D(g)
 Finally, the following message will be printed out:
 ```
 
-## Testing from Command Line
+## Testing from Command Line (Kevin)
 
 
 Now that we have cloned the REPO lets talk about testing.
