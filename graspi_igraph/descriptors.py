@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 # from . import igraph_testing as ig
+=======
+# from . import igraph_tes ting as ig
+>>>>>>> Stashed changes
 import igraph_testing as ig
 
 def STAT_n(graph):

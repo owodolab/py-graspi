@@ -3,7 +3,14 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import os
+<<<<<<< Updated upstream
 
+=======
+# from . 
+import descriptors as d
+DEBUG = False
+PERIODICITY = True
+>>>>>>> Stashed changes
 '''---------Function to create edges for graph in specified format --------'''
 
 
