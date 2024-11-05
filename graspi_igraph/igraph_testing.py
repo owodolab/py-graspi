@@ -32,6 +32,7 @@ def adjList(fileName):
                   as well as a bool to signal if the graph is a 2D or 3D graph.
         """
     adjacency_list = {}
+    edge_labels = []
     first_order_pairs = []
     second_order_pairs = []
     third_order_pairs = []
@@ -47,10 +48,7 @@ def adjList(fileName):
             else:
                 dimZ = int(header[2])
 
-        if dimZ == 0 or dimZ == 1:
-            dimZ = 1
-        else:
-            # dimZ = dimX * dimY
+        if dimZ > 1:
             is_2d = False
         offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1),
                    (1,0,-1), (1,-1,0)]
@@ -66,10 +64,13 @@ def adjList(fileName):
                             neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
                             if (dx, dy, dz) == offsets[1] or (dx, dy, dz) == offsets[2] or (dx, dy, dz) == offsets[3]:
                                 first_order_pairs.append([current_vertex, neighbor_vertex])
+                                edge_labels.append("f")
                             elif (dx, dy, dz) == offsets[4] or (dx, dy, dz) == offsets[5] or (dx, dy, dz) == offsets[6] or (dx, dy, dz) == offsets[7] or (dx, dy, dz) == offsets[8]:
                                 third_order_pairs.append([current_vertex, neighbor_vertex])
+                                edge_labels.append("t")
                             else:
                                 second_order_pairs.append([current_vertex, neighbor_vertex])
+                                edge_labels.append("s")
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
@@ -79,15 +80,13 @@ def adjList(fileName):
         for x in range(dimX):
             adjacency_list[dimZ * dimY * dimX].append(z  * (dimY * dimX) + y * dimX + x)
             second_order_pairs.append([dimZ * dimY * dimX, z  * (dimY * dimX) + y * dimX + x])
-    # for y in range(0,dimY, dimY):
-    # adjacency_list[dimZ * dimY * dimX + 1] = [i + dimX * (dimY - 1) for i in range(dimX)]
+
     adjacency_list[dimZ * dimY * dimX + 1] = []
     for z in range(dimZ):
         for x in range(dimX):
             adjacency_list[dimZ * dimY * dimX + 1].append(z  * (dimY * dimX) + (dimY - 1) * dimX + x)
             second_order_pairs.append([dimZ * dimY * dimX + 1, z  * (dimY * dimX) + (dimY - 1) * dimX + x])
-        # for y in range(0,dimY, dimY):
-        #     pass
+
 
     blue_neighbors = adjacency_list[dimZ * dimY * dimX]
     red_neighbors = adjacency_list[dimZ * dimY * dimX + 1]
