@@ -55,7 +55,7 @@ def main():
             pdf.add_page()
 
         g, is_2D = ig.generateGraph(data_path + test_file + ".txt")
-        stats = ds.desciptors(g)
+        stats = ds.descriptors(g)
 
         if PDF:
             pdf.cell(200, 8, txt=f"{test_file} Results", ln=True, align="L")

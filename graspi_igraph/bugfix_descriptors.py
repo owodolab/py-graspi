@@ -32,7 +32,7 @@ def main():
                 ig.visual3D(fg)
 
     if functionality == 'descriptors':
-        print(descriptors.desciptors(g))
+        print(descriptors.descriptors(g))
 
     
     if functionality == 'cc':

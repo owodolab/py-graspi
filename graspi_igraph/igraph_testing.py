@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import os
-import descriptors as d
+from . import descriptors as d
 DEBUG = False
 PERIODICITY = True
 '''---------Function to create edges for graph in specified format --------'''
@@ -594,7 +594,7 @@ def main():
             visualize(filteredGraph, is_2D)
 
             if DEBUG:
-                dic = d.desciptors(g)
+                dic = d.descriptors(g)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
@@ -606,7 +606,7 @@ def main():
             visualize(filteredGraph, is_2D)
 
             if DEBUG:
-                dic = d.desciptors(g)
+                dic = d.descriptors(g)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
@@ -628,7 +628,7 @@ def main():
             visualize(filteredGraph, is_2D)
 
             if DEBUG:
-                dic = d.desciptors(g)
+                dic = d.descriptors(g)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
