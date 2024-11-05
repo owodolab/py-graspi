@@ -184,6 +184,7 @@ To test if descriptors are computed correctly, you can run the following script 
 ```
 python graspi_igraph/simple-test.py graspi_igraph/data/data_0.5_2.2_001900.txt
 ```
+This will print out whether the descriptor computation is correct and should take around 10-15 seconds.
 
 ### To visualize graphs
 
