@@ -1,4 +1,5 @@
 import sys
+
 import igraph as ig
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -8,6 +9,7 @@ import descriptors as d
 DEBUG = True
 PERIODICITY = False
 '''---------Function to create edges for graph in specified format --------'''
+
 
 def adjList(fileName):
     """
@@ -71,38 +73,19 @@ def adjList(fileName):
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
+    #add edges to Blue Node
+    adjacency_list[dimZ * dimY * dimX] = []
+    for z in range(dimZ):
+        for x in range(dimX):
+            adjacency_list[dimZ * dimY * dimX].append(z * (dimY * dimX) + x)
+            edge_labels.append("s")
 
-    if not is_2d:
-        # add edges to Blue Node for 3D
-        adjacency_list[dimZ * dimY * dimX] = []
-        for y in range(dimY):
-            for x in range(dimX):
-                vertex_index = y * dimX + x
-                adjacency_list[dimZ * dimY * dimX].append(vertex_index)
-                edge_labels.append("s")
-
-        #add edges to Red Node for 3D
-        adjacency_list[dimZ * dimY * dimX + 1] = []
-        for y in range(dimY):
-            for x in range(dimX):
-                vertex_index = (dimZ - 1) * (dimY * dimX) + y * dimX + x
-                adjacency_list[dimZ * dimY * dimX + 1].append(vertex_index)
-                edge_labels.append("s")
-
-    elif is_2d:
-        # add edges to Blue Node for 2D
-        adjacency_list[dimZ * dimY * dimX] = []
-        for z in range(dimZ):
-            for x in range(dimX):
-                adjacency_list[dimZ * dimY * dimX].append(z * (dimY * dimX) + x)
-                edge_labels.append("s")
-
-        #add edges to Red Node for 2D
-        adjacency_list[dimZ * dimY * dimX + 1] = []
-        for z in range(dimZ):
-            for x in range(dimX):
-                adjacency_list[dimZ * dimY * dimX + 1].append(z * (dimY * dimX) + (dimY - 1) * dimX + x)
-                edge_labels.append("s")
+    #add edges to Red Node
+    adjacency_list[dimZ * dimY * dimX + 1] = []
+    for z in range(dimZ):
+        for x in range(dimX):
+            adjacency_list[dimZ * dimY * dimX + 1].append(z * (dimY * dimX) + (dimY - 1) * dimX + x)
+            edge_labels.append("s")
     if DEBUG:
         print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
@@ -259,17 +242,27 @@ def generateGraphGraphe(file):
 
     # exists = [0] * (g.vcount() - 3)
 
+    # For loop makes sure all black and white pairings are labeled black as first and white as second in pairing
+    for pair in first_order_neighbors:
+        if g.vs[pair[0]]['color'] == 'white' and g.vs[pair[1]]['color'] == 'black':
+            temp = pair[0]
+            pair[0] = pair[1]
+            pair[1] = temp
 
     # Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added
     for pair in first_order_neighbors:
         source_vertex = pair[0]
         target_vertex = pair[1]
 
-        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'
-                or g.vs[target_vertex]['color'] == 'black') and g.vs[source_vertex]['color'] == 'white':
+        if g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white':
             # connect both source and target to green meta vertex
             g.add_edge(green_vertex, source_vertex)
             g.add_edge(green_vertex, target_vertex)
+
+            # if exists[pair[0]] == 0:
+            #     exists[pair[0]] += 1
+            # if exists[pair[1]] == 0:
+            #     exists[pair[1]] += 1
 
     # print(test)
     return g, is_2d
@@ -420,6 +413,7 @@ def visualize(graph, is_2D):
             Returns:
                 None
             """
+
         edges = g.get_edgelist()
         num_vertices = len(g.vs)
         grid_size = int(np.round(num_vertices ** (1 / 3)))
@@ -625,10 +619,6 @@ def main():
             visualize(filteredGraph, is_2D)
             if DEBUG:
                 print(connectedComponents(filteredGraph))
-                dic = d.desciptors(g)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
 
 
         elif sys.argv[1] != "-g":
@@ -646,5 +636,8 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
 
 
