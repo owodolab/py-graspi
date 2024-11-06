@@ -232,7 +232,7 @@ If you have the same test directories as this GitHub Repo you should be able to 
 python graspi_igraph/igraph_testing.py g graspi_igraph/tests/2D-testFile/data_4_3.graphe
 ```
 ### _Running with Periodicity:_
-We include the option of running any test case with periodicity turned on ONLY for *.txt input files. This 
+We include the option of running any test case with periodicity turned on. This 
 is done with an added '-p' parameter. This parameter is added first before inputting the test case
 format.
 
@@ -240,9 +240,21 @@ For example, for *.txt cases with periodicity turned on will look like the follo
 ```
 python graspi_igraph/igraph_testing.py -p {total pathname of test file}
 ```
-
-To test this out run the example test case above but with the added '-p' parameter
+For *.graphe cases with periodicity turned on it will look like the following:
+```
+python graspi_igraph/igraph_testing.py -p -g {total pathname of test file} 
+```
+To test this out run the example test cases above but with the added '-p' parameter
 to turn periodicity on.
+## Output of Command Line Input
+As long as the inputs follow the format above and a file exists the program shall do the following:
+1. Pop up window should appear, this will be the initial visualization of the graph along with red, blue, and green meta vertices.
+2. Exit out of this pop up window with the top right "X" button.
+3. Now a second pop up window should appear, this window will now show a visualization of the filtered version of the graph in step 1.
+4. Exit out this window following same steps as step 2.
+5. Make sure program exits correctly (code 0).
+
+DISCLAIMER: if any issues occur you may not be in the right directory (py-graspi) or the test file may not exists or be poorly formatted.
 
 ## Generate and Run Files for py-graspi API (ML)
 In order to generate an API using sphinx, you need to follow the installation of py-graspi:
