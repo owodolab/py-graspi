@@ -229,10 +229,10 @@ python graspi_igraph/igraph_testing.py -g {total pathname of test file}
 ````
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
 ```
-python graspi_igraph/igraph_testing.py -g graspi_igraph/tests/2D-testFile/data_4_3.graphe
+python graspi_igraph/igraph_testing.py -g graspi_igraph/tests/2D-testFile/data_4_3_2.graphe
 ```
 ### _Running with Periodicity:_
-We include the option of running any test case with periodicity turned on. This 
+We include the option of running any test case with periodicity turned on (only for .txt files). This 
 is done with an added '-p' parameter. This parameter is added first before inputting the test case
 format.
 
@@ -240,11 +240,7 @@ For example, for *.txt cases with periodicity turned on will look like the follo
 ```
 python graspi_igraph/igraph_testing.py -p {total pathname of test file}
 ```
-For *.graphe cases with periodicity turned on it will look like the following:
-```
-python graspi_igraph/igraph_testing.py -p -g {total pathname of test file} 
-```
-To test this out run the example test cases above but with the added '-p' parameter
+To test this out run the example test case above but with the added '-p' parameter
 to turn periodicity on.
 ## Output of Command Line Input
 As long as the inputs follow the format above and a file exists the program shall do the following:
