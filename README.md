@@ -221,7 +221,7 @@ If you have the same test directories as this GitHub Repo you should be able to 
 python graspi_igraph/igraph_testing.py graspi_igraph/tests/2D-testFile/testFile-10-2D.txt 
 ```
 ### _*.graphe input format:_
-*.graphe input format is not that different, only extra parameter you need to input is a 'g' before the total pathname of the test file.
+*.graphe input format is not that different, only extra parameter you need to input is a '-g' before the total pathname of the test file.
 
 The command line input to run a graph creation for *.graphe files will have the following format:
 ````
@@ -229,7 +229,7 @@ python graspi_igraph/igraph_testing.py -g {total pathname of test file}
 ````
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
 ```
-python graspi_igraph/igraph_testing.py g graspi_igraph/tests/2D-testFile/data_4_3.graphe
+python graspi_igraph/igraph_testing.py -g graspi_igraph/tests/2D-testFile/data_4_3.graphe
 ```
 ### _Running with Periodicity:_
 We include the option of running any test case with periodicity turned on. This 
