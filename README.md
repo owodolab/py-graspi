@@ -202,9 +202,9 @@ ig.visual2D(g, is_2D)
 
 Now that we have cloned the REPO lets talk about testing.
 
-\*\*\*First and foremost make sure you are in te py-graspi directory. If not you may run into some errors\*\*\*
+\*\*\*First and foremost make sure you are in the py-graspi directory. If not you may run into some errors\*\*\*
 
-In this GitHub Repo, all the tests are in the test directory. Furthermore, within this directory are two more directories: 2D-testFile and 3D-testFile.
+In this GitHub Repo, you can find test files in the data directory or the 2D-testFile and 3D-testFile directories.
 Inside these directories, some files hold information about either 2d or 3d graphs based on the directory name. 
 When running from command lines you will need to know the complete pathname of the test file you are trying to run.
 
@@ -218,7 +218,7 @@ python graspi_igraph/igraph_testing.py {total pathname of test file}
 ```
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 10x10 graph.
 ```
-python graspi_igraph/igraph_testing.py graspi_igraph/tests/2D-testFile/testFile-10-2D.txt 
+python graspi_igraph/igraph_testing.py graspi_igraph/2D-testFile/testFile-10-2D.txt 
 ```
 ### _*.graphe input format:_
 *.graphe input format is not that different, only extra parameter you need to input is a '-g' before the total pathname of the test file.
@@ -229,7 +229,7 @@ python graspi_igraph/igraph_testing.py -g {total pathname of test file}
 ````
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
 ```
-python graspi_igraph/igraph_testing.py -g graspi_igraph/tests/2D-testFile/data_4_3_2.graphe
+python graspi_igraph/igraph_testing.py -g graspi_igraph/data_4_3.graphe
 ```
 ### _Running with Periodicity:_
 We include the option of running any test case with periodicity turned on (only for .txt files). This 
