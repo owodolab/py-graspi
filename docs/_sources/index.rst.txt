@@ -57,6 +57,6 @@ Below is a quick example of how to use the package to generate a graph and perfo
    print(f"Connected Components: {fg.connected_components()}")
 
    # Produce a list of descriptors
-   ig.descriptorsToTxt(ig.desciptors(g), "descriptors_list.txt")
+   ig.descriptorsToTxt(ig.descriptors(g), "descriptors_list.txt")
 
 
