@@ -26,7 +26,7 @@
       STAT_n
       STAT_n_A
       STAT_n_D
-      desciptors
+      descriptors
       descriptorsToTxt
    
    
