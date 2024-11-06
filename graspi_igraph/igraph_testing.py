@@ -1,4 +1,5 @@
 import sys
+
 import igraph as ig
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -8,6 +9,7 @@ import descriptors as d
 DEBUG = True
 PERIODICITY = False
 '''---------Function to create edges for graph in specified format --------'''
+
 
 def adjList(fileName):
     """
