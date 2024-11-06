@@ -1,6 +1,5 @@
-# from . import igraph_testing as ig
-import igraph_testing as ig
-
+from . import igraph_testing as ig
+# import igraph_testing as ig
 
 def STAT_n(graph):
     """
@@ -12,8 +11,7 @@ def STAT_n(graph):
     Returns:
         int: The number of vertices minus three.
     """
-    return graph.vcount() - 3
-
+    return graph.vcount()-3
 
 def STAT_e(graph):
     """
@@ -31,14 +29,15 @@ def STAT_e(graph):
     for edge in edgeList:
         currentNode = edge[0]
         toNode = edge[1]
-        # neighbor of green, only with only blacks and if first neighbor
-        if (graph.vs[currentNode]['color'] == 'green' or graph.vs[toNode]['color'] == 'green'):
-            if (graph.vs[currentNode]['color'] == 'green' and graph.vs[toNode] == 'black') or (
-                    graph.vs[currentNode]['color'] == 'black' and graph.vs[toNode]['color'] == 'green'):
+
+        # check if the edge is connected the interface
+        if(graph.vs[currentNode]['color'] == 'green' or graph.vs[toNode]['color'] == 'green'):
+            # check if the endpoints of the edges are either green or black
+            if(graph.vs[currentNode]['color'] == 'green' and graph.vs[toNode] == 'black') or (graph.vs[currentNode]['color'] == 'black' and graph.vs[toNode]['color'] == 'green'):
+                # increment the edge count
                 count += 1
 
     return count
-
 
 def STAT_n_D(graph):
     """
@@ -56,9 +55,8 @@ def STAT_n_D(graph):
     for vertex in range(vertices):
         if graph.vs[vertex]['color'] == 'black':
             count += 1
-
+    
     return count
-
 
 def STAT_n_A(graph):
     """
@@ -76,9 +74,8 @@ def STAT_n_A(graph):
     for vertex in range(vertices):
         if graph.vs[vertex]['color'] == 'white':
             count += 1
-
+    
     return count
-
 
 def STAT_CC_D(graph):
     """
@@ -99,7 +96,6 @@ def STAT_CC_D(graph):
 
     return count
 
-
 def STAT_CC_A(graph):
     """
     Counts the connected components that contain at least one 'white' vertex.
@@ -118,8 +114,7 @@ def STAT_CC_A(graph):
             count += 1
 
     return count
-
-
+    
 def STAT_CC_D_An(graph):
     """
     Counts the connected components containing 'black' vertices and 'red' vertex (top).
@@ -136,9 +131,8 @@ def STAT_CC_D_An(graph):
     for c in cc:
         if graph.vs[c][0]['color'] == 'black' and 'red' in graph.vs[c]['color']:
             count += 1
-
+    
     return count
-
 
 def STAT_CC_A_Ca(graph):
     """
@@ -156,9 +150,8 @@ def STAT_CC_A_Ca(graph):
     for c in cc:
         if graph.vs[c][0]['color'] == 'white' and 'blue' in graph.vs[c]['color']:
             count += 1
-
+    
     return count
-
 
 def ABS_f_D(graph):
     """
@@ -172,8 +165,7 @@ def ABS_f_D(graph):
     """
     fraction = STAT_n_D(graph) / STAT_n(graph)
 
-    return round(fraction, 6)
-
+    return round(fraction,6)
 
 def CT_f_conn_D_An(graph):
     """
@@ -187,7 +179,7 @@ def CT_f_conn_D_An(graph):
     """
     cc = ig.connectedComponents(graph);
     count = 0
-
+    
     if cc is not None:
         for c in cc:
             if graph.vs[c][0]['color'] == 'black' and 'red' in graph.vs[c]['color']:
@@ -196,9 +188,19 @@ def CT_f_conn_D_An(graph):
                         count += 1
 
     fraction = count / STAT_n_D(graph)
+    cc = ig.connectedComponents(graph);
+    count = 0
+    
+    if cc is not None:
+        for c in cc:
+            if graph.vs[c][0]['color'] == 'black' and 'red' in graph.vs[c]['color']:
+                for vertex in c:
+                    if graph.vs[vertex]['color'] == 'black':
+                        count += 1
 
-    return round(fraction, 6)
-
+    fraction = count / STAT_n_D(graph)
+ 
+    return round(fraction,6)
 
 def CT_f_conn_A_Ca(graph):
     """
@@ -221,9 +223,19 @@ def CT_f_conn_A_Ca(graph):
                         count += 1
 
     fraction = count / STAT_n_A(graph)
+    cc = ig.connectedComponents(graph);
+    count = 0
 
-    return round(fraction, 6)
+    if cc is not None:
+        for c in cc:
+            if graph.vs[c][0]['color'] == 'white' and 'blue' in graph.vs[c]['color']:
+                for vertex in c:
+                    if graph.vs[vertex]['color'] == 'white':
+                        count += 1
 
+    fraction = count / STAT_n_A(graph)
+
+    return round(fraction,6)
 
 def CT_n_D_adj_An(graph):
     """
@@ -236,19 +248,18 @@ def CT_n_D_adj_An(graph):
         int: The number of 'black' vertices direct contact with the 'red' vertex (top).
     """
     edgeList = graph.get_edgelist()
+    edgeList = graph.get_edgelist()
     count = 0
 
     for edge in edgeList:
         currentNode = edge[0]
         toNode = edge[1]
 
-        if (graph.vs[currentNode]['color'] == 'red' or graph.vs[toNode]['color'] == 'red'):
-            if (graph.vs[currentNode]['color'] == 'red' and graph.vs[toNode] == 'black') or (
-                    graph.vs[currentNode]['color'] == 'black' and graph.vs[toNode]['color'] == 'red'):
+        if(graph.vs[currentNode]['color'] == 'red' or graph.vs[toNode]['color'] == 'red'):
+            if(graph.vs[currentNode]['color'] == 'red' and graph.vs[toNode] == 'black') or (graph.vs[currentNode]['color'] == 'black' and graph.vs[toNode]['color'] == 'red'):
                 count += 1
 
     return count
-
 
 def CT_n_A_adj_Ca(graph):
     """
@@ -260,7 +271,9 @@ def CT_n_A_adj_Ca(graph):
     Returns:
         int: The number of 'white' vertices direct contact with the 'blue' vertex (bottom).
     """
-
+    
+    edgeList = graph.get_edgelist()
+    
     edgeList = graph.get_edgelist()
     count = 0
 
@@ -268,15 +281,15 @@ def CT_n_A_adj_Ca(graph):
         currentNode = edge[0]
         toNode = edge[1]
 
-        if (graph.vs[currentNode]['color'] == 'blue' or graph.vs[toNode]['color'] == 'blue'):
-            if (graph.vs[currentNode]['color'] == 'blue' and graph.vs[toNode] == 'white') or (
-                    graph.vs[currentNode]['color'] == 'white' and graph.vs[toNode]['color'] == 'blue'):
+        if(graph.vs[currentNode]['color'] == 'blue' or graph.vs[toNode]['color'] == 'blue'):
+            if(graph.vs[currentNode]['color'] == 'blue' and graph.vs[toNode] == 'white') or (graph.vs[currentNode]['color'] == 'white' and graph.vs[toNode]['color'] == 'blue'):
                 count += 1
+
+    
 
     return count
 
-
-def desciptors(graph):
+def descriptors(graph):
     """
     Generates a dictionary of all graph descriptors.
 
@@ -287,7 +300,7 @@ def desciptors(graph):
         dict: A dictionary of descriptors and their calculated values.
     """
     dict = {}
-    dict["STAT_n"] = STAT_n(graph)
+    dict["STAT_n"] =  STAT_n(graph)
     dict["STAT_e"] = STAT_e(graph)
     dict["STAT_n_D"] = STAT_n_D(graph)
     dict["STAT_n_A"] = STAT_n_A(graph)
@@ -316,8 +329,8 @@ def descriptorsToTxt(dict, fileName):
         None
     """
 
-    f = open(fileName, "x")
+    f = open(fileName,"x")
 
-    with open(fileName, 'a') as f:
+    with open(fileName,'a') as f:
         for d in dict:
             f.write(d + " " + str(dict[d]) + '\n')

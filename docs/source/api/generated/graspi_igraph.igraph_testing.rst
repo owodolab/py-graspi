@@ -5,6 +5,12 @@
 
    
    
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      PERIODICITY
+   
    
 
    
@@ -16,6 +22,7 @@
       adjList
       adjvertexColors
       connectedComponents
+      edgeLabels
       filterGraph
       generateGraph
       generateGraphAdj
@@ -25,6 +32,7 @@
       vertexColors
       visual2D
       visual3D
+      visualize
    
    
 

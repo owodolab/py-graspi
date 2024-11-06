@@ -1,0 +1,13 @@
+data_0.5_3.6_000540 Results
+STAT_n passed - 65536 is the same as expected 65536
+STAT_e passed - 3628 is the same as expected 3628
+STAT_n_D passed - 32832 is the same as expected 32832
+STAT_n_A passed - 32704 is the same as expected 32704
+STAT_CC_D passed - 4 is the same as expected 4
+STAT_CC_A passed - 4 is the same as expected 4
+STAT_CC_D_An passed - 1 is the same as expected 1
+STAT_CC_A_Ca passed - 1 is the same as expected 1
+ABS_f_D passed - 0.500977 is the same as expected 0.500977
+CT_f_conn_D_An passed - 0.846278 is the same as expected 0.846278
+CT_f_conn_A_Ca passed - 0.611943 is the same as expected 0.611943
+{'STAT_n': 65536, 'STAT_e': 3628, 'STAT_n_D': 32832, 'STAT_n_A': 32704, 'STAT_CC_D': 4, 'STAT_CC_A': 4, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.500977, 'CT_f_conn_D_An': 0.846278, 'CT_f_conn_A_Ca': 0.611943, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512}

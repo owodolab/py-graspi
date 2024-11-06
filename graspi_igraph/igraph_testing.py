@@ -1,13 +1,15 @@
 import sys
+
 import igraph as ig
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import os
-import descriptors as d
-DEBUG = True
-PERIODICITY = False
+from . import descriptors as d
+DEBUG = False
+PERIODICITY = True
 '''---------Function to create edges for graph in specified format --------'''
+
 
 def adjList(fileName):
     """
@@ -71,29 +73,32 @@ def adjList(fileName):
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
-    if not is_2d:
+        if not is_2d:
+        # add edges to Blue Node for 3D
         adjacency_list[dimZ * dimY * dimX] = []
         for y in range(dimY):
             for x in range(dimX):
                 vertex_index = y * dimX + x
                 adjacency_list[dimZ * dimY * dimX].append(vertex_index)
                 edge_labels.append("s")
-
+                
+        #add edges to Red Node for 3D
         adjacency_list[dimZ * dimY * dimX + 1] = []
         for y in range(dimY):
             for x in range(dimX):
                 vertex_index = (dimZ - 1) * (dimY * dimX) + y * dimX + x
                 adjacency_list[dimZ * dimY * dimX + 1].append(vertex_index)
                 edge_labels.append("s")
-    #add edges to Blue Node
+    
     elif is_2d:
+        # add edges to Blue Node for 2D
         adjacency_list[dimZ * dimY * dimX] = []
         for z in range(dimZ):
             for x in range(dimX):
                 adjacency_list[dimZ * dimY * dimX].append(z * (dimY * dimX) + x)
                 edge_labels.append("s")
 
-        #add edges to Red Node
+        #add edges to Red Node for 2D
         adjacency_list[dimZ * dimY * dimX + 1] = []
         for z in range(dimZ):
             for x in range(dimX):
@@ -426,6 +431,7 @@ def visualize(graph, is_2D):
             Returns:
                 None
             """
+
         edges = g.get_edgelist()
         num_vertices = len(g.vs)
         grid_size = int(np.round(num_vertices ** (1 / 3)))
@@ -606,7 +612,7 @@ def main():
             visualize(filteredGraph, is_2D)
 
             if DEBUG:
-                dic = d.desciptors(g)
+                dic = d.descriptors(g)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
@@ -618,7 +624,7 @@ def main():
             visualize(filteredGraph, is_2D)
 
             if DEBUG:
-                dic = d.desciptors(g)
+                dic = d.descriptors(g)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
@@ -635,12 +641,12 @@ def main():
 
         elif sys.argv[1] != "-g":
             g, is_2D = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-            # visualize(g, is_2D)
+            visualize(g, is_2D)
             filteredGraph = filterGraph(g)
-            # visualize(filteredGraph, is_2D)
+            visualize(filteredGraph, is_2D)
 
             if DEBUG:
-                dic = d.desciptors(g)
+                dic = d.descriptors(g)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
@@ -648,5 +654,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
