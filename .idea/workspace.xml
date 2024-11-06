@@ -4,9 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
+    <list default="true" id="21da6ccd-3b54-4132-9da6-9e6d845692fb" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/.doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/docs/.doctrees/environment.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/.doctrees/pyGraspiDescriptors.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/.doctrees/pyGraspiDescriptors.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_modules/graspi_igraph/igraph_testing.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_modules/graspi_igraph/igraph_testing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_sources/pyGraspiDescriptors.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_sources/pyGraspiDescriptors.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.igraph_testing.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/api/generated/graspi_igraph.igraph_testing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/docs/objects.inv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/py-modindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/py-modindex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/pyGraspiDescriptors.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/pyGraspiDescriptors.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/searchindex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/source/pyGraspiDescriptors.rst" beforeDir="false" afterPath="$PROJECT_DIR$/docs/source/pyGraspiDescriptors.rst" afterDir="false" />
+=======
     <list default="true" id="21da6ccd-3b54-4132-9da6-9e6d845692fb" name="Changes" comment="Fixed 3D implementation for adjacency lists. Card #109">
       <change beforePath="$PROJECT_DIR$/.idea/py-graspi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/py-graspi.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> 5f18a8075c8392e0844ee9cf6130879084850e11
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
