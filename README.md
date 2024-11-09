@@ -1,4 +1,4 @@
-# py-graspi
+﻿# py-graspi
 
 Python-Igraph is a graph-based library contender for the library that works with the GraSPI package. 
 
@@ -7,15 +7,15 @@ The basic algorithm requirements include:
   -  Construction of graphs
   -  Graph Filtering
   -  Determine the number of connected components
-  -  Determine the shortest path from the bottom boundary to all black vertices until the white vertices are met
+  -  Determine the shortest path from some meta-vertices to all specified vertices
+  -  Provide a list of descriptors
   -  Graph visualization
-  -  Computation of Descriptors
 
 ## Installation
-First, you'd need to clone the repo by running the following command in your command line:
+Download the packages found in requirements.txt after you have set up your virtual environment. 
+Cone the repo by:
 ```
-git clone git@github.com:wenqizheng326/graspi_igraph.git
-
+git clone https://github.com/owodolab/py-graspi.git
 ```
 **Note: You'd need git installed on your system first**
 <br />
@@ -25,18 +25,25 @@ git clone git@github.com:wenqizheng326/graspi_igraph.git
 <br />
 Next, you'd need to navigate to the cloned repo using terminal. An example would be:
 ```
+cd /path/py-graspi
+```
+Once navigated to the branch, access the following directory:
+```
+cd graspi_igraph
+```
+Next, the downloads needed can be found in requirements.txt and can be installed by:
+```
+pip install notebook
+```
+Install the graspi_igraph package by:
+```
+pip install graspi-igraph
+```
+Once installed, to utilize the package remember to import the package:
+```
+import graspi_igraph as ig
+```
 
-cd /path/graspi_igraph
-```
-First, make sure you're on the memoryFix branch of the repo by running
-```
-git checkout memoryFix
-```
-Once navigated to the branch, downloads needed can be found in requirements.txt and can be installed by:
-
-```
-pip install -r requirements.txt
-```
 **Note: you must have Python and pip installed onto your system**
 <br />
 <br />
@@ -48,39 +55,82 @@ pip install -r requirements.txt
 <br />
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
-## Running memory tests
-To run memory tests, run the following command in terminal:
+## Running All 33 Morphologies Tests (JZ)
+To run the morphologies tests, return to the previous directory of "/py-graspi" by running:
 ```
-python main.py n dimension function
+cd ..
 ```
-**Make sure of the following:**
-  -  Replace "n" with the size of the graph you want. Note: n should be between 1-1000 for 2D graphs and 1-100 for 3D graphs
-  -  Replace "dimension" with 2D or 3D to specify if you want a 2D or 3D graph
-  -  Replace "function" with either generate, filter, or shortest_path, to choose which function you want to test memory for
- 
-<br />**An example of a correct command would be:**
+Next, make sure you're on bash first by running:
 ```
-python main.py 10 2D generate
-
+bash
 ```
-## Outputs
-After running this command, you should see
+Next, run the following:
 ```
-
-Generating results
+chmod +x run.sh
 ```
-Followed by the memory usage and runtime results after some time.
+Finally, run the following: 
+```
+./run.sh <file_type>
+```
+Substitute <file_type> with either txt or pdf for the desired output type.
+## 33 Morphologies Output (JZ)
+After running the command, the automatic report generation will begin. 
+<br />
+<br /> 
+The following will print when the report generation begins:
+```
+Generating PDF (If on pdf mode)
+Generating Text Files
+```
+As the script is running, the following will print for which microstructure it is on
+```
+Executing <test_file>
+```
+After a few minutes, the following will print once the report has been created
+```
+Text Files Generated
+PDF Generated (If on pdf mode)
+```
+## Viewing 33 Morphologies Output (JZ)
+For text files, navigate to the results directory by using the following command:
+```
+cd graspi_igraph/results
+```
+Use the following command to view the list of text files generated:
+```
+ls
+```
+To view the result in each file, run the following command:
+```
+cat <result_file_name>
+```
+Replace <result_file_name> with any of the files outputted by "ls"
 <br />
 <br />
- The following will print:
+If using pdf mode, the pdf should automattically open upon completion.
+<br />
+<br />
+If the pdf does not automatically pop up, use the following commands:
+### On Windows
 ```
-Completed
+start graspi_igraph/test_results.pdf
 ```
-To know that the tests have been completed
+### On MacOS
+```
+open graspi_igraph/test_results.pdf
+```
+### On Linux
+```
+evince graspi_igraph/test_results.pdf
+```
+If evince is not installed, run this first:
+```
+sudo apt install evince
+```
 ## To Test Algorithms
 
 To **generate graphs**, call the generateGraph(_file_) function which takes in a input-file name
-  -  returns a graph
+  -  returns a graph and a bool of whether it's a 2D graph
 ```
 ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
 ```
@@ -89,17 +139,17 @@ To **filter graphs**, call filterGraph(_graph_) function which takes in a graph 
   -  can pass a graph generated by generateGraph(_file_)
   -  returns a filtered graph
 ```
-g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")     # utilizing the test file found in 2D-testFiles folder as an example
+g, is_2D = ig.generateGraph("2D-testFile/testFile-10-2D.txt")     # utilizing the test file found in 2D-testFiles folder as an example
 fg = ig.filterGraph(g)
 ```
 
 To **determine the connected components** of the filtered graph, call connected_components() function
 ```
-print(fg.connected_components())
+print(ig.connectedComponents(fg))
 ```
 The number of connected components can be found by taking the length of the result produced by the connected_components function 
 ```
-print(len(fg.connected_components())) 
+print(len(ig.connectedComponents(fg))) 
 ```
 
 The **shortest path** between some meta-vertices to all specified vertices calling the function shortest_path(_fiteredGraph_, _specifiedVertices_, _metaVertex_, _fileName_)
@@ -111,38 +161,50 @@ Example:
 ig.shortest_path(fg,'black','blue',"black_to_blue_paths.txt")    #fg is a filtered graph object
 ```
 
-### To get list of descriptors (WZ)
+### To get dictionary of descriptors (WZ)
 
-A **descriptors stored in a dictionary** can be found by calling the function descriptors(_graph_)
+To test if descriptors are computed correctly, you can run the following script in the terminal to check.
+  -  make sure you are in the py-graspi directory after git cloning
+  -  if not in directory, in the terminal, run the command
+     ```
+     cd py-graspi
+     ```
+
+```
+python graspi_igraph/simple-test.py graspi_igraph/data/data_0.5_2.2_001900.txt
+```
+This will print out whether the descriptor computation is correct and should take around 10-15 seconds.
+
+The **descriptors stored in a dictionary** can be computed by calling the function descriptors(_graph_)
 
 ```
 ig.descriptors(g)      # g is a graph object
 ```
-A **list of descriptors in a text file** can be found by calling the function descriptorsToTxt(_dictionary_,_filename_)
+The ** descriptors in a text file** can be computed by calling the function descriptorsToTxt(_dictionary_,_filename_)
+  -  _dict_ is a dictionary of descriptors that is returned by calling ig.descriptors(g)
 ```
-ig.descriptorsToTxt(dict,"descriptors_list.txt")
+ig.descriptorsToTxt(dict,"descriptors_list.txt") 
 ```
+
 
 ### To visualize graphs
 
-  -  for 2d graphs, call visual2D(_graph_)
+To visualize graphs, call visualize(_graph_, _is_2D_)
+  -  _graph_ is a graph object
+  -  _is_2D_ is a bool of whether a graph is 2D, also a return value when _generateGraph()_ is called
 ```
-g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")     # utilizing the test file found in 2D-testFiles folder as an example
-ig.visual2D(g)
-```
-  -  for 3d graphs, call visual3D(_graph_)
-```
-g = ig.generateGraph("3D-testFile/testFile-10-3D.txt")     # utilizing the test file found in 2D-testFiles folder as an example
-ig.visual3D(g)
-Finally, the following message will be printed out:
+g, is_2D = ig.generateGraph("2D-testFile/testFile-10-2D.txt")     # utilizing the test file found in 2D-testFiles folder as an example
+ig.visual2D(g, is_2D)
 ```
 
-## Testing from Command Line
+## Testing from Command Line (Kevin)
 
+
+Now that we have cloned the REPO lets talk about testing.
 
 \*\*\*First and foremost make sure you are in the py-graspi directory. If not you may run into some errors\*\*\*
 
-In this GitHub Repo, all the tests are in the test directory. Furthermore, within this directory are two more directories: 2D-testFile and 3D-testFile.
+In this GitHub Repo, you can find test files in the data directory or the 2D-testFile and 3D-testFile directories.
 Inside these directories, some files hold information about either 2d or 3d graphs based on the directory name. 
 When running from command lines you will need to know the complete pathname of the test file you are trying to run.
 
@@ -152,20 +214,116 @@ There are 2 type of input file formats: *.txt & *.graphe
 
 The command line input to run a graph creation for *.txt files will have the following format:
 ```
-python graspi_igraph/igraph_testing.py {total pathname of test file} {2d or 3d}
+python graspi_igraph/igraph_testing.py {total pathname of test file}
 ```
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 10x10 graph.
 ```
-python graspi_igraph/igraph_testing.py graspi_igraph/tests/2D-testFile/testFile-10-2D.txt 2d
+python graspi_igraph/igraph_testing.py graspi_igraph/2D-testFile/testFile-10-2D.txt 
 ```
 ### _*.graphe input format:_
-*.graphe input format is not that different, only extra parameter you need to input is a 'g' before the total pathname of the test file.
+*.graphe input format is not that different, only extra parameter you need to input is a '-g' before the total pathname of the test file.
 
 The command line input to run a graph creation for *.graphe files will have the following format:
 ````
-python graspi_igraph/igraph_testing.py g {total pathname of test file} {2d or 3d}
+python graspi_igraph/igraph_testing.py -g {total pathname of test file} 
 ````
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
 ```
-python graspi_igraph/igraph_testing.py g graspi_igraph/tests/2D-testFile/data_4_3.graphe 2d 
+python graspi_igraph/igraph_testing.py -g graspi_igraph/data_4_3.graphe
 ```
+### _Running with Periodicity:_
+We include the option of running any test case with periodicity turned on (only for .txt files). This 
+is done with an added '-p' parameter. This parameter is added first before inputting the test case
+format.
+
+For example, for *.txt cases with periodicity turned on will look like the following:
+```
+python graspi_igraph/igraph_testing.py -p {total pathname of test file}
+```
+To test this out run the example test case above but with the added '-p' parameter
+to turn periodicity on.
+## Output of Command Line Input
+As long as the inputs follow the format above and a file exists the program shall do the following:
+1. Pop up window should appear, this will be the initial visualization of the graph along with red, blue, and green meta vertices.
+2. Exit out of this pop up window with the top right "X" button.
+3. Now a second pop up window should appear, this window will now show a visualization of the filtered version of the graph in step 1.
+4. Exit out this window following same steps as step 2.
+5. Make sure program exits correctly (code 0).
+
+DISCLAIMER: if any issues occur you may not be in the right directory (py-graspi) or the test file may not exists or be poorly formatted.
+
+## Generate and Run Files for py-graspi API (ML)
+In order to generate an API using sphinx, you need to follow the installation of py-graspi:
+
+Cloning the repository:
+```
+git clone https://github.com/owodolab/py-graspi.git
+```
+
+**Make sure your current directory is py-graspi**
+
+In order to create an API with sphinx, you need to download sphinx with this command in the command line interface:
+```
+pip install sphinx
+```
+Additional dependencies needed for installed Sphinx Extension:
+```
+pip install sphinxcontrib-details-directive
+```
+Provides additional details (dropdowns) for each submodle listed.
+```
+pip install sphinx_rtd_theme
+```
+Uses the rtf theme for the API
+```
+pip install --upgrade setuptools
+```
+Used by python to handle resources and files
+
+In the command line interface, run this command:
+```
+sphinx-build -b html ./docs/source/ ./docs/ 
+```
+* **sphinx-build**: This is the main command for building Sphinx documentation. It generates documentation from reStructuredText (.rst) or Markdown (.md) source files.
+* **-b html**: This specifies the output format. Here, -b html tells Sphinx to build the documentation in HTML format, which is typically used for web-based documentation.
+* **./docs/source/**: This is the path to the source directory where Sphinx looks for the documentation source files. In this example, it’s in the source subdirectory inside docs.
+* **./docs/**: This is the output directory where the built HTML files will be saved. In this example, it’s the main docs folder. After running this command, you’ll find the generated HTML files here.
+
+In order to see the py-graspi API, run this command in the command line interface:
+
+**FOR WINDOWS:**
+```
+start docs/index.html
+```
+
+**FOR MACOS:**
+```
+open docs/index.html
+```
+This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
+
+## 2D & 3D Morphologies Tests (QP)
+To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
+
+First you will need to git clone the current repo, make sure that you are in the ""dev branch"":
+```
+git clone https://github.com/owodolab/py-graspi.git
+```
+Then, you will need to install the igraph package:
+```
+pip install graspi-igraph
+```
+Install jupyter notebook in order to view the test file:
+```
+pip install notebook
+```
+
+Finally, you will be able to use the command:
+```
+jupyter notebook
+```
+This will bring you into the testing filing on jupyter.
+Navigate to the directory 3d_2d_tests.
+Navigate to the file graspi_igraph_notebook.ipynb.
+
+On this file you will be able to run and view the 2d and 3d morphologies for subtask 4, card 104.

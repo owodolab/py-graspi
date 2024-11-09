@@ -1,0 +1,11 @@
+Metadata-Version: 2.1
+Name: graspi_igraph
+Version: 0.0.2.7
+Summary: Utilize Python-igraph to produce similar functionality as GraSPI
+Author: Wenqi Zheng
+Author-email: wenqizhe@buffalo.edu
+Classifier: Programming Language :: Python
+Requires-Python: >=3.7
+Requires-Dist: igraph
+Requires-Dist: matplotlib
+Requires-Dist: numpy
