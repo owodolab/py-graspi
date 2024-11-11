@@ -37,11 +37,11 @@ pip install notebook
 ```
 Install the graspi_igraph package by:
 ```
-pip install graspi-igraph
+pip install py-graspi
 ```
 Once installed, to utilize the package remember to import the package:
 ```
-import graspi_igraph as ig
+import py-graspi as ig
 ```
 
 **Note: you must have Python and pip installed onto your system**
