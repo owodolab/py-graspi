@@ -208,11 +208,11 @@ pip install notebook
 ```
 Install the graspi_igraph package by:
 ```
-pip install graspi-igraph
+pip install py-graspi
 ```
 Once installed, to utilize the package remember to import the package:
 ```
-import graspi_igraph as ig
+import py-graspi as ig
 ```
 
 **Note: you must have Python and pip installed onto your system**
@@ -332,18 +332,7 @@ Example:
 ig.shortest_path(fg,'black','blue',"black_to_blue_paths.txt")    #fg is a filtered graph object
 ```
 
-### To get list of descriptors (WZ)
-
-A **descriptors stored in a dictionary** can be found by calling the function descriptors(_graph_)
-
-```
-ig.descriptors(g)      # g is a graph object
-```
-A **list of descriptors in a text file** can be found by calling the function descriptorsToTxt(_dictionary_,_filename_)
-  -  _dict_ is a dictionary of descriptors that is returned by calling ig.descriptors(g)
-```
-ig.descriptorsToTxt(dict,"descriptors_list.txt") 
-```
+### To get dictionary of descriptors (WZ)
 
 To test if descriptors are computed correctly, you can run the following script in the terminal to check.
   -  make sure you are in the py-graspi directory after git cloning
@@ -355,6 +344,19 @@ To test if descriptors are computed correctly, you can run the following script 
 ```
 python graspi_igraph/simple-test.py graspi_igraph/data/data_0.5_2.2_001900.txt
 ```
+This will print out whether the descriptor computation is correct and should take around 10-15 seconds.
+
+The **descriptors stored in a dictionary** can be computed by calling the function descriptors(_graph_)
+
+```
+ig.descriptors(g)      # g is a graph object
+```
+The ** descriptors in a text file** can be computed by calling the function descriptorsToTxt(_dictionary_,_filename_)
+  -  _dict_ is a dictionary of descriptors that is returned by calling ig.descriptors(g)
+```
+ig.descriptorsToTxt(dict,"descriptors_list.txt") 
+```
+
 
 ### To visualize graphs
 
@@ -371,9 +373,9 @@ ig.visual2D(g, is_2D)
 
 Now that we have cloned the REPO lets talk about testing.
 
-\*\*\*First and foremost make sure you are in te py-graspi directory. If not you may run into some errors\*\*\*
+\*\*\*First and foremost make sure you are in the py-graspi directory. If not you may run into some errors\*\*\*
 
-In this GitHub Repo, all the tests are in the test directory. Furthermore, within this directory are two more directories: 2D-testFile and 3D-testFile.
+In this GitHub Repo, you can find test files in the data directory or the 2D-testFile and 3D-testFile directories.
 Inside these directories, some files hold information about either 2d or 3d graphs based on the directory name. 
 When running from command lines you will need to know the complete pathname of the test file you are trying to run.
 
@@ -387,10 +389,10 @@ python graspi_igraph/igraph_testing.py {total pathname of test file}
 ```
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 10x10 graph.
 ```
-python graspi_igraph/igraph_testing.py graspi_igraph/tests/2D-testFile/testFile-10-2D.txt 
+python graspi_igraph/igraph_testing.py graspi_igraph/2D-testFile/testFile-10-2D.txt 
 ```
 ### _*.graphe input format:_
-*.graphe input format is not that different, only extra parameter you need to input is a 'g' before the total pathname of the test file.
+*.graphe input format is not that different, only extra parameter you need to input is a '-g' before the total pathname of the test file.
 
 The command line input to run a graph creation for *.graphe files will have the following format:
 ````
@@ -398,10 +400,10 @@ python graspi_igraph/igraph_testing.py -g {total pathname of test file}
 ````
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
 ```
-python graspi_igraph/igraph_testing.py g graspi_igraph/tests/2D-testFile/data_4_3.graphe
+python graspi_igraph/igraph_testing.py -g graspi_igraph/data_4_3.graphe
 ```
 ### _Running with Periodicity:_
-We include the option of running any test case with periodicity turned on ONLY for *.txt input files. This 
+We include the option of running any test case with periodicity turned on (only for .txt files). This 
 is done with an added '-p' parameter. This parameter is added first before inputting the test case
 format.
 
@@ -409,9 +411,17 @@ For example, for *.txt cases with periodicity turned on will look like the follo
 ```
 python graspi_igraph/igraph_testing.py -p {total pathname of test file}
 ```
-
 To test this out run the example test case above but with the added '-p' parameter
 to turn periodicity on.
+## Output of Command Line Input
+As long as the inputs follow the format above and a file exists the program shall do the following:
+1. Pop up window should appear, this will be the initial visualization of the graph along with red, blue, and green meta vertices.
+2. Exit out of this pop up window with the top right "X" button.
+3. Now a second pop up window should appear, this window will now show a visualization of the filtered version of the graph in step 1.
+4. Exit out this window following same steps as step 2.
+5. Make sure program exits correctly (code 0).
+
+DISCLAIMER: if any issues occur you may not be in the right directory (py-graspi) or the test file may not exists or be poorly formatted.
 
 ## Generate and Run Files for py-graspi API (ML)
 In order to generate an API using sphinx, you need to follow the installation of py-graspi:
@@ -463,7 +473,7 @@ open docs/index.html
 ```
 This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
 
-## 2D & 3D Morphologies Tests
+## 2D & 3D Morphologies Tests (QP)
 To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
 
 First you will need to git clone the current repo, make sure that you are in the ""dev branch"":
