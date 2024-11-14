@@ -143,24 +143,6 @@ g, is_2D = ig.generateGraph("2D-testFile/testFile-10-2D.txt")     # utilizing th
 fg = ig.filterGraph(g)
 ```
 
-To **determine the connected components** of the filtered graph, call connected_components() function
-```
-print(ig.connectedComponents(fg))
-```
-The number of connected components can be found by taking the length of the result produced by the connected_components function 
-```
-print(len(ig.connectedComponents(fg))) 
-```
-
-The **shortest path** between some meta-vertices to all specified vertices calling the function shortest_path(_fiteredGraph_, _specifiedVertices_, _metaVertex_, _fileName_)
-  -  stores the distance of the paths to from the _metaVertex_ to every single _specified Vertices_ in a text file called _fileName_
-
-Example:
-  - the example below finds the shortest path between all black vertices to the blue meta-vertex and stores it in the text file, black_to_blue_paths.txt
-```
-ig.shortest_path(fg,'black','blue',"black_to_blue_paths.txt")    #fg is a filtered graph object
-```
-
 ### To get dictionary of descriptors (WZ)
 
 To test if descriptors are computed correctly, you can run the following script in the terminal to check.
