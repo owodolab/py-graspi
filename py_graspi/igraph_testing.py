@@ -787,18 +787,18 @@ def shortest_path(graph, vertices, toVertex, fileName):
 #                 for key, value in dic.items():
 #                     print(key, value)
 
-    else:
-        if sys.argv[1] == "-g":
-            g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
-            if DEBUG:
-                print(connectedComponents(filteredGraph))
-                dic = d.desciptors(g)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                print(key, value)
+        # else:
+        #     if sys.argv[1] == "-g":
+        #         g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+        #         visualize(g, is_2D)
+        #         filteredGraph = filterGraph(g)
+        #         visualize(filteredGraph, is_2D)
+        #         if DEBUG:
+        #             print(connectedComponents(filteredGraph))
+        #             dic = d.desciptors(g)
+        #             print(connectedComponents(filteredGraph))
+        #             for key, value in dic.items():
+        #             print(key, value)
 
 
 #         elif sys.argv[1] != "-g":
