@@ -12,7 +12,7 @@ import os
 from numpy import character
 
 import descriptors as d
-import tortuosity as t
+# import tortuosity as t
 
 DEBUG = False
 PERIODICITY = False
