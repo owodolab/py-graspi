@@ -1,3 +1,5 @@
+import sys
+
 import numpy as np
 
 
@@ -94,5 +96,11 @@ def translate_data(input_file):
 # Example usage
 # input_file = "plt/5x4x3.plt"  # Replace with your actual input file path
 # input_file = "plt/data_4_4.plt"
-input_file = "plt/phasedataCH.0008.plt"
-translate_data(input_file)
+
+def main():
+    input_file = sys.argv[1]
+    translate_data(input_file)
+
+if __name__ == "__main__":
+    main()
+
