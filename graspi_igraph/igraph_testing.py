@@ -12,7 +12,7 @@ import os
 from numpy import character
 
 import descriptors as d
-# import tortuosity as t
+import tortuosity as t
 
 DEBUG = False
 PERIODICITY = False
@@ -653,20 +653,18 @@ def main():
                     print(key, value)
 
 
-#
-# def test():
-#     filename = "data_4_3.txt"
-#     # filename = "data/data_0.5_2.2_001900.txt"
-#     # filename = "data/data_5x4x3.txt"
-#
-#     g,is_2d  = generateGraphAdj(filename)
-#     # visualize(g,is_2d)
-#
-#     # t.find_tortuosity(g, is_2d)
-#
-#     blackNodes = t.get_black_nodes(g)
-#     t.create_heatmap(g,blackNodes,g.vs[g.vcount()-2].index)
+
+def test():
+    filename = sys.argv[1]
+    # filename = "data/data_0.5_2.2_001900.txt"
+    # filename = "data/data_5x4x3.txt"
+
+    g,is_2d  = generateGraphAdj(filename)
+    visualize(g,is_2d)
+
+    t.find_tortuosity(g, is_2d, filename)
+
 
 if __name__ == '__main__':
-    main()
-    # test()
+    # main()
+    test()
