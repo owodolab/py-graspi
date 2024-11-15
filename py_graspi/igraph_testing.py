@@ -103,6 +103,8 @@ def adjList(fileName):
     if not is_2d:
         # add edges to Blue Node for 3D
         adjacency_list[dimZ * dimY * dimX] = []
+        blueVertex = dimZ * dimY * dimX
+        vertex_color.append('blue') 
         for y in range(dimY):
             for x in range(dimX):
                 vertex_index = y * dimX + x
@@ -112,6 +114,8 @@ def adjList(fileName):
 
         #add edges to Red Node for 3D
         adjacency_list[dimZ * dimY * dimX + 1] = []
+        redVertex = dimZ * dimY * dimX + 1
+        vertex_color.append('red')
         for y in range(dimY):
             for x in range(dimX):
                 vertex_index = (dimZ - 1) * (dimY * dimX) + y * dimX + x
