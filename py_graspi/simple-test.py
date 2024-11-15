@@ -1,4 +1,5 @@
-from . import igraph_testing as ig
+# from . 
+import igraph_testing as ig
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np

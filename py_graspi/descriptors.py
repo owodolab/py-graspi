@@ -1,5 +1,6 @@
-# from . import igraph_testing as ig
-import py_graspi as ig
+# from . 
+import igraph_testing as ig
+# import py_graspi as ig
 import math
 
 def STAT_n(graph):
@@ -361,7 +362,7 @@ def filterGraph_metavertices(graph):
 #     return blackToTop, f10_count / totalBlacks, summation / totalBlacks, tor_black / totalBlacks, tor_white / totalWhites
 '''
 
-def DISS(graph,black_vertices,white_vertices, dim):
+def DISS(graph,filename,black_vertices,white_vertices, dim):
     fg_green, fg_blue, fg_red = filterGraph_metavertices(graph)
     greenVertex = (graph.vs.select(color = 'green')[0]).index
     redVertex = (graph.vs.select(color = 'red')[0]).index
@@ -391,6 +392,15 @@ def DISS(graph,black_vertices,white_vertices, dim):
         if black_tor_distance != float('inf') and straight_path != float('inf'):
             tor = black_tor_distance / straight_path
             tolerance = 1 + (1/dim)
+
+            file = open(f"{filename}_TortuosityBlackToRed.txt", 'a')
+            file.write(f'{tor}\n')
+            file.close()
+
+            file = open(f"{filename}_IdTortuosityBlackToRed.txt",'a')
+            file.write(f'{vertex} {tor} {black_tor_distance} {straight_path}\n')
+            file.close()
+
             if tor < tolerance:
                 black_tor += 1
 
@@ -402,9 +412,14 @@ def DISS(graph,black_vertices,white_vertices, dim):
             
             summation += A1*math.exp(-((distance-B1)/C1)*((distance-B1)/C1))
 
-            file = open("DistanceBlackToGreen.txt", 'a')
-            file.write(f'{str(vertex)}: {str(distance)}\n')
+            file = open(f"{filename}_DistanceBlackToGreen.txt", 'a')
+            file.write(f'{str(distance)}\n')
             file.close()
+
+            file = open(f"{filename}_DistanceBlackToRed.txt", 'a')
+            file.write(f'{black_tor_distance}\n')
+            file.close()
+
             # check if distance is < 10, if yes, increment counter for DISS_f10_D
             if distance > 0 and distance < 10:
                 f10_count += 1
@@ -415,9 +430,22 @@ def DISS(graph,black_vertices,white_vertices, dim):
         white_tor_distance = white_tor_distances[vertex]
         straight_path = straight_paths[vertex]
         
+        file = open(f"{filename}_DistancesWhiteToBlue.txt",'a')
+        file.write(f'{white_tor_distance}\n')
+        file.close()
+
         if white_tor_distance != float('inf') and straight_path != float('inf'):
             tor = white_tor_distance / straight_path
             tolerance = 1 + (1/dim)
+
+            file = open(f"{filename}_TortuosityWhiteToBlue.txt",'a')
+            file.write(f'{tor}\n')
+            file.close()
+
+            file = open(f"{filename}_IdTortuosityWhiteToBlue.txt",'a')
+            file.write(f'{vertex} {tor} {white_tor_distance} {straight_path}\n')
+            file.close()
+
             if tor < tolerance:
                 white_tor += 1
     
@@ -427,7 +455,7 @@ def DISS(graph,black_vertices,white_vertices, dim):
 
 
 
-def descriptors(graph,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim):
+def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim):
     """
     Generates a dictionary of all graph descriptors.
 
@@ -447,7 +475,7 @@ def descriptors(graph,black_vertices,white_vertices, black_green,black_interface
 
     # shortest path descriptors
 
-    DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1= DISS(graph,black_vertices,white_vertices, dim)
+    DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1= DISS(graph,filename, black_vertices,white_vertices, dim)
 
     dict["STAT_n"] =  STAT_n_A + STAT_n_D
     dict["STAT_e"] = black_green

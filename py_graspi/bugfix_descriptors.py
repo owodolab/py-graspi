@@ -21,7 +21,7 @@ def main():
         ig.visualize(g,is_2D)
 
     if functionality == 'descriptors':
-        print(descriptors.descriptors(g,black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim))
+        print(descriptors.descriptors(g,filename,black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim))
 
     
     if functionality == 'cc':
