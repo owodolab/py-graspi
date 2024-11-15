@@ -1,10 +1,10 @@
 from setuptools import setup, find_packages
 
 setup(
-    name = "graspi_igraph",
+    name = "py_graspi",
     author = "Wenqi Zheng",
     author_email = "wenqizhe@buffalo.edu",
-    version = "0.0.2.7",
+    version = "0.0.1.8",
     description = "Utilize Python-igraph to produce similar functionality as GraSPI",
     packages = find_packages(),
     classifiers = ["Programming Language :: Python"],

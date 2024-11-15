@@ -40,7 +40,7 @@ def testFileMaker(num, depth, textFileName):
     return "success"
 
 def run_test_file_maker():
-    testFileMaker(4, 1, "t.txt")
+    testFileMaker(100, 1, "100x100.txt")
 
 if __name__ == "__main__":
     run_test_file_maker()
