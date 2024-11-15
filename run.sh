@@ -6,9 +6,9 @@ else
   exit 1
 fi
 
-if [ $FILETYPE == "txt" ]; then
+if [ $FILETYPE = "txt" ]; then
   python3 py_graspi/tests.py txt
-elif [ $FILETYPE == "pdf" ]; then
+elif [ $FILETYPE = "pdf" ]; then
   python3 py_graspi/tests.py pdf
 else
   echo "Unsupported file type. Must be txt or pdf"
