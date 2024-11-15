@@ -29,7 +29,7 @@ cd /path/py-graspi
 ```
 Once navigated to the branch, access the following directory:
 ```
-cd graspi_igraph
+cd py_graspi
 ```
 Next, the downloads needed can be found in requirements.txt and can be installed by:
 ```
