@@ -6,12 +6,20 @@ Descriptors
 
 For two-phase morphology, current **py-graspi** computes the following descriptors:
 
-* **STAT_n** - Number of vertices
+* **STAT_n** - Number of vertices, excluding meta ones
 * **STAT_e** - Number of interface edges
+
+    .. image:: imgs/stat_n_e.png
+        :scale: 50%
+        :align: center
 * **STAT_n_D** - Number of black vertices
 * **STAT_n_A** - Number of white vertices
 * **STAT_CC_D** - Number of black connected components
 * **STAT_CC_A** - Number of white connected components
+
+    .. image:: imgs/c_a.png
+        :scale: 50%
+        :align: center
 * **STAT_CC_D_An** - Number of black connected components connected to top (red)
 * **STAT_CC_A_Ca** - Number of white connected components connected to bottom (blue)
 * **ABS_f_D** - Fraction of black vertices

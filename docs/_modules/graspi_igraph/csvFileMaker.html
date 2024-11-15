@@ -40,16 +40,15 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">API Modules:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../api/graspi_igraph.csvFileMaker.html">csvFileMaker</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/graspi_igraph.descriptors.html">descriptors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/graspi_igraph.igraph_testing.html">testing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api/graspi_igraph.testFileMaker.html">testFileMaker</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">API Overview:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../api/api_overview.html">API Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiExamples.html">Example of Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_overview.html">API Overview</a></li>
 </ul>
 
         </div>
@@ -82,7 +81,7 @@
 <span class="kn">import</span> <span class="nn">tracemalloc</span>
 <span class="kn">import</span> <span class="nn">csv</span>
 
-<div class="viewcode-block" id="functionRuntime"><a class="viewcode-back" href="../../api/graspi_igraph.csvFileMaker.html#graspi_igraph.csvFileMaker.functionRuntime">[docs]</a><span class="k">def</span> <span class="nf">functionRuntime</span><span class="p">(</span><span class="n">count</span><span class="p">,</span><span class="n">function</span><span class="p">,</span> <span class="o">*</span><span class="n">argv</span><span class="p">):</span>
+<div class="viewcode-block" id="functionRuntime"><a class="viewcode-back" href="../../api_overview.html#graspi_igraph.csvFileMaker.functionRuntime">[docs]</a><span class="k">def</span> <span class="nf">functionRuntime</span><span class="p">(</span><span class="n">count</span><span class="p">,</span><span class="n">function</span><span class="p">,</span> <span class="o">*</span><span class="n">argv</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Measures the average runtime of a function over a specified number of executions.</span>
 
@@ -107,7 +106,7 @@
 
     <span class="k">return</span> <span class="n">avgExecution</span></div>
 
-<div class="viewcode-block" id="functionMemory"><a class="viewcode-back" href="../../api/graspi_igraph.csvFileMaker.html#graspi_igraph.csvFileMaker.functionMemory">[docs]</a><span class="k">def</span> <span class="nf">functionMemory</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="o">*</span><span class="n">argv</span><span class="p">):</span>
+<div class="viewcode-block" id="functionMemory"><a class="viewcode-back" href="../../api_overview.html#graspi_igraph.csvFileMaker.functionMemory">[docs]</a><span class="k">def</span> <span class="nf">functionMemory</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="o">*</span><span class="n">argv</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Measures the peak memory usage of a function during its execution.</span>
 
@@ -126,7 +125,7 @@
     
     <span class="k">return</span> <span class="n">stats</span></div>
 
-<div class="viewcode-block" id="csvMaker"><a class="viewcode-back" href="../../api/graspi_igraph.csvFileMaker.html#graspi_igraph.csvFileMaker.csvMaker">[docs]</a><span class="k">def</span> <span class="nf">csvMaker</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">graphGen</span><span class="p">,</span> <span class="n">graphGenPar</span><span class="p">,</span><span class="n">graphFilt</span><span class="p">,</span> <span class="n">graphFiltPar</span><span class="p">,</span><span class="n">shortPath</span><span class="p">,</span> <span class="n">shortPathPar</span><span class="p">):</span>
+<div class="viewcode-block" id="csvMaker"><a class="viewcode-back" href="../../api_overview.html#graspi_igraph.csvFileMaker.csvMaker">[docs]</a><span class="k">def</span> <span class="nf">csvMaker</span><span class="p">(</span><span class="n">fileName</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">graphGen</span><span class="p">,</span> <span class="n">graphGenPar</span><span class="p">,</span><span class="n">graphFilt</span><span class="p">,</span> <span class="n">graphFiltPar</span><span class="p">,</span><span class="n">shortPath</span><span class="p">,</span> <span class="n">shortPathPar</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Runs multiple graph-related functions, records their runtime and memory usage,</span>
 <span class="sd">    and stores the results in a CSV file.</span>
@@ -185,7 +184,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
