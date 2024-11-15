@@ -31,7 +31,7 @@ Once navigated to the branch, access the following directory:
 ```
 cd graspi_igraph
 ```
-Next, the downloads needed can be found in requirements.txt and can be installed by:
+Next, the downloads needed can be found in `requirements.txt` and can be installed by:
 ```
 pip install notebook
 ```
@@ -56,11 +56,15 @@ import py-graspi as ig
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
 ## Running All 33 Morphologies Tests (JZ)
-To run the morphologies tests, return to the previous directory of "/py-graspi" by running:
+To run the morphologies tests, return to the previous directory of `/py-graspi` by running:
 ```
 cd ..
 ```
-Next, make sure you're on bash first by running:
+Next, make sure you're on the correct directory by using:
+```
+git checkout Card#122-Histogram-Report
+```
+Next, make sure you're running using bash:
 ```
 bash
 ```
@@ -72,7 +76,7 @@ Finally, run the following:
 ```
 ./run.sh <file_type>
 ```
-Substitute <file_type> with either txt or pdf for the desired output type.
+Substitute `<file_type>` with either `txt` or `pdf` for the desired output type.
 ## 33 Morphologies Output (JZ)
 After running the command, the automatic report generation will begin. 
 <br />
@@ -104,7 +108,7 @@ To view the result in each file, run the following command:
 ```
 cat <result_file_name>
 ```
-Replace <result_file_name> with any of the files outputted by "ls"
+Replace `<result_file_name>` with any of the files outputted by `ls`
 <br />
 <br />
 If using pdf mode, the pdf should automattically open upon completion.
