@@ -40,8 +40,9 @@ def generate_histogram(data, bins, filename, title, labelX, labelY, color):
     plt.title(title)
     plt.xlabel(labelX)
     plt.ylabel(labelY)
-    plt.xticks(ticks=np.arange(start=min(data[0]),
-                               step=np.ptp(data[0]) / bins,
+    start = min(data[0]) if min(data[0]) != 0 else epsilon
+    plt.xticks(ticks=np.arange(start=start,
+                               step=(max(data[0]) - start) / bins,
                                stop=np.max(data[0]) + 1), rotation=90)
     plt.savefig(hist_path + filename + ".png", format="png")
     plt.close()
@@ -138,12 +139,12 @@ def main():
 
                 with open(data_path + test_file + "_TortuosityBlackToRed.txt", "r") as f:
                     data5 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
-                    hist5 = generate_histogram([data5], 25, test_file + "5", "Tortuosity of D-paths to An", "Tortuosity","Instances", "Red")
+                    hist5 = generate_histogram([data5], 10, test_file + "5", "Tortuosity of D-paths to An", "Tortuosity","Instances", "Red")
                     pdf.image(hist5, x=70, y=140, h=54, w=72)
 
                 with open(data_path + test_file + "_TortuosityWhiteToBlue.txt", "r") as f:
                     data6 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
-                    hist6 = generate_histogram([data6], 25, test_file + "6", "Tortuosity of A-paths to Ca", "Tortuosity","Instances", "Green")
+                    hist6 = generate_histogram([data6], 10, test_file + "6", "Tortuosity of A-paths to Ca", "Tortuosity","Instances", "Green")
                     pdf.image(hist6, x=140, y=140, h=54, w=72)
 
                 print(f"{test_file} PDF Generated")
