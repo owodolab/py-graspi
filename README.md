@@ -174,6 +174,7 @@ This will print out whether the descriptor computation is correct and should tak
 The **descriptors stored in a dictionary** can be computed by calling the function descriptors(...)
 It take in values returned from generateGraph() and a input filename as the parameters:
   - graph: graph object
+  - filename: input filename used to generate graph
   - black_vertices: list of all black vertices
   - white_vertices: list of all white vertices
   - black_green: number of edges from black to interface (green vertex)
@@ -188,7 +189,7 @@ It take in values returned from generateGraph() and a input filename as the para
 
 ```
 
-ig.descriptors(graph,filename,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim) 
+ig.descriptors(graph,filename,black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca) 
 ```
 The ** descriptors in a text file** can be computed by calling the function descriptorsToTxt(_dictionary_,_filename_)
   -  _dict_ is a dictionary of descriptors that is returned by calling ig.descriptors(...)
