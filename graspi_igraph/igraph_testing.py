@@ -1,21 +1,16 @@
 import sys
-from fileinput import filename
 
 import igraph as ig
 import matplotlib.pyplot as plt
-from graspi_igraph import descriptors
-from igraph.drawing.plotly.graph import plotly
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import os
-
-from numpy import character
-
 import descriptors as d
+import math
 import tortuosity as t
 
-DEBUG = False
-PERIODICITY = False
+DEBUG = True
+PERIODICITY = True
 '''---------Function to create edges for graph in specified format --------'''
 
 
@@ -35,11 +30,18 @@ def adjList(fileName):
         first_order_pairs = []
         second_order_pairs = []
         third_order_pairs = []
+
     edge_labels = []
+    edge_weights = []
+    vertex_color = []
+    black_vertices = []
+    white_vertices = []
+
     is_2d = True
     with open(fileName, "r") as file:
         header = file.readline().split(' ')
         dimX, dimY = int(header[0]), int(header[1])
+        dim = dimY
         if len(header) < 3:
             dimZ = 1
         else:
@@ -51,15 +53,30 @@ def adjList(fileName):
         if dimZ > 1:
             # dimZ = dimX * dimY
             is_2d = False
-        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1),
-                   (1,0,-1), (1,-1,0)]
+            dim = dimZ
+        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1, -1, -1), (-1, 0, -1), (0, -1, -1), (1, -1, -1),
+                   (1, 0, -1), (1, -1, 0)]
 
-        #Loops through input and adds adjacency list of current vertex based on Offsets. Offsets, make it so edges aren't duplicated.
-        #Also adds edge labels based on Graspi Documentation
+        # Loops through input and adds adjacency list of current vertex based on Offsets. Offsets, make it so edges aren't duplicated.
+        # Also adds edge labels based on Graspi Documentation
         for z in range(dimZ):
             for y in range(dimY):
+                # read each vertice
+                line = file.readline().strip().split(' ')
                 for x in range(dimX):
                     current_vertex = z * dimY * dimX + y * dimX + x
+                    # adding color to vertices to reduce runtime
+                    if len(line[0]) > 0:
+                        color_code = line[x]
+                        if color_code == '1':
+                            vertex_color.append('white')
+                            # append to list of white vertices
+                            white_vertices.append(current_vertex)
+                        elif color_code == '0':
+                            vertex_color.append('black')
+                            # append to list of black vertices
+                            black_vertices.append(current_vertex)
+
                     neighbors = []
                     for dx, dy, dz in offsets:
                         nx, ny, nz = x + dx, y + dy, z + dz
@@ -69,18 +86,20 @@ def adjList(fileName):
                                 if DEBUG:
                                     first_order_pairs.append([current_vertex, neighbor_vertex])
                                 edge_labels.append("f")
+                                edge_weights.append(1)
                             elif (dx, dy, dz) == offsets[4] or (dx, dy, dz) == offsets[5] or (dx, dy, dz) == offsets[
                                 6] or (dx, dy, dz) == offsets[7] or (dx, dy, dz) == offsets[8]:
                                 if DEBUG:
                                     third_order_pairs.append([current_vertex, neighbor_vertex])
                                 edge_labels.append("t")
+                                edge_weights.append(math.sqrt(3))
                             else:
                                 if DEBUG:
                                     second_order_pairs.append([current_vertex, neighbor_vertex])
                                 edge_labels.append("s")
+                                edge_weights.append(math.sqrt(2))
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
-
 
     if not is_2d:
         # add edges to Blue Node for 3D
@@ -90,29 +109,41 @@ def adjList(fileName):
                 vertex_index = y * dimX + x
                 adjacency_list[dimZ * dimY * dimX].append(vertex_index)
                 edge_labels.append("s")
+                edge_weights.append(math.sqrt(2))
 
-        #add edges to Red Node for 3D
+        # add edges to Red Node for 3D
         adjacency_list[dimZ * dimY * dimX + 1] = []
         for y in range(dimY):
             for x in range(dimX):
                 vertex_index = (dimZ - 1) * (dimY * dimX) + y * dimX + x
                 adjacency_list[dimZ * dimY * dimX + 1].append(vertex_index)
                 edge_labels.append("s")
+                edge_weights.append(math.sqrt(2))
 
     elif is_2d:
         # add edges to Blue Node for 2D
         adjacency_list[dimZ * dimY * dimX] = []
+        blueVertex = dimZ * dimY * dimX
+        # added the color of the vertex
+        vertex_color.append('blue')
         for z in range(dimZ):
             for x in range(dimX):
                 adjacency_list[dimZ * dimY * dimX].append(z * (dimY * dimX) + x)
                 edge_labels.append("s")
+                edge_weights.append(math.sqrt(2))
 
-        #add edges to Red Node for 2D
+        # print(adjacency_list[dimZ * dimY * dimX])
+
+        # add edges to Red Node for 2D
         adjacency_list[dimZ * dimY * dimX + 1] = []
+        redVertex = dimZ * dimY * dimX + 1
+        # added the color of the vertex
+        vertex_color.append('red')
         for z in range(dimZ):
             for x in range(dimX):
                 adjacency_list[dimZ * dimY * dimX + 1].append(z * (dimY * dimX) + (dimY - 1) * dimX + x)
                 edge_labels.append("s")
+                edge_weights.append(math.sqrt(2))
     if DEBUG:
         print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
@@ -125,7 +156,7 @@ def adjList(fileName):
         print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
-    return adjacency_list, edge_labels, is_2d
+    return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim
 
 
 def graphe_adjList(filename):
@@ -169,11 +200,11 @@ def graphe_adjList(filename):
                     third_order_neighbors.append([int(header[j]), i])
             adjacency_list.append(neighbors)
 
-    #Adds empty lists for Red and Blue nodes since input should have already added any nodes that belong to them, this removes duplicate edges (no cycles)
+    # Adds empty lists for Red and Blue nodes since input should have already added any nodes that belong to them, this removes duplicate edges (no cycles)
     adjacency_list.append([])
     adjacency_list.append([])
 
-    #only input files that have third order neighbors are 3D input files, this checks for that
+    # only input files that have third order neighbors are 3D input files, this checks for that
     is_2D = False
     if len(third_order_neighbors) <= 0:
         is_2D = True
@@ -212,30 +243,50 @@ def adjvertexColors(fileName):
     return labels
 
 
-def vertexColors(fileName):
+'''********* Constructing the Graph **********'''
+
+
+def filterGraph_metavertices(graph):
     """
-    Labels the colors of vertices based on a given file based on Graspi Documentation.
+    Filters the graph by keeping only edges between vertices of the same color and metavertices
 
     Args:
-        fileName (str): The name of the file containing the vertex color data.
+        graph (ig.Graph): The input graph.
 
     Returns:
-        list: A list of vertex colors.
+        ig.Graph: The filtered graph.
     """
-    labels = []
-    with open(fileName, 'r') as file:
-        lines = file.readlines()
-        for line in lines[1:]:
-            for char in line:
-                if char == '1':
-                    labels.append('white')
-                elif char == '0':
-                    labels.append('black')
+    edgeList = graph.get_edgelist()
+    keptEdges_blue = []
+    keptWeights_blue = []
+    keptEdges_red = []
+    keptWeights_red = []
 
-    return labels
+    # Checks edges and keeps only edges that connect to the same colored vertices
+    for edge in edgeList:
+        currentNode = edge[0]
+        toNode = edge[1]
 
+        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
+            keptEdges_blue.append(edge)
+            keptEdges_red.append(edge)
+            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
 
-'''********* Constructing the Graph **********'''
+        if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
+            keptEdges_blue.append(edge)
+            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+        elif ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')):
+            keptEdges_red.append(edge)
+            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+
+    fg_blue = graph.subgraph_edges(keptEdges_blue, delete_vertices=False)
+    fg_blue.es['weight'] = keptWeights_blue
+
+    fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
+    fg_red.es['weight'] = keptWeights_red
+
+    return fg_blue, fg_red
 
 
 def generateGraphGraphe(file):
@@ -269,20 +320,62 @@ def generateGraphGraphe(file):
 
     # exists = [0] * (g.vcount() - 3)
 
-
     # Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added
     for pair in first_order_neighbors:
         source_vertex = pair[0]
         target_vertex = pair[1]
 
         if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'
-                or g.vs[target_vertex]['color'] == 'black') and g.vs[source_vertex]['color'] == 'white':
+            or g.vs[target_vertex]['color'] == 'black') and g.vs[source_vertex]['color'] == 'white':
             # connect both source and target to green meta vertex
             g.add_edge(green_vertex, source_vertex)
             g.add_edge(green_vertex, target_vertex)
 
     # print(test)
     return g, is_2d
+
+
+def filterGraph_blue_red(graph):
+    """
+    Filters the graph by keeping only edges between vertices of the same color and metavertices
+
+    Args:
+        graph (ig.Graph): The input graph.
+
+    Returns:
+        ig.Graph: The filtered graph.
+    """
+    edgeList = graph.get_edgelist()
+    keptEdges_blue = []
+    keptWeights_blue = []
+    keptEdges_red = []
+    keptWeights_red = []
+
+    # Checks edges and keeps only edges that connect to the same colored vertices
+    for edge in edgeList:
+        currentNode = edge[0]
+        toNode = edge[1]
+
+        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
+            keptEdges_blue.append(edge)
+            keptEdges_red.append(edge)
+            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+
+        if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
+            keptEdges_blue.append(edge)
+            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+        elif ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')):
+            keptEdges_red.append(edge)
+            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+
+    fg_blue = graph.subgraph_edges(keptEdges_blue, delete_vertices=False)
+    fg_blue.es['weight'] = keptWeights_blue
+
+    fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
+    fg_red.es['weight'] = keptWeights_red
+
+    return fg_blue, fg_red
 
 
 def generateGraphAdj(file):
@@ -296,58 +389,116 @@ def generateGraphAdj(file):
             graph: the graph that holds all the edges and vertices based on file input
             boolean: returns  a boolean to signal if graph is 2D or not
         """
-    #get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
-    edges, edge_labels, is_2D = adjList(file)
-    labels = vertexColors(file)
+    # get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
+    edges, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2D, redVertex, blueVertex, dim = adjList(
+        file)
+    # labels, totalWhite, totalBlack = vertexColors(file)
     f = open(file, 'r')
     line = f.readline()
     line = line.split()
     dimX = int(line[0])
     dimY = int(line[1])
     g = ig.Graph.ListDict(edges=edges, directed=False)
-    g.vs["color"] = labels
+    g.vs["color"] = vertex_color
     g.es['label'] = edge_labels
+    g.es['weight'] = edge_weights
+
+    fg_blue, fg_red = filterGraph_blue_red(g)
+    redComponent = set(fg_red.subcomponent(redVertex, mode="ALL"))
+    blueComponent = set(fg_blue.subcomponent(blueVertex, mode="ALL"))
+
+    shortest_path_to_red = g.distances(source=redVertex, weights=g.es['weight'])[0]
+    shortest_path_to_blue = g.distances(source=blueVertex, weights=g.es['weight'])[0]
 
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY:
         for i in range(0, g.vcount() - 2, dimX):
             # first add first neighbor wrap around
             g.add_edge(g.vs[i], g.vs[i + (dimX - 1)])
-            g.es[g.ecount()-1]['label'] = 'f'
+            g.es[g.ecount() - 1]['label'] = 'f'
+            g.es[g.ecount() - 1]['weight'] = 1
 
             # add diagnol wrap arounds
             if i - 1 >= 0:
                 g.add_edge(g.vs[i], g.vs[i - 1])
-                g.es[g.ecount()-1]['label'] = 's'
+                g.es[g.ecount() - 1]['label'] = 's'
+                g.es[g.ecount() - 1]['weight'] = math.sqrt(2)
 
             if i + (dimX * 2 - 1) <= dimX * dimY:
                 g.add_edge(g.vs[i], g.vs[i + (dimX * 2 - 1)])
-                g.es[g.ecount()-1]['label'] = 's'
+                g.es[g.ecount() - 1]['label'] = 's'
+                g.es[g.ecount() - 1]['weight'] = math.sqrt(3)
 
-    #add color for the Blue and Red node
-    g.vs[g.vcount()-2]['color'] = 'blue'
-    g.vs[g.vcount()-1]['color'] = 'red'
-
-    #Add Green Interface and it's color
+    # Add Green Interface and it's color
     g.add_vertices(1)
-    g.vs[g.vcount()-1]['color'] = 'green'
+    g.vs[g.vcount() - 1]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1]
 
     if DEBUG:
         black_green_neighbors = []
 
-    #Add black/white edges to green interface node.
+    # counter for CT_n_D_adj_An
+    CT_n_D_adj_An = 0
+    # counter for CT_n_A_adj_Ca
+    CT_n_A_adj_Ca = 0
+    # counter for green black interface edges
+    black_green = 0
+    # counter for black interface vertices to red
+    black_interface_red = 0
+    # counter for white interface vertices to blue
+    white_interface_blue = 0
+
+    # counter for interface edges for complementary paths
+    interface_edge_comp_paths = 0
+
+    # Add black/white edges to green interface node.
     for edge in g.es:
         source_vertex = edge.source
         target_vertex = edge.target
+
+        if (g.vs[source_vertex]['color'] == 'blue' or g.vs[target_vertex]['color'] == 'blue'):
+            if (g.vs[source_vertex]['color'] == 'blue' and g.vs[target_vertex] == 'white') or (
+                    g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'blue'):
+                CT_n_A_adj_Ca += 1
+
+        if (g.vs[source_vertex]['color'] == 'red' or g.vs[target_vertex]['color'] == 'red'):
+            if (g.vs[source_vertex]['color'] == 'red' and g.vs[target_vertex] == 'black') or (
+                    g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'red'):
+                CT_n_D_adj_An += 1
+
+        # Add black/white edges to green interface node.
         if edge['label'] == 'f':
             if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (
                     g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
 
+                # incremement counter if black vertices has path to top (red)
+                if (g.vs[source_vertex]['color'] == 'black' and source_vertex in redComponent) or (
+                        g.vs[target_vertex]['color'] == 'black' and target_vertex in redComponent):
+                    black_interface_red += 1
+
+                # incremement counter if white interface vertices has path to bottom (blue)
+                if (g.vs[source_vertex]['color'] == 'white' and source_vertex in blueComponent) or (
+                        g.vs[target_vertex]['color'] == 'white' and target_vertex in blueComponent):
+                    white_interface_blue += 1
+
+                # increment count when black and white interface pair, black has path to top (red), white has path to (bottom) blue
+                if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') and (
+                        source_vertex in redComponent and target_vertex in blueComponent):
+                    interface_edge_comp_paths += 1
+                elif (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black') and (
+                        source_vertex in blueComponent and target_vertex in redComponent):
+                    interface_edge_comp_paths += 1
+
                 g.add_edge(green_vertex, source_vertex)
                 g.es[g.ecount() - 1]['label'] = 's'
+                g.es[g.ecount() - 1]['weight'] = 1 / 2
                 g.add_edge(green_vertex, target_vertex)
                 g.es[g.ecount() - 1]['label'] = 's'
+                g.es[g.ecount() - 1]['weight'] = 1 / 2
+
+                # increment black_green when black to green edge is added
+                black_green += 1
+
                 if DEBUG:
                     if g.vs[source_vertex]['color'] == 'black':
                         black_green_neighbors.append(source_vertex)
@@ -367,7 +518,7 @@ def generateGraphAdj(file):
         print("Nodes connected to red: ", g.vs[g.vcount() - 2]['color'], g.neighbors(g.vcount() - 2))
         print("Length: ", len(g.neighbors(g.vcount() - 2)))
         # exit()
-    return g, is_2D
+    return g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
 
 
 def generateGraph(file):
@@ -432,18 +583,19 @@ def visualize(graph, is_2D):
             """
         edges = g.get_edgelist()
         num_vertices = len(g.vs)
-        grid_size = int(np.ceil(num_vertices ** (1 / 3)))
+        grid_size = int(np.round(num_vertices ** (1 / 3)))
 
         # Generate 3D coordinates (layout) for the vertices
         x, y, z = np.meshgrid(range(grid_size), range(grid_size), range(grid_size))
-        coords = np.vstack([x.ravel(), y.ravel(), z.ravel()]).T[:num_vertices]  # Ensure coords match the number of vertices
+        coords = np.vstack([x.ravel(), y.ravel(), z.ravel()]).T
 
         # Plot the graph in 3D using matplotlib
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
 
-        color = g.vs['color']
-
+        color = []
+        for vertex in range(g.vcount()):
+            color.append(str(g.vs[vertex]['color']))
         # Plot vertices
         ax.scatter(coords[:, 0], coords[:, 1], coords[:, 2], c=color, s=100)
 
@@ -477,7 +629,7 @@ def filterGraph(graph):
     edgeList = graph.get_edgelist()
     keptEdges = []
 
-    #Checks edges and keeps only edges that connect to the same colored vertices
+    # Checks edges and keeps only edges that connect to the same colored vertices
     for edge in edgeList:
         currentNode = edge[0]
         toNode = edge[1]
@@ -559,45 +711,6 @@ def connectedComponents(graph):
     return connected_comp
 
 
-'''********* Shortest Path **********'''
-
-
-def shortest_path(graph, vertices, toVertex, fileName):
-    """
-    Finds the shortest paths from vertices to a target vertex and writes them to a file.
-
-    Args:
-        graph (ig.Graph): The input graph.
-        vertices (str): The source vertex color.
-        toVertex (str): The target vertex color.
-        fileName (str): The name of the output file.
-
-    Returns:
-        dict: A dictionary of shortest paths.
-    """
-    numVertices = graph.vcount()
-    ccp = graph.connected_components()
-    listOfShortestPaths = {}
-    vertex = numVertices;
-
-    if toVertex == 'blue':
-        vertex = numVertices - 2
-    elif toVertex == 'red':
-        vertex = numVertices - 1
-
-    f = open(fileName, "x")
-
-    with open(fileName, 'a') as f:
-        for c in ccp:
-            if graph.vs[c][0]['color'] == vertices or graph.vs[c][0]['color'] == toVertex:
-                for x in c:
-                    if graph.vs[x]['color'] == vertices or graph.vs[x]['color'] == toVertex:
-                        listOfShortestPaths[x] = graph.get_shortest_paths(x, vertex, output="vpath")[0]
-                        f.write(str(x) + ": " + str(
-                            len(graph.get_shortest_paths(x, vertex, output="vpath")[0]) - 1) + '\n');
-
-    return listOfShortestPaths
-
 def main():
     if sys.argv[1] == "-p":
         global PERIODICITY
@@ -626,43 +739,46 @@ def main():
                 for key, value in dic.items():
                     print(key, value)
 
-    else:
-        if sys.argv[1] == "-g":
-            g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
-            if DEBUG:
-                print(connectedComponents(filteredGraph))
-                dic = d.descriptors(g)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
+        else:
+            if sys.argv[1] == "-g":
+                g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+                visualize(g, is_2D)
+                filteredGraph = filterGraph(g)
+                visualize(filteredGraph, is_2D)
+                if DEBUG:
+                    print(connectedComponents(filteredGraph))
+                    dic = d.desciptors(g)
+                    print(connectedComponents(filteredGraph))
+                    for key, value in dic.items():
+                        print(key, value)
 
 
-        elif sys.argv[1] != "-g":
-            g, is_2D = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+            elif sys.argv[1] != "-g":
+                g, is_2D = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
+                visualize(g, is_2D)
+                filteredGraph = filterGraph(g)
+                visualize(filteredGraph, is_2D)
 
-            if DEBUG:
-                dic = d.descriptors(g)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
-
+                if DEBUG:
+                    dic = d.descriptors(g)
+                    print(connectedComponents(filteredGraph))
+                    for key, value in dic.items():
+                        print(key, value)
 
 
 def test():
     filename = sys.argv[1]
     # filename = "data/data_0.5_2.2_001900.txt"
-    # filename = "data/data_5x4x3.txt"
 
-    g,is_2d  = generateGraphAdj(filename)
-    visualize(g,is_2d)
-
-    t.find_tortuosity(g, is_2d, filename)
+    (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, dim, interface_edge_comp_paths,
+     shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)  = generateGraphAdj(filename)
+    # visualize(g,is_2D)
+    # if DEBUG:
+    #     dic = d.descriptors(g, filename, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
+    #                         dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)
+    #     for key, value in dic.items():
+    #         print(key, value)
+    t.find_tortuosity(g, is_2D, filename)
 
 
 if __name__ == '__main__':
