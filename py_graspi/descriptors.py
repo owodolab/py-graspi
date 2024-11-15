@@ -124,7 +124,6 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
     totalBlacks = len(black_vertices) 
     totalWhite = len(white_vertices)
 
-    filename = filename.split('/')[-1]
     filename = filename.split('.txt')[0]
   
     for vertex in black_vertices:
