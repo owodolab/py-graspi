@@ -1,0 +1,215 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>graspi_igraph.tests &mdash; py-graspi  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://owodolab.github.io/py-graspi/_modules/graspi_igraph/tests.html" />
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            py-graspi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiExamples.html">Example of Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_overview.html">API Overview</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">py-graspi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">graspi_igraph.tests</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for graspi_igraph.tests</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">igraph_testing</span> <span class="k">as</span> <span class="nn">ig</span>
+<span class="kn">import</span> <span class="nn">descriptors</span> <span class="k">as</span> <span class="nn">ds</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">fpdf</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">webbrowser</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+
+<span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<span class="n">data_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/graspi_igraph/data/&quot;</span>
+<span class="n">descriptors_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/graspi_igraph/descriptors/&quot;</span>
+<span class="n">image_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/graspi_igraph/images/&quot;</span>
+<span class="n">results_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/graspi_igraph/results/&quot;</span>
+<span class="n">test_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">data_path</span><span class="p">)]</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1e-5</span>
+
+<div class="viewcode-block" id="generate_image">
+<a class="viewcode-back" href="../../api/generated/graspi_igraph.tests.html#graspi_igraph.tests.generate_image">[docs]</a>
+<span class="k">def</span> <span class="nf">generate_image</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="n">data_path</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">char</span><span class="p">))</span>
+            <span class="n">matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+    <span class="n">matrix_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">fromarray</span><span class="p">(</span><span class="n">matrix_array</span> <span class="o">*</span> <span class="mi">255</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+    <span class="n">bw_image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
+    <span class="n">bw_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">image_path</span> <span class="o">+</span> <span class="n">filename</span> <span class="o">+</span> <span class="s2">&quot;.png&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../api/generated/graspi_igraph.tests.html#graspi_igraph.tests.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;file_type&quot;</span><span class="p">,</span> <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;txt&quot;</span><span class="p">,</span> <span class="s2">&quot;pdf&quot;</span><span class="p">])</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">file_type</span> <span class="o">==</span> <span class="s2">&quot;txt&quot;</span><span class="p">:</span>
+        <span class="n">PDF</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">PDF</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="n">pdf</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="n">PDF</span><span class="p">:</span>
+        <span class="n">pdf</span> <span class="o">=</span> <span class="n">fpdf</span><span class="o">.</span><span class="n">FPDF</span><span class="p">()</span>
+        <span class="n">pdf</span><span class="o">.</span><span class="n">set_font</span><span class="p">(</span><span class="s2">&quot;Arial&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generating PDF&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Generating Text Files&quot;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">test_file</span> <span class="ow">in</span> <span class="n">test_files</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Executing </span><span class="si">{</span><span class="n">test_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">PDF</span><span class="p">:</span>
+            <span class="n">pdf</span><span class="o">.</span><span class="n">add_page</span><span class="p">()</span>
+
+        <span class="n">g</span><span class="p">,</span> <span class="n">is_2D</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">generateGraph</span><span class="p">(</span><span class="n">data_path</span> <span class="o">+</span> <span class="n">test_file</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span><span class="p">)</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">desciptors</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">PDF</span><span class="p">:</span>
+            <span class="n">pdf</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">txt</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_file</span><span class="si">}</span><span class="s2"> Results&quot;</span><span class="p">,</span> <span class="n">ln</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">results_path</span> <span class="o">+</span> <span class="s2">&quot;descriptors-&quot;</span> <span class="o">+</span> <span class="n">test_file</span> <span class="o">+</span> <span class="s2">&quot;.txt&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">txt</span><span class="p">:</span>
+            <span class="n">txt</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">test_file</span><span class="si">}</span><span class="s2"> Results</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">descriptors_path</span> <span class="o">+</span> <span class="s2">&quot;descriptors.&quot;</span> <span class="o">+</span> <span class="n">test_file</span> <span class="o">+</span> <span class="s2">&quot;.log&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">stat</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                            <span class="n">txt</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> passed - </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> is the same as expected </span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">PDF</span><span class="p">:</span>
+                                <span class="n">pdf</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">txt</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> passed - </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> is the same as expected </span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ln</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">int</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                            <span class="n">txt</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> failed - </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> is not the same as expected </span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">PDF</span><span class="p">:</span>
+                                <span class="n">pdf</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">txt</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> failed - </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> is not the same as expected </span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ln</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="nb">abs</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="o">&lt;</span> <span class="n">epsilon</span><span class="p">:</span>
+                            <span class="n">txt</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> passed - </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> is the same as expected </span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">PDF</span><span class="p">:</span>
+                                <span class="n">pdf</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">txt</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> passed - </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> is the same as expected </span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ln</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+                        <span class="k">elif</span> <span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">float</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+                            <span class="n">txt</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> failed - </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> is not the same as expected </span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="n">PDF</span><span class="p">:</span>
+                                <span class="n">pdf</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span><span class="n">txt</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> failed - </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">stat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s2"> is not the same as expected </span><span class="si">{</span><span class="n">stat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">ln</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+            <span class="n">txt</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">PDF</span><span class="p">:</span>
+            <span class="n">pdf</span><span class="o">.</span><span class="n">multi_cell</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="n">txt</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stats</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s2">&quot;L&quot;</span><span class="p">)</span>
+            <span class="n">generate_image</span><span class="p">(</span><span class="n">test_file</span><span class="p">)</span>
+            <span class="n">image_file</span> <span class="o">=</span> <span class="n">image_path</span> <span class="o">+</span> <span class="n">test_file</span> <span class="o">+</span> <span class="s2">&quot;.png&quot;</span>
+            <span class="n">pdf</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="n">image_file</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Text Files Generated&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">PDF</span><span class="p">:</span>
+        <span class="n">pdf</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/graspi_igraph/test_results.pdf&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PDF Generated&quot;</span><span class="p">)</span>
+        <span class="n">webbrowser</span><span class="o">.</span><span class="n">open_new_tab</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/graspi_igraph/test_results.pdf&quot;</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
