@@ -167,7 +167,7 @@ To test if descriptors are computed correctly, you can run the following script 
      ```
 
 ```
-python py_graspi/simple-test.py py_graspi/data/data_0.5_2.2_001900.txt
+python simple-test.py data/data_0.5_2.2_001900.txt
 ```
 This will print out whether the descriptor computation is correct and should take around 10-15 seconds.
 
