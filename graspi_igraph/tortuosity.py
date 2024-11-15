@@ -1,14 +1,7 @@
 import sys
-
-from numpy.matlib import empty
-from seaborn import heatmap
-
-import igraph_testing as ig
-import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
-from igraph import Graph
-from collections import defaultdict
+
 
 def find_coords(filename):
     with open(filename, "r") as file:
@@ -42,33 +35,15 @@ def find_tortuosity(g, is_2d, filename):
     redVertex = g.vcount() - 2
     blackToRedList = []
     filteredGraph = filterGraph(g)
-    # ig.visualize(filteredGraph, is_2d)
     idOfPixelIn1DArray, tort = read_file_and_extract_numbers(filename)
-    # # Loop through non-meta vertices and find tortuosity based on color
-    # for i in range(numVertices - 3):
-    #     currentVertex = g.vs[i]
-    #     if currentVertex['color'] == 'black':
-    #         blackToRedList.append(filteredGraph.get_shortest_path(i, redVertex))
 
-
-    # print(blackToRedList)
     #Calculate vertex frequencies
     vertex_frequency = [0] * numVertices
     for i in range(len(idOfPixelIn1DArray)):
         vertex_frequency[idOfPixelIn1DArray[i]] = tort[i]
 
-
-    # for path in blackToRedList:
-    #     for vertex in path:
-    #         vertex_frequency[vertex] += 1
-    # print(vertex_frequency)
-    #
-    # # Remove the last three entries
-    # vertex_frequency = vertex_frequency[:-3]
     vertex_frequency = vertex_frequency[:-3]
     dimX,dimY,dimZ = coords = find_coords(filename)
-    # Reshape the 1D array back into a 2D array
-    # You'll need to know the original shape (e.g., 3x3)
     data_2d = np.array(vertex_frequency).reshape(dimY, dimX)
 
     # Create the heatmap
