@@ -41,9 +41,7 @@ def generate_histogram(data, bins, filename, title, labelX, labelY, color):
     plt.xlabel(labelX)
     plt.ylabel(labelY)
     start = min(data[0]) if min(data[0]) != 0 else epsilon
-    plt.xticks(ticks=np.arange(start=start,
-                               step=(max(data[0]) - start) / bins,
-                               stop=np.max(data[0]) + 1), rotation=90)
+    plt.xticks(ticks=np.arange(start=start, step=(max(data[0]) - start) / bins, stop=np.max(data[0]) + 1), rotation=90)
     plt.savefig(hist_path + filename + ".png", format="png")
     plt.close()
     return hist_path + filename + ".png"
@@ -81,35 +79,12 @@ def main():
             pdf.cell(200, 8, txt=f"Morphology: {test_file}", ln=True, align="L")
 
         if PDF:
-            #pdf.multi_cell(200, 8, txt=f"{stats}", align="L")
             generate_image(test_file)
             image_file = image_path + test_file + ".png"
             pdf.image(image_file, h=15, w=60)
 
         with open(results_path + "descriptors-" + test_file + ".txt", "w") as txt:
             txt.write(f"Morphology: {test_file}\n")
-
-            #with open(descriptors_path + "descriptors." + test_file + ".log") as f:
-                #for line in f:
-                    #stat = line.strip().split(" ")
-                    #try:
-                        #if stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) == int(stat[1]):
-                            #txt.write(f"{stat[0]} passed - {stats.get(stat[0])} is the same as expected {stat[1]}\n")
-                            #if PDF:
-                                #pdf.cell(200, 8, txt=f"{stat[0]} passed - {stats.get(stat[0])} is the same as expected {stat[1]}", ln=True, align="L")
-                        #elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != int(stat[1]):
-                            #txt.write(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}\n")
-                            #if PDF:
-                                #pdf.cell(200, 8, txt=f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}", ln=True, align="L")
-                    #except ValueError:
-                        #if stats.get(stat[0], -1) != -1 and abs(stats.get(stat[0], -1) - float(stat[1])) < epsilon:
-                            #txt.write(f"{stat[0]} passed - {stats.get(stat[0])} is the same as expected {stat[1]}\n")
-                            #if PDF:
-                                #pdf.cell(200, 8, txt=f"{stat[0]} passed - {stats.get(stat[0])} is the same as expected {stat[1]}", ln=True, align="L")
-                        #elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != float(stat[1]):
-                            #txt.write(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}\n")
-                            #if PDF:
-                                #pdf.cell(200, 8,txt=f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}",ln=True, align="L")
 
             for stat in stats:
                 txt.write(f"{stat} {stats[stat]}")
