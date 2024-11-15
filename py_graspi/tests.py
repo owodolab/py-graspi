@@ -15,7 +15,7 @@ descriptors_path = f"{current_dir}/py_graspi/descriptors/"
 image_path = f"{current_dir}/py_graspi/images/"
 hist_path = f"{current_dir}/py_graspi/histograms/"
 results_path = f"{current_dir}/py_graspi/results/"
-test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path)]
+test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path) if os.path.splitext(file)[0].count("_") == 3]
 epsilon = 1e-5
 
 def generate_image(filename):
@@ -42,7 +42,7 @@ def generate_histogram(data, bins, filename, title, labelX, labelY, color):
     plt.ylabel(labelY)
     plt.xticks(ticks=np.arange(start=min(data[0]),
                                step=np.ptp(data[0]) / bins,
-                               stop=np.max(data[0]) + 1))
+                               stop=np.max(data[0]) + 1), rotation=90)
     plt.savefig(hist_path + filename + ".png", format="png")
     plt.close()
     return hist_path + filename + ".png"
