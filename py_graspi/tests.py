@@ -40,8 +40,11 @@ def generate_histogram(data, bins, filename, title, labelX, labelY, color):
     plt.title(title)
     plt.xlabel(labelX)
     plt.ylabel(labelY)
-    start = min(data[0]) if min(data[0]) != 0 else epsilon
-    plt.xticks(ticks=np.arange(start=start, step=(max(data[0]) - start) / bins, stop=np.max(data[0]) + 1), rotation=90)
+    start = min(data[0]) if min(data[0]) != 0 else 1e-10
+    step = (max(data[0]) - start)
+    if step == 0:
+        step = 1
+    plt.xticks(ticks=np.arange(start=start, step=step, stop=np.max(data[0]) + 1), rotation=90)
     plt.savefig(hist_path + filename + ".png", format="png")
     plt.close()
     return hist_path + filename + ".png"
