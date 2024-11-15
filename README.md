@@ -41,7 +41,7 @@ pip install py-graspi
 ```
 Once installed, to utilize the package remember to import the package:
 ```
-import py-graspi as ig
+import py_graspi as ig
 ```
 
 **Note: you must have Python and pip installed onto your system**
