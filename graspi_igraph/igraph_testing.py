@@ -9,7 +9,7 @@ import descriptors as d
 import math
 import tortuosity as t
 
-DEBUG = True
+DEBUG = False
 PERIODICITY = True
 '''---------Function to create edges for graph in specified format --------'''
 

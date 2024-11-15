@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
-
+import igraph_testing as ig
 
 def find_coords(filename):
     with open(filename, "r") as file:
@@ -57,7 +57,6 @@ def read_file_and_extract_numbers(base_filename):
     file_path = f"distances/{base_filename}-IdTortuosityBlackToRed.txt"
     idOfPixelIn1DArray = []
     tort = []
-
     # Open the file in read mode
     with open(file_path, "r") as file:
         # Read each line in the file
@@ -73,3 +72,12 @@ def read_file_and_extract_numbers(base_filename):
 
     return idOfPixelIn1DArray, tort
 
+def main():
+    filename = sys.argv[1]
+    (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, dim, interface_edge_comp_paths,
+     shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)  = ig.generateGraphAdj(filename)
+    find_tortuosity(g, is_2D, filename)
+
+
+if __name__ == '__main__':
+    main()
