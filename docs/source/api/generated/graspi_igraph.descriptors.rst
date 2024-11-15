@@ -4,11 +4,6 @@
 .. automodule:: graspi_igraph.descriptors
 
    
-   
-   
-
-   
-   
    .. rubric:: Functions
 
    .. autosummary::
@@ -29,15 +24,3 @@
       descriptors
       descriptorsToTxt
    
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
-
