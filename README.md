@@ -139,6 +139,12 @@ returns:
   - black_interface_red: number of black interface vertices that has a path to top (red)
   - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
   - dim: value of vertices in y direction for 2D and z direction for 3D
+  - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
+  - shortest_path_to_red: shortest paths from all vertices to red 
+  - shortest_path_to_blue: shortest paths from all vertices to blue
+  - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
+  - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
+
 ```
 ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
 ```
@@ -167,13 +173,18 @@ This will print out whether the descriptor computation is correct and should tak
 
 The **descriptors stored in a dictionary** can be computed by calling the function descriptors(...)
 It take in values returned from generateGraph() and a input filename as the parameters:
-  -  graph: graph object
+  - graph: graph object
   - black_vertices: list of all black vertices
   - white_vertices: list of all white vertices
   - black_green: number of edges from black to interface (green vertex)
   - black_interface_red: number of black interface vertices that has a path to top (red)
   - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
   - dim: value of vertices in y direction for 2D and z direction for 3D
+  - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
+  - shortest_path_to_red: shortest paths from all vertices to red 
+  - shortest_path_to_blue: shortest paths from all vertices to blue
+  - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
+  - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
 
 ```
 
