@@ -161,7 +161,7 @@ fg = ig.filterGraph(g)
 
 To test if descriptors are computed correctly, you can run the following script in the terminal to check.
   -  make sure you are in the py_graspi directory after git cloning
-  -  if not in directory, in the terminal, run the command
+  -  if not in directory py-graspi/py_graspi, in the terminal, run the command
      ```
      cd py_graspi
      ```
