@@ -29,7 +29,7 @@ cd /path/py-graspi
 ```
 Once navigated to the branch, access the following directory:
 ```
-cd graspi_igraph
+cd py_graspi
 ```
 Next, the downloads needed can be found in requirements.txt and can be installed by:
 ```
@@ -139,6 +139,12 @@ returns:
   - black_interface_red: number of black interface vertices that has a path to top (red)
   - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
   - dim: value of vertices in y direction for 2D and z direction for 3D
+  - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
+  - shortest_path_to_red: shortest paths from all vertices to red 
+  - shortest_path_to_blue: shortest paths from all vertices to blue
+  - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
+  - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
+
 ```
 ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
 ```
@@ -161,23 +167,29 @@ To test if descriptors are computed correctly, you can run the following script 
      ```
 
 ```
-python py_graspi/simple-test.py py_graspi/data/data_0.5_2.2_001900.txt
+python simple-test.py data/data_0.5_2.2_001900.txt
 ```
 This will print out whether the descriptor computation is correct and should take around 10-15 seconds.
 
 The **descriptors stored in a dictionary** can be computed by calling the function descriptors(...)
 It take in values returned from generateGraph() and a input filename as the parameters:
-  -  graph: graph object
+  - graph: graph object
+  - filename: input filename used to generate graph
   - black_vertices: list of all black vertices
   - white_vertices: list of all white vertices
   - black_green: number of edges from black to interface (green vertex)
   - black_interface_red: number of black interface vertices that has a path to top (red)
   - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
   - dim: value of vertices in y direction for 2D and z direction for 3D
+  - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
+  - shortest_path_to_red: shortest paths from all vertices to red 
+  - shortest_path_to_blue: shortest paths from all vertices to blue
+  - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
+  - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
 
 ```
 
-ig.descriptors(graph,filename,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim) 
+ig.descriptors(graph,filename,black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca) 
 ```
 The ** descriptors in a text file** can be computed by calling the function descriptorsToTxt(_dictionary_,_filename_)
   -  _dict_ is a dictionary of descriptors that is returned by calling ig.descriptors(...)
