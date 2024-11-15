@@ -27,13 +27,17 @@ Next, you'd need to navigate to the cloned repo using terminal. An example would
 ```
 cd /path/py-graspi
 ```
+Next, make sure you're on the correct branch by using:
+```
+git checkout Card#122-Histogram-Report
+```
 Once navigated to the branch, access the following directory:
 ```
 cd py_graspi
 ```
 Next, the downloads needed can be found in `requirements.txt` and can be installed by:
 ```
-pip install notebook
+pip install -r requirements.txt
 ```
 Install the graspi_igraph package by:
 ```
@@ -59,10 +63,6 @@ import py_graspi as ig
 To run the morphologies tests, return to the previous directory of `/py-graspi` by running:
 ```
 cd ..
-```
-Next, make sure you're on the correct directory by using:
-```
-git checkout Card#122-Histogram-Report
 ```
 Next, make sure you're running using bash:
 ```
