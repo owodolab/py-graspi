@@ -130,7 +130,7 @@ sudo apt install evince
 ## To Test Algorithms
 
 To **generate graphs**, call the generateGraph(_file_) function which takes in a input-file name
-  - returns
+returns:
   - g: graph object
   - s_2D: bool of whether the graph is 2D
   - black_vertices: list of all black vertices
@@ -166,7 +166,8 @@ python py_graspi/simple-test.py py_graspi/data/data_0.5_2.2_001900.txt
 This will print out whether the descriptor computation is correct and should take around 10-15 seconds.
 
 The **descriptors stored in a dictionary** can be computed by calling the function descriptors(...)
--  it take in values returned from generateGraph() and a input filename:
+It take in values returned from generateGraph() and a input filename as the parameters:
+  -  graph: graph object
   - black_vertices: list of all black vertices
   - white_vertices: list of all white vertices
   - black_green: number of edges from black to interface (green vertex)
