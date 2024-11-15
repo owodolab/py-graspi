@@ -37,7 +37,7 @@ cd py_graspi
 ```
 Next, the downloads needed can be found in `requirements.txt` and can be installed by:
 ```
-pip install notebook
+pip install -r requirements.txt
 ```
 Install the graspi_igraph package by:
 ```
