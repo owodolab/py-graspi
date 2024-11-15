@@ -13,7 +13,7 @@ def main():
     graph_type = sys.argv[2]
     functionality = sys.argv[3]
 
-    g,is_2D,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim = ig.generateGraph(filename)
+    g,is_2D,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca = ig.generateGraph(filename)
     fg = ig.filterGraph(g)
 
 
@@ -21,7 +21,7 @@ def main():
         ig.visualize(g,is_2D)
 
     if functionality == 'descriptors':
-        print(descriptors.descriptors(g,filename,black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim))
+        print(descriptors.descriptors(g,filename,black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca))
 
     
     if functionality == 'cc':
