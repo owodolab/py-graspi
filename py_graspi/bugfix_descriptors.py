@@ -13,26 +13,15 @@ def main():
     graph_type = sys.argv[2]
     functionality = sys.argv[3]
 
-    g,is_2D = ig.generateGraph(filename)
+    g,is_2D,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca = ig.generateGraph(filename)
     fg = ig.filterGraph(g)
 
 
     if functionality == 'visuals':
-        if is_2D == True:
-            if graph_type == 'g':
-                ig.visual2D(g,'graph')
-                print("Plot displayed.")
-            if graph_type == 'fg':
-                ig.visual2D(fg,'filtered')
-                print("Plot displayed.")
-        else:
-            if graph_type == 'g':
-                ig.visual3D(g)
-            if graph_type == 'fg':
-                ig.visual3D(fg)
+        ig.visualize(g,is_2D)
 
     if functionality == 'descriptors':
-        print(descriptors.descriptors(g))
+        print(descriptors.descriptors(g,filename,black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca))
 
     
     if functionality == 'cc':
