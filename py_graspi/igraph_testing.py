@@ -3,7 +3,6 @@ from fileinput import filename
 
 import igraph as ig
 import matplotlib.pyplot as plt
-from graspi_igraph import descriptors
 from igraph.drawing.plotly.graph import plotly
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
@@ -807,6 +806,11 @@ def main():
                     print(connectedComponents(filteredGraph))
                     for key, value in dic.items():
                         print(key, value)
+            if DEBUG:
+                dic = d.descriptors(g)
+                print(connectedComponents(filteredGraph))
+                for key, value in dic.items():
+                    print(key, value)
 
 
 #
