@@ -1,14 +1,21 @@
 import sys
+from fileinput import filename
 
 import igraph as ig
 import matplotlib.pyplot as plt
+from graspi_igraph import descriptors
+from igraph.drawing.plotly.graph import plotly
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import os
+
+from numpy import character
+
 import descriptors as d
 import math
 DEBUG = False
 PERIODICITY = True
+# import tortuosity as t
 '''---------Function to create edges for graph in specified format --------'''
 
 
@@ -607,19 +614,18 @@ def visualize(graph, is_2D):
             """
         edges = g.get_edgelist()
         num_vertices = len(g.vs)
-        grid_size = int(np.round(num_vertices ** (1 / 3)))
+        grid_size = int(np.ceil(num_vertices ** (1 / 3)))
 
         # Generate 3D coordinates (layout) for the vertices
         x, y, z = np.meshgrid(range(grid_size), range(grid_size), range(grid_size))
-        coords = np.vstack([x.ravel(), y.ravel(), z.ravel()]).T
+        coords = np.vstack([x.ravel(), y.ravel(), z.ravel()]).T[:num_vertices]  # Ensure coords match the number of vertices
 
         # Plot the graph in 3D using matplotlib
         fig = plt.figure()
         ax = fig.add_subplot(111, projection='3d')
 
-        color = []
-        for vertex in range(g.vcount()):
-            color.append(str(g.vs[vertex]['color']))
+        color = g.vs['color']
+
         # Plot vertices
         ax.scatter(coords[:, 0], coords[:, 1], coords[:, 2], c=color, s=100)
 
@@ -746,6 +752,7 @@ def main():
 
             if DEBUG:
                 dic = d.descriptors(g)
+                dic = d.descriptors(g)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
@@ -757,6 +764,7 @@ def main():
             visualize(filteredGraph, is_2D)
 
             if DEBUG:
+                dic = d.descriptors(g)
                 dic = d.descriptors(g)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
@@ -774,6 +782,18 @@ def main():
                     print(connectedComponents(filteredGraph))
                     for key, value in dic.items():
                         print(key, value)
+    else:
+        if sys.argv[1] == "-g":
+            g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+            visualize(g, is_2D)
+            filteredGraph = filterGraph(g)
+            visualize(filteredGraph, is_2D)
+            if DEBUG:
+                print(connectedComponents(filteredGraph))
+                dic = d.descriptors(g)
+                print(connectedComponents(filteredGraph))
+                for key, value in dic.items():
+                    print(key, value)
 
 
             elif sys.argv[1] != "-g":
@@ -789,5 +809,20 @@ def main():
                         print(key, value)
 
 
+#
+# def test():
+#     filename = "data_4_3.txt"
+#     # filename = "data/data_0.5_2.2_001900.txt"
+#     # filename = "data/data_5x4x3.txt"
+#
+#     g,is_2d  = generateGraphAdj(filename)
+#     # visualize(g,is_2d)
+#
+#     # t.find_tortuosity(g, is_2d)
+#
+#     blackNodes = t.get_black_nodes(g)
+#     t.create_heatmap(g,blackNodes,g.vs[g.vcount()-2].index)
+
 if __name__ == '__main__':
     main()
+    # test()
