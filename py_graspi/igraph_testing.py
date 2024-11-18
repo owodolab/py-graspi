@@ -135,8 +135,6 @@ def adjList(fileName):
                 edge_labels.append("s")
                 edge_weights.append(math.sqrt(2))
 
-    # print(adjacency_list[dimZ * dimY * dimX])
-
         #add edges to Red Node for 2D
         adjacency_list[dimZ * dimY * dimX + 1] = []
         redVertex = dimZ * dimY * dimX + 1
@@ -464,10 +462,10 @@ def generateGraphAdj(file):
 
 
         #Add black/white edges to green interface node.
-        if edge['label'] == 'f':
-            if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (
-                    g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
-                
+        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (
+                g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
+            
+            if edge['label'] == 'f':
                 # incremement counter if black vertices has path to top (red)
                 if (g.vs[source_vertex]['color'] == 'black' and source_vertex in redComponent) or (g.vs[target_vertex]['color'] == 'black' and target_vertex in redComponent):
                     black_interface_red += 1
@@ -479,27 +477,58 @@ def generateGraphAdj(file):
                 # increment count when black and white interface pair, black has path to top (red), white has path to (bottom) blue
                 if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') and (source_vertex in redComponent and target_vertex in blueComponent):
                     interface_edge_comp_paths += 1
+
                 elif (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black') and (source_vertex in blueComponent and target_vertex in redComponent):
                     interface_edge_comp_paths += 1
-                
-
-                g.add_edge(green_vertex, source_vertex)
-                g.es[g.ecount() - 1]['label'] = 's'
-                g.es[g.ecount()-1]['weight'] = 1/2
-                g.add_edge(green_vertex, target_vertex)
-                g.es[g.ecount() - 1]['label'] = 's'
-                g.es[g.ecount()-1]['weight'] = 1/2
-
+            
+            
                 # increment black_green when black to green edge is added
                 black_green += 1
+            
+            try:
+                greenToSource = g.get_eid(green_vertex, source_vertex)
 
-                if DEBUG:
-                    if g.vs[source_vertex]['color'] == 'black':
-                        black_green_neighbors.append(source_vertex)
-                if DEBUG:
-                    if g.vs[target_vertex]['color'] == 'black':
-                        black_green_neighbors.append(target_vertex)
-    
+                if edge['weight'] / 2 < g.es[greenToSource]['weight']:
+                    g.es[greenToSource]['weight'] = edge['weight'] / 2
+                    g.es[greenToSource]['label'] = edge['label']
+
+                greenToSource = g.get_eid(source_vertex, green_vertex)
+
+                if edge['weight'] / 2 < g.es[greenToSource]['weight']:
+                    g.es[greenToSource]['weight'] = edge['weight'] / 2
+                    g.es[greenToSource]['label'] = edge['label']
+            
+            except ig._igraph.InternalError:
+                g.add_edge(green_vertex, source_vertex)
+                g.es[g.ecount() - 1]['label'] = edge['label']
+                g.es[g.ecount()-1]['weight'] = edge['weight'] / 2
+
+            try:
+                greenToTarget = g.get_eid(green_vertex, target_vertex)
+
+                if edge['weight'] / 2 < g.es[greenToTarget]['weight']:
+                    g.es[greenToTarget]['weight'] = edge['weight'] / 2
+                    g.es[greenToTarget]['label'] = edge['label']
+
+                greenToTarget = g.get_eid(target_vertex, green_vertex)
+
+                if edge['weight'] / 2 < g.es[greenToTarget]['weight']:
+                    g.es[greenToTarget]['weight'] = edge['weight'] / 2
+                    g.es[greenToTarget]['label'] = edge['label']
+            
+            except ig._igraph.InternalError:
+                g.add_edge(green_vertex, target_vertex)
+                g.es[g.ecount() - 1]['label'] = edge['label']
+                g.es[g.ecount()-1]['weight'] = edge['weight'] / 2
+
+
+            if DEBUG:
+                if g.vs[source_vertex]['color'] == 'black':
+                    black_green_neighbors.append(source_vertex)
+            if DEBUG:
+                if g.vs[target_vertex]['color'] == 'black':
+                    black_green_neighbors.append(target_vertex)
+
 
     if DEBUG:
         print(g.vs['color'])
