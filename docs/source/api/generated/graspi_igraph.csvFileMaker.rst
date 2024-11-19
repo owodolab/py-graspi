@@ -4,11 +4,6 @@
 .. automodule:: graspi_igraph.csvFileMaker
 
    
-   
-   
-
-   
-   
    .. rubric:: Functions
 
    .. autosummary::
@@ -17,15 +12,3 @@
       functionMemory
       functionRuntime
    
-   
-
-   
-   
-   
-
-   
-   
-   
-
-
-

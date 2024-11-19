@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -14,9 +14,9 @@
     <link rel="canonical" href="https://owodolab.github.io/py-graspi/pyGraspiRepresentation.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
-      <script src="_static/doctools.js?v=888ff710"></script>
-      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -80,14 +80,15 @@
            <div itemprop="articleBody">
              
   <section id="graph-based-representation-of-microstructure">
-<span id="pygraspirepresentation"></span><h1>Graph-based representation of microstructure<a class="headerlink" href="#graph-based-representation-of-microstructure" title="Permalink to this heading"></a></h1>
+<span id="pygraspirepresentation"></span><h1>Graph-based representation of microstructure<a class="headerlink" href="#graph-based-representation-of-microstructure" title="Link to this heading"></a></h1>
 <p>The package is built on the concept of graph-based microstructure representation.
 The segmented and digitized morphology is represented using a labelled, weighted, undirected graph.
 Each pixel (or voxel in 3D) becomes a graph vertex with a label denoting its phase.
 The vertices are connected with edges that capture information about distances.
 Graph construction for simple two phase morphologies is illustrated in figure.
 Once the morphology is represented as a graph, the standard graph-theory algorithms are used to quantify information about shortest paths and connectivity.</p>
-<a class="reference internal image-reference" href="_images/graphSteps.png"><img alt="_images/graphSteps.png" src="_images/graphSteps.png" style="width: 550px;" /></a>
+<a class="reference internal image-reference" href="_images/graphSteps.png"><img alt="_images/graphSteps.png" src="_images/graphSteps.png" style="width: 550px;" />
+</a>
 <p>Digitized and segmented morphology is the input to the software.
 Graph construction of a labeled weighted undirected graph <span class="math notranslate nohighlight">\(G = (V,E,W,L)\)</span>
 for a two-phase, two-dimensional morphology is described in this section.
