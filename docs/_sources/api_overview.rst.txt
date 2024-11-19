@@ -9,7 +9,7 @@ Below is the list of all functions available in **py-graspi**:
 .. details:: Descriptor Functions
    :open:
 
-   .. automodule:: graspi_igraph.descriptors
+   .. automodule:: py_graspi.descriptors
       :members:
       :undoc-members:
       :show-inheritance:
@@ -17,7 +17,7 @@ Below is the list of all functions available in **py-graspi**:
 .. details:: py-graspi Functions
    :open:
 
-   .. automodule:: graspi_igraph.igraph_testing
+   .. automodule:: py_graspi.igraph_testing
       :members:
       :undoc-members:
       :show-inheritance:
@@ -25,7 +25,7 @@ Below is the list of all functions available in **py-graspi**:
 .. details:: CSV File Making
    :open:
 
-   .. automodule:: graspi_igraph.csvFileMaker
+   .. automodule:: py_graspi.csvFileMaker
       :members:
       :undoc-members:
       :show-inheritance:
@@ -33,7 +33,7 @@ Below is the list of all functions available in **py-graspi**:
 .. details:: Test Files Generation
    :open:
 
-   .. automodule:: graspi_igraph.testFileMaker
+   .. automodule:: py_graspi.testFileMaker
       :members:
       :undoc-members:
       :show-inheritance:
