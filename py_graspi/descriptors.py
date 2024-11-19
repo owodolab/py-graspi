@@ -155,7 +155,7 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
             summation += A1*math.exp(-((distance-B1)/C1)*((distance-B1)/C1))
 
             file = open(f"{filename}_DistanceBlackToGreen.txt", 'a')
-            file.write(f'{str(distance)}\n')
+            file.write(f'{str(round(distance,6))}\n')
             file.close()
 
             file = open(f"{filename}_DistanceBlackToRed.txt", 'a')

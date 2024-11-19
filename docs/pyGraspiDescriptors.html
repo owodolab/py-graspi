@@ -98,13 +98,21 @@
   <section id="descriptors">
 <span id="pygraspidescriptors"></span><h1>Descriptors<a class="headerlink" href="#descriptors" title="Permalink to this heading"></a></h1>
 <p>For two-phase morphology, current <strong>py-graspi</strong> computes the following descriptors:</p>
-<ul class="simple">
-<li><p><strong>STAT_n</strong> - Number of vertices</p></li>
-<li><p><strong>STAT_e</strong> - Number of interface edges</p></li>
+<ul>
+<li><p><strong>STAT_n</strong> - Number of vertices, excluding meta ones</p></li>
+<li><p><strong>STAT_e</strong> - Number of interface edges</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/stat_n_e.png"><img alt="_images/stat_n_e.png" class="align-center" src="_images/stat_n_e.png" style="width: 483.5px; height: 146.0px;" /></a>
+</div></blockquote>
+</li>
 <li><p><strong>STAT_n_D</strong> - Number of black vertices</p></li>
 <li><p><strong>STAT_n_A</strong> - Number of white vertices</p></li>
 <li><p><strong>STAT_CC_D</strong> - Number of black connected components</p></li>
-<li><p><strong>STAT_CC_A</strong> - Number of white connected components</p></li>
+<li><p><strong>STAT_CC_A</strong> - Number of white connected components</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/c_a.png"><img alt="_images/c_a.png" class="align-center" src="_images/c_a.png" style="width: 481.0px; height: 122.5px;" /></a>
+</div></blockquote>
+</li>
 <li><p><strong>STAT_CC_D_An</strong> - Number of black connected components connected to top (red)</p></li>
 <li><p><strong>STAT_CC_A_Ca</strong> - Number of white connected components connected to bottom (blue)</p></li>
 <li><p><strong>ABS_f_D</strong> - Fraction of black vertices</p></li>
