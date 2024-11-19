@@ -105,6 +105,25 @@ def filterGraph_metavertices(graph):
     return filteredGraph_green, fg_blue, fg_red
 
 def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim, shortest_path_to_red, shortest_path_to_blue):
+    """
+    Computes descriptors based on shortest paths in graphs with vertex and metavertex colorations. This function also writes to file multiple types of distance metrics and tortuosity calculations related to specific vertex color relationships.
+
+    Args:
+        graph (ig.Graph): The input graph with vertex color attributes.
+        filename (str): Base filename for output text files storing the results.
+        black_vertices (list): Indices of vertices considered 'black'.
+        white_vertices (list): Indices of vertices considered 'white'.
+        dim (float): Dimensionality constant used in the calculation of tolerance.
+        shortest_path_to_red (list): List containing shortest path distances from each vertex to the nearest red vertex.
+        shortest_path_to_blue (list): List containing shortest path distances from each vertex to the nearest blue vertex.
+
+    Returns:
+        tuple: Contains the following elements:
+            - (float) Fraction of black vertices where the distance to the green vertex is less than 10.
+            - (float) Normalized summation of the distance function calculated for black vertices to the green vertex.
+            - (float) Fraction of black vertices where the tortuosity to the red vertex is within the defined tolerance.
+            - (float) Fraction of white vertices where the tortuosity to the blue vertex is within the defined tolerance.
+    """
     fg_green, fg_blue, fg_red = filterGraph_metavertices(graph)
     greenVertex = (graph.vs.select(color = 'green')[0]).index
     redVertex = (graph.vs.select(color = 'red')[0]).index
