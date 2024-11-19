@@ -27,13 +27,17 @@ Next, you'd need to navigate to the cloned repo using terminal. An example would
 ```
 cd /path/py-graspi
 ```
+Next, make sure you're on the correct branch by using:
+```
+git checkout Card#122-Histogram-Report
+```
 Once navigated to the branch, access the following directory:
 ```
 cd py_graspi
 ```
-Next, the downloads needed can be found in requirements.txt and can be installed by:
+Next, the downloads needed can be found in `requirements.txt` and can be installed by:
 ```
-pip install notebook
+pip install -r requirements.txt
 ```
 Install the graspi_igraph package by:
 ```
@@ -56,11 +60,11 @@ import py_graspi as ig
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
 ## Running All 33 Morphologies Tests (JZ)
-To run the morphologies tests, return to the previous directory of "/py-graspi" by running:
+To run the morphologies tests, return to the previous directory of `/py-graspi` by running:
 ```
 cd ..
 ```
-Next, make sure you're on bash first by running:
+Next, make sure you're running using bash:
 ```
 bash
 ```
@@ -72,7 +76,7 @@ Finally, run the following:
 ```
 ./run.sh <file_type>
 ```
-Substitute <file_type> with either txt or pdf for the desired output type.
+Substitute `<file_type>` with either `txt` or `pdf` for the desired output type.
 ## 33 Morphologies Output (JZ)
 After running the command, the automatic report generation will begin. 
 <br />
@@ -104,7 +108,7 @@ To view the result in each file, run the following command:
 ```
 cat <result_file_name>
 ```
-Replace <result_file_name> with any of the files outputted by "ls"
+Replace `<result_file_name>` with any of the files outputted by `ls`
 <br />
 <br />
 If using pdf mode, the pdf should automattically open upon completion.
@@ -208,7 +212,7 @@ g, is_2D = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0:1]     # utilizi
 ig.visual2D(g, is_2D)
 ```
 
-## Testing from Command Line (Kevin)
+## Testing from Command Line (KM)
 
 
 Now that we have cloned the REPO lets talk about testing.
@@ -220,7 +224,7 @@ Inside these directories, some files hold information about either 2d or 3d grap
 When running from command lines you will need to know the complete pathname of the test file you are trying to run.
 
 There are 2 type of input file formats: *.txt & *.graphe
-### _*.txt input format:_
+### _*.txt input format:_ (KM)
 
 
 The command line input to run a graph creation for *.txt files will have the following format:
@@ -231,7 +235,7 @@ If you have the same test directories as this GitHub Repo you should be able to 
 ```
 python graspi_igraph/igraph_testing.py graspi_igraph/2D-testFile/testFile-10-2D.txt 
 ```
-### _*.graphe input format:_
+### _*.graphe input format:_ (KM)
 *.graphe input format is not that different, only extra parameter you need to input is a '-g' before the total pathname of the test file.
 
 The command line input to run a graph creation for *.graphe files will have the following format:
@@ -242,7 +246,7 @@ If you have the same test directories as this GitHub Repo you should be able to 
 ```
 python graspi_igraph/igraph_testing.py -g graspi_igraph/data_4_3.graphe
 ```
-### _Running with Periodicity:_
+### _Running with Periodicity:_ (KM)
 We include the option of running any test case with periodicity turned on (only for .txt files). This 
 is done with an added '-p' parameter. This parameter is added first before inputting the test case
 format.
@@ -253,7 +257,7 @@ python graspi_igraph/igraph_testing.py -p {total pathname of test file}
 ```
 To test this out run the example test case above but with the added '-p' parameter
 to turn periodicity on.
-## Output of Command Line Input
+## Output of Command Line Input (KM)
 As long as the inputs follow the format above and a file exists the program shall do the following:
 1. Pop up window should appear, this will be the initial visualization of the graph along with red, blue, and green meta vertices.
 2. Exit out of this pop up window with the top right "X" button.
@@ -345,3 +349,16 @@ Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQu
 * **py_graspi_installation**: How to install Py-Graspi and run basic commands.
 * **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
 * **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
+
+## Translate Image File Into Truncated .txt File (KM)
+1. Make sure you cd into py_graspi directory first.
+2. The command line format to translate an image file into its truncated .txt file is as follows:
+```
+python img_to_txt.py {pathname of image file}
+```
+2. This should place both a truncated image file and truncated .txt file of the original image file into the "resized" directory.
+3. They will be named "resized_" followed by the image file name and correct extension.
+4. An example command line input that should work for this repo is as follows:
+```
+python img_to_txt.py images/data_0.5_2.2_001900.png
+```
