@@ -6,20 +6,19 @@ from numpy.ma.core import asarray
 
 DEBUG = False
 
-def img_to_txt(imageFile):
+def img_to_txt(imageFile, resizeFactor):
     #open image file
     image = Image.open(imageFile)
     #turn image into a numpy Array
     numpyData = asarray(image)
-    np_img = numpy.array(image)
 
     #initialize x and y axis of image
-    dimX = numpyData.shape[0]
-    dimY = numpyData.shape[1]
+    dimY = numpyData.shape[0]
+    dimX = numpyData.shape[1]
 
    #resize original image into a new image file
     partOutfile = imageFile[7:-4]
-    new_image = image.resize((dimX//3, dimY//3))
+    new_image = image.resize((int(dimX * resizeFactor), int(dimY * resizeFactor)))
     new_image.save(f"resized/resized_{partOutfile}.png")
     image2 = Image.open(f"resized/resized_{partOutfile}.png")
     if DEBUG:
@@ -28,13 +27,13 @@ def img_to_txt(imageFile):
         print(image2.mode)
     #turn new image into an array and find the Rows and Columns of new image
     numpyData2 = asarray(image2)
-    dimX = numpyData2.shape[0]
-    dimY = numpyData2.shape[1]
+    dimX = numpyData2.shape[1]
+    dimY = numpyData2.shape[0]
 
     #set up output file for new txt file that will be created from the newly shrunken image
     outfile = f"resized/resized_{partOutfile}.txt"
     file = open(outfile, "w")
-    file.write(f"{dimY} {dimX}")
+    file.write(f"{dimX} {dimY}")
 
     #loop through newimage array and write out into the new file
     for rows in numpyData2:
@@ -49,7 +48,9 @@ def img_to_txt(imageFile):
 
 def main():
     input_file = sys.argv[1]
-    img_to_txt(input_file)
+    resize_factor = sys.argv[2]
+    resize_factor = float(resize_factor)
+    img_to_txt(input_file, resize_factor)
 
 if __name__ == "__main__":
     main()
