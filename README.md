@@ -351,14 +351,18 @@ Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQu
 * **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
 
 ## Translate Image File Into Truncated .txt File (KM)
-1. Make sure you cd into py_graspi directory first.
+1. make sure you have py-graspi installed: pip install py-graspi
+2. Make sure you cd into py_graspi directory first.
 2. The command line format to translate an image file into its truncated .txt file is as follows:
 ```
-python img_to_txt.py {pathname of image file}
+python img_to_txt.py {pathname of image file} {Resize calculation amount}
 ```
-2. This should place both a truncated image file and truncated .txt file of the original image file into the "resized" directory.
-3. They will be named "resized_" followed by the image file name and correct extension.
-4. An example command line input that should work for this repo is as follows:
+3. The "resize calculation amount" is multiplied to the X and Y axis of the original image and this will alter the size of the image's final resized .txt file.
+4. This should place both a truncated image file and truncated .txt file of the original image file into the "resized" directory. 
+4. They will be named "resized_" followed by the image file name and correct extension. 
+5. An example command line input that should work for this repo is as follows:
 ```
-python img_to_txt.py images/data_0.5_2.2_001900.png
+python img_to_txt.py images/data_0.5_2.2_001900.png 0.25
 ```
+
+
