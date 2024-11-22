@@ -76,11 +76,6 @@ def main():
         if PDF:
             pdf.add_page()
 
-        g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca = ig.generateGraph(data_path + test_file + ".txt")
-        print(f"{test_file} Graph Generated")
-        stats = ds.descriptors(g,data_path + test_file + ".txt",black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)
-        print(f"{test_file} Descriptors Generated")
-
         if PDF:
             pdf.cell(200, 8, txt=f"Morphology: {test_file}", ln=True, align="L")
 
@@ -89,46 +84,59 @@ def main():
             image_file = image_path + test_file + ".png"
             pdf.image(image_file, h=15, w=60)
 
-        with open(results_path + "descriptors-" + test_file + ".txt", "w") as txt:
-            txt.write(f"Morphology: {test_file}\n")
+        if os.path.exists(results_path + "descriptors-" + test_file + ".txt") and PDF:
+            with open(results_path + "descriptors-" + test_file + ".txt", "r") as txt:
+                next(txt)
+                for line in txt.readlines():
+                    pdf.cell(40, 8, txt=line, ln=True, align="L")
+        else:
+            g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca = ig.generateGraph(
+                data_path + test_file + ".txt")
+            print(f"{test_file} Graph Generated")
+            stats = ds.descriptors(g, data_path + test_file + ".txt", black_vertices, white_vertices, black_green,
+                                   black_interface_red, white_interface_blue, dim, interface_edge_comp_paths,
+                                   shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)
+            print(f"{test_file} Descriptors Generated")
+            with open(results_path + "descriptors-" + test_file + ".txt", "w") as txt:
+                txt.write(f"Morphology: {test_file}\n")
 
-            for stat in stats:
-                txt.write(f"{stat} {stats[stat]}")
-                if PDF:
-                    pdf.cell(40, 8, txt=f"{stat} {stats[stat]}", ln=True, align="L")
+                for stat in stats:
+                    txt.write(f"{stat} {stats[stat]}\n")
+                    if PDF:
+                        pdf.cell(40, 8, txt=f"{stat} {stats[stat]}", ln=True, align="L")
 
-            print(f"{test_file} Text File Generated")
+                print(f"{test_file} Text File Generated")
 
-            if PDF:
-                with open(data_path + test_file + "_DistancesWhiteToBlue.txt", "r") as f:
-                    data1 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
-                    hist1 = generate_histogram([data1], 25, test_file + "1", "Distance from A to Ca", "Distance","Instances", "Blue", 0, 50, 250)
-                    pdf.image(hist1, x=80, y=10, w=60)
+        if PDF:
+            with open(data_path + test_file + "_DistancesWhiteToBlue.txt", "r") as f:
+                data1 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
+                hist1 = generate_histogram([data1], 25, test_file + "1", "Distance from A to Ca", "Distance","Instances", "Blue", 0, 50, 250)
+                pdf.image(hist1, x=80, y=10, w=60)
 
-                with open(data_path + test_file + "_DistanceBlackToRed.txt", "r") as f:
-                    data2 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
-                    hist2 = generate_histogram([data2], 20, test_file + "2", "Distance from D to Am", "Distance","Instances", "Red", 0, 20, 200)
-                    pdf.image(hist2, x=142, y=10, w=60)
+            with open(data_path + test_file + "_DistanceBlackToRed.txt", "r") as f:
+                data2 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
+                hist2 = generate_histogram([data2], 20, test_file + "2", "Distance from D to Am", "Distance","Instances", "Red", 0, 20, 200)
+                pdf.image(hist2, x=142, y=10, w=60)
 
-                hist3 = generate_histogram([data1, data2], 25, test_file + "3", "Path Balance", "Distance", "Instances",["Blue", "Red"], 0, 50, 250)
-                pdf.image(hist3, x=80, y=60, w=60)
+            hist3 = generate_histogram([data1, data2], 25, test_file + "3", "Path Balance", "Distance", "Instances",["Blue", "Red"], 0, 50, 250)
+            pdf.image(hist3, x=80, y=60, w=60)
 
-                with open(data_path + test_file + "_DistanceBlackToGreen.txt", "r") as f:
-                    data4 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
-                    hist4 = generate_histogram([data4], 12, test_file + "4", "Distance from D to Int", "Distance","Instances", "Green", 0, 10, 60)
-                    pdf.image(hist4, x=142, y=60, w=60)
+            with open(data_path + test_file + "_DistanceBlackToGreen.txt", "r") as f:
+                data4 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
+                hist4 = generate_histogram([data4], 12, test_file + "4", "Distance from D to Int", "Distance","Instances", "Green", 0, 10, 60)
+                pdf.image(hist4, x=142, y=60, w=60)
 
-                with open(data_path + test_file + "_TortuosityBlackToRed.txt", "r") as f:
-                    data5 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
-                    hist5 = generate_histogram([data5], 25, test_file + "5", "Tortuosity of D-paths to An", "Tortuosity","Instances", "Red", 1, 0.1, 1.5)
-                    pdf.image(hist5, x=80, y=110, w=60)
+            with open(data_path + test_file + "_TortuosityBlackToRed.txt", "r") as f:
+                data5 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
+                hist5 = generate_histogram([data5], 25, test_file + "5", "Tortuosity of D-paths to An", "Tortuosity","Instances", "Red", 1, 0.1, 1.5)
+                pdf.image(hist5, x=80, y=110, w=60)
 
-                with open(data_path + test_file + "_TortuosityWhiteToBlue.txt", "r") as f:
-                    data6 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
-                    hist6 = generate_histogram([data6], 25, test_file + "6", "Tortuosity of A-paths to Ca", "Tortuosity","Instances", "Blue", 1, 0.1, 1.5)
-                    pdf.image(hist6, x=142, y=110, w=60)
+            with open(data_path + test_file + "_TortuosityWhiteToBlue.txt", "r") as f:
+                data6 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
+                hist6 = generate_histogram([data6], 25, test_file + "6", "Tortuosity of A-paths to Ca", "Tortuosity","Instances", "Blue", 1, 0.1, 1.5)
+                pdf.image(hist6, x=142, y=110, w=60)
 
-                print(f"{test_file} PDF Generated")
+            print(f"{test_file} PDF Generated")
 
 
     print("Text Files Generated")
