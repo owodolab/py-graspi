@@ -1,5 +1,6 @@
 import igraph_testing as ig
 import math
+import numpy as np
 
 def CC_descriptors(graph,totalBlack, totalWhite):
     """
@@ -39,13 +40,19 @@ def CC_descriptors(graph,totalBlack, totalWhite):
 
             if graph.vs[c][0]['color'] == 'black' and 'red' in graph.vs[c]['color']:
                 countBlack_Red += 1
-                countBlack_Red_conn += sum(1 for v in c if graph.vs['color'][v] == 'black')
+                # countBlack_Red_conn += sum(1 for v in c if graph.vs['color'][v] == 'black')
+                # QP
+                colors = np.array(graph.vs['color'])
+                countBlack_Red_conn += np.sum(colors[c] == 'black')
                         
             
             if graph.vs[c][0]['color'] == 'white' and 'blue' in graph.vs[c]['color']:
                 countWhite_Blue += 1
-                countWhite_Blue_conn += sum(1 for v in c if graph.vs['color'][v] == 'white')
-
+                # countWhite_Blue_conn += sum(1 for v in c if graph.vs['color'][v] == 'white')
+                #QP
+                colors = np.array(graph.vs['color'])
+                countWhite_Blue_conn += np.sum(colors[c] == 'white')
+            # 21% to 7% of runtime
 
     return countBlack, countWhite, countBlack_Red, countWhite_Blue, round(countBlack_Red_conn / totalBlack,6), round(countWhite_Blue_conn / totalWhite, 6)
 
@@ -75,23 +82,59 @@ def filterGraph_metavertices(graph):
         currentNode = edge[0]
         toNode = edge[1]
 
-        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
-            keptEdges.append(edge)
-            keptEdges_blue.append(edge)
-            keptEdges_red.append(edge)
-            keptWeights.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
 
-        if ((graph.vs[currentNode]['color'] == 'green') or (graph.vs[toNode]['color'] == 'green')):
+        #QP 
+        # kept = {
+        #     'edges': [],
+        #     'edges_blue': [],
+        #     'edges_red': [],
+        #     'weights': [],
+        #     'weights_blue': [],
+        #     'weights_red': []
+        # }
+
+        #call these values once
+        weight = graph.es[graph.get_eid(currentNode, toNode)]['weight']
+        color_current = graph.vs[currentNode]['color']
+        color_toNode = graph.vs[toNode]['color']
+        
+        if (color_current == color_toNode):
             keptEdges.append(edge)
-            keptWeights.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-        elif ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
             keptEdges_blue.append(edge)
-            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-        elif ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')) :
             keptEdges_red.append(edge)
-            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+            keptWeights.append(weight)
+            keptWeights_blue.append(weight)
+            keptWeights_red.append(weight)
+
+            
+            # for key in ['edges', 'edges_blue', 'edges_red']:
+            #     kept[key].append(edge)
+            # for key in ['weights', 'weights_blue', 'weights_red']:
+            #     kept[key].append(weight)
+        # color_conditions = {
+        #     'green': ('edges', 'weights'),
+        #     'blue': ('edges_blue', 'weights_blue'),
+        #     'red': ('edges_red', 'weights_red')
+        # }
+
+        
+        
+        if ((color_current == 'green') or (color_toNode == 'green')):
+            keptEdges.append(edge)
+            keptWeights.append(weight)
+        elif ((color_current == 'blue') or (color_toNode == 'blue')):
+            keptEdges_blue.append(edge)
+            keptWeights_blue.append(weight)
+        elif ((color_current == 'red') or (color_toNode == 'red')) :
+            keptEdges_red.append(edge)
+            keptWeights_red.append(weight)
+
+
+        # for color, (edge_key, weight_key) in color_conditions.items():
+        #     if graph.vs[currentNode]['color'] == color or graph.vs[toNode]['color'] == color:
+        #         kept[edge_key].append(edge)
+        #         kept[weight_key].append(weight)
+
 
     filteredGraph_green = graph.subgraph_edges(keptEdges, delete_vertices=False)
     filteredGraph_green.es['weight'] = keptWeights
@@ -101,6 +144,15 @@ def filterGraph_metavertices(graph):
 
     fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
     fg_red.es['weight'] = keptWeights_red
+
+    # filteredGraph_green = graph.subgraph_edges(kept['edges'], delete_vertices=False)
+    # filteredGraph_green.es['weight'] = kept['weights']
+
+    # fg_blue = graph.subgraph_edges(kept['edges_blue'], delete_vertices=False)
+    # fg_blue.es['weight'] = kept['weights_blue']
+
+    # fg_red = graph.subgraph_edges(kept['edges_red'], delete_vertices=False)
+    # fg_red.es['weight'] = kept['weights_red']
 
     return filteredGraph_green, fg_blue, fg_red
 
@@ -123,6 +175,8 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
 
     totalBlacks = len(black_vertices) 
     totalWhite = len(white_vertices)
+
+    filename = filename.split('.txt')[0]
   
     for vertex in black_vertices:
         distance = distances[vertex]
@@ -153,7 +207,7 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
             summation += A1*math.exp(-((distance-B1)/C1)*((distance-B1)/C1))
 
             file = open(f"{filename}_DistanceBlackToGreen.txt", 'a')
-            file.write(f'{str(distance)}\n')
+            file.write(f'{str(round(distance,6))}\n')
             file.close()
 
             file = open(f"{filename}_DistanceBlackToRed.txt", 'a')
@@ -195,7 +249,6 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
 
 import time
 import tracemalloc
-
 def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca):
     """
     Generates a dictionary of all graph descriptors.
@@ -246,6 +299,7 @@ def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_
     total_time = end-start
     dict["time"] = total_time
     dict["mem"] = stats
+
     return dict
 
 
@@ -266,6 +320,5 @@ def descriptorsToTxt(dict, fileName):
     with open(fileName,'a') as f:
         for d in dict:
             f.write(d + " " + str(dict[d]) + '\n')
-
 
 
