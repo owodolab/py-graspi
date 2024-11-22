@@ -5,6 +5,12 @@
 
    
    
+   .. rubric:: Module Attributes
+
+   .. autosummary::
+   
+      PERIODICITY
+   
    
 
    
@@ -21,10 +27,10 @@
       generateGraphAdj
       generateGraphGraphe
       graphe_adjList
+      main
       shortest_path
       vertexColors
-      visual2D
-      visual3D
+      visualize
    
    
 

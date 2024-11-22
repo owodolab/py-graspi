@@ -342,3 +342,10 @@ Navigate to the directory 3d_2d_tests.
 Navigate to the file graspi_igraph_notebook.ipynb.
 
 On this file you will be able to run and view the 2d and 3d morphologies for subtask 4, card 104.
+
+## View Demo Videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
+Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQuN86RUYXvJG_F9MMq?usp=sharing
+### Videos
+* **py_graspi_installation**: How to install Py-Graspi and run basic commands.
+* **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
+* **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
