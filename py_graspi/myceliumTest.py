@@ -1,6 +1,5 @@
 import sys
 
-from graspi_igraph import filterGraph, vertexColors
 import igraph
 import matplotlib.pyplot as plt
 import igraph_testing as ig
@@ -15,7 +14,6 @@ def visualize(g):
     igraph.plot(g,
                 target=ax,
                 layout=layout,
-                vertex_colors=vertexColors,
                 vertex_size=5,
                 margin=20)
 
@@ -81,9 +79,9 @@ def main():
     (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
      dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
      CT_n_D_adj_An, CT_n_A_adj_Ca) = ig.generateGraphAdj(txt_filename)
-    # print("graph created")
+    print("graph created")
     whiteFilteredGraph = filter_white_vertices(g)
-    # print("graph filtered")
+    print("graph filtered")
     visualize(whiteFilteredGraph)
     blackFilteredGraph = filter_black_vertices(g)
     visualize(blackFilteredGraph)

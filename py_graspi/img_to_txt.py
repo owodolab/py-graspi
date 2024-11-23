@@ -32,7 +32,7 @@ def img_to_txt(imageFile, resizeFactor, threshold=127.5):
 
     # Convert to boolean numpy array using the threshold
     bool_array = numpyData2 > threshold
-
+    print(bool_array)
     # Set up output file for new txt file that will be created from the newly shrunken image
     outfile = f"resized/resized_{partOutfile}.txt"
     with open(outfile, "w") as file:
@@ -40,7 +40,7 @@ def img_to_txt(imageFile, resizeFactor, threshold=127.5):
 
         # Loop through new image array and write out into the new file
         for row in bool_array:
-            file.write(" ".join(['0' if col else '1' for col in row]) + "\n")
+            file.write(" ".join(['1' if col else '0' for col in row]) + "\n")
 
     return bool_array
 
