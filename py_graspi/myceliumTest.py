@@ -191,5 +191,6 @@ def main():
     blackFilteredGraph = filter_black_vertices(g)
     visualize(blackFilteredGraph)
 
+
 if __name__ == "__main__":
     main()
