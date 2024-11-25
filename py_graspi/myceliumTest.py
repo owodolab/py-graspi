@@ -102,7 +102,7 @@ def zoom_in(event, ax):
     y_center = (ylims[0] + ylims[1]) / 2
 
     # Define a more aggressive zoom factor
-    factor = 0.5  # Change this value to zoom in more or less
+    factor = 0.5  # Change this value to zoom in more
 
     # Calculate new limits
     x_range = (xlims[1] - xlims[0]) * factor
@@ -125,7 +125,7 @@ def zoom_out(event, ax):
     y_center = (ylims[0] + ylims[1]) / 2
 
     # Define a more aggressive zoom factor
-    factor = 2  # Change this value to zoom in more or less
+    factor = 2  # Change this value to zoom in less
 
     # Calculate new limits
     x_range = (xlims[1] - xlims[0]) * factor
@@ -143,6 +143,7 @@ def rotate(event, ax, g, layout,current_angle, angle):
     # Preserve current zoom limits
     xlims = ax.get_xlim()
     ylims = ax.get_ylim()
+
     # Convert the angle to radians
     current_angle[0] += angle
     angle_rad = np.deg2rad(current_angle[0])
@@ -158,6 +159,7 @@ def rotate(event, ax, g, layout,current_angle, angle):
 
     # Update the layout with the rotated coordinates
     new_layout = igraph.Layout(rotated_coords.tolist())
+
     # Clear the current plot and redraw the graph with the new layout
     ax.clear()
     plot = igraph.plot(g,
