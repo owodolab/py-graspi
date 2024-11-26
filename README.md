@@ -77,6 +77,9 @@ Finally, run the following:
 ./run.sh <file_type>
 ```
 Substitute `<file_type>` with either `txt` or `pdf` for the desired output type.
+<br />
+<br />
+**Note: run txt before pdf to update text files and for an accurate output**
 ## 33 Morphologies Output (JZ)
 After running the command, the automatic report generation will begin. 
 <br />
