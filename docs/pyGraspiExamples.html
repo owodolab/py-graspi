@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -14,9 +14,9 @@
     <link rel="canonical" href="https://owodolab.github.io/py-graspi/pyGraspiExamples.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
-      <script src="_static/doctools.js?v=888ff710"></script>
-      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -85,13 +85,13 @@
            <div itemprop="articleBody">
              
   <section id="example-of-usage">
-<span id="pygraspiexamples"></span><h1>Example of Usage<a class="headerlink" href="#example-of-usage" title="Permalink to this heading"></a></h1>
+<span id="pygraspiexamples"></span><h1>Example of Usage<a class="headerlink" href="#example-of-usage" title="Link to this heading"></a></h1>
 <p><strong>py-graspi</strong> is a command line tool. Make sure to install all requirements with:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
 </pre></div>
 </div>
 <section id="running-memory-tests">
-<h2>Running Memory Tests<a class="headerlink" href="#running-memory-tests" title="Permalink to this heading"></a></h2>
+<h2>Running Memory Tests<a class="headerlink" href="#running-memory-tests" title="Link to this heading"></a></h2>
 <p>To run memory tests, run the following command in the terminal:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>main.py<span class="w"> </span>n<span class="w"> </span>dimension<span class="w"> </span><span class="k">function</span>
 </pre></div>
@@ -108,7 +108,7 @@
 </div>
 </section>
 <section id="testing-algorithms">
-<h2>Testing Algorithms<a class="headerlink" href="#testing-algorithms" title="Permalink to this heading"></a></h2>
+<h2>Testing Algorithms<a class="headerlink" href="#testing-algorithms" title="Link to this heading"></a></h2>
 <p>To <strong>generate graphs</strong>, call the generateGraph(file) function which takes in an input-file name</p>
 <ul class="simple">
 <li><p>Returns a graph</p></li>
@@ -144,7 +144,7 @@
 </div>
 </section>
 <section id="get-the-list-of-descriptors">
-<h2>Get the List of Descriptors<a class="headerlink" href="#get-the-list-of-descriptors" title="Permalink to this heading"></a></h2>
+<h2>Get the List of Descriptors<a class="headerlink" href="#get-the-list-of-descriptors" title="Link to this heading"></a></h2>
 <p>A <strong>descriptor stored in a dictionary</strong> can be found by calling the function descriptors(graph)</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ig.descriptors<span class="o">(</span>g<span class="o">)</span><span class="w">      </span><span class="c1"># g is a graph object</span>
 </pre></div>
@@ -155,7 +155,7 @@
 </div>
 </section>
 <section id="visualize-graphs">
-<h2>Visualize Graphs<a class="headerlink" href="#visualize-graphs" title="Permalink to this heading"></a></h2>
+<h2>Visualize Graphs<a class="headerlink" href="#visualize-graphs" title="Link to this heading"></a></h2>
 <p>For 2D graphs, call visual2D(graph)</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ig.generateGraph<span class="o">(</span><span class="s2">&quot;2D-testFile/testFile-10-2D.txt&quot;</span><span class="o">)</span><span class="w">     </span><span class="c1"># utilizing the test file found in 2D-testFiles folder as an example</span>
 ig.visual2D<span class="o">(</span>g<span class="o">)</span>

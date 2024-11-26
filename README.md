@@ -27,13 +27,17 @@ Next, you'd need to navigate to the cloned repo using terminal. An example would
 ```
 cd /path/py-graspi
 ```
+Next, make sure you're on the correct branch by using:
+```
+git checkout Card#122-Histogram-Report
+```
 Once navigated to the branch, access the following directory:
 ```
 cd py_graspi
 ```
-Next, the downloads needed can be found in requirements.txt and can be installed by:
+Next, the downloads needed can be found in `requirements.txt` and can be installed by:
 ```
-pip install notebook
+pip install -r requirements.txt
 ```
 Install the graspi_igraph package by:
 ```
@@ -55,12 +59,12 @@ import py_graspi as ig
 <br />
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
-## Running All 33 Morphologies Tests (JZ)
-To run the morphologies tests, return to the previous directory of "/py-graspi" by running:
+## Running All 33 Morphologies Tests
+To run the morphologies tests, return to the previous directory of `/py-graspi` by running:
 ```
 cd ..
 ```
-Next, make sure you're on bash first by running:
+Next, make sure you're running using bash:
 ```
 bash
 ```
@@ -72,8 +76,11 @@ Finally, run the following:
 ```
 ./run.sh <file_type>
 ```
-Substitute <file_type> with either txt or pdf for the desired output type.
-## 33 Morphologies Output (JZ)
+Substitute `<file_type>` with either `txt` or `pdf` for the desired output type.
+<br />
+<br />
+**Note: run txt before pdf to update text files and for an accurate output**
+## 33 Morphologies Output
 After running the command, the automatic report generation will begin. 
 <br />
 <br /> 
@@ -91,7 +98,7 @@ After a few minutes, the following will print once the report has been created
 Text Files Generated
 PDF Generated (If on pdf mode)
 ```
-## Viewing 33 Morphologies Output (JZ)
+## Viewing 33 Morphologies Output
 For text files, navigate to the results directory by using the following command:
 ```
 cd graspi_igraph/results
@@ -104,7 +111,7 @@ To view the result in each file, run the following command:
 ```
 cat <result_file_name>
 ```
-Replace <result_file_name> with any of the files outputted by "ls"
+Replace `<result_file_name>` with any of the files outputted by `ls`
 <br />
 <br />
 If using pdf mode, the pdf should automattically open upon completion.
@@ -157,7 +164,7 @@ g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0]     # utilizing the te
 fg = ig.filterGraph(g)
 ```
 
-### To get dictionary of descriptors (WZ)
+### To get dictionary of descriptors
 
 To test if descriptors are computed correctly, you can run the following script in the terminal to check.
   -  make sure you are in the py_graspi directory after git cloning
@@ -208,7 +215,7 @@ g, is_2D = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0:1]     # utilizi
 ig.visual2D(g, is_2D)
 ```
 
-## Testing from Command Line (Kevin)
+## Testing from Command Line
 
 
 Now that we have cloned the REPO lets talk about testing.
@@ -263,7 +270,7 @@ As long as the inputs follow the format above and a file exists the program shal
 
 DISCLAIMER: if any issues occur you may not be in the right directory (py-graspi) or the test file may not exists or be poorly formatted.
 
-## Generate and Run Files for py-graspi API (ML)
+## Generate and Run Files for py-graspi API
 In order to generate an API using sphinx, you need to follow the installation of py-graspi:
 
 Cloning the repository:
@@ -313,7 +320,7 @@ open docs/index.html
 ```
 This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
 
-## 2D & 3D Morphologies Tests (QP)
+## 2D & 3D Morphologies Tests
 To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
 
 First you will need to git clone the current repo, make sure that you are in the ""dev branch"":
@@ -345,3 +352,38 @@ Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQu
 * **py_graspi_installation**: How to install Py-Graspi and run basic commands.
 * **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
 * **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
+
+## Translate Image File Into Truncated .txt File
+1. make sure you have py-graspi installed: pip install py-graspi
+2. Make sure you cd into py_graspi directory first. 
+3. The command line format to translate an image file into its truncated .txt file is as follows:
+```
+python img_to_txt.py {pathname of image file} {Resize calculation amount}
+```
+4. The "resize calculation amount" is multiplied to the X and Y axis of the original image and this will alter the size of the image's final resized .txt file. 
+5. This should place both a truncated image file and truncated .txt file of the original image file into the "resized" directory. 
+6. They will be named "resized_" followed by the image file name and correct extension. 
+7. An example command line input that should work for this repo is as follows:
+```
+python img_to_txt.py images/data_0.5_2.2_001900.png 0.25
+```
+
+## Mycelium Filtered Vertices Visualization
+This section explains how to visualize a mycelium image by both it's white and black vertices filtered versions.
+The mycelium image used is included in the "images" directory called "mycelium.png".
+
+The following are steps on how to visualize the graph from this image.
+1. Make sure you have py-graspi installed: pip install py-graspi
+2. Make sure you cd into py_graspi directory first.
+3. The command line format input is as follows
+```
+python myceliumTest.py {pathname of image file} {Resize calculation amount}
+```
+4. The input is the same as the translation input from image files to .txt files, it will create a new .img and .txt file for it in the "resized" directory.
+5. The image input pathname must be in the "images" directory.
+6. If you wish to not resize the original image just input a '1' for the Resize calculation amount, this will keep the original size.
+7. Example command line input is as follows:
+```
+python myceliumTest.py images/mycelium.png 0.25
+```
+8. This creates a turncated version of the mycelium image (for runtime purposes) and outputs two graphs, first one is a white only vertex graph and the second one is a black only vertex version.

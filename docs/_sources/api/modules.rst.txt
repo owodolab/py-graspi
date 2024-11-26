@@ -1,7 +1,7 @@
-graspi_igraph
-=============
+py_graspi
+=========
 
 .. toctree::
-   :maxdepth: 10
+   :maxdepth: 4
 
-   graspi_igraph
+   py_graspi

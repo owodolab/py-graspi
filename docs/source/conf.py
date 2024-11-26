@@ -2,7 +2,9 @@ import os
 import sys
 
 sys.path.insert(0, os.path.abspath('../../../py-graspi'))
-sys.path.insert(0, os.path.abspath('../../graspi_igraph'))
+sys.path.insert(0, os.path.abspath('../../py_graspi'))
+print(f"TEST: {os.path.abspath('../../py_graspi')}")
+
 
 project = 'py-graspi'
 copyright = '2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez'

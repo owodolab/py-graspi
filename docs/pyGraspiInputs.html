@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -14,9 +14,9 @@
     <link rel="canonical" href="https://owodolab.github.io/py-graspi/pyGraspiInputs.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
-      <script src="_static/doctools.js?v=888ff710"></script>
-      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -80,10 +80,11 @@
            <div itemprop="articleBody">
              
   <section id="inputs">
-<span id="pygraspiinputs"></span><h1>Inputs<a class="headerlink" href="#inputs" title="Permalink to this heading"></a></h1>
+<span id="pygraspiinputs"></span><h1>Inputs<a class="headerlink" href="#inputs" title="Link to this heading"></a></h1>
 <p><strong>py-graspi</strong> supports two input formats: one for structured data and one for unstructured data.
 For structured data, the dimensions of discrete points along each axis <span class="math notranslate nohighlight">\(n_x, n_y, n_z\)</span> must be specified in the first line of the input file. The rest of the file contains a row-wise representation of the corresponding matrix, listing the phases using labels from the available set. This data is organized as a single, contiguous block in row-major order (also known as “C order”). Because the data is structured, graspi can build the local neighborhood as it processes the input.</p>
-<a class="reference internal image-reference" href="_images/structuredGraph.png"><img alt="_images/structuredGraph.png" src="_images/structuredGraph.png" style="width: 400px;" /></a>
+<a class="reference internal image-reference" href="_images/structuredGraph.png"><img alt="_images/structuredGraph.png" src="_images/structuredGraph.png" style="width: 400px;" />
+</a>
 <p>The input file for the above figure</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>4 4 1
 <span class="linenos">2</span>1 1 0 0

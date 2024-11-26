@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en">
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -14,9 +14,9 @@
     <link rel="canonical" href="https://owodolab.github.io/py-graspi/pyGraspiFunctionality.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js?v=b3ba4146"></script>
-      <script src="_static/doctools.js?v=888ff710"></script>
-      <script src="_static/sphinx_highlight.js?v=4825356b"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -79,7 +79,7 @@
            <div itemprop="articleBody">
              
   <section id="functionality">
-<span id="pygraspifunctionality"></span><h1>Functionality<a class="headerlink" href="#functionality" title="Permalink to this heading"></a></h1>
+<span id="pygraspifunctionality"></span><h1>Functionality<a class="headerlink" href="#functionality" title="Link to this heading"></a></h1>
 <p><strong>py-graspi</strong> is a Python implemented version of GraSPI, which computes a library of descriptors for a segmented microstructure
 and computes descriptors that are relevant for organic solar cells performance.</p>
 <p><strong>py-graspi</strong> assumes that input microstructure is segmented into two phases: BLACK and WHITE.
@@ -97,7 +97,8 @@ and RED vertex is added to all vertices corresponding to the last row in the inp
 <strong>py-graspi</strong> reads the colors of the pixels starting from the bottom left corner.
 GREEN vertices are added as the graph is constructed, when BLACK pixel has any WHITE
 voxel in the neighborhood, two additional edges are added (between BLACK and GREEN, and between WHITE and GREEN).</p>
-<a class="reference internal image-reference" href="_images/graphLayout.png"><img alt="_images/graphLayout.png" src="_images/graphLayout.png" style="width: 600px;" /></a>
+<a class="reference internal image-reference" href="_images/graphLayout.png"><img alt="_images/graphLayout.png" src="_images/graphLayout.png" style="width: 600px;" />
+</a>
 <p>The package computes two types of descriptors: scalar descriptors and array descriptors.
 The scalar descriptors are directed to the standard output, while array descriptors are directed to the corresponding file.
 The array descriptors correspond to the shortest distances and are saved to a directory named <strong>descriptors</strong></p>
