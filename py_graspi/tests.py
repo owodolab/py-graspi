@@ -8,11 +8,12 @@ import webbrowser
 import argparse
 
 current_dir = os.getcwd()
-data_path = f"{current_dir}/graspi_igraph/data/"
-descriptors_path = f"{current_dir}/graspi_igraph/descriptors/"
-image_path = f"{current_dir}/graspi_igraph/images/"
-results_path = f"{current_dir}/graspi_igraph/results/"
-test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path)]
+data_path = f"{current_dir}/py_graspi/data/"
+descriptors_path = f"{current_dir}/py_graspi/descriptors/"
+image_path = f"{current_dir}/py_graspi/images/"
+hist_path = f"{current_dir}/py_graspi/histograms/"
+results_path = f"{current_dir}/py_graspi/results/"
+test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path) if os.path.splitext(file)[0].count("_") == 3]
 epsilon = 1e-5
 
 def generate_image(filename):
@@ -53,9 +54,8 @@ def main():
         print(f"Executing {test_file}")
         if PDF:
             pdf.add_page()
-
-        g, is_2D = ig.generateGraph(data_path + test_file + ".txt")
-        stats = ds.descriptors(g)
+        g,is_2D,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca= ig.generateGraph(data_path + test_file + ".txt")
+        stats = ds.descriptors(g,data_path + test_file + ".txt",black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)
 
         if PDF:
             pdf.cell(200, 8, txt=f"{test_file} Results", ln=True, align="L")
@@ -93,9 +93,9 @@ def main():
     print("Text Files Generated")
 
     if PDF:
-        pdf.output(f"{current_dir}/graspi_igraph/test_results.pdf")
+        pdf.output(f"{current_dir}/py_graspi/test_results.pdf")
         print("PDF Generated")
-        webbrowser.open_new_tab(f"{current_dir}/graspi_igraph/test_results.pdf")
+        webbrowser.open_new_tab(f"{current_dir}/py_graspi/test_results.pdf")
 
 if __name__ == "__main__":
     main()

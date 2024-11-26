@@ -96,12 +96,12 @@ def adjList(fileName):
                                 if DEBUG:
                                     third_order_pairs.append([current_vertex, neighbor_vertex])
                                 edge_labels.append("t")
-                                edge_weights.append(math.sqrt(3))
+                                edge_weights.append(np.float32(math.sqrt(3)))
                             else:
                                 if DEBUG:
                                     second_order_pairs.append([current_vertex, neighbor_vertex])
                                 edge_labels.append("s")
-                                edge_weights.append(math.sqrt(2))
+                                edge_weights.append(np.float32(math.sqrt(2)))
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
@@ -110,47 +110,41 @@ def adjList(fileName):
         # add edges to Blue Node for 3D
         adjacency_list[dimZ * dimY * dimX] = []
         blueVertex = dimZ * dimY * dimX
-        vertex_color.append('blue') 
         for y in range(dimY):
             for x in range(dimX):
                 vertex_index = y * dimX + x
                 adjacency_list[dimZ * dimY * dimX].append(vertex_index)
                 edge_labels.append("s")
-                edge_weights.append(math.sqrt(2))
+                edge_weights.append(0)
 
         #add edges to Red Node for 3D
         adjacency_list[dimZ * dimY * dimX + 1] = []
         redVertex = dimZ * dimY * dimX + 1
-        vertex_color.append('red')
         for y in range(dimY):
             for x in range(dimX):
                 vertex_index = (dimZ - 1) * (dimY * dimX) + y * dimX + x
                 adjacency_list[dimZ * dimY * dimX + 1].append(vertex_index)
                 edge_labels.append("s")
-                edge_weights.append(math.sqrt(2))
+                edge_weights.append(0)
 
     elif is_2d:
         # add edges to Blue Node for 2D
         adjacency_list[dimZ * dimY * dimX] = []
         blueVertex = dimZ * dimY * dimX
-        #added the color of the vertex
-        vertex_color.append('blue') 
         for z in range(dimZ):
             for x in range(dimX):
                 adjacency_list[dimZ * dimY * dimX].append(z * (dimY * dimX) + x)
                 edge_labels.append("s")
-                edge_weights.append(math.sqrt(2))
+                edge_weights.append(0)
 
         #add edges to Red Node for 2D
         adjacency_list[dimZ * dimY * dimX + 1] = []
         redVertex = dimZ * dimY * dimX + 1
-        #added the color of the vertex
-        vertex_color.append('red')
         for z in range(dimZ):
             for x in range(dimX):
                 adjacency_list[dimZ * dimY * dimX + 1].append(z * (dimY * dimX) + (dimY - 1) * dimX + x)
                 edge_labels.append("s")
-                edge_weights.append(math.sqrt(2))
+                edge_weights.append(0)
     if DEBUG:
         print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
@@ -369,7 +363,8 @@ def filterGraph_blue_red(graph):
         if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
             keptEdges_blue.append(edge)
             keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-        elif ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')) :
+        
+        if ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')) :
             keptEdges_red.append(edge)
             keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
 
@@ -405,9 +400,19 @@ def generateGraphAdj(file):
     g.es['label'] = edge_labels
     g.es['weight'] = edge_weights
 
+    # add color to blue and red metavertices
+    g.vs[g.vcount()-2]['color'] = 'blue'
+    g.vs[g.vcount()-1]['color'] = 'red'
+
     fg_blue, fg_red = filterGraph_blue_red(g)
     redComponent = set(fg_red.subcomponent(redVertex, mode="ALL"))
     blueComponent = set(fg_blue.subcomponent(blueVertex, mode="ALL"))
+    # l = []
+    # for x in redComponent:
+    #     if g.vs[x]['color'] == 'black':
+    #         l.append(x)
+    # print(l)
+    # print(f'red cc: {len(redComponent)}')
 
     shortest_path_to_red = g.shortest_paths(source = redVertex, weights = g.es['weight'])[0]
     shortest_path_to_blue = g.shortest_paths(source = blueVertex,weights = g.es['weight'])[0]
@@ -458,36 +463,41 @@ def generateGraphAdj(file):
         source_vertex = edge.source
         target_vertex = edge.target
 
+
         if(g.vs[source_vertex]['color'] == 'blue' or g.vs[target_vertex]['color'] == 'blue'):
-            if(g.vs[source_vertex]['color'] == 'blue' and g.vs[target_vertex] == 'white') or (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'blue'):
+            if(g.vs[source_vertex]['color'] == 'blue' and g.vs[target_vertex] == 'white') \
+                 or (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'blue'):
                 CT_n_A_adj_Ca += 1
 
         if(g.vs[source_vertex]['color'] == 'red' or g.vs[target_vertex]['color'] == 'red'):
-            if(g.vs[source_vertex]['color'] == 'red' and g.vs[target_vertex] == 'black') or (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'red'):
+            if(g.vs[source_vertex]['color'] == 'red' and g.vs[target_vertex] == 'black') \
+                or (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'red'):
                 CT_n_D_adj_An += 1
-
-
-        #Add black/white edges to green interface node.
-        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') or (
-                g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
+        
+        # checks if edge contains black/white vertices
+        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') \
+            or (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black'):
             
+            # check if edge is first order
             if edge['label'] == 'f':
+                if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') \
+                    and (source_vertex in redComponent and target_vertex in blueComponent):
+                    interface_edge_comp_paths += 1
+
+                elif (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black') \
+                    and (source_vertex in blueComponent and target_vertex in redComponent):
+                    interface_edge_comp_paths += 1
+
                 # incremement counter if black vertices has path to top (red)
-                if (g.vs[source_vertex]['color'] == 'black' and source_vertex in redComponent) or (g.vs[target_vertex]['color'] == 'black' and target_vertex in redComponent):
+                if (g.vs[source_vertex]['color'] == 'black' and source_vertex in redComponent) \
+                    or (g.vs[target_vertex]['color'] == 'black' and target_vertex in redComponent):
                     black_interface_red += 1
 
                 # incremement counter if white interface vertices has path to bottom (blue)
-                if (g.vs[source_vertex]['color'] == 'white' and source_vertex in blueComponent) or (g.vs[target_vertex]['color'] == 'white' and target_vertex in blueComponent):
+                elif (g.vs[source_vertex]['color'] == 'white' and source_vertex in blueComponent) \
+                    or (g.vs[target_vertex]['color'] == 'white' and target_vertex in blueComponent):
                     white_interface_blue += 1
-
-                # increment count when black and white interface pair, black has path to top (red), white has path to (bottom) blue
-                if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white') and (source_vertex in redComponent and target_vertex in blueComponent):
-                    interface_edge_comp_paths += 1
-
-                elif (g.vs[source_vertex]['color'] == 'white' and g.vs[target_vertex]['color'] == 'black') and (source_vertex in blueComponent and target_vertex in redComponent):
-                    interface_edge_comp_paths += 1
-            
-            
+    
                 # increment black_green when black to green edge is added
                 black_green += 1
             
@@ -535,7 +545,6 @@ def generateGraphAdj(file):
                 if g.vs[target_vertex]['color'] == 'black':
                     black_green_neighbors.append(target_vertex)
 
-
     if DEBUG:
         print(g.vs['color'])
         print("Number of nodes: ", g.vcount())
@@ -580,7 +589,7 @@ def visualize(graph, is_2D):
        """
     g = graph
     if is_2D:
-        layout = g.layout('fr')
+        layout = g.layout('grid')
         # fig, ax = plt.subplots()
         # ax.invert_yaxis() # reverse starting point of graph (vertex 0)
         fig, ax = plt.subplots(figsize=(10, 10))
@@ -690,7 +699,6 @@ def connectedComponents(graph):
     blueVertex = None;
     blackCCList = []
     whiteCCList = []
-    # print(len(cc))
 
     for vertex in range(vertices - 1, -1, -1):
         color = graph.vs[vertex]['color']

@@ -1,5 +1,6 @@
 import igraph_testing as ig
 import math
+import numpy as np
 
 def CC_descriptors(graph,totalBlack, totalWhite):
     """
@@ -46,8 +47,7 @@ def CC_descriptors(graph,totalBlack, totalWhite):
                 countWhite_Blue += 1
                 countWhite_Blue_conn += sum(1 for v in c if graph.vs['color'][v] == 'white')
 
-
-    return countBlack, countWhite, countBlack_Red, countWhite_Blue, round(countBlack_Red_conn / totalBlack,6), round(countWhite_Blue_conn / totalWhite, 6)
+    return countBlack, countWhite, countBlack_Red, countWhite_Blue, round(countBlack_Red_conn / totalBlack,6), round(countWhite_Blue_conn / totalWhite, 6), countBlack_Red_conn, countWhite_Blue_conn
 
 '''--------------- Shortest Path Descriptors ---------------'''
 def filterGraph_metavertices(graph):
@@ -104,7 +104,7 @@ def filterGraph_metavertices(graph):
 
     return filteredGraph_green, fg_blue, fg_red
 
-def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim, shortest_path_to_red, shortest_path_to_blue):
+def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim, shortest_path_to_red, shortest_path_to_blue,countBlack_Red_conn, countWhite_Blue_conn):
     fg_green, fg_blue, fg_red = filterGraph_metavertices(graph)
     greenVertex = (graph.vs.select(color = 'green')[0]).index
     redVertex = (graph.vs.select(color = 'red')[0]).index
@@ -125,6 +125,14 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
     totalWhite = len(white_vertices)
 
     filename = filename.split('.txt')[0]
+
+    tort_black_to_red = []
+    id_tort_black_to_red = []
+    dist_black_to_green = []
+    dist_black_to_red = []
+    dist_white_to_blue = []
+    tort_white_to_blue = []
+    id_tort_white_to_blue = []
   
     for vertex in black_vertices:
         distance = distances[vertex]
@@ -132,19 +140,20 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
         straight_path = shortest_path_to_red[vertex]
         
         if black_tor_distance != float('inf') and straight_path != float('inf'):
-            tor = black_tor_distance / straight_path
+            if straight_path == 0: 
+                tor = 1
+            else:
+                tor = black_tor_distance / straight_path
             tolerance = 1 + (1/dim)
-
-            file = open(f"{filename}_TortuosityBlackToRed.txt", 'a')
-            file.write(f'{tor}\n')
-            file.close()
-
-            file = open(f"{filename}_IdTortuosityBlackToRed.txt",'a')
-            file.write(f'{vertex} {tor} {black_tor_distance} {straight_path}\n')
-            file.close()
-
+            
             if tor < tolerance:
+                tor = 1
                 black_tor += 1
+
+            tort_black_to_red.append(f'{float(tor)}\n')
+            id_tort_black_to_red.append(f'{vertex} {float(tor)} {float(black_tor_distance)} {float(straight_path)}\n')
+        
+    
 
         if distance != float('inf'):
             # summation of weight * distance for DISS_wf10_D
@@ -152,47 +161,67 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
             B1=-23.0
             C1=17.17
             
-            summation += A1*math.exp(-((distance-B1)/C1)*((distance-B1)/C1))
-
-            file = open(f"{filename}_DistanceBlackToGreen.txt", 'a')
-            file.write(f'{str(round(distance,6))}\n')
-            file.close()
-
-            file = open(f"{filename}_DistanceBlackToRed.txt", 'a')
-            file.write(f'{black_tor_distance}\n')
-            file.close()
+            dist_black_to_green.append(f'{float(distance)}\n')
 
             # check if distance is < 10, if yes, increment counter for DISS_f10_D
             if distance > 0 and distance < 10:
+                summation += A1*math.exp(-((distance-B1)/C1)*((distance-B1)/C1))
                 f10_count += 1
+
+        if black_tor_distance != float('inf'): 
+            dist_black_to_red.append(f'{float(black_tor_distance)}\n')
     
 
     for vertex in white_vertices:
         white_tor_distance = white_tor_distances[vertex]
         straight_path = shortest_path_to_blue[vertex]
         
-        file = open(f"{filename}_DistancesWhiteToBlue.txt",'a')
-        file.write(f'{white_tor_distance}\n')
-        file.close()
+        dist_white_to_blue.append(f'{float(white_tor_distance)}\n')
 
         if white_tor_distance != float('inf') and straight_path != float('inf'):
-            tor = white_tor_distance / straight_path
+            if straight_path == 0:
+                tor = 1
+            else:
+                tor = white_tor_distance / straight_path
             tolerance = 1 + (1/dim)
 
-            file = open(f"{filename}_TortuosityWhiteToBlue.txt",'a')
-            file.write(f'{tor}\n')
-            file.close()
-
-            file = open(f"{filename}_IdTortuosityWhiteToBlue.txt",'a')
-            file.write(f'{vertex} {tor} {white_tor_distance} {straight_path}\n')
-            file.close()
-
             if tor < tolerance:
+                tor = 1
                 white_tor += 1
-    
-        
 
-    return f10_count / totalBlacks, summation / totalBlacks, black_tor / totalBlacks, white_tor / totalWhite
+            tort_white_to_blue.append(f'{float(tor)}\n')
+            id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
+
+    
+    file = open(f"{filename}_TortuosityBlackToRed.txt", 'w')
+    file.writelines(tort_black_to_red)
+    file.close()
+
+    file = open(f"{filename}_IdTortuosityBlackToRed.txt", 'w')
+    file.writelines(id_tort_black_to_red)
+    file.close()
+
+    file = open(f"{filename}_DistancesBlackToGreen.txt", 'w')
+    file.writelines(dist_black_to_green)
+    file.close()
+
+    file = open(f"{filename}_DistancesBlackToRed.txt", 'w')
+    file.writelines(dist_black_to_red)
+    file.close()
+
+    file = open(f"{filename}_DistancesWhiteToBlue.txt", 'w')
+    file.writelines(dist_white_to_blue)
+    file.close()
+
+    file = open(f"{filename}_TortuosityWhiteToBlue.txt", 'w')
+    file.writelines(tort_white_to_blue)
+    file.close()
+
+    file = open(f"{filename}_IdTortuosityWhiteToBlue.txt", 'w')
+    file.writelines(id_tort_white_to_blue)
+    file.close()
+
+    return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), float(white_tor / countWhite_Blue_conn)
 
 
 
@@ -211,11 +240,11 @@ def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_
 
     STAT_n_D = len(black_vertices)
     STAT_n_A = len(white_vertices)
-    STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca = CC_descriptors(graph, STAT_n_D,STAT_n_A)
+    STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, countWhite_Blue_conn = CC_descriptors(graph, STAT_n_D,STAT_n_A)
 
 
     # shortest path descriptors
-    DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1 = shortest_path_descriptors(graph,filename, black_vertices,white_vertices, dim, shortest_path_to_red, shortest_path_to_blue)
+    DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1 = shortest_path_descriptors(graph,filename, black_vertices,white_vertices, dim, shortest_path_to_red, shortest_path_to_blue, countBlack_Red_conn, countWhite_Blue_conn)
 
     dict["STAT_n"] =  STAT_n_A + STAT_n_D
     dict["STAT_e"] = black_green
@@ -225,10 +254,10 @@ def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_
     dict["STAT_CC_A"] = STAT_CC_A
     dict["STAT_CC_D_An"] = STAT_CC_D_An
     dict["STAT_CC_A_Ca"] = STAT_CC_A_Ca
-    dict["ABS_f_D"] = STAT_n_D / (STAT_n_D + STAT_n_A)
+    dict["ABS_f_D"] = float(STAT_n_D / (STAT_n_D + STAT_n_A))
     dict["DISS_f10_D"] = DISS_f10_D
     dict["DISS_wf10_D"] = DISS_wf10_D
-    dict["CT_f_e_conn"] = interface_edge_comp_paths / black_green
+    dict["CT_f_e_conn"] = float(interface_edge_comp_paths / black_green)
     dict["CT_f_conn_D_An"] = CT_f_conn_D_An
     dict["CT_f_conn_A_Ca"] = CT_f_conn_A_Ca
     dict["CT_e_conn"] = interface_edge_comp_paths
@@ -258,7 +287,7 @@ def descriptorsToTxt(dict, fileName):
 
     with open(fileName,'a') as f:
         for d in dict:
-            f.write(d + " " + str(dict[d]) + '\n')
+            f.write(d + " " + str(float(dict[d])) + '\n')
 
 
 

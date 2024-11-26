@@ -7,7 +7,15 @@ STAT_CC_D passed - 1 is the same as expected 1
 STAT_CC_A passed - 3 is the same as expected 3
 STAT_CC_D_An passed - 1 is the same as expected 1
 STAT_CC_A_Ca passed - 1 is the same as expected 1
-ABS_f_D passed - 0.499695 is the same as expected 0.499695
+ABS_f_D passed - 0.49969482421875 is the same as expected 0.499695
+DISS_wf10_D failed - 0.3421423282871301 is not the same as expected 0.32034
+DISS_f10_D failed - 0.6195798216684988 is not the same as expected 0.61961
+CT_f_e_conn passed - 0.34906427990235966 is the same as expected 0.349064
 CT_f_conn_D_An passed - 1.0 is the same as expected 1
 CT_f_conn_A_Ca passed - 0.38081 is the same as expected 0.38081
-{'STAT_n': 65536, 'STAT_e': 2458, 'STAT_n_D': 32748, 'STAT_n_A': 32788, 'STAT_CC_D': 1, 'STAT_CC_A': 3, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.499695, 'CT_f_conn_D_An': 1.0, 'CT_f_conn_A_Ca': 0.38081, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512}
+CT_e_conn passed - 858 is the same as expected 858
+CT_e_D_An failed - 2458 is not the same as expected 2465
+CT_e_A_Ca passed - 858 is the same as expected 858
+CT_f_D_tort1 failed - 0.33559301331379016 is not the same as expected 0.335715
+CT_f_A_tort1 passed - 0.8886753163543168 is the same as expected 0.888675
+{'STAT_n': 65536, 'STAT_e': 2458, 'STAT_n_D': 32748, 'STAT_n_A': 32788, 'STAT_CC_D': 1, 'STAT_CC_A': 3, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.49969482421875, 'DISS_f10_D': 0.6195798216684988, 'DISS_wf10_D': 0.3421423282871301, 'CT_f_e_conn': 0.34906427990235966, 'CT_f_conn_D_An': 1.0, 'CT_f_conn_A_Ca': 0.38081, 'CT_e_conn': 858, 'CT_e_D_An': 2458, 'CT_e_A_Ca': 858, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512, 'CT_f_D_tort1': 0.33559301331379016, 'CT_f_A_tort1': 0.8886753163543168}
