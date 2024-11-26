@@ -18,19 +18,22 @@ def visualize(g):
                        margin=20)
     axcolor = 'lightgoldenrodyellow'
 
-    ax_zoom_in = plt.axes([0.7, 0.05, 0.1, 0.075], facecolor=axcolor)
-    ax_zoom_out = plt.axes([0.81, 0.05, 0.1, 0.075], facecolor=axcolor)
-    ax_rotate = plt.axes([0.92, 0.05, 0.1, 0.075], facecolor=axcolor)
+    ax_zoom_in = plt.axes([0.55, 0.05, 0.1, 0.075], facecolor=axcolor)
+    ax_zoom_out = plt.axes([0.65, 0.05, 0.1, 0.075], facecolor=axcolor)
+    ax_rotate = plt.axes([0.75, 0.05, 0.1, 0.075], facecolor=axcolor)
+    ax_rotate_ccw = plt.axes([0.85, 0.05, 0.1, 0.075], facecolor=axcolor)
 
     button_zoom_in = Button(ax_zoom_in, label='Zoom In')
     button_zoom_out = Button(ax_zoom_out, label='Zoom Out')
-    button_rotate = Button(ax_rotate, label='Rotate')
+    button_rotate = Button(ax_rotate, label='Rotate CW')
+    button_rotate_opposite = Button(ax_rotate_ccw, label='Rotate CCW')
 
     current_angle = [0]
 
     button_zoom_in.on_clicked(lambda event: zoom_in(event, ax))
     button_zoom_out.on_clicked(lambda event: zoom_out(event, ax))
     button_rotate.on_clicked(lambda event: rotate(event, ax, g, layout,current_angle, 30))
+    button_rotate_opposite.on_clicked(lambda event: rotate(event, ax, g, layout,current_angle, -30))
 
     plt.show()
 
@@ -54,9 +57,13 @@ def filter_black_vertices(graph):
         toNode = edge[1]
         if (graph.vs[currentNode]['color'] == 'black') and (graph.vs[toNode]['color'] == 'black'):
             keptEdges.append(edge)
-        if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
+        # if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
+        #     keptEdges.append(edge)
+        if ((graph.vs[currentNode]['color'] == 'red') and (graph.vs[toNode]['color'] == 'black')) or (
+                graph.vs[currentNode]['color'] == 'black') and (graph.vs[toNode]['color'] == 'red'):
             keptEdges.append(edge)
-        elif ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')) :
+        elif ((graph.vs[currentNode]['color'] == 'blue') and (graph.vs[toNode]['color'] == 'black')) or (
+                graph.vs[currentNode]['color'] == 'black') and (graph.vs[toNode]['color'] == 'blue'):
             keptEdges.append(edge)
     filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=True)
 
@@ -82,11 +89,17 @@ def filter_white_vertices(graph):
         toNode = edge[1]
         if (graph.vs[currentNode]['color'] == 'white') and (graph.vs[toNode]['color'] == 'white'):
             keptEdges.append(edge)
-        if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
-            keptEdges.append(edge)
-        elif ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')) :
-            keptEdges.append(edge)
+        # if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
+        #     keptEdges.append(edge)
+        # elif ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')) :
+        #     keptEdges.append(edge)
 
+        if ((graph.vs[currentNode]['color'] == 'red') and (graph.vs[toNode]['color'] == 'white')) or (
+                graph.vs[currentNode]['color'] == 'white') and (graph.vs[toNode]['color'] == 'red'):
+            keptEdges.append(edge)
+        elif ((graph.vs[currentNode]['color'] == 'blue') and (graph.vs[toNode]['color'] == 'white')) or (
+                graph.vs[currentNode]['color'] == 'white') and (graph.vs[toNode]['color'] == 'blue'):
+            keptEdges.append(edge)
 
     filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=True)
 
@@ -166,7 +179,7 @@ def rotate(event, ax, g, layout,current_angle, angle):
                        target=ax,
                        layout=new_layout,
                        vertex_colors=g.vs["color"],
-                       vertex_size=5,
+                       vertex_size=10,
                        margin=20)
 
     # Reapply the previous zoom limits
@@ -174,6 +187,40 @@ def rotate(event, ax, g, layout,current_angle, angle):
     ax.set_ylim(ylims)
     plt.draw()
 
+def rotate_counterclockwise(event, ax, g, layout, current_angle, angle):
+    # Preserve current zoom limits
+    xlims = ax.get_xlim()
+    ylims = ax.get_ylim()
+
+    # Convert the angle to radians and update the current angle
+    current_angle[0] += angle
+    angle_rad = np.deg2rad(current_angle[0])
+
+    # Get the original layout coordinates
+    coords = np.array(layout.coords)
+
+    # Rotate the coordinates counterclockwise
+    cos_angle = np.cos(angle_rad)
+    sin_angle = np.sin(angle_rad)
+    rotation_matrix = np.array([[cos_angle, sin_angle], [-sin_angle, cos_angle]])
+    rotated_coords = coords.dot(rotation_matrix)
+
+    # Update the layout with the rotated coordinates
+    new_layout = igraph.Layout(rotated_coords.tolist())
+
+    # Clear the current plot and redraw the graph with the new layout
+    ax.clear()
+    plot = igraph.plot(g,
+                       target=ax,
+                       layout=new_layout,
+                       vertex_colors=g.vs["color"],
+                       vertex_size=10,
+                       margin=20)
+
+    # Reapply the previous zoom limits
+    ax.set_xlim(xlims)
+    ax.set_ylim(ylims)
+    plt.draw()
 
 def main():
     input_file = sys.argv[1]
@@ -181,14 +228,18 @@ def main():
     resize_factor = float(resize_factor)
     translate.img_to_txt(input_file,resize_factor)
     txt_filename = "resized/resized_" +input_file[7:-4]+".txt"
+    print("creating graph")
     (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
      dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
      CT_n_D_adj_An, CT_n_A_adj_Ca) = ig.generateGraphAdj(txt_filename)
     print("graph created")
+    print("filtering graph)")
     whiteFilteredGraph = filter_white_vertices(g)
     print("graph filtered")
     visualize(whiteFilteredGraph)
+    print("filtering graph")
     blackFilteredGraph = filter_black_vertices(g)
+    print("graph filtered")
     visualize(blackFilteredGraph)
 
 
