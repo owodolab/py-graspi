@@ -8,14 +8,14 @@ STAT_CC_A passed - 3 is the same as expected 3
 STAT_CC_D_An passed - 1 is the same as expected 1
 STAT_CC_A_Ca passed - 1 is the same as expected 1
 ABS_f_D passed - 0.470489501953125 is the same as expected 0.47049
-DISS_wf10_D failed - 0.6204377871323797 is not the same as expected 0.619668
+DISS_wf10_D failed - 0.6195987058660943 is not the same as expected 0.619668
 DISS_f10_D passed - 0.992929882597133 is the same as expected 0.99293
 CT_f_e_conn passed - 0.32401258301293256 is the same as expected 0.324013
-CT_f_conn_D_An passed - 0.404553 is the same as expected 0.404553
-CT_f_conn_A_Ca passed - 0.992364 is the same as expected 0.992364
+CT_f_conn_D_An passed - 0.404553415061296 is the same as expected 0.404553
+CT_f_conn_A_Ca passed - 0.9923635525329952 is the same as expected 0.992364
 CT_e_conn passed - 1854 is the same as expected 1854
 CT_e_D_An failed - 1966 is not the same as expected 1973
-CT_e_A_Ca failed - 5610 is not the same as expected 5669
+CT_e_A_Ca failed - 3756 is not the same as expected 5669
 CT_f_D_tort1 passed - 0.5872214205547539 is the same as expected 0.587221
 CT_f_A_tort1 passed - 0.22414844498649708 is the same as expected 0.224148
-{'STAT_n': 65536, 'STAT_e': 5722, 'STAT_n_D': 30834, 'STAT_n_A': 34702, 'STAT_CC_D': 16, 'STAT_CC_A': 3, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.470489501953125, 'DISS_f10_D': 0.992929882597133, 'DISS_wf10_D': 0.6204377871323797, 'CT_f_e_conn': 0.32401258301293256, 'CT_f_conn_D_An': 0.404553, 'CT_f_conn_A_Ca': 0.992364, 'CT_e_conn': 1854, 'CT_e_D_An': 1966, 'CT_e_A_Ca': 5610, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512, 'CT_f_D_tort1': 0.5872214205547539, 'CT_f_A_tort1': 0.22414844498649708}
+{'STAT_n': 65536, 'STAT_e': 5722, 'STAT_n_D': 30834, 'STAT_n_A': 34702, 'STAT_CC_D': 16, 'STAT_CC_A': 3, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.470489501953125, 'DISS_f10_D': 0.992929882597133, 'DISS_wf10_D': 0.6195987058660943, 'CT_f_e_conn': 0.32401258301293256, 'CT_f_conn_D_An': 0.404553415061296, 'CT_f_conn_A_Ca': 0.9923635525329952, 'CT_e_conn': 1854, 'CT_e_D_An': 1966, 'CT_e_A_Ca': 3756, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512, 'CT_f_D_tort1': 0.5872214205547539, 'CT_f_A_tort1': 0.22414844498649708}

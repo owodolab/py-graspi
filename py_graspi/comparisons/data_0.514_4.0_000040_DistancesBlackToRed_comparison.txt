@@ -1,1 +1,1 @@
-Line: 1 Expected: 248.31278494128927 Actual: 247.995
+Line: 1 Expected: 248.31278661131265 Actual: 247.995

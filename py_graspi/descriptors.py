@@ -40,14 +40,17 @@ def CC_descriptors(graph,totalBlack, totalWhite):
 
             if graph.vs[c][0]['color'] == 'black' and 'red' in graph.vs[c]['color']:
                 countBlack_Red += 1
-                countBlack_Red_conn += sum(1 for v in c if graph.vs['color'][v] == 'black')
+                colors = np.array(graph.vs['color'])
+                countBlack_Red_conn += np.sum(colors[c] == 'black')
                         
             
             if graph.vs[c][0]['color'] == 'white' and 'blue' in graph.vs[c]['color']:
                 countWhite_Blue += 1
-                countWhite_Blue_conn += sum(1 for v in c if graph.vs['color'][v] == 'white')
+                colors = np.array(graph.vs['color'])
+                countWhite_Blue_conn += np.sum(colors[c] == 'white')
 
-    return countBlack, countWhite, countBlack_Red, countWhite_Blue, round(countBlack_Red_conn / totalBlack,6), round(countWhite_Blue_conn / totalWhite, 6), countBlack_Red_conn, countWhite_Blue_conn
+    return countBlack, countWhite, countBlack_Red, countWhite_Blue, float(countBlack_Red_conn / totalBlack), \
+        float(countWhite_Blue_conn / totalWhite), countBlack_Red_conn, countWhite_Blue_conn
 
 '''--------------- Shortest Path Descriptors ---------------'''
 def filterGraph_metavertices(graph):
@@ -75,23 +78,27 @@ def filterGraph_metavertices(graph):
         currentNode = edge[0]
         toNode = edge[1]
 
-        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
-            keptEdges.append(edge)
-            keptEdges_blue.append(edge)
-            keptEdges_red.append(edge)
-            keptWeights.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+        weight = graph.es[graph.get_eid(currentNode, toNode)]['weight']
+        color_current = graph.vs[currentNode]['color']
+        color_toNode = graph.vs[toNode]['color']
 
-        if ((graph.vs[currentNode]['color'] == 'green') or (graph.vs[toNode]['color'] == 'green')):
+        if (color_current == color_toNode):
             keptEdges.append(edge)
-            keptWeights.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-        elif ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
             keptEdges_blue.append(edge)
-            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-        elif ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')) :
             keptEdges_red.append(edge)
-            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+            keptWeights.append(weight)
+            keptWeights_blue.append(weight)
+            keptWeights_red.append(weight)
+
+        if ((color_current == 'green') or (color_toNode == 'green')):
+            keptEdges.append(edge)
+            keptWeights.append(weight)
+        elif ((color_current == 'blue') or (color_toNode == 'blue')):
+            keptEdges_blue.append(edge)
+            keptWeights_blue.append(weight)
+        elif ((color_current == 'red') or (color_toNode == 'red')) :
+            keptEdges_red.append(edge)
+            keptWeights_red.append(weight)
 
     filteredGraph_green = graph.subgraph_edges(keptEdges, delete_vertices=False)
     filteredGraph_green.es['weight'] = keptWeights
@@ -104,7 +111,8 @@ def filterGraph_metavertices(graph):
 
     return filteredGraph_green, fg_blue, fg_red
 
-def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim, shortest_path_to_red, shortest_path_to_blue,countBlack_Red_conn, countWhite_Blue_conn):
+def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim, shortest_path_to_red, \
+                              shortest_path_to_blue,countBlack_Red_conn, countWhite_Blue_conn):
     fg_green, fg_blue, fg_red = filterGraph_metavertices(graph)
     greenVertex = (graph.vs.select(color = 'green')[0]).index
     redVertex = (graph.vs.select(color = 'red')[0]).index
@@ -221,11 +229,13 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
     file.writelines(id_tort_white_to_blue)
     file.close()
 
-    return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), float(white_tor / countWhite_Blue_conn)
+    return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), \
+        float(white_tor / countWhite_Blue_conn)
 
 
 
-def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca):
+def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, \
+                dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca):
     """
     Generates a dictionary of all graph descriptors.
 
@@ -240,11 +250,14 @@ def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_
 
     STAT_n_D = len(black_vertices)
     STAT_n_A = len(white_vertices)
-    STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, countWhite_Blue_conn = CC_descriptors(graph, STAT_n_D,STAT_n_A)
+    STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, \
+        countWhite_Blue_conn = CC_descriptors(graph, STAT_n_D,STAT_n_A)
 
 
     # shortest path descriptors
-    DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1 = shortest_path_descriptors(graph,filename, black_vertices,white_vertices, dim, shortest_path_to_red, shortest_path_to_blue, countBlack_Red_conn, countWhite_Blue_conn)
+    DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1 \
+        = shortest_path_descriptors(graph,filename, black_vertices,white_vertices, dim, shortest_path_to_red, \
+                                    shortest_path_to_blue, countBlack_Red_conn, countWhite_Blue_conn)
 
     dict["STAT_n"] =  STAT_n_A + STAT_n_D
     dict["STAT_e"] = black_green

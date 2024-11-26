@@ -96,12 +96,12 @@ def adjList(fileName):
                                 if DEBUG:
                                     third_order_pairs.append([current_vertex, neighbor_vertex])
                                 edge_labels.append("t")
-                                edge_weights.append(np.float32(math.sqrt(3)))
+                                edge_weights.append(float(math.sqrt(3)))
                             else:
                                 if DEBUG:
                                     second_order_pairs.append([current_vertex, neighbor_vertex])
                                 edge_labels.append("s")
-                                edge_weights.append(np.float32(math.sqrt(2)))
+                                edge_weights.append(float(math.sqrt(2)))
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
@@ -407,12 +407,6 @@ def generateGraphAdj(file):
     fg_blue, fg_red = filterGraph_blue_red(g)
     redComponent = set(fg_red.subcomponent(redVertex, mode="ALL"))
     blueComponent = set(fg_blue.subcomponent(blueVertex, mode="ALL"))
-    # l = []
-    # for x in redComponent:
-    #     if g.vs[x]['color'] == 'black':
-    #         l.append(x)
-    # print(l)
-    # print(f'red cc: {len(redComponent)}')
 
     shortest_path_to_red = g.shortest_paths(source = redVertex, weights = g.es['weight'])[0]
     shortest_path_to_blue = g.shortest_paths(source = blueVertex,weights = g.es['weight'])[0]
@@ -459,6 +453,7 @@ def generateGraphAdj(file):
     interface_edge_comp_paths = 0
 
     #Add black/white edges to green interface node.
+
     for edge in g.es:
         source_vertex = edge.source
         target_vertex = edge.target
@@ -545,6 +540,116 @@ def generateGraphAdj(file):
                 if g.vs[target_vertex]['color'] == 'black':
                     black_green_neighbors.append(target_vertex)
 
+    
+    # edges_index_start = 0
+    # while True:
+    #     edges_to_add = []
+    #     labels = []
+    #     weights = []
+    #     starting_index = len(g.es)
+    #     if starting_index == edges_index_start:
+    #         break
+        
+    #     #Add black/white edges to green interface node.
+    #     for edge in g.es[edges_index_start:]:
+    #         source_vertex = edge.source
+    #         target_vertex = edge.target
+
+    #         source_vertex_color = g.vs[source_vertex]['color']
+    #         target_vertex_color = g.vs[target_vertex]['color']
+    #         # ecount_label = g.es[g.ecount() - 1]['label']
+
+    #         if(source_vertex_color == 'blue' or target_vertex_color == 'blue'):
+    #             if(source_vertex_color == 'blue' and target_vertex_color == 'white') \
+    #                 or (source_vertex_color == 'white' and target_vertex_color == 'blue'):
+    #                 CT_n_A_adj_Ca += 1
+
+    #         if(source_vertex_color == 'red' or target_vertex_color == 'red'):
+    #             if(source_vertex_color == 'red' and target_vertex_color == 'black') \
+    #                 or (source_vertex_color == 'black' and target_vertex_color == 'red'):
+    #                 CT_n_D_adj_An += 1
+
+
+    #         #Add black/white edges to green interface node.
+    #         if (source_vertex_color == 'black' and target_vertex_color == 'white') or (
+    #                 source_vertex_color == 'white' and target_vertex_color == 'black'):
+
+    #             if edge['label'] == 'f':
+    #                 # incremement counter if black vertices has path to top (red)
+    #                 if (source_vertex_color == 'black' and source_vertex in redComponent) \
+    #                     or (target_vertex_color == 'black' and target_vertex in redComponent):
+    #                     black_interface_red += 1
+
+    #                 # incremement counter if white interface vertices has path to bottom (blue)
+    #                 if (source_vertex_color == 'white' and source_vertex in blueComponent) \
+    #                     or (target_vertex_color == 'white' and target_vertex in blueComponent):
+    #                     white_interface_blue += 1
+
+    #                 # increment count when black and white interface pair, black has path to top (red), white has path to (bottom) blue
+    #                 if (source_vertex_color == 'black' and target_vertex_color == 'white') \
+    #                     and (source_vertex in redComponent and target_vertex in blueComponent):
+    #                     interface_edge_comp_paths += 1
+
+    #                 elif (source_vertex_color == 'white' and target_vertex_color == 'black') \
+    #                     and (source_vertex in blueComponent and target_vertex in redComponent):
+    #                     interface_edge_comp_paths += 1
+
+
+    #                 # increment black_green when black to green edge is added
+    #                 black_green += 1
+
+    #             try:
+    #                 greenToSource = g.get_eid(green_vertex, source_vertex)
+
+    #                 if edge['weight'] / 2 < g.es[greenToSource]['weight']:
+    #                     g.es[greenToSource]['weight'] = edge['weight'] / 2
+    #                     g.es[greenToSource]['label'] = edge['label']
+
+    #                 greenToSource = g.get_eid(source_vertex, green_vertex)
+
+    #                 if edge['weight'] / 2 < g.es[greenToSource]['weight']:
+    #                     g.es[greenToSource]['weight'] = edge['weight'] / 2
+    #                     g.es[greenToSource]['label'] = edge['label']
+
+    #             except ig._igraph.InternalError:
+    #                 edges_to_add.append((green_vertex, source_vertex))
+    #                 labels.append(edge['label'])
+    #                 weights.append(edge['weight']/2)
+    #                 # g.add_edge(green_vertex, source_vertex, label=edge['label'], weight=edge['weight']/2)
+
+    #             try:
+    #                 greenToTarget = g.get_eid(green_vertex, target_vertex)
+
+    #                 if edge['weight'] / 2 < g.es[greenToTarget]['weight']:
+    #                     g.es[greenToTarget]['weight'] = edge['weight'] / 2
+    #                     g.es[greenToTarget]['label'] = edge['label']
+
+    #                 greenToTarget = g.get_eid(target_vertex, green_vertex)
+
+    #                 if edge['weight'] / 2 < g.es[greenToTarget]['weight']:
+    #                     g.es[greenToTarget]['weight'] = edge['weight'] / 2
+    #                     g.es[greenToTarget]['label'] = edge['label']
+
+    #             except ig._igraph.InternalError:
+    #                 edges_to_add.append((green_vertex, target_vertex))
+    #                 labels.append(edge['label'])
+    #                 weights.append(edge['weight']/2)
+    #                 # g.add_edge(green_vertex, target_vertex, label=edge['label'], weight=edge['weight']/2)
+
+    #             if DEBUG:
+    #                 if source_vertex_color == 'black':
+    #                     black_green_neighbors.append(source_vertex)
+    #             if DEBUG:
+    #                 if target_vertex_color == 'black':
+    #                     black_green_neighbors.append(target_vertex)
+        
+    #     edges_index_start = starting_index
+
+    #     # Add all edges at once  
+    #     g.add_edges(edges_to_add)
+    #     g.es[starting_index:]["label"] = labels
+    #     g.es[starting_index:]["weight"] = weights
+
     if DEBUG:
         print(g.vs['color'])
         print("Number of nodes: ", g.vcount())
@@ -557,7 +662,8 @@ def generateGraphAdj(file):
         print("Nodes connected to red: ", g.vs[g.vcount() - 2]['color'], g.neighbors(g.vcount() - 2))
         print("Length: ", len(g.neighbors(g.vcount() - 2)))
         # exit()
-    return g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
+    return g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
+        dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
 
 
 def generateGraph(file):

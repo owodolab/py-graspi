@@ -8,14 +8,14 @@ STAT_CC_A passed - 1 is the same as expected 1
 STAT_CC_D_An passed - 1 is the same as expected 1
 STAT_CC_A_Ca passed - 1 is the same as expected 1
 ABS_f_D passed - 0.48016357421875 is the same as expected 0.480164
-DISS_wf10_D failed - 0.33616878801184247 is not the same as expected 0.313122
+DISS_wf10_D failed - 0.31304003616399495 is not the same as expected 0.313122
 DISS_f10_D failed - 0.5905999745773484 is not the same as expected 0.590727
 CT_f_e_conn failed - 0.3500778816199377 is not the same as expected 0.536604
-CT_f_conn_D_An passed - 0.627145 is the same as expected 0.627145
+CT_f_conn_D_An passed - 0.6271450362272785 is the same as expected 0.627145
 CT_f_conn_A_Ca passed - 1.0 is the same as expected 1
 CT_e_conn failed - 899 is not the same as expected 1378
 CT_e_D_An failed - 1345 is not the same as expected 1378
-CT_e_A_Ca failed - 2122 is not the same as expected 2592
+CT_e_A_Ca failed - 1223 is not the same as expected 2592
 CT_f_D_tort1 passed - 0.7022042057258677 is the same as expected 0.702204
 CT_f_A_tort1 passed - 0.42661735352823765 is the same as expected 0.426617
-{'STAT_n': 65536, 'STAT_e': 2568, 'STAT_n_D': 31468, 'STAT_n_A': 34068, 'STAT_CC_D': 7, 'STAT_CC_A': 1, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.48016357421875, 'DISS_f10_D': 0.5905999745773484, 'DISS_wf10_D': 0.33616878801184247, 'CT_f_e_conn': 0.3500778816199377, 'CT_f_conn_D_An': 0.627145, 'CT_f_conn_A_Ca': 1.0, 'CT_e_conn': 899, 'CT_e_D_An': 1345, 'CT_e_A_Ca': 2122, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512, 'CT_f_D_tort1': 0.7022042057258677, 'CT_f_A_tort1': 0.42661735352823765}
+{'STAT_n': 65536, 'STAT_e': 2568, 'STAT_n_D': 31468, 'STAT_n_A': 34068, 'STAT_CC_D': 7, 'STAT_CC_A': 1, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.48016357421875, 'DISS_f10_D': 0.5905999745773484, 'DISS_wf10_D': 0.31304003616399495, 'CT_f_e_conn': 0.3500778816199377, 'CT_f_conn_D_An': 0.6271450362272785, 'CT_f_conn_A_Ca': 1.0, 'CT_e_conn': 899, 'CT_e_D_An': 1345, 'CT_e_A_Ca': 1223, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512, 'CT_f_D_tort1': 0.7022042057258677, 'CT_f_A_tort1': 0.42661735352823765}
