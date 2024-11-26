@@ -59,7 +59,7 @@ import py_graspi as ig
 <br />
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
-## Running All 33 Morphologies Tests (JZ)
+## Running All 33 Morphologies Tests
 To run the morphologies tests, return to the previous directory of `/py-graspi` by running:
 ```
 cd ..
@@ -80,7 +80,7 @@ Substitute `<file_type>` with either `txt` or `pdf` for the desired output type.
 <br />
 <br />
 **Note: run txt before pdf to update text files and for an accurate output**
-## 33 Morphologies Output (JZ)
+## 33 Morphologies Output
 After running the command, the automatic report generation will begin. 
 <br />
 <br /> 
@@ -98,7 +98,7 @@ After a few minutes, the following will print once the report has been created
 Text Files Generated
 PDF Generated (If on pdf mode)
 ```
-## Viewing 33 Morphologies Output (JZ)
+## Viewing 33 Morphologies Output
 For text files, navigate to the results directory by using the following command:
 ```
 cd graspi_igraph/results
@@ -164,7 +164,7 @@ g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0]     # utilizing the te
 fg = ig.filterGraph(g)
 ```
 
-### To get dictionary of descriptors (WZ)
+### To get dictionary of descriptors
 
 To test if descriptors are computed correctly, you can run the following script in the terminal to check.
   -  make sure you are in the py_graspi directory after git cloning
@@ -215,7 +215,7 @@ g, is_2D = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0:1]     # utilizi
 ig.visual2D(g, is_2D)
 ```
 
-## Testing from Command Line (KM)
+## Testing from Command Line
 
 
 Now that we have cloned the REPO lets talk about testing.
@@ -227,7 +227,7 @@ Inside these directories, some files hold information about either 2d or 3d grap
 When running from command lines you will need to know the complete pathname of the test file you are trying to run.
 
 There are 2 type of input file formats: *.txt & *.graphe
-### _*.txt input format:_ (KM)
+### _*.txt input format:_
 
 
 The command line input to run a graph creation for *.txt files will have the following format:
@@ -238,7 +238,7 @@ If you have the same test directories as this GitHub Repo you should be able to 
 ```
 python graspi_igraph/igraph_testing.py graspi_igraph/2D-testFile/testFile-10-2D.txt 
 ```
-### _*.graphe input format:_ (KM)
+### _*.graphe input format:_
 *.graphe input format is not that different, only extra parameter you need to input is a '-g' before the total pathname of the test file.
 
 The command line input to run a graph creation for *.graphe files will have the following format:
@@ -249,7 +249,7 @@ If you have the same test directories as this GitHub Repo you should be able to 
 ```
 python graspi_igraph/igraph_testing.py -g graspi_igraph/data_4_3.graphe
 ```
-### _Running with Periodicity:_ (KM)
+### _Running with Periodicity:_
 We include the option of running any test case with periodicity turned on (only for .txt files). This 
 is done with an added '-p' parameter. This parameter is added first before inputting the test case
 format.
@@ -260,7 +260,7 @@ python graspi_igraph/igraph_testing.py -p {total pathname of test file}
 ```
 To test this out run the example test case above but with the added '-p' parameter
 to turn periodicity on.
-## Output of Command Line Input (KM)
+## Output of Command Line Input
 As long as the inputs follow the format above and a file exists the program shall do the following:
 1. Pop up window should appear, this will be the initial visualization of the graph along with red, blue, and green meta vertices.
 2. Exit out of this pop up window with the top right "X" button.
@@ -270,7 +270,7 @@ As long as the inputs follow the format above and a file exists the program shal
 
 DISCLAIMER: if any issues occur you may not be in the right directory (py-graspi) or the test file may not exists or be poorly formatted.
 
-## Generate and Run Files for py-graspi API (ML)
+## Generate and Run Files for py-graspi API
 In order to generate an API using sphinx, you need to follow the installation of py-graspi:
 
 Cloning the repository:
@@ -320,7 +320,7 @@ open docs/index.html
 ```
 This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
 
-## 2D & 3D Morphologies Tests (QP)
+## 2D & 3D Morphologies Tests
 To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
 
 First you will need to git clone the current repo, make sure that you are in the ""dev branch"":
@@ -353,7 +353,7 @@ Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQu
 * **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
 * **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
 
-## Translate Image File Into Truncated .txt File (KM)
+## Translate Image File Into Truncated .txt File
 1. make sure you have py-graspi installed: pip install py-graspi
 2. Make sure you cd into py_graspi directory first. 
 3. The command line format to translate an image file into its truncated .txt file is as follows:
