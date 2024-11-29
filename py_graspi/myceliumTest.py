@@ -8,12 +8,14 @@ import numpy as np
 
 
 def visualize(g):
-    layout = g.layout('kk')  # Kamada-Kawai layout for better spacing
+    g.es["weight"] = [200 if i % 2 == 0 else 200 for i in range(g.ecount())]
+    layout = g.layout('kk', weights="weight")  # Kamada-Kawai layout for better spacing
     fig, ax = plt.subplots(figsize=(10, 10))
     plot = igraph.plot(g,
                        target=ax,
                        layout=layout,
-                       vertex_colors = g.vs["color"],
+                       vertex_colors=g.vs["color"],
+
                        vertex_size=10,
                        margin=20)
     axcolor = 'lightgoldenrodyellow'
@@ -32,10 +34,11 @@ def visualize(g):
 
     button_zoom_in.on_clicked(lambda event: zoom_in(event, ax))
     button_zoom_out.on_clicked(lambda event: zoom_out(event, ax))
-    button_rotate.on_clicked(lambda event: rotate(event, ax, g, layout,current_angle, 30))
-    button_rotate_opposite.on_clicked(lambda event: rotate(event, ax, g, layout,current_angle, -30))
+    button_rotate.on_clicked(lambda event: rotate(event, ax, g, layout, current_angle, 30))
+    button_rotate_opposite.on_clicked(lambda event: rotate(event, ax, g, layout, current_angle, -30))
 
     plt.show()
+
 
 
 def filter_black_vertices(graph):
@@ -105,7 +108,10 @@ def filter_white_vertices(graph):
 
     return filteredGraph
 
-
+def get_largest_subgraph(g):
+    subgraphs = g.decompose()
+    largest_subgraph = max(subgraphs, key=lambda sg:sg.vcount())
+    return largest_subgraph
 def zoom_in(event, ax):
     xlims = ax.get_xlim()
     ylims = ax.get_ylim()
@@ -227,7 +233,7 @@ def main():
     resize_factor = sys.argv[2]
     resize_factor = float(resize_factor)
     translate.img_to_txt(input_file,resize_factor)
-    txt_filename = "resized/resized_" +input_file[7:-4]+".txt"
+    txt_filename = "resized/resized_" +input_file[7:-4]+ "_" + str(resize_factor) +"x.txt"
     print("creating graph")
     (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
      dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
@@ -235,12 +241,14 @@ def main():
     print("graph created")
     print("filtering graph)")
     whiteFilteredGraph = filter_white_vertices(g)
+    lWhiteSubGraph = get_largest_subgraph(whiteFilteredGraph)
     print("graph filtered")
-    visualize(whiteFilteredGraph)
+    visualize(lWhiteSubGraph)
     print("filtering graph")
     blackFilteredGraph = filter_black_vertices(g)
+    lBlackSubGraph = get_largest_subgraph(blackFilteredGraph)
     print("graph filtered")
-    visualize(blackFilteredGraph)
+    visualize(lBlackSubGraph)
 
 
 if __name__ == "__main__":
