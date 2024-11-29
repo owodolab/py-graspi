@@ -384,3 +384,14 @@ python myceliumTest.py {pathname of image file} {Resize calculation amount}
 python myceliumTest.py images/mycelium.png 0.25
 ```
 8. This creates a turncated version of the mycelium image (for runtime purposes) and outputs two graphs, first one is a white only vertex graph and the second one is a black only vertex version.
+
+## Mycelium Filtered Vertices Interactivity
+1. Follow these steps to run through different interactive features after running the myceliumTest.py file
+2. On the bottom left of the window, there will be some built-in mathplotlib tools in the following order: "Reset Home Button," "Undo," "Redo," "Drag and Pull Move Mode," "Zoom in Mode," "Configuration Settings," and "Save File."
+3. The Reset Home Button, when clicked, will take you to the center of the graph no matter where you are. You may need to zoom out a couple of times, but if you do, you will resort back to the original graph visualization (not accounting for rotations).
+4. We will not use these Redo/Undo buttons since they only work with the mathplotlib built-in functionalities and not my built-in ones so they may cause confusion.
+5. The Drag and Pull Mode Button, when clicked, allows the user to hold a click on the graph and move around as desired. Make sure you are able to move around easily.
+6. The Zoom In Mode will make it so you can crop out a rectangular area and it will automatically zoom into this area. This is helpful for easier massive zooms and can be used with the built-in zoom in/out buttons. Make sure you can zoom in with this functionality. 
+7. The Configuration Settings will open up a window with sliders. These sliders will change the border of the graph and get rid of white space around the graph. Play with the sliders to make sure you are able to change the border fo the graph visualization. (The bottom two sliders do not affect our graph visualization in any way, recommend not to mess with these). 
+8. If you wish to reset the configurations there is a "reset" button on the bottom right of this new pop up window, click this and confirm that all the settings are back to how they were originally. 
+9. Lastly, the Save File button works just as any other save file button. This allows to save the the graph visualization into your computer files. 
