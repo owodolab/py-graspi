@@ -10,6 +10,7 @@ import numpy as np
 def visualize(g):
     layout = g.layout('sugiyama')  # Kamada-Kawai layout for better spacing
     fig, ax = plt.subplots(figsize=(200, 200))
+
     plot = igraph.plot(g,
                        target=ax,
                        layout=layout,
