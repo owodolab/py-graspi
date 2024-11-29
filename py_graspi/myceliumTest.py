@@ -8,16 +8,14 @@ import numpy as np
 
 
 def visualize(g):
-    g.es["weight"] = [200 if i % 2 == 0 else 200 for i in range(g.ecount())]
-    layout = g.layout('kk', weights="weight")  # Kamada-Kawai layout for better spacing
-    fig, ax = plt.subplots(figsize=(10, 10))
+    layout = g.layout('sugiyama')  # Kamada-Kawai layout for better spacing
+    fig, ax = plt.subplots(figsize=(200, 200))
     plot = igraph.plot(g,
                        target=ax,
                        layout=layout,
                        vertex_colors=g.vs["color"],
-
                        vertex_size=10,
-                       margin=20)
+                       margin=200)
     axcolor = 'lightgoldenrodyellow'
 
     ax_zoom_in = plt.axes([0.55, 0.05, 0.1, 0.075], facecolor=axcolor)
