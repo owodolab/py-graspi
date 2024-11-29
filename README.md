@@ -343,10 +343,13 @@ to visualize a heatmap is as follows:
 ```
 python tortuosity.py data/data_0.5_2.2_001900.txt
 ```
+6. First a tortuosity heatmap will output for Black To Red vertices.
+7. Exit out of this pop up window.
+8. Second a totuosity heatmap will output for White to Blue vertices.
+9. Exit out of this pop up Window.
 ### Reading HeatMap
 * A HeatMap should show up with a HeatMap Bar to the right of the HeatMap. 
 * Based on current implementation, this HeatMap outputs tort values of each vertex and based on that value, the higher it is the "hotter" is is and the lower it is the "colder".
-* These tort values are based on the distances between black nodes to the top red node.
 * Read the side bar to the right to understand the gradiant coloring. In short, the blacker (bottom of bar) the graph is means these parts of the graph aren't visited as much when computing these shortest paths, but as you go up in color these vertices are visited more frequently.
 
 ## Jupyter NoteBook to Visualize HeatMap
