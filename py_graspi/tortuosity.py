@@ -30,6 +30,14 @@ def find_coords(filename):
         coords = [dimX, dimY, dimZ]
     return coords
 
+def filterGraph(graph):
+    keptEdges = [edge for edge in graph.get_edgelist()
+                 if graph.vs[edge[0]]['color'] == graph.vs[edge[1]]['color']
+                 or 'red' in {graph.vs[edge[0]]['color'], graph.vs[edge[1]]['color']}
+                 or 'blue' in {graph.vs[edge[0]]['color'], graph.vs[edge[1]]['color']}]
+
+    return graph.subgraph_edges(keptEdges, delete_vertices=False)
+
 def find_BTR_tortuosity(g, is_2d, filename):
     """
         finds and visualizes the tortuosity of Black to Red vertices
@@ -42,7 +50,9 @@ def find_BTR_tortuosity(g, is_2d, filename):
             No return but a visualization is created and displayed on screen.
         """
     numVertices = g.vcount()
-
+    redVertex = g.vcount() - 2
+    blackToRedList = []
+    filteredGraph = filterGraph(g)
     idOfPixelIn1DArray, tort = read_BTR_file_and_extract_numbers(filename)
     #Calculate vertex frequencies
     vertex_frequency = [0] * numVertices
@@ -50,7 +60,7 @@ def find_BTR_tortuosity(g, is_2d, filename):
         vertex_frequency[idOfPixelIn1DArray[i]] = tort[i]
 
     vertex_frequency = vertex_frequency[:-3]
-    dimX,dimY,dimZ = find_coords(filename)
+    dimX,dimY,dimZ = coords = find_coords(filename)
     data_2d = np.array(vertex_frequency).reshape(dimY, dimX)
 
     # Create the heatmap
@@ -72,6 +82,9 @@ def find_WTB_tortuosity(g, is_2d, filename):
             No return but a visualization is created and displayed on screen.
         """
     numVertices = g.vcount()
+    redVertex = g.vcount() - 2
+    blackToRedList = []
+    filteredGraph = filterGraph(g)
     idOfPixelIn1DArray, tort = read_WTB_file_and_extract_numbers(filename)
     #Calculate vertex frequencies
     vertex_frequency = [0] * numVertices
@@ -79,7 +92,7 @@ def find_WTB_tortuosity(g, is_2d, filename):
         vertex_frequency[idOfPixelIn1DArray[i]] = tort[i]
 
     vertex_frequency = vertex_frequency[:-3]
-    dimX,dimY,dimZ = find_coords(filename)
+    dimX,dimY,dimZ = coords = find_coords(filename)
     data_2d = np.array(vertex_frequency).reshape(dimY, dimX)
 
     # Create the heatmap
