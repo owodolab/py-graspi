@@ -215,7 +215,7 @@ g, is_2D = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0:1]     # utilizi
 ig.visual2D(g, is_2D)
 ```
 
-## Testing from Command Line (Kevin)
+## Testing from Command Line (KM)
 
 
 Now that we have cloned the REPO lets talk about testing.
@@ -227,7 +227,7 @@ Inside these directories, some files hold information about either 2d or 3d grap
 When running from command lines you will need to know the complete pathname of the test file you are trying to run.
 
 There are 2 type of input file formats: *.txt & *.graphe
-### _*.txt input format:_
+### _*.txt input format:_ (KM)
 
 
 The command line input to run a graph creation for *.txt files will have the following format:
@@ -238,7 +238,7 @@ If you have the same test directories as this GitHub Repo you should be able to 
 ```
 python graspi_igraph/igraph_testing.py graspi_igraph/2D-testFile/testFile-10-2D.txt 
 ```
-### _*.graphe input format:_
+### _*.graphe input format:_ (KM)
 *.graphe input format is not that different, only extra parameter you need to input is a '-g' before the total pathname of the test file.
 
 The command line input to run a graph creation for *.graphe files will have the following format:
@@ -249,7 +249,7 @@ If you have the same test directories as this GitHub Repo you should be able to 
 ```
 python graspi_igraph/igraph_testing.py -g graspi_igraph/data_4_3.graphe
 ```
-### _Running with Periodicity:_
+### _Running with Periodicity:_ (KM)
 We include the option of running any test case with periodicity turned on (only for .txt files). This 
 is done with an added '-p' parameter. This parameter is added first before inputting the test case
 format.
@@ -260,7 +260,7 @@ python graspi_igraph/igraph_testing.py -p {total pathname of test file}
 ```
 To test this out run the example test case above but with the added '-p' parameter
 to turn periodicity on.
-## Output of Command Line Input
+## Output of Command Line Input (KM)
 As long as the inputs follow the format above and a file exists the program shall do the following:
 1. Pop up window should appear, this will be the initial visualization of the graph along with red, blue, and green meta vertices.
 2. Exit out of this pop up window with the top right "X" button.
@@ -352,3 +352,38 @@ Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQu
 * **py_graspi_installation**: How to install Py-Graspi and run basic commands.
 * **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
 * **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
+
+## Translate Image File Into Truncated .txt File (KM)
+1. make sure you have py-graspi installed: pip install py-graspi
+2. Make sure you cd into py_graspi directory first. 
+3. The command line format to translate an image file into its truncated .txt file is as follows:
+```
+python img_to_txt.py {pathname of image file} {Resize calculation amount}
+```
+4. The "resize calculation amount" is multiplied to the X and Y axis of the original image and this will alter the size of the image's final resized .txt file. 
+5. This should place both a truncated image file and truncated .txt file of the original image file into the "resized" directory. 
+6. They will be named "resized_" followed by the image file name and correct extension. 
+7. An example command line input that should work for this repo is as follows:
+```
+python img_to_txt.py images/data_0.5_2.2_001900.png 0.25
+```
+
+## Mycelium Filtered Vertices Visualization
+This section explains how to visualize a mycelium image by both it's white and black vertices filtered versions.
+The mycelium image used is included in the "images" directory called "mycelium.png".
+
+The following are steps on how to visualize the graph from this image.
+1. Make sure you have py-graspi installed: pip install py-graspi
+2. Make sure you cd into py_graspi directory first.
+3. The command line format input is as follows
+```
+python myceliumTest.py {pathname of image file} {Resize calculation amount}
+```
+4. The input is the same as the translation input from image files to .txt files, it will create a new .img and .txt file for it in the "resized" directory.
+5. The image input pathname must be in the "images" directory.
+6. If you wish to not resize the original image just input a '1' for the Resize calculation amount, this will keep the original size.
+7. Example command line input is as follows:
+```
+python myceliumTest.py images/mycelium.png 0.25
+```
+8. This creates a turncated version of the mycelium image (for runtime purposes) and outputs two graphs, first one is a white only vertex graph and the second one is a black only vertex version.
