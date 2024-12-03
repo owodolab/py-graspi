@@ -8,7 +8,7 @@ import numpy as np
 
 
 def visualize(g):
-    layout = g.layout('sugiyama')  # Kamada-Kawai layout for better spacing
+    layout = g.layout('kk')
     fig, ax = plt.subplots(figsize=(200, 200))
 
     plot = igraph.plot(g,
@@ -59,8 +59,6 @@ def filter_black_vertices(graph):
         toNode = edge[1]
         if (graph.vs[currentNode]['color'] == 'black') and (graph.vs[toNode]['color'] == 'black'):
             keptEdges.append(edge)
-        # if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
-        #     keptEdges.append(edge)
         if ((graph.vs[currentNode]['color'] == 'red') and (graph.vs[toNode]['color'] == 'black')) or (
                 graph.vs[currentNode]['color'] == 'black') and (graph.vs[toNode]['color'] == 'red'):
             keptEdges.append(edge)
@@ -91,11 +89,6 @@ def filter_white_vertices(graph):
         toNode = edge[1]
         if (graph.vs[currentNode]['color'] == 'white') and (graph.vs[toNode]['color'] == 'white'):
             keptEdges.append(edge)
-        # if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
-        #     keptEdges.append(edge)
-        # elif ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')) :
-        #     keptEdges.append(edge)
-
         if ((graph.vs[currentNode]['color'] == 'red') and (graph.vs[toNode]['color'] == 'white')) or (
                 graph.vs[currentNode]['color'] == 'white') and (graph.vs[toNode]['color'] == 'red'):
             keptEdges.append(edge)
