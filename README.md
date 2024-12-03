@@ -346,6 +346,9 @@ Navigate to the file graspi_igraph_notebook.ipynb.
 
 On this file you will be able to run and view the 2d and 3d morphologies for subtask 4, card 104.
 
+## Testing Runtime for old and new implementation
+Repeat the above instructions from "2D & 3D Morphologies Tests (QP)". New tests are located in the same notebook at the bottom two.
+
 ## View Demo Videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
 Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQuN86RUYXvJG_F9MMq?usp=sharing
 ### Videos
