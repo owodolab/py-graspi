@@ -356,6 +356,60 @@ Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQu
 * **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
 * **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
 
+## Tortuosity HeatMap Visualization
+This are the steps for visualizing tortuosity via HeatMap.
+1. Make sure you cd into the graspi_igraph directory.
+2. All necessary functions are in the tortuosity.py file.
+3. Code necessary to visualize the tortuosity HeatMap is as follows:
+```
+python tortuosity.py {pathname of file}
+```
+4. This code will only work if the IdTortuosityBlackToRed descriptors of this file
+have been found and outputted to it's corresponding file in the distances directory.
+5. For now there are some file examples in this directory so an example code
+to visualize a heatmap is as follows:
+```
+python tortuosity.py data/data_0.5_2.2_001900.txt
+```
+6. First a tortuosity heatmap will output for Black To Red vertices.
+7. Exit out of this pop up window.
+8. Second a totuosity heatmap will output for White to Blue vertices.
+9. Exit out of this pop up Window.
+### Reading HeatMap
+* A HeatMap should show up with a HeatMap Bar to the right of the HeatMap. 
+* Based on current implementation, this HeatMap outputs tort values of each vertex and based on that value, the higher it is the "hotter" is is and the lower it is the "colder".
+* Read the side bar to the right to understand the gradiant coloring. In short, the blacker (bottom of bar) the graph is means these parts of the graph aren't visited as much when computing these shortest paths, but as you go up in color these vertices are visited more frequently.
+
+## Jupyter NoteBook to Visualize HeatMap
+1. Make sure Jupyter Notebook is installed:
+```
+pip install jupyter
+```
+2. Run jupyter notebook with following command:
+```
+jupyter notebook
+```
+3. Open up tortuosity.ipynb.
+4. Click the Run tab on the top.
+5. Click "Run All Cells"
+6. Wait a bit and the HeatMaps of some files will be created and visualized.
+## Translating .plt files to .txt files
+These are the steps for translating .plt files to .txt files in order to be turned into graphs.
+1. Make sure you cd into the graspi_igraph directory.
+2. All necessary functions are in the plt_to_txt.py file.
+3. The command line input format for this file is as follows:
+```
+python plt_to_txt.py [pathname]
+```
+5. The file in pathname should be in the plt directory and end with the .plt extension, if not this will not work.
+6. It's translated .plt file should show up in the same directory but now with a .txt extension and in .txt formatting when executed with no errors.
+7. Some files have been placed in the .plt directory for testing.
+8. If you wish to run an example, first delete the translated version of a .plt file if it has been created, and run the following command line input:
+```
+python plt_to_txt.py plt/data_4_4.plt 
+```
+9. Make sure the translated file with .txt extension has been made and placed in the plt directory to ensure the file has been executed correctly.
+
 ## Translate Image File Into Truncated .txt File
 1. make sure you have py-graspi installed: pip install py-graspi
 2. Make sure you cd into py_graspi directory first. 
