@@ -1,0 +1,4 @@
+STAT_n_D 50
+STAT_n_A 50
+STAT_CC_D_An 1
+STAT_CC_A_Ca 1
