@@ -2,9 +2,12 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import igraph_testing as ig
+import os
+
+current_dir = os.getcwd()
 
 def find_coords(filename):
-    with open(filename, "r") as file:
+    with open(f"{current_dir}/py_graspi/data/{filename}", "r") as file:
         header = file.readline().split(' ')
         dimX, dimY = int(header[0]), int(header[1])
         if len(header) < 3:
@@ -30,7 +33,7 @@ def filterGraph(graph):
     return graph.subgraph_edges(keptEdges, delete_vertices=False)
 
 
-def find_BTR_tortuosity(g, is_2d, filename):
+def find_BTR_tortuosity(g, is_2d, filename, output, title):
     numVertices = g.vcount()
     redVertex = g.vcount() - 2
     blackToRedList = []
@@ -46,12 +49,15 @@ def find_BTR_tortuosity(g, is_2d, filename):
     data_2d = np.array(vertex_frequency).reshape(dimY, dimX)
 
     # Create the heatmap
+    plt.rcParams.update({'font.size': 20})
     plt.title("Black to Red Tortuosity HeatMap")
     plt.imshow(data_2d, cmap='hot', interpolation='nearest')
     plt.colorbar()  # Add a colorbar to show the values
-    plt.show()
+    plt.title(title, y=2, fontsize=20)
+    plt.savefig(output)
+    plt.close()
 
-def find_WTB_tortuosity(g, is_2d, filename):
+def find_WTB_tortuosity(g, is_2d, filename, output, title):
     numVertices = g.vcount()
     blueVertex = g.vcount() - 1
     whiteToBlueList = []
@@ -67,15 +73,18 @@ def find_WTB_tortuosity(g, is_2d, filename):
     data_2d = np.array(vertex_frequency).reshape(dimY, dimX)
 
     # Create the heatmap
+    plt.rcParams.update({'font.size': 20})
     plt.title("White to Blue Tortuosity HeatMap")
     plt.imshow(data_2d, cmap='hot', interpolation='nearest')
     plt.colorbar()  # Add a colorbar to show the values
-    plt.show()
+    plt.title(title, y=2, fontsize=20)
+    plt.savefig(output)
+    plt.close()
 
 # Define the function to read the file and extract the numbers
 def read_BTR_file_and_extract_numbers(base_filename):
     base_filename = base_filename[5:-4]
-    file_path = f"distances/{base_filename}-IdTortuosityBlackToRed.txt"
+    file_path = f"{current_dir}/py_graspi/data/data_{base_filename}_IdTortuosityBlackToRed.txt"
     idOfPixelIn1DArray = []
     tort = []
     # Open the file in read mode
@@ -95,7 +104,7 @@ def read_BTR_file_and_extract_numbers(base_filename):
 
 def read_WTB_file_and_extract_numbers(base_filename):
     base_filename = base_filename[5:-4]
-    file_path = f"distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
+    file_path = f"{current_dir}/py_graspi/data/data_{base_filename}_IdTortuosityWhiteToBlue.txt"
     idOfPixelIn1DArray = []
     tort = []
     # Open the file in read mode
@@ -112,15 +121,3 @@ def read_WTB_file_and_extract_numbers(base_filename):
             tort.append(second_number)
 
     return idOfPixelIn1DArray, tort
-
-
-def main():
-    filename = sys.argv[1]
-    (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, dim, interface_edge_comp_paths,
-     shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)  = ig.generateGraphAdj(filename)
-    find_BTR_tortuosity(g, is_2D, filename)
-    find_WTB_tortuosity(g, is_2D, filename)
-
-
-if __name__ == '__main__':
-    main()

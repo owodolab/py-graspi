@@ -17,12 +17,6 @@ image_path = f"{current_dir}/py_graspi/images/"
 hist_path = f"{current_dir}/py_graspi/histograms/"
 results_path = f"{current_dir}/py_graspi/results/"
 test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path) if os.path.splitext(file)[0].count("_") == 3]
-data_path = f"{current_dir}/py_graspi/data/"
-descriptors_path = f"{current_dir}/py_graspi/descriptors/"
-image_path = f"{current_dir}/py_graspi/images/"
-hist_path = f"{current_dir}/py_graspi/histograms/"
-results_path = f"{current_dir}/py_graspi/results/"
-test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path) if os.path.splitext(file)[0].count("_") == 3]
 epsilon = 1e-5
 
 """
@@ -97,8 +91,6 @@ def main():
         print(f"Executing {test_file}")
         if PDF:
             pdf.add_page()
-        g,is_2D,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca= ig.generateGraph(data_path + test_file + ".txt")
-        stats = ds.descriptors(g,data_path + test_file + ".txt",black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)
 
         if PDF:
             pdf.cell(200, 8, txt=f"Morphology: {test_file}", ln=True, align="L")
@@ -173,10 +165,13 @@ def main():
                 pdf.image(hist6, x=142, y=110, w=60)
 
             """
-            Generates the heat map of tortuosity between black and red
+            Generates the heat map of tortuosity between black and red, and white to blue
             """
-            heat1 = t.find_tortuosity(g, is_2D, test_file + ".txt", hist_path + test_file + "7.png", "Tortuosity of D-paths to An")
+            heat1 = t.find_BTR_tortuosity(g, is_2D, test_file + ".txt", hist_path + test_file + "7.png", "Tortuosity of D-paths to An")
             pdf.image(hist_path + test_file + "7.png", x=80, y=160, w=60)
+
+            heat2 = t.find_WTB_tortuosity(g, is_2D, test_file + ".txt", hist_path + test_file + "8.png","Tortuosity of A-paths to Ca")
+            pdf.image(hist_path + test_file + "8.png", x=142, y=160, w=60)
 
 
             print(f"{test_file} PDF Generated")
@@ -189,9 +184,7 @@ def main():
     """
     if PDF:
         pdf.output(f"{current_dir}/py_graspi/test_results.pdf")
-        pdf.output(f"{current_dir}/py_graspi/test_results.pdf")
         print("PDF Generated")
-        webbrowser.open_new_tab(f"{current_dir}/py_graspi/test_results.pdf")
         webbrowser.open_new_tab(f"{current_dir}/py_graspi/test_results.pdf")
 
 if __name__ == "__main__":
