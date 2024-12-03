@@ -165,7 +165,7 @@ def main():
                 pdf.image(hist6, x=142, y=110, w=60)
 
             """
-            Generates the heat map of tortuosity between black and red
+            Generates the heat map of tortuosity between black and red, and white to blue
             """
             heat1 = t.find_BTR_tortuosity(g, is_2D, test_file + ".txt", hist_path + test_file + "7.png", "Tortuosity of D-paths to An")
             pdf.image(hist_path + test_file + "7.png", x=80, y=160, w=60)
