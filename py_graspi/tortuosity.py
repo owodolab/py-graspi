@@ -83,8 +83,8 @@ def find_WTB_tortuosity(g, is_2d, filename):
         """
     numVertices = g.vcount()
     redVertex = g.vcount() - 2
-    blackToRedList = []
-    filteredGraph = filterGraph(g)
+    blueVertex = g.vcount() - 1
+    whiteToBlueList = []
     idOfPixelIn1DArray, tort = read_WTB_file_and_extract_numbers(filename)
     #Calculate vertex frequencies
     vertex_frequency = [0] * numVertices
