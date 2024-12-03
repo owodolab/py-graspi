@@ -8,6 +8,15 @@ import numpy as np
 
 
 def visualize(g):
+    """
+        Visualizes any given graph
+
+        Args:
+            g (ig.Graph): The input graph.
+
+        Returns:
+            No return but a visualization is created and displayed on screen.
+        """
     layout = g.layout('kk')
     fig, ax = plt.subplots(figsize=(200, 200))
 
@@ -19,18 +28,22 @@ def visualize(g):
                        margin=200)
     axcolor = 'lightgoldenrodyellow'
 
+    #coordinated for interactive buttons
     ax_zoom_in = plt.axes([0.55, 0.05, 0.1, 0.075], facecolor=axcolor)
     ax_zoom_out = plt.axes([0.65, 0.05, 0.1, 0.075], facecolor=axcolor)
     ax_rotate = plt.axes([0.75, 0.05, 0.1, 0.075], facecolor=axcolor)
     ax_rotate_ccw = plt.axes([0.85, 0.05, 0.1, 0.075], facecolor=axcolor)
 
+    #labeling  interactive buttons
     button_zoom_in = Button(ax_zoom_in, label='Zoom In')
     button_zoom_out = Button(ax_zoom_out, label='Zoom Out')
     button_rotate = Button(ax_rotate, label='Rotate CW')
     button_rotate_opposite = Button(ax_rotate_ccw, label='Rotate CCW')
 
+    #needed to maintain current interactive button change
     current_angle = [0]
 
+    #on_click action functions called when action is performed
     button_zoom_in.on_clicked(lambda event: zoom_in(event, ax))
     button_zoom_out.on_clicked(lambda event: zoom_out(event, ax))
     button_rotate.on_clicked(lambda event: rotate(event, ax, g, layout, current_angle, 30))
@@ -53,7 +66,7 @@ def filter_black_vertices(graph):
     edgeList = graph.get_edgelist()
     keptEdges = []
 
-    # Checks edges and keeps only edges that connect to the same colored vertices
+    # Checks edges and keeps only edges that connect to black vertices
     for edge in edgeList:
         currentNode = edge[0]
         toNode = edge[1]
@@ -83,7 +96,7 @@ def filter_white_vertices(graph):
     edgeList = graph.get_edgelist()
     keptEdges = []
 
-    # Checks edges and keeps only edges that connect to the same colored vertices
+    # Checks edges and keeps only edges that connect to white vertices
     for edge in edgeList:
         currentNode = edge[0]
         toNode = edge[1]
@@ -100,11 +113,33 @@ def filter_white_vertices(graph):
 
     return filteredGraph
 
+
 def get_largest_subgraph(g):
+    """
+        returns the largest subgraph of the input graph
+        Args:
+            g (ig.Graph): The input graph.
+
+        Returns:
+            largest_subgraph: largest (vertex) subgraph of the input graph.
+        """
+    #breaks apart graphs and returns a list of graph objects
     subgraphs = g.decompose()
+
+    #find and return largest subgraph
     largest_subgraph = max(subgraphs, key=lambda sg:sg.vcount())
     return largest_subgraph
+
 def zoom_in(event, ax):
+    """
+        zooms in the input graph
+        Args:
+            event (lambda): The input event.
+            ax: the axis of the graph.
+
+        Returns:
+           returns a zoomed in visualization of the input graph.
+        """
     xlims = ax.get_xlim()
     ylims = ax.get_ylim()
 
@@ -112,7 +147,7 @@ def zoom_in(event, ax):
     x_center = (xlims[0] + xlims[1]) / 2
     y_center = (ylims[0] + ylims[1]) / 2
 
-    # Define a more aggressive zoom factor
+    # Define zoom factor
     factor = 0.5  # Change this value to zoom in more
 
     # Calculate new limits
@@ -128,6 +163,15 @@ def zoom_in(event, ax):
 
 
 def zoom_out(event, ax):
+    """
+        zooms out the input graph
+        Args:
+            event (lambda): The input event.
+            ax: the axis of the graph.
+
+        Returns:
+           returns a zoomed out visualization of the input graph.
+        """
     xlims = ax.get_xlim()
     ylims = ax.get_ylim()
 
@@ -135,7 +179,7 @@ def zoom_out(event, ax):
     x_center = (xlims[0] + xlims[1]) / 2
     y_center = (ylims[0] + ylims[1]) / 2
 
-    # Define a more aggressive zoom factor
+    # Define a zoom factor
     factor = 2  # Change this value to zoom in less
 
     # Calculate new limits
@@ -151,6 +195,19 @@ def zoom_out(event, ax):
 
 
 def rotate(event, ax, g, layout,current_angle, angle):
+    """
+        Rotates the input graph clockwise
+        Args:
+            event (lambda): The input event.
+            ax: the axis of the graph.
+            g (ig.Graph): the input graph.
+            layout (ig.Layout): the input layout.
+            current_angle (list): the current rotation angles.
+            angle (list): the amount to rotate it by
+
+        Returns:
+           returns a clockwise rotated visualization of the input graph based on angle parameter.
+        """
     # Preserve current zoom limits
     xlims = ax.get_xlim()
     ylims = ax.get_ylim()
@@ -186,6 +243,19 @@ def rotate(event, ax, g, layout,current_angle, angle):
     plt.draw()
 
 def rotate_counterclockwise(event, ax, g, layout, current_angle, angle):
+    """
+        Rotates the input graph counter-clockwise
+        Args:
+            event (lambda): The input event.
+            ax: the axis of the graph.
+            g (ig.Graph): the input graph.
+            layout (ig.Layout): the input layout.
+            current_angle (list): the current rotation angles.
+            angle (list): the amount to rotate it by
+
+        Returns:
+           returns a counter-clockwise rotated visualization of the input graph based on angle parameter.
+    """
     # Preserve current zoom limits
     xlims = ax.get_xlim()
     ylims = ax.get_ylim()
