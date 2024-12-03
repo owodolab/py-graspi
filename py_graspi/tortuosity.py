@@ -29,7 +29,6 @@ def filterGraph(graph):
 
     return graph.subgraph_edges(keptEdges, delete_vertices=False)
 
-
 def find_BTR_tortuosity(g, is_2d, filename):
     numVertices = g.vcount()
     redVertex = g.vcount() - 2
@@ -47,7 +46,8 @@ def find_BTR_tortuosity(g, is_2d, filename):
 
     # Create the heatmap
     plt.title("Black to Red Tortuosity HeatMap")
-    plt.imshow(data_2d, cmap='hot', interpolation='nearest')
+    plt.imshow(data_2d, cmap='hsv', interpolation='nearest')
+
     plt.colorbar()  # Add a colorbar to show the values
     plt.show()
 
@@ -68,7 +68,7 @@ def find_WTB_tortuosity(g, is_2d, filename):
 
     # Create the heatmap
     plt.title("White to Blue Tortuosity HeatMap")
-    plt.imshow(data_2d, cmap='hot', interpolation='nearest')
+    plt.imshow(data_2d, cmap='hsv', interpolation='nearest')
     plt.colorbar()  # Add a colorbar to show the values
     plt.show()
 
@@ -112,7 +112,6 @@ def read_WTB_file_and_extract_numbers(base_filename):
             tort.append(second_number)
 
     return idOfPixelIn1DArray, tort
-
 
 def main():
     filename = sys.argv[1]
