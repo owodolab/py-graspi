@@ -6,6 +6,16 @@ import numpy as np
 DEBUG = False
 
 def img_to_txt(imageFile, resizeFactor, threshold=127.5):
+    """
+        translates an image to a truncated .txt file
+        Args:
+            imageFile (string): image file path
+            resizeFactor (float): resize factor
+            threshold (float): threshold for image conversion
+        Returns:
+            bool_array: boolean array with true or false of truncated image.
+            Read README to find out the path of the new resized .txt file
+        """
     # Open image file
     image = Image.open(imageFile).convert('L')  # Convert image to grayscale
     # Turn image into a numpy array
