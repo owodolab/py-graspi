@@ -4,6 +4,15 @@ import matplotlib.pyplot as plt
 import igraph_testing as ig
 
 def find_coords(filename):
+    """
+        find coordinates of file
+
+        Args:
+            filename(string): path to file
+
+        Returns:
+            coords: x,y,x coords of file in a list.
+        """
     with open(filename, "r") as file:
         header = file.readline().split(' ')
         dimX, dimY = int(header[0]), int(header[1])
@@ -22,6 +31,16 @@ def find_coords(filename):
     return coords
 
 def find_BTR_tortuosity(g, is_2d, filename):
+    """
+        finds and visualizes the tortuosity of Black to Red vertices
+        Args:
+            g (ig.Graph): The input graph.
+            is_2d(bool): true if 2D of false if otherwise
+            filename(string): path to file
+
+        Returns:
+            No return but a visualization is created and displayed on screen.
+        """
     numVertices = g.vcount()
 
     idOfPixelIn1DArray, tort = read_BTR_file_and_extract_numbers(filename)
@@ -42,6 +61,16 @@ def find_BTR_tortuosity(g, is_2d, filename):
     plt.show()
 
 def find_WTB_tortuosity(g, is_2d, filename):
+    """
+        finds and visualizes the tortuosity of White to Black vertices
+        Args:
+            g (ig.Graph): The input graph.
+            is_2d(bool): true if 2D of false if otherwise
+            filename(string): path to file
+
+        Returns:
+            No return but a visualization is created and displayed on screen.
+        """
     numVertices = g.vcount()
     idOfPixelIn1DArray, tort = read_WTB_file_and_extract_numbers(filename)
     #Calculate vertex frequencies
@@ -61,6 +90,15 @@ def find_WTB_tortuosity(g, is_2d, filename):
 
 # Define the function to read the file and extract the numbers
 def read_BTR_file_and_extract_numbers(base_filename):
+    """
+        reads Black to Red Tortuosity ID file and extracts numbers needed from it
+        Args:
+            base_filename(string): path to file
+
+        Returns:
+            idOfPixelIn1DArray(list): list of id of pixel in 1D array
+            tort(list): list of tortuosity, index matches that of idOfPixelIn1DArray
+        """
     base_filename = base_filename[5:-4]
     file_path = f"distances/{base_filename}-IdTortuosityBlackToRed.txt"
     idOfPixelIn1DArray = []
@@ -81,6 +119,15 @@ def read_BTR_file_and_extract_numbers(base_filename):
     return idOfPixelIn1DArray, tort
 
 def read_WTB_file_and_extract_numbers(base_filename):
+    """
+        reads White to Black Tortuosity ID file and extracts numbers needed from it
+        Args:
+            base_filename(string): path to file
+
+        Returns:
+            idOfPixelIn1DArray(list): list of id of pixel in 1D array
+            tort(list): list of tortuosity, index matches that of idOfPixelIn1DArray
+        """
     base_filename = base_filename[5:-4]
     file_path = f"distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
     idOfPixelIn1DArray = []
