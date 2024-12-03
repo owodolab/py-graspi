@@ -132,6 +132,7 @@ def read_WTB_file_and_extract_numbers(base_filename):
     file_path = f"distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
     idOfPixelIn1DArray = []
     tort = []
+
     # Open the file in read mode
     with open(file_path, "r") as file:
         # Read each line in the file
