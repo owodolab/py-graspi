@@ -2,7 +2,6 @@ import sys
 
 import numpy as np
 
-
 def translate_data(input_file):
     base_filename = input_file[4:-4]
     outputFileName = f"plt/{base_filename}.txt"
