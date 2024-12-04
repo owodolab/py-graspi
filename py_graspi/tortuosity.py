@@ -64,9 +64,9 @@ def find_BTR_tortuosity(g, is_2d, filename):
     data_2d = np.array(vertex_frequency).reshape(dimY, dimX)
 
     # Create the heatmap
+    #plt.rcParams.update({'font.size': 20})
     plt.title("Black to Red Tortuosity HeatMap")
     plt.imshow(data_2d, cmap='hsv', interpolation='nearest')
-
     plt.colorbar()  # Add a colorbar to show the values
     plt.show()
 
@@ -96,6 +96,7 @@ def find_WTB_tortuosity(g, is_2d, filename):
     data_2d = np.array(vertex_frequency).reshape(dimY, dimX)
 
     # Create the heatmap
+    #plt.rcParams.update({'font.size': 20})
     plt.title("White to Blue Tortuosity HeatMap")
     plt.imshow(data_2d, cmap='hsv', interpolation='nearest')
     plt.colorbar()  # Add a colorbar to show the values
@@ -167,7 +168,6 @@ def main():
      shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)  = ig.generateGraphAdj(filename)
     find_BTR_tortuosity(g, is_2D, filename)
     find_WTB_tortuosity(g, is_2D, filename)
-
 
 if __name__ == '__main__':
     main()
