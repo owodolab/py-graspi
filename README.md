@@ -59,81 +59,6 @@ import py_graspi as ig
 <br />
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
-## Running All 33 Morphologies Tests
-To run the morphologies tests, return to the previous directory of `/py-graspi` by running:
-```
-cd ..
-```
-Next, make sure you're running using bash:
-```
-bash
-```
-Next, run the following:
-```
-chmod +x run.sh
-```
-Finally, run the following: 
-```
-./run.sh <file_type>
-```
-Substitute `<file_type>` with either `txt` or `pdf` for the desired output type.
-<br />
-<br />
-**Note: run txt before pdf to update text files and for an accurate output**
-## 33 Morphologies Output
-After running the command, the automatic report generation will begin. 
-<br />
-<br /> 
-The following will print when the report generation begins:
-```
-Generating PDF (If on pdf mode)
-Generating Text Files
-```
-As the script is running, the following will print for which microstructure it is on
-```
-Executing <test_file>
-```
-After a few minutes, the following will print once the report has been created
-```
-Text Files Generated
-PDF Generated (If on pdf mode)
-```
-## Viewing 33 Morphologies Output
-For text files, navigate to the results directory by using the following command:
-```
-cd graspi_igraph/results
-```
-Use the following command to view the list of text files generated:
-```
-ls
-```
-To view the result in each file, run the following command:
-```
-cat <result_file_name>
-```
-Replace `<result_file_name>` with any of the files outputted by `ls`
-<br />
-<br />
-If using pdf mode, the pdf should automattically open upon completion.
-<br />
-<br />
-If the pdf does not automatically pop up, use the following commands:
-### On Windows
-```
-start graspi_igraph/test_results.pdf
-```
-### On MacOS
-```
-open graspi_igraph/test_results.pdf
-```
-### On Linux
-```
-evince graspi_igraph/test_results.pdf
-```
-If evince is not installed, run this first:
-```
-sudo apt install evince
-```
 ## To Test Algorithms
 
 To **generate graphs**, call the generateGraph(_file_) function which takes in a input-file name
@@ -260,6 +185,7 @@ python igraph_testing.py -p {total pathname of test file}
 ```
 To test this out run the example test case above but with the added '-p' parameter
 to turn periodicity on.
+
 ## Output of Command Line Input
 As long as the inputs follow the format above and a file exists the program shall do the following:
 1. Pop up window should appear, this will be the initial visualization of the graph along with red, blue, and green meta vertices.
@@ -269,56 +195,6 @@ As long as the inputs follow the format above and a file exists the program shal
 5. Make sure program exits correctly (code 0).
 
 DISCLAIMER: if any issues occur you may not be in the right directory (py-graspi) or the test file may not exists or be poorly formatted.
-
-## Generate and Run Files for py-graspi API
-In order to generate an API using sphinx, you need to follow the installation of py-graspi:
-
-Cloning the repository:
-```
-git clone https://github.com/owodolab/py-graspi.git
-```
-
-**Make sure your current directory is py-graspi**
-
-In order to create an API with sphinx, you need to download sphinx with this command in the command line interface:
-```
-pip install sphinx
-```
-Additional dependencies needed for installed Sphinx Extension:
-```
-pip install sphinxcontrib-details-directive
-```
-Provides additional details (dropdowns) for each submodle listed.
-```
-pip install sphinx_rtd_theme
-```
-Uses the rtf theme for the API
-```
-pip install --upgrade setuptools
-```
-Used by python to handle resources and files
-
-In the command line interface, run this command:
-```
-sphinx-build -b html ./docs/source/ ./docs/ 
-```
-* **sphinx-build**: This is the main command for building Sphinx documentation. It generates documentation from reStructuredText (.rst) or Markdown (.md) source files.
-* **-b html**: This specifies the output format. Here, -b html tells Sphinx to build the documentation in HTML format, which is typically used for web-based documentation.
-* **./docs/source/**: This is the path to the source directory where Sphinx looks for the documentation source files. In this example, it’s in the source subdirectory inside docs.
-* **./docs/**: This is the output directory where the built HTML files will be saved. In this example, it’s the main docs folder. After running this command, you’ll find the generated HTML files here.
-
-In order to see the py-graspi API, run this command in the command line interface:
-
-**FOR WINDOWS:**
-```
-start docs/index.html
-```
-
-**FOR MACOS:**
-```
-open docs/index.html
-```
-This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
 
 ## 2D & 3D Morphologies Tests
 To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
@@ -349,12 +225,81 @@ On this file you will be able to run and view the 2d and 3d morphologies for sub
 ## Testing Runtime for old and new implementation
 Repeat the above instructions from "2D & 3D Morphologies Tests (QP)". New tests are located in the same notebook at the bottom two.
 
-## View Demo Videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
-Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQuN86RUYXvJG_F9MMq?usp=sharing
-### Videos
-* **py_graspi_installation**: How to install Py-Graspi and run basic commands.
-* **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
-* **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
+## Running All 33 Morphologies Tests
+To run the morphologies tests, return to the previous directory of `/py-graspi` by running:
+```
+cd ..
+```
+Next, make sure you're running using bash:
+```
+bash
+```
+Next, run the following:
+```
+chmod +x run.sh
+```
+Finally, run the following: 
+```
+./run.sh <file_type>
+```
+Substitute `<file_type>` with either `txt` or `pdf` for the desired output type.
+<br />
+<br />
+**Note: run txt before pdf to update text files and for an accurate output**
+## 33 Morphologies Output
+After running the command, the automatic report generation will begin. 
+<br />
+<br /> 
+The following will print when the report generation begins:
+```
+Generating PDF (If on pdf mode)
+Generating Text Files
+```
+As the script is running, the following will print for which microstructure it is on
+```
+Executing <test_file>
+```
+After a few minutes, the following will print once the report has been created
+```
+Text Files Generated
+PDF Generated (If on pdf mode)
+```
+## Viewing 33 Morphologies Output
+For text files, navigate to the results directory by using the following command:
+```
+cd graspi_igraph/results
+```
+Use the following command to view the list of text files generated:
+```
+ls
+```
+To view the result in each file, run the following command:
+```
+cat <result_file_name>
+```
+Replace `<result_file_name>` with any of the files outputted by `ls`
+<br />
+<br />
+If using pdf mode, the pdf should automattically open upon completion.
+<br />
+<br />
+If the pdf does not automatically pop up, use the following commands:
+### On Windows
+```
+start graspi_igraph/test_results.pdf
+```
+### On MacOS
+```
+open graspi_igraph/test_results.pdf
+```
+### On Linux
+```
+evince graspi_igraph/test_results.pdf
+```
+If evince is not installed, run this first:
+```
+sudo apt install evince
+```
 
 ## Tortuosity HeatMap Visualization
 This are the steps for visualizing tortuosity via HeatMap.
@@ -455,3 +400,61 @@ python myceliumTest.py images/mycelium.png 0.25
 7. The Configuration Settings will open up a window with sliders. These sliders will change the border of the graph and get rid of white space around the graph. Play with the sliders to make sure you are able to change the border fo the graph visualization. (The bottom two sliders do not affect our graph visualization in any way, recommend not to mess with these). 
 8. If you wish to reset the configurations there is a "reset" button on the bottom right of this new pop up window, click this and confirm that all the settings are back to how they were originally. 
 9. Lastly, the Save File button works just as any other save file button. This allows to save the the graph visualization into your computer files. 
+
+## Generate and Run Files for py-graspi API
+In order to generate an API using sphinx, you need to follow the installation of py-graspi:
+
+Cloning the repository:
+```
+git clone https://github.com/owodolab/py-graspi.git
+```
+
+**Make sure your current directory is py-graspi**
+
+In order to create an API with sphinx, you need to download sphinx with this command in the command line interface:
+```
+pip install sphinx
+```
+Additional dependencies needed for installed Sphinx Extension:
+```
+pip install sphinxcontrib-details-directive
+```
+Provides additional details (dropdowns) for each submodle listed.
+```
+pip install sphinx_rtd_theme
+```
+Uses the rtf theme for the API
+```
+pip install --upgrade setuptools
+```
+Used by python to handle resources and files
+
+In the command line interface, run this command:
+```
+sphinx-build -b html ./docs/source/ ./docs/ 
+```
+* **sphinx-build**: This is the main command for building Sphinx documentation. It generates documentation from reStructuredText (.rst) or Markdown (.md) source files.
+* **-b html**: This specifies the output format. Here, -b html tells Sphinx to build the documentation in HTML format, which is typically used for web-based documentation.
+* **./docs/source/**: This is the path to the source directory where Sphinx looks for the documentation source files. In this example, it’s in the source subdirectory inside docs.
+* **./docs/**: This is the output directory where the built HTML files will be saved. In this example, it’s the main docs folder. After running this command, you’ll find the generated HTML files here.
+
+In order to see the py-graspi API, run this command in the command line interface:
+
+**FOR WINDOWS:**
+```
+start docs/index.html
+```
+
+**FOR MACOS:**
+```
+open docs/index.html
+```
+This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
+
+## View Demo Videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
+Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQuN86RUYXvJG_F9MMq?usp=sharing
+### Videos
+* **py_graspi_installation**: How to install Py-Graspi and run basic commands.
+* **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
+* **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
+
