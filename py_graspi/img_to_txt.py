@@ -18,8 +18,8 @@ def img_to_txt(imageFile, resizeFactor, threshold=127.5):
     # Resize original image into a new image file
     partOutfile = imageFile[7:-4]
     new_image = image.resize((int(dimX * resizeFactor), int(dimY * resizeFactor)))
-    new_image.save(f"resized/resized_{partOutfile}.png")
-    image2 = Image.open(f"resized/resized_{partOutfile}.png").convert('L')
+    new_image.save(f"resized/resized_{partOutfile}_{resizeFactor}x.png")
+    image2 = Image.open(f"resized/resized_{partOutfile}_{resizeFactor}x.png").convert('L')
     if DEBUG:
         print(image2.format)
         print(image2.size)
@@ -34,7 +34,7 @@ def img_to_txt(imageFile, resizeFactor, threshold=127.5):
     bool_array = numpyData2 > threshold
     print(bool_array)
     # Set up output file for new txt file that will be created from the newly shrunken image
-    outfile = f"resized/resized_{partOutfile}.txt"
+    outfile = f"resized/resized_{partOutfile}_{resizeFactor}x.txt"
     with open(outfile, "w") as file:
         file.write(f"{dimX} {dimY}\n")
 

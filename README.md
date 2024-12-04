@@ -59,7 +59,7 @@ import py_graspi as ig
 <br />
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
 
-## Running All 33 Morphologies Tests (JZ)
+## Running All 33 Morphologies Tests
 To run the morphologies tests, return to the previous directory of `/py-graspi` by running:
 ```
 cd ..
@@ -80,7 +80,7 @@ Substitute `<file_type>` with either `txt` or `pdf` for the desired output type.
 <br />
 <br />
 **Note: run txt before pdf to update text files and for an accurate output**
-## 33 Morphologies Output (JZ)
+## 33 Morphologies Output
 After running the command, the automatic report generation will begin. 
 <br />
 <br /> 
@@ -98,7 +98,7 @@ After a few minutes, the following will print once the report has been created
 Text Files Generated
 PDF Generated (If on pdf mode)
 ```
-## Viewing 33 Morphologies Output (JZ)
+## Viewing 33 Morphologies Output
 For text files, navigate to the results directory by using the following command:
 ```
 cd graspi_igraph/results
@@ -164,7 +164,7 @@ g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0]     # utilizing the te
 fg = ig.filterGraph(g)
 ```
 
-### To get dictionary of descriptors (WZ)
+### To get dictionary of descriptors
 
 To test if descriptors are computed correctly, you can run the following script in the terminal to check.
   -  make sure you are in the py_graspi directory after git cloning
@@ -215,52 +215,52 @@ g, is_2D = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0:1]     # utilizi
 ig.visual2D(g, is_2D)
 ```
 
-## Testing from Command Line (KM)
+## Testing from Command Line
 
 
 Now that we have cloned the REPO lets talk about testing.
 
-\*\*\*First and foremost make sure you are in the py-graspi directory. If not you may run into some errors\*\*\*
+\*\*\*First and foremost make sure you are in the py-graspi/py_graspi directory. If not you may run into some errors\*\*\*
 
 In this GitHub Repo, you can find test files in the data directory or the 2D-testFile and 3D-testFile directories.
 Inside these directories, some files hold information about either 2d or 3d graphs based on the directory name. 
 When running from command lines you will need to know the complete pathname of the test file you are trying to run.
 
 There are 2 type of input file formats: *.txt & *.graphe
-### _*.txt input format:_ (KM)
+### _*.txt input format:_
 
 
 The command line input to run a graph creation for *.txt files will have the following format:
 ```
-python graspi_igraph/igraph_testing.py {total pathname of test file}
+python igraph_testing.py {total pathname of test file}
 ```
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 10x10 graph.
 ```
-python graspi_igraph/igraph_testing.py graspi_igraph/2D-testFile/testFile-10-2D.txt 
+python igraph_testing.py 2D-testFile/testFile-10-2D.txt 
 ```
-### _*.graphe input format:_ (KM)
+### _*.graphe input format:_
 *.graphe input format is not that different, only extra parameter you need to input is a '-g' before the total pathname of the test file.
 
 The command line input to run a graph creation for *.graphe files will have the following format:
 ````
-python graspi_igraph/igraph_testing.py -g {total pathname of test file} 
+python igraph_testing.py -g {total pathname of test file} 
 ````
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
 ```
-python graspi_igraph/igraph_testing.py -g graspi_igraph/data_4_3.graphe
+python igraph_testing.py -g data_4_3.graphe
 ```
-### _Running with Periodicity:_ (KM)
+### _Running with Periodicity:_
 We include the option of running any test case with periodicity turned on (only for .txt files). This 
 is done with an added '-p' parameter. This parameter is added first before inputting the test case
 format.
 
 For example, for *.txt cases with periodicity turned on will look like the following:
 ```
-python graspi_igraph/igraph_testing.py -p {total pathname of test file}
+python igraph_testing.py -p {total pathname of test file}
 ```
 To test this out run the example test case above but with the added '-p' parameter
 to turn periodicity on.
-## Output of Command Line Input (KM)
+## Output of Command Line Input
 As long as the inputs follow the format above and a file exists the program shall do the following:
 1. Pop up window should appear, this will be the initial visualization of the graph along with red, blue, and green meta vertices.
 2. Exit out of this pop up window with the top right "X" button.
@@ -270,7 +270,7 @@ As long as the inputs follow the format above and a file exists the program shal
 
 DISCLAIMER: if any issues occur you may not be in the right directory (py-graspi) or the test file may not exists or be poorly formatted.
 
-## Generate and Run Files for py-graspi API (ML)
+## Generate and Run Files for py-graspi API
 In order to generate an API using sphinx, you need to follow the installation of py-graspi:
 
 Cloning the repository:
@@ -320,7 +320,7 @@ open docs/index.html
 ```
 This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
 
-## 2D & 3D Morphologies Tests (QP)
+## 2D & 3D Morphologies Tests
 To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
 
 First you will need to git clone the current repo, make sure that you are in the ""dev branch"":
@@ -341,10 +341,13 @@ Finally, you will be able to use the command:
 jupyter notebook
 ```
 This will bring you into the testing filing on jupyter.
-Navigate to the directory 3d_2d_tests.
+
 Navigate to the file graspi_igraph_notebook.ipynb.
 
 On this file you will be able to run and view the 2d and 3d morphologies for subtask 4, card 104.
+
+## Testing Runtime for old and new implementation
+Repeat the above instructions from "2D & 3D Morphologies Tests (QP)". New tests are located in the same notebook at the bottom two.
 
 ## View Demo Videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
 Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQuN86RUYXvJG_F9MMq?usp=sharing
@@ -353,7 +356,61 @@ Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQu
 * **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
 * **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
 
-## Translate Image File Into Truncated .txt File (KM)
+## Tortuosity HeatMap Visualization
+This are the steps for visualizing tortuosity via HeatMap.
+1. Make sure you cd into the graspi_igraph directory.
+2. All necessary functions are in the tortuosity.py file.
+3. Code necessary to visualize the tortuosity HeatMap is as follows:
+```
+python tortuosity.py {pathname of file}
+```
+4. This code will only work if the IdTortuosityBlackToRed descriptors of this file
+have been found and outputted to it's corresponding file in the distances directory.
+5. For now there are some file examples in this directory so an example code
+to visualize a heatmap is as follows:
+```
+python tortuosity.py data/data_0.5_2.2_001900.txt
+```
+6. First a tortuosity heatmap will output for Black To Red vertices.
+7. Exit out of this pop up window.
+8. Second a totuosity heatmap will output for White to Blue vertices.
+9. Exit out of this pop up Window.
+### Reading HeatMap
+* A HeatMap should show up with a HeatMap Bar to the right of the HeatMap. 
+* Based on current implementation, this HeatMap outputs tort values of each vertex and based on that value, the higher it is the "hotter" is is and the lower it is the "colder".
+* Read the side bar to the right to understand the gradiant coloring. In short, the blacker (bottom of bar) the graph is means these parts of the graph aren't visited as much when computing these shortest paths, but as you go up in color these vertices are visited more frequently.
+
+## Jupyter NoteBook to Visualize HeatMap
+1. Make sure Jupyter Notebook is installed:
+```
+pip install jupyter
+```
+2. Run jupyter notebook with following command:
+```
+jupyter notebook
+```
+3. Open up tortuosity.ipynb.
+4. Click the Run tab on the top.
+5. Click "Run All Cells"
+6. Wait a bit and the HeatMaps of some files will be created and visualized.
+## Translating .plt files to .txt files
+These are the steps for translating .plt files to .txt files in order to be turned into graphs.
+1. Make sure you cd into the graspi_igraph directory.
+2. All necessary functions are in the plt_to_txt.py file.
+3. The command line input format for this file is as follows:
+```
+python plt_to_txt.py [pathname]
+```
+5. The file in pathname should be in the plt directory and end with the .plt extension, if not this will not work.
+6. It's translated .plt file should show up in the same directory but now with a .txt extension and in .txt formatting when executed with no errors.
+7. Some files have been placed in the .plt directory for testing.
+8. If you wish to run an example, first delete the translated version of a .plt file if it has been created, and run the following command line input:
+```
+python plt_to_txt.py plt/data_4_4.plt 
+```
+9. Make sure the translated file with .txt extension has been made and placed in the plt directory to ensure the file has been executed correctly.
+
+## Translate Image File Into Truncated .txt File
 1. make sure you have py-graspi installed: pip install py-graspi
 2. Make sure you cd into py_graspi directory first. 
 3. The command line format to translate an image file into its truncated .txt file is as follows:
@@ -386,4 +443,15 @@ python myceliumTest.py {pathname of image file} {Resize calculation amount}
 ```
 python myceliumTest.py images/mycelium.png 0.25
 ```
-8. This creates a turncated version of the mycelium image (for runtime purposes) and outputs two graphs, first one is a white only vertex graph and the second one is a black only vertex version.
+8. This creates a truncated version of the mycelium image (for runtime purposes) and outputs two graphs, first one is a white only vertex graph and the second one is a black only vertex version.
+
+## Mycelium Filtered Vertices Interactivity
+1. Follow these steps to run through different interactive features after running the myceliumTest.py file
+2. On the bottom left of the window, there will be some built-in mathplotlib tools in the following order: "Reset Home Button," "Undo," "Redo," "Drag and Pull Move Mode," "Zoom in Mode," "Configuration Settings," and "Save File."
+3. The Reset Home Button, when clicked, will take you to the center of the graph no matter where you are. You may need to zoom out a couple of times, but if you do, you will resort back to the original graph visualization (not accounting for rotations).
+4. We will not use these Redo/Undo buttons since they only work with the mathplotlib built-in functionalities and not my built-in ones so they may cause confusion.
+5. The Drag and Pull Mode Button, when clicked, allows the user to hold a click on the graph and move around as desired. Make sure you are able to move around easily.
+6. The Zoom In Mode will make it so you can crop out a rectangular area and it will automatically zoom into this area. This is helpful for easier massive zooms and can be used with the built-in zoom in/out buttons. Make sure you can zoom in with this functionality. 
+7. The Configuration Settings will open up a window with sliders. These sliders will change the border of the graph and get rid of white space around the graph. Play with the sliders to make sure you are able to change the border fo the graph visualization. (The bottom two sliders do not affect our graph visualization in any way, recommend not to mess with these). 
+8. If you wish to reset the configurations there is a "reset" button on the bottom right of this new pop up window, click this and confirm that all the settings are back to how they were originally. 
+9. Lastly, the Save File button works just as any other save file button. This allows to save the the graph visualization into your computer files. 
