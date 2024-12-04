@@ -8,7 +8,7 @@ import webbrowser
 import argparse
 import matplotlib.pyplot as plt
 import math
-import tortuosity as t
+import tortuosity_histogram as t
 
 current_dir = os.getcwd()
 data_path = f"{current_dir}/py_graspi/data/"
