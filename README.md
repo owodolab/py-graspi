@@ -194,7 +194,7 @@ As long as the inputs follow the format above and a file exists the program shal
 4. Exit out this window following same steps as step 2.
 5. Make sure program exits correctly (code 0).
 
-DISCLAIMER: if any issues occur you may not be in the right directory (py-graspi) or the test file may not exists or be poorly formatted.
+DISCLAIMER: if any issues occur you may not be in the right directory (py_graspi) or the test file may not exists or be poorly formatted.
 
 ## 2D & 3D Morphologies Tests
 To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
@@ -303,7 +303,7 @@ sudo apt install evince
 
 ## Tortuosity HeatMap Visualization
 This are the steps for visualizing tortuosity via HeatMap.
-1. Make sure you cd into the graspi_igraph directory.
+1. Make sure you cd into the py_graspi directory.
 2. All necessary functions are in the tortuosity.py file.
 3. Code necessary to visualize the tortuosity HeatMap is as follows:
 ```
@@ -322,8 +322,11 @@ python tortuosity.py data/data_0.5_2.2_001900.txt
 9. Exit out of this pop up Window.
 ### Reading HeatMap
 * A HeatMap should show up with a HeatMap Bar to the right of the HeatMap. 
-* Based on current implementation, this HeatMap outputs tort values of each vertex and based on that value, the higher it is the "hotter" is is and the lower it is the "colder".
-* Read the side bar to the right to understand the gradiant coloring. In short, the blacker (bottom of bar) the graph is means these parts of the graph aren't visited as much when computing these shortest paths, but as you go up in color these vertices are visited more frequently.
+* Based on current implementation, this HeatMap outputs tort values of each vertex and that value is used to color in the Heatmap based on the HeatMap Bar.
+* Read the side bar to the right to understand the cyclic gradiant coloring.
+* Following is the matplotlib api section for more information on this gradiant: https://matplotlib.org/stable/users/explain/colors/colormaps.html#cyclic
+
+  
 
 ## Jupyter NoteBook to Visualize HeatMap
 1. Make sure Jupyter Notebook is installed:
@@ -340,7 +343,7 @@ jupyter notebook
 6. Wait a bit and the HeatMaps of some files will be created and visualized.
 ## Translating .plt files to .txt files
 These are the steps for translating .plt files to .txt files in order to be turned into graphs.
-1. Make sure you cd into the graspi_igraph directory.
+1. Make sure you cd into the py_graspi directory.
 2. All necessary functions are in the plt_to_txt.py file.
 3. The command line input format for this file is as follows:
 ```
@@ -388,7 +391,9 @@ python myceliumTest.py {pathname of image file} {Resize calculation amount}
 ```
 python myceliumTest.py images/mycelium.png 0.25
 ```
-8. This creates a truncated version of the mycelium image (for runtime purposes) and outputs two graphs, first one is a white only vertex graph and the second one is a black only vertex version.
+8. This creates a truncated version of the mycelium image (for runtime purposes) and outputs the largest subgraph of the following filtered graphs:
+   1. The first one is a white only vertex graph 
+   2. The second one is a black only vertex graph.
 
 ## Mycelium Filtered Vertices Interactivity
 1. Follow these steps to run through different interactive features after running the myceliumTest.py file
@@ -399,7 +404,13 @@ python myceliumTest.py images/mycelium.png 0.25
 6. The Zoom In Mode will make it so you can crop out a rectangular area and it will automatically zoom into this area. This is helpful for easier massive zooms and can be used with the built-in zoom in/out buttons. Make sure you can zoom in with this functionality. 
 7. The Configuration Settings will open up a window with sliders. These sliders will change the border of the graph and get rid of white space around the graph. Play with the sliders to make sure you are able to change the border fo the graph visualization. (The bottom two sliders do not affect our graph visualization in any way, recommend not to mess with these). 
 8. If you wish to reset the configurations there is a "reset" button on the bottom right of this new pop up window, click this and confirm that all the settings are back to how they were originally. 
-9. Lastly, the Save File button works just as any other save file button. This allows to save the the graph visualization into your computer files. 
+9. The Save File button works just as any other save file button. This allows to save the graph visualization into your computer files. 
+10. There are also 4 buttons to the bottom right of the Graph in the following order: Zoom In, Zoom Out, Rotate CW, and Rotate CCW.
+11. Pressing the Zoom In button which will zoom into the graph.
+12. Pressing the Zoom Out button will zoom out the same amount as it zoomed in.
+13. Pressing Rotate CW will rotate the graph by 30 degrees clockwise.
+14. Pressing Rotate CCW will rotate the graph by 30 degrees counter-clockwise.
+
 
 ## Generate and Run Files for py-graspi API
 In order to generate an API using sphinx, you need to follow the installation of py-graspi:
