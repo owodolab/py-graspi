@@ -108,7 +108,6 @@ It take in values returned from generateGraph() and a input filename as the para
   - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
 
 ```
-
 ig.descriptors(graph,filename,black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca) 
 ```
 The ** descriptors in a text file** can be computed by calling the function descriptorsToTxt(_dictionary_,_filename_)
@@ -193,13 +192,12 @@ git clone https://github.com/owodolab/py-graspi.git
 ```
 Then, you will need to install the igraph package:
 ```
-pip install graspi-igraph
+pip install py-graspi
 ```
 Install jupyter notebook in order to view the test file:
 ```
 pip install notebook
 ```
-
 Finally, you will be able to use the command:
 ```
 jupyter notebook
@@ -211,22 +209,18 @@ Navigate to the file graspi_igraph_notebook.ipynb.
 On this file you will be able to run and view the 2d and 3d morphologies for subtask 4, card 104.
 
 ## Testing Runtime for old and new implementation
-Repeat the above instructions from "2D & 3D Morphologies Tests (QP)". New tests are located in the same notebook at the bottom two.
+Repeat the above instructions from "2D & 3D Morphologies Tests". New tests are located in the same notebook at the bottom two.
 
 ## Running All 33 Morphologies Tests
-To run the morphologies tests, return to the previous directory of `/py-graspi` by running:
-```
-cd ..
-```
-Next, make sure you're running using bash:
+To run the morphologies tests, make sure you're running using bash by running the following command:
 ```
 bash
 ```
-Next, run the following:
+Next, run the following command:
 ```
 chmod +x run.sh
 ```
-Finally, run the following: 
+Finally, run the following command for .txt or .pdf generation: 
 ```
 ./run.sh <file_type>
 ```
@@ -278,15 +272,15 @@ If using pdf mode, the PDF should automattically open upon completion.
 If the pdf does not automatically pop up, use the following commands:
 ### On Windows
 ```
-start graspi_igraph/test_results.pdf
+start py_graspi/test_results.pdf
 ```
 ### On MacOS
 ```
-open graspi_igraph/test_results.pdf
+open py_graspi/test_results.pdf
 ```
 ### On Linux
 ```
-evince graspi_igraph/test_results.pdf
+evince py_graspi/test_results.pdf
 ```
 If evince is not installed, run this first:
 ```
