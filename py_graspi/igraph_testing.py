@@ -915,9 +915,9 @@ def main():
             (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
              dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
              CT_n_D_adj_An, CT_n_A_adj_Ca) = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-            # visualize(g, is_2D)
+            visualize(g, is_2D)
             filteredGraph = filterGraph(g)
-            # visualize(filteredGraph, is_2D)
+            visualize(filteredGraph, is_2D)
 
             if DEBUG:
                 dic = d.descriptors(g)
