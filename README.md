@@ -25,21 +25,9 @@ git clone https://github.com/owodolab/py-graspi.git
 <br />
 Next, you'd need to navigate to the cloned repo using terminal. An example would be:
 ```
-cd /path/py-graspi
+cd py-graspi
 ```
-Next, make sure you're on the correct branch by using:
-```
-git checkout Card#122-Histogram-Report
-```
-Once navigated to the branch, access the following directory:
-```
-cd py_graspi
-```
-Next, the downloads needed can be found in `requirements.txt` and can be installed by:
-```
-pip install -r requirements.txt
-```
-Install the graspi_igraph package by:
+Next, install the graspi_igraph package by running the following command:
 ```
 pip install py-graspi
 ```
@@ -120,7 +108,6 @@ It take in values returned from generateGraph() and a input filename as the para
   - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
 
 ```
-
 ig.descriptors(graph,filename,black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca) 
 ```
 The ** descriptors in a text file** can be computed by calling the function descriptorsToTxt(_dictionary_,_filename_)
@@ -199,53 +186,59 @@ DISCLAIMER: if any issues occur you may not be in the right directory (py_graspi
 ## 2D & 3D Morphologies Tests
 To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
 
-First you will need to git clone the current repo, make sure that you are in the ""dev branch"":
+First you will need to git clone the current repo:
 ```
 git clone https://github.com/owodolab/py-graspi.git
 ```
 Then, you will need to install the igraph package:
 ```
-pip install graspi-igraph
+pip install py-graspi
 ```
 Install jupyter notebook in order to view the test file:
 ```
 pip install notebook
 ```
-
 Finally, you will be able to use the command:
 ```
 jupyter notebook
 ```
 This will bring you into the testing filing on jupyter.
 
-Navigate to the file graspi_igraph_notebook.ipynb.
+Navigate to the file `graspi_igraph_notebook.ipynb` under the `notebook` directory.
 
-On this file you will be able to run and view the 2d and 3d morphologies for subtask 4, card 104.
+On this file you will be able to run and view the 2d and 3d morphologies.
 
 ## Testing Runtime for old and new implementation
-Repeat the above instructions from "2D & 3D Morphologies Tests (QP)". New tests are located in the same notebook at the bottom two.
+Repeat the above instructions from "2D & 3D Morphologies Tests". New tests are located in the same notebook at the bottom two.
 
 ## Running All 33 Morphologies Tests
-To run the morphologies tests, return to the previous directory of `/py-graspi` by running:
+To run the morphologies tests, first make sure you're on the `py-graspi` directory and not `py-graspi/py_graspi`.
+<br>
+<br>
+If you're on `py-graspi/py_graspi`, run the following command:
 ```
 cd ..
 ```
-Next, make sure you're running using bash:
+Next, make sure you're running using bash by running the following command:
 ```
 bash
 ```
-Next, run the following:
+Next, run the following command:
 ```
 chmod +x run.sh
 ```
-Finally, run the following: 
+Finally, run the following command for .txt or .pdf generation: 
 ```
 ./run.sh <file_type>
 ```
 Substitute `<file_type>` with either `txt` or `pdf` for the desired output type.
 <br />
 <br />
-**Note: run txt before pdf to update text files and for an accurate output**
+Example:
+```
+./run.sh txt
+```
+**Note: You should run `txt` before `pdf` to update text files and for an accurate PDF output**
 ## 33 Morphologies Output
 After running the command, the automatic report generation will begin. 
 <br />
@@ -265,9 +258,10 @@ Text Files Generated
 PDF Generated (If on pdf mode)
 ```
 ## Viewing 33 Morphologies Output
+### Text Files
 For text files, navigate to the results directory by using the following command:
 ```
-cd graspi_igraph/results
+cd py_graspi/results
 ```
 Use the following command to view the list of text files generated:
 ```
@@ -277,24 +271,29 @@ To view the result in each file, run the following command:
 ```
 cat <result_file_name>
 ```
-Replace `<result_file_name>` with any of the files outputted by `ls`
+Replace `<result_file_name>` with any of the files outputted by running `ls`
 <br />
 <br />
-If using pdf mode, the pdf should automattically open upon completion.
+Example:
+```
+cat descriptors-data_0.514_2.4_000220.txt
+```
+### PDF
+If using pdf mode, the PDF should automattically open upon completion.
 <br />
 <br />
-If the pdf does not automatically pop up, use the following commands:
+If the pdf does not automatically pop up, use the following commands, making sure you're on the `py-graspi` directory:
 ### On Windows
 ```
-start graspi_igraph/test_results.pdf
+start py_graspi/test_results.pdf
 ```
 ### On MacOS
 ```
-open graspi_igraph/test_results.pdf
+open py_graspi/test_results.pdf
 ```
 ### On Linux
 ```
-evince graspi_igraph/test_results.pdf
+evince py_graspi/test_results.pdf
 ```
 If evince is not installed, run this first:
 ```
@@ -337,7 +336,7 @@ pip install jupyter
 ```
 jupyter notebook
 ```
-3. Open up tortuosity.ipynb.
+3. Open up `tortuosity.ipynb` under the `py_graspi` directory.
 4. Click the Run tab on the top.
 5. Click "Run All Cells"
 6. Wait a bit and the HeatMaps of some files will be created and visualized.
