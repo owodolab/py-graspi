@@ -186,7 +186,7 @@ DISCLAIMER: if any issues occur you may not be in the right directory (py_graspi
 ## 2D & 3D Morphologies Tests
 To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
 
-First you will need to git clone the current repo, make sure that you are in the ""dev branch"":
+First you will need to git clone the current repo:
 ```
 git clone https://github.com/owodolab/py-graspi.git
 ```
@@ -204,15 +204,22 @@ jupyter notebook
 ```
 This will bring you into the testing filing on jupyter.
 
-Navigate to the file graspi_igraph_notebook.ipynb.
+Navigate to the file `graspi_igraph_notebook.ipynb` under the `notebook` directory.
 
-On this file you will be able to run and view the 2d and 3d morphologies for subtask 4, card 104.
+On this file you will be able to run and view the 2d and 3d morphologies.
 
 ## Testing Runtime for old and new implementation
 Repeat the above instructions from "2D & 3D Morphologies Tests". New tests are located in the same notebook at the bottom two.
 
 ## Running All 33 Morphologies Tests
-To run the morphologies tests, make sure you're running using bash by running the following command:
+To run the morphologies tests, first make sure you're on the `py-graspi` directory and not `py-graspi/py_graspi`.
+<br>
+<br>
+If you're on `py-graspi/py_graspi`, run the following command:
+```
+cd ..
+```
+Next, make sure you're running using bash by running the following command:
 ```
 bash
 ```
@@ -251,6 +258,7 @@ Text Files Generated
 PDF Generated (If on pdf mode)
 ```
 ## Viewing 33 Morphologies Output
+### Text Files
 For text files, navigate to the results directory by using the following command:
 ```
 cd py_graspi/results
@@ -266,10 +274,15 @@ cat <result_file_name>
 Replace `<result_file_name>` with any of the files outputted by running `ls`
 <br />
 <br />
+Example:
+```
+cat descriptors-data_0.514_2.4_000220.txt
+```
+### PDF
 If using pdf mode, the PDF should automattically open upon completion.
 <br />
 <br />
-If the pdf does not automatically pop up, use the following commands:
+If the pdf does not automatically pop up, use the following commands, making sure you're on the `py-graspi` directory:
 ### On Windows
 ```
 start py_graspi/test_results.pdf
@@ -323,7 +336,7 @@ pip install jupyter
 ```
 jupyter notebook
 ```
-3. Open up tortuosity.ipynb.
+3. Open up `tortuosity.ipynb` under the `py_graspi` directory.
 4. Click the Run tab on the top.
 5. Click "Run All Cells"
 6. Wait a bit and the HeatMaps of some files will be created and visualized.
