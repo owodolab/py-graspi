@@ -25,21 +25,9 @@ git clone https://github.com/owodolab/py-graspi.git
 <br />
 Next, you'd need to navigate to the cloned repo using terminal. An example would be:
 ```
-cd /path/py-graspi
+cd py-graspi
 ```
-Next, make sure you're on the correct branch by using:
-```
-git checkout Card#122-Histogram-Report
-```
-Once navigated to the branch, access the following directory:
-```
-cd py_graspi
-```
-Next, the downloads needed can be found in `requirements.txt` and can be installed by:
-```
-pip install -r requirements.txt
-```
-Install the graspi_igraph package by:
+Next, install the graspi_igraph package by running the following command:
 ```
 pip install py-graspi
 ```
@@ -245,7 +233,11 @@ Finally, run the following:
 Substitute `<file_type>` with either `txt` or `pdf` for the desired output type.
 <br />
 <br />
-**Note: run txt before pdf to update text files and for an accurate output**
+Example:
+```
+./run.sh txt
+```
+**Note: You should run `txt` before `pdf` to update text files and for an accurate PDF output**
 ## 33 Morphologies Output
 After running the command, the automatic report generation will begin. 
 <br />
@@ -267,7 +259,7 @@ PDF Generated (If on pdf mode)
 ## Viewing 33 Morphologies Output
 For text files, navigate to the results directory by using the following command:
 ```
-cd graspi_igraph/results
+cd py_graspi/results
 ```
 Use the following command to view the list of text files generated:
 ```
@@ -277,10 +269,10 @@ To view the result in each file, run the following command:
 ```
 cat <result_file_name>
 ```
-Replace `<result_file_name>` with any of the files outputted by `ls`
+Replace `<result_file_name>` with any of the files outputted by running `ls`
 <br />
 <br />
-If using pdf mode, the pdf should automattically open upon completion.
+If using pdf mode, the PDF should automattically open upon completion.
 <br />
 <br />
 If the pdf does not automatically pop up, use the following commands:
