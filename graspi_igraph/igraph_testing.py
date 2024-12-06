@@ -778,9 +778,9 @@ def test():
     #                         dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)
     #     for key, value in dic.items():
     #         print(key, value)
-    t.find_tortuosity(g, is_2D, filename)
+    #t.find_tortuosity(g, is_2D, filename)
 
 
 if __name__ == '__main__':
-    # main()
-    test()
+    main()
+    #test()
