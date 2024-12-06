@@ -84,14 +84,6 @@ def filterGraph_metavertices(graph):
 
 
         #QP 
-        # kept = {
-        #     'edges': [],
-        #     'edges_blue': [],
-        #     'edges_red': [],
-        #     'weights': [],
-        #     'weights_blue': [],
-        #     'weights_red': []
-        # }
 
         #call these values once
         weight = graph.es[graph.get_eid(currentNode, toNode)]['weight']
@@ -106,16 +98,7 @@ def filterGraph_metavertices(graph):
             keptWeights_blue.append(weight)
             keptWeights_red.append(weight)
 
-            
-            # for key in ['edges', 'edges_blue', 'edges_red']:
-            #     kept[key].append(edge)
-            # for key in ['weights', 'weights_blue', 'weights_red']:
-            #     kept[key].append(weight)
-        # color_conditions = {
-        #     'green': ('edges', 'weights'),
-        #     'blue': ('edges_blue', 'weights_blue'),
-        #     'red': ('edges_red', 'weights_red')
-        # }
+        
 
         
         
@@ -130,10 +113,6 @@ def filterGraph_metavertices(graph):
             keptWeights_red.append(weight)
 
 
-        # for color, (edge_key, weight_key) in color_conditions.items():
-        #     if graph.vs[currentNode]['color'] == color or graph.vs[toNode]['color'] == color:
-        #         kept[edge_key].append(edge)
-        #         kept[weight_key].append(weight)
 
 
     filteredGraph_green = graph.subgraph_edges(keptEdges, delete_vertices=False)

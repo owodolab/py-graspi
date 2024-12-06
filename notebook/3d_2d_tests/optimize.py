@@ -1,17 +1,17 @@
-import combined_with as ig
+import combined_without as ig
 import new_descriptors as ds
 import os
 import time
 
 current_dir = os.getcwd()
 data_path = f"{current_dir}/graspi_igraph/data/"
-descriptors_path = f"{current_dir}/graspi_igraph/p1descriptors/"
+descriptors_path = f"{current_dir}/graspi_igraph/descriptors/"
 test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path)]
 epsilon=1e-5
 for test_file in test_files:
     if 'morph' not in test_file:
         continue
-    if '2x' not in test_file:
+    if '1x' not in test_file:
         continue
     # g = ig.generateGraph(data_path + test_file + ".txt")
     import time
@@ -23,7 +23,7 @@ for test_file in test_files:
 
     print(f"{test_file} Results")
 
-    with open(descriptors_path + "p1descriptors." + test_file + ".log") as f:
+    with open(descriptors_path + "descriptors." + test_file + ".log") as f:
         for line in f:
             stat = line.strip().split(" ")
             try:
@@ -45,3 +45,4 @@ for test_file in test_files:
     print(f"Peak memory usage for descriptor calculation: {mem} bytes")
     print(stats)
     print("")
+
