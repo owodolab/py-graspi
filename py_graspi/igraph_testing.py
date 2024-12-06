@@ -456,23 +456,13 @@ def generateGraphAdj(file):
     # counter for interface edges for complementary paths
     interface_edge_comp_paths = 0
 
-    #Add black/white edges to green interface node.
-
     edges_index_start = 0
     extra_edges = 0
     edge_count = 0
     edges_to_add_set = set()
-    black_interface_red_vertices = []
-    white_interface_blue_vertices = []
 
     white = set()
     black = set()
-    
-    visited = set()
-
-    all_edge_occur_indices = {} # edge: [indices]
-
-    indices_count = 0
 
     vertices = set()
 
@@ -484,13 +474,6 @@ def generateGraphAdj(file):
         starting_index = len(g.es)
         if starting_index == edges_index_start:
             break
-        # l = []
-        # for edge in g.es:
-        #     if edge.source == 1 and edge.target == 32:
-        #         l.append((edge.source,edge.target))
-        #         print(edge)
-
-        # print(l)
         
         #Add black/white edges to green interface node.
         for edge in g.es[edges_index_start:]:
@@ -500,7 +483,6 @@ def generateGraphAdj(file):
 
             source_vertex_color = g.vs[source_vertex]['color']
             target_vertex_color = g.vs[target_vertex]['color']
-            # ecount_label = g.es[g.ecount() - 1]['label']
 
             if(source_vertex_color == 'blue' or target_vertex_color == 'blue'):
                 if(source_vertex_color == 'blue' and target_vertex_color == 'white') \
@@ -528,8 +510,6 @@ def generateGraphAdj(file):
                 if (target_vertex_color == 'white' and target_vertex in blueComponent):
                     white.add(target_vertex)
 
-                # print(f'edge: {(source_vertex,target_vertex)}')
-
                 
                 if edge['label'] == 'f':
                     # increment count when black and white interface pair, black has path to top (red), white has path to (bottom) blue
@@ -543,6 +523,7 @@ def generateGraphAdj(file):
                     # increment black_green when black to green edge is added
                     black_green += 1 
 
+                # getting all the green interface edges that need to be added
                 try:
                     source_vertex,green_vertex = min(source_vertex,green_vertex), max(source_vertex,green_vertex)
                     index = list(edges_to_add_set).index((source_vertex, green_vertex))
@@ -574,7 +555,6 @@ def generateGraphAdj(file):
                         labels.append(edge['label'])
                         weights.append(edge['weight']/2)
                         edges_to_add_set.add((target_vertex,green_vertex))
-                    # g.add_edge(green_vertex, target_vertex, label=edge['label'], weight=edge['weight']/2)
 
 
 
@@ -584,74 +564,16 @@ def generateGraphAdj(file):
                 if DEBUG:
                     if target_vertex_color == 'black':
                         black_green_neighbors.append(target_vertex)
-        
+
+        # bulk adding green interface edges and their respective weights and labels
         edges_index_start = starting_index
-        # print(edges_to_add)
-        # print(weights)
-        # Add all edges at once  
         g.add_edges(edges_to_add)
         g.es[starting_index:]["label"] = labels
         g.es[starting_index:]["weight"] = weights
         
-    # print(f"this is the number of edges {edge_count}")
-    # print(f"extra = {extra_edges}")
-
-    # file = open(f"black_interface_red_vertices.txt", 'w')
-    # file.writelines(black_interface_red_vertices)
-    # file.close()
-
-    # file = open(f"white_interface_blue_vertices.txt", 'w')
-    # file.writelines(white_interface_blue_vertices)
-    # file.close()
 
     black_interface_red = len(black)
     white_interface_blue = len(white)
-
-    # vertices = g.vcount();
-    # for v in range(vertices):
-    #     print(f'{v}: {g.neighbors(v, mode='all')}')
-    #     for n in g.neighbors(v, mode='all'):
-    #         weight = g.es[edge]['weight']
-    #         label = g.es[edge]['label']
-    #         print(f'{n}: w:{weight} n:{label}')
-
-    # print('\n\n\n\n')
-    # print(all_edge_occur_indices)
-    # print()
-    # print('\n\n\n\n')
-
-    # # print(g.es.select(_between=([32], [0])).indices)
-    # connected_edges = g.incident(4)  
-    # for edge_id in connected_edges:
-    #     edge = g.es[edge_id]
-    #     print(f"{edge.source}, {edge.target} :  weight: {g.es[edge_id]['weight']} label: {g.es[edge_id]['label']}")
-
-    # print(vertices)
-    # print(black)
-    # print('\n')
-
-    # l = []
-    # for e in redComponent:
-    #     if g.vs[e]['color'] == 'black':
-    #         l.append(e)
-
-
-    # print(l)
-    # print(redComponent)
-
-    # print('\n')
-
-    # a = []
-    # for v in g.vs:
-    #     if v['color'] == 'black':
-    #         a.append(v.index)
-            
-
-    # print(a)
-    
-   
-
-    # print('\n')
 
     if DEBUG:
         print(g.vs['color'])

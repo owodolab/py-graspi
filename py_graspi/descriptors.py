@@ -72,6 +72,8 @@ def filterGraph_metavertices(graph):
     keptWeights_blue = []
     keptEdges_red = []
     keptWeights_red= []
+    keptEdges_red_unfiltered = []
+    keptWeights_red_unfiltered = []
 
     #Checks edges and keeps only edges that connect to the same colored vertices
     for edge in edgeList:
@@ -99,6 +101,13 @@ def filterGraph_metavertices(graph):
         elif ((color_current == 'red') or (color_toNode == 'red')) :
             keptEdges_red.append(edge)
             keptWeights_red.append(weight)
+        
+        if((color_current != 'blue') and (color_toNode != 'blue') \
+           and (color_current != 'green') and (color_toNode != 'green')):
+            keptEdges_red_unfiltered.append(edge)
+            keptWeights_red_unfiltered.append(weight)
+            
+
 
     filteredGraph_green = graph.subgraph_edges(keptEdges, delete_vertices=False)
     filteredGraph_green.es['weight'] = keptWeights
@@ -109,11 +118,14 @@ def filterGraph_metavertices(graph):
     fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
     fg_red.es['weight'] = keptWeights_red
 
-    return filteredGraph_green, fg_blue, fg_red
+    fg_red_unfiltered = graph.subgraph_edges(keptEdges_red_unfiltered, delete_vertices=False)
+    fg_red_unfiltered['weight'] = keptWeights_red_unfiltered
+
+    return filteredGraph_green, fg_blue, fg_red, fg_red_unfiltered
 
 def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim, shortest_path_to_red, \
                               shortest_path_to_blue,countBlack_Red_conn, countWhite_Blue_conn):
-    fg_green, fg_blue, fg_red = filterGraph_metavertices(graph)
+    fg_green, fg_blue, fg_red, fg_red_unfiltered = filterGraph_metavertices(graph)
     greenVertex = (graph.vs.select(color = 'green')[0]).index
     redVertex = (graph.vs.select(color = 'red')[0]).index
     blueVertex = (graph.vs.select(color = 'blue')[0]).index
@@ -124,10 +136,13 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
     black_tor_distances = fg_red.shortest_paths(source=redVertex, weights=fg_red.es["weight"])[0]
     white_tor_distances = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
 
+    black_red_unfiltered_distance = fg_red_unfiltered.shortest_paths(source=redVertex, weights=fg_red_unfiltered.es['weight'])[0]
+
     f10_count = 0
     summation = 0
     black_tor = 0
     white_tor = 0
+    total_weighted_black_red = 0
 
     totalBlacks = len(black_vertices) 
     totalWhite = len(white_vertices)
@@ -141,12 +156,16 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
     dist_white_to_blue = []
     tort_white_to_blue = []
     id_tort_white_to_blue = []
+
+    d = []
   
     for vertex in black_vertices:
         distance = distances[vertex]
         black_tor_distance = black_tor_distances[vertex]
         straight_path = shortest_path_to_red[vertex]
+        black_red = black_red_unfiltered_distance[vertex]
         
+        # computing the tor descriptors
         if black_tor_distance != float('inf') and straight_path != float('inf'):
             if straight_path == 0: 
                 tor = 1
@@ -160,16 +179,15 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
 
             tort_black_to_red.append(f'{float(tor)}\n')
             id_tort_black_to_red.append(f'{vertex} {float(tor)} {float(black_tor_distance)} {float(straight_path)}\n')
-        
     
 
         if distance != float('inf'):
+            dist_black_to_green.append(f'{float(distance)}\n')
+
             # summation of weight * distance for DISS_wf10_D
             A1=6.265
             B1=-23.0
             C1=17.17
-            
-            dist_black_to_green.append(f'{float(distance)}\n')
 
             # check if distance is < 10, if yes, increment counter for DISS_f10_D
             if distance > 0 and distance < 10:
@@ -178,6 +196,9 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
 
         if black_tor_distance != float('inf'): 
             dist_black_to_red.append(f'{float(black_tor_distance)}\n')
+        
+        # computation for ABS_wf_D
+        total_weighted_black_red += math.exp(-1.0*(black_red)/100)
     
 
     for vertex in white_vertices:
@@ -230,7 +251,7 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
     file.close()
 
     return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), \
-        float(white_tor / countWhite_Blue_conn)
+        float(white_tor / countWhite_Blue_conn), float(total_weighted_black_red / (totalBlacks + totalWhite))
 
 
 
@@ -255,7 +276,7 @@ def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_
 
 
     # shortest path descriptors
-    DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1 \
+    DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1, ABS_wf_D \
         = shortest_path_descriptors(graph,filename, black_vertices,white_vertices, dim, shortest_path_to_red, \
                                     shortest_path_to_blue, countBlack_Red_conn, countWhite_Blue_conn)
 
@@ -267,6 +288,7 @@ def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_
     dict["STAT_CC_A"] = STAT_CC_A
     dict["STAT_CC_D_An"] = STAT_CC_D_An
     dict["STAT_CC_A_Ca"] = STAT_CC_A_Ca
+    dict['ABS_wf_D'] = ABS_wf_D
     dict["ABS_f_D"] = float(STAT_n_D / (STAT_n_D + STAT_n_A))
     dict["DISS_f10_D"] = DISS_f10_D
     dict["DISS_wf10_D"] = DISS_wf10_D
