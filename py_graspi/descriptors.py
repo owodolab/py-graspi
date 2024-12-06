@@ -296,9 +296,7 @@ def descriptorsToTxt(dict, fileName):
         None
     """
 
-    f = open(fileName,"x")
-
-    with open(fileName,'a') as f:
+    with open(fileName,'w') as f:
         for d in dict:
             f.write(d + " " + str(float(dict[d])) + '\n')
 

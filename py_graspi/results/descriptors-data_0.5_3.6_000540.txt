@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 data_0.5_3.6_000540 Results
 STAT_n passed - 65536 is the same as expected 65536
 STAT_e passed - 3628 is the same as expected 3628
@@ -9,38 +8,14 @@ STAT_CC_A passed - 4 is the same as expected 4
 STAT_CC_D_An passed - 1 is the same as expected 1
 STAT_CC_A_Ca passed - 1 is the same as expected 1
 ABS_f_D passed - 0.5009765625 is the same as expected 0.500977
-DISS_wf10_D failed - 0.43768712487265854 is not the same as expected 0.437716
-DISS_f10_D passed - 0.8067129629629629 is the same as expected 0.806713
-CT_f_e_conn failed - 0.1954244762954796 is not the same as expected 0.342889
+DISS_wf10_D failed - 0.436719314846638 is not the same as expected 0.437716
+DISS_f10_D failed - 0.8113730506822612 is not the same as expected 0.806713
+CT_f_e_conn passed - 0.3428886438809261 is the same as expected 0.342889
 CT_f_conn_D_An passed - 0.8462780214424951 is the same as expected 0.846278
 CT_f_conn_A_Ca passed - 0.611943493150685 is the same as expected 0.611943
-CT_e_conn failed - 709 is not the same as expected 1244
-CT_e_D_An failed - 2470 is not the same as expected 2842
-CT_e_A_Ca failed - 1158 is not the same as expected 2054
+CT_e_conn passed - 1244 is the same as expected 1244
+CT_e_D_An passed - 2842 is the same as expected 2842
+CT_e_A_Ca passed - 2054 is the same as expected 2054
 CT_f_D_tort1 passed - 0.3642612920640633 is the same as expected 0.364261
 CT_f_A_tort1 passed - 0.4631489531804327 is the same as expected 0.463149
-{'STAT_n': 65536, 'STAT_e': 3628, 'STAT_n_D': 32832, 'STAT_n_A': 32704, 'STAT_CC_D': 4, 'STAT_CC_A': 4, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.5009765625, 'DISS_f10_D': 0.8067129629629629, 'DISS_wf10_D': 0.43768712487265854, 'CT_f_e_conn': 0.1954244762954796, 'CT_f_conn_D_An': 0.8462780214424951, 'CT_f_conn_A_Ca': 0.611943493150685, 'CT_e_conn': 709, 'CT_e_D_An': 2470, 'CT_e_A_Ca': 1158, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512, 'CT_f_D_tort1': 0.3642612920640633, 'CT_f_A_tort1': 0.4631489531804327}
-=======
-Morphology: data_0.5_3.6_000540
-STAT_n 65536
-STAT_e 3628
-STAT_n_D 32832
-STAT_n_A 32704
-STAT_CC_D 4
-STAT_CC_A 4
-STAT_CC_D_An 1
-STAT_CC_A_Ca 1
-ABS_f_D 0.5009765625
-DISS_f10_D 0.8067129629629629
-DISS_wf10_D 0.4535590259721246
-CT_f_e_conn 0.1954244762954796
-CT_f_conn_D_An 0.846278
-CT_f_conn_A_Ca 0.611943
-CT_e_conn 709
-CT_e_D_An 2470
-CT_e_A_Ca 1867
-CT_n_D_adj_An 512
-CT_n_A_adj_Ca 512
-CT_f_D_tort1 0.30844907407407407
-CT_f_A_tort1 0.28369618395303325
->>>>>>> 7675a5153aad53130dffc4101dc088a8b50f621b
+{'STAT_n': 65536, 'STAT_e': 3628, 'STAT_n_D': 32832, 'STAT_n_A': 32704, 'STAT_CC_D': 4, 'STAT_CC_A': 4, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.5009765625, 'DISS_f10_D': 0.8113730506822612, 'DISS_wf10_D': 0.436719314846638, 'CT_f_e_conn': 0.3428886438809261, 'CT_f_conn_D_An': 0.8462780214424951, 'CT_f_conn_A_Ca': 0.611943493150685, 'CT_e_conn': 1244, 'CT_e_D_An': 2842, 'CT_e_A_Ca': 2054, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512, 'CT_f_D_tort1': 0.3642612920640633, 'CT_f_A_tort1': 0.4631489531804327}
