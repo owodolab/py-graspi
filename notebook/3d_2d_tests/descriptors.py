@@ -23,7 +23,8 @@ def STAT_e(graph):
     Returns:
         int: The number of edges where at least one endpoint has the color 'green'.
     """
-    edgeList = graph.get_edgelist()
+    # edgeList = graph.get_edgelist()
+    edgeList = edgelist_global
     count = 0
 
     for edge in edgeList:
@@ -84,7 +85,8 @@ def STAT_CC_D(graph):
     Returns:
         int: The number of connected components with at least one 'black' vertex.
     """
-    cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph);
+    cc = cc_global
     count = 0
 
     for c in cc:
@@ -103,7 +105,8 @@ def STAT_CC_A(graph):
     Returns:
         int: The number of connected components with at least one 'white' vertex.
     """
-    cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph);
+    cc = cc_global
     count = 0
 
     for c in cc:
@@ -122,7 +125,8 @@ def STAT_CC_D_An(graph):
     Returns:
         int: The number of connected components with 'black' and 'red' vertices (top).
     """
-    cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph);
+    cc = cc_global
     count = 0;
 
     for c in cc:
@@ -141,7 +145,8 @@ def STAT_CC_A_Ca(graph):
     Returns:
         int: The number of connected components with 'white' and 'blue' vertices (bottom).
     """
-    cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph);
+    cc = cc_global
     count = 0;
 
     for c in cc:
@@ -174,7 +179,8 @@ def CT_f_conn_D_An(graph):
     Returns:
         float: The fraction of 'black' vertices in connected components with 'black' vertices (top).
     """
-    cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph);
+    cc = cc_global
     count = 0
     
     if cc is not None:
@@ -198,7 +204,8 @@ def CT_f_conn_A_Ca(graph):
     Returns:
         float: The fraction of 'white' vertices in specific connected components (bottom).
     """
-    cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph);
+    cc = cc_global
     count = 0
 
     if cc is not None:
@@ -222,7 +229,8 @@ def CT_n_D_adj_An(graph):
     Returns:
         int: The number of 'black' vertices direct contact with the 'red' vertex (top).
     """
-    edgeList = graph.get_edgelist()
+    # edgeList = graph.get_edgelist()
+    edgeList = edgelist_global
     count = 0
 
     for edge in edgeList:
@@ -246,7 +254,8 @@ def CT_n_A_adj_Ca(graph):
         int: The number of 'white' vertices direct contact with the 'blue' vertex (bottom).
     """
     
-    edgeList = graph.get_edgelist()
+    # edgeList = graph.get_edgelist()
+    edgeList = edgelist_global
     count = 0
 
     for edge in edgeList:
@@ -274,6 +283,10 @@ def desciptors(graph):
     Returns:
         dict: A dictionary of descriptors and their calculated values.
     """
+    global cc_global
+    cc_global = ig.connectedComponents(graph)
+    global edgelist_global
+    edgelist_global = graph.get_edgelist()
     dict = {}
     start = time.time()
     tracemalloc.start()

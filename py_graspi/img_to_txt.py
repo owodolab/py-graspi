@@ -6,6 +6,18 @@ import numpy as np
 DEBUG = False
 
 def img_to_txt(imageFile, resizeFactor, threshold=127.5):
+    """
+        Converts an image file into a .txt file, dimensions are multiplied by resizeFactor.
+
+        Args:
+            imageFile (string): path of the image file.
+            resizeFactor (float): resizeFactor used to multiply X and Y dimensions of imageFile to either truncate or enlarge.
+            threshold (float): threshold used for deciding color intensity of what is considered white or black in numpy array of image
+
+        Returns:
+            bool_array (numpy Array): numpy array of boolean array which signal if index should be black or white.
+            *not really needed is used in function to convert and output resized .txt file of image into the resized directory.
+        """
     # Open image file
     image = Image.open(imageFile).convert('L')  # Convert image to grayscale
     # Turn image into a numpy array
@@ -18,8 +30,8 @@ def img_to_txt(imageFile, resizeFactor, threshold=127.5):
     # Resize original image into a new image file
     partOutfile = imageFile[7:-4]
     new_image = image.resize((int(dimX * resizeFactor), int(dimY * resizeFactor)))
-    new_image.save(f"resized/resized_{partOutfile}.png")
-    image2 = Image.open(f"resized/resized_{partOutfile}.png").convert('L')
+    new_image.save(f"resized/resized_{partOutfile}_{resizeFactor}x.png")
+    image2 = Image.open(f"resized/resized_{partOutfile}_{resizeFactor}x.png").convert('L')
     if DEBUG:
         print(image2.format)
         print(image2.size)
@@ -34,7 +46,7 @@ def img_to_txt(imageFile, resizeFactor, threshold=127.5):
     bool_array = numpyData2 > threshold
     print(bool_array)
     # Set up output file for new txt file that will be created from the newly shrunken image
-    outfile = f"resized/resized_{partOutfile}.txt"
+    outfile = f"resized/resized_{partOutfile}_{resizeFactor}x.txt"
     with open(outfile, "w") as file:
         file.write(f"{dimX} {dimY}\n")
 
