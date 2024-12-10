@@ -6,6 +6,18 @@ import numpy as np
 DEBUG = False
 
 def img_to_txt(imageFile, resizeFactor, threshold=127.5):
+    """
+        Converts an image file into a .txt file, dimensions are multiplied by resizeFactor.
+
+        Args:
+            imageFile (string): path of the image file.
+            resizeFactor (float): resizeFactor used to multiply X and Y dimensions of imageFile to either truncate or enlarge.
+            threshold (float): threshold used for deciding color intensity of what is considered white or black in numpy array of image
+
+        Returns:
+            bool_array (numpy Array): numpy array of boolean array which signal if index should be black or white.
+            *not really needed is used in function to convert and output resized .txt file of image into the resized directory.
+        """
     # Open image file
     image = Image.open(imageFile).convert('L')  # Convert image to grayscale
     # Turn image into a numpy array
