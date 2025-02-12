@@ -123,7 +123,7 @@ def filterGraph_metavertices(graph):
 
     return filteredGraph_green, fg_blue, fg_red, fg_red_unfiltered
 
-def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim, shortest_path_to_red, \
+def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim, shortest_path_to_red,
                               shortest_path_to_blue,countBlack_Red_conn, countWhite_Blue_conn):
     fg_green, fg_blue, fg_red, fg_red_unfiltered = filterGraph_metavertices(graph)
     greenVertex = (graph.vs.select(color = 'green')[0]).index
@@ -255,7 +255,7 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
 
 
 
-def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, \
+def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue,
                 dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca):
     """
     Generates a dictionary of all graph descriptors.
@@ -277,7 +277,7 @@ def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_
 
     # shortest path descriptors
     DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1, ABS_wf_D \
-        = shortest_path_descriptors(graph,filename, black_vertices,white_vertices, dim, shortest_path_to_red, \
+        = shortest_path_descriptors(graph,filename, black_vertices,white_vertices, dim, shortest_path_to_red,
                                     shortest_path_to_blue, countBlack_Red_conn, countWhite_Blue_conn)
 
     dict["STAT_n"] =  STAT_n_A + STAT_n_D

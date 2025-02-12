@@ -7,7 +7,8 @@ import os
 current_dir = os.getcwd()
 
 def find_coords(filename):
-    with open(f"{current_dir}/py_graspi/data/{filename}", "r") as file:
+    # with open(f"{current_dir}/py_graspi/data/{filename}", "r") as file:
+    with open(f"{current_dir}/data/{filename}", "r") as file:
         header = file.readline().split(' ')
         dimX, dimY = int(header[0]), int(header[1])
         if len(header) < 3:
@@ -84,7 +85,8 @@ def find_WTB_tortuosity(g, is_2d, filename, output, title):
 # Define the function to read the file and extract the numbers
 def read_BTR_file_and_extract_numbers(base_filename):
     base_filename = base_filename[5:-4]
-    file_path = f"{current_dir}/py_graspi/data/data_{base_filename}_IdTortuosityBlackToRed.txt"
+    # file_path = f"{current_dir}/py_graspi/data/data_{base_filename}_IdTortuosityBlackToRed.txt"
+    file_path = f"{current_dir}/data/data_{base_filename}_IdTortuosityBlackToRed.txt"
     idOfPixelIn1DArray = []
     tort = []
     # Open the file in read mode
@@ -104,7 +106,9 @@ def read_BTR_file_and_extract_numbers(base_filename):
 
 def read_WTB_file_and_extract_numbers(base_filename):
     base_filename = base_filename[5:-4]
-    file_path = f"{current_dir}/py_graspi/data/data_{base_filename}_IdTortuosityWhiteToBlue.txt"
+    # file_path = f"{current_dir}/py_graspi/data/data_{base_filename}_IdTortuosityWhiteToBlue.txt"
+    file_path = f"{current_dir}/data/data_{base_filename}_IdTortuosityWhiteToBlue.txt"
+
     idOfPixelIn1DArray = []
     tort = []
     # Open the file in read mode

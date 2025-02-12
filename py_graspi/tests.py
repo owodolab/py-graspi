@@ -11,11 +11,16 @@ import math
 import tortuosity_histogram as t
 
 current_dir = os.getcwd()
-data_path = f"{current_dir}/py_graspi/data/"
-descriptors_path = f"{current_dir}/py_graspi/descriptors/"
-image_path = f"{current_dir}/py_graspi/images/"
-hist_path = f"{current_dir}/py_graspi/histograms/"
-results_path = f"{current_dir}/py_graspi/results/"
+# data_path = f"{current_dir}/py_graspi/data/"
+# descriptors_path = f"{current_dir}/py_graspi/descriptors/"
+# image_path = f"{current_dir}/py_graspi/images/"
+# hist_path = f"{current_dir}/py_graspi/histograms/"
+# results_path = f"{current_dir}/py_graspi/results/"
+data_path = f"{current_dir}/data/"
+descriptors_path = f"{current_dir}/descriptors/"
+image_path = f"{current_dir}/images/"
+hist_path = f"{current_dir}/histograms/"
+results_path = f"{current_dir}/results/"
 test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path) if os.path.splitext(file)[0].count("_") == 3]
 epsilon = 1e-5
 
