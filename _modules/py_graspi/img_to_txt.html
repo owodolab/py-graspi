@@ -1,0 +1,180 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py_graspi.img_to_txt &mdash; py-graspi  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://owodolab.github.io/py-graspi/_modules/py_graspi/img_to_txt.html" />
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            py-graspi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiExamples.html">Example of Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_overview.html">API Overview</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">py-graspi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">py_graspi.img_to_txt</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for py_graspi.img_to_txt</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">logging</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEBUG</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="img_to_txt">
+<a class="viewcode-back" href="../../py_graspi.html#py_graspi.img_to_txt.img_to_txt">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">img_to_txt</span><span class="p">(</span><span class="n">imageFile</span><span class="p">,</span> <span class="n">resizeFactor</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">127.5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts an image file into a .txt file, dimensions are multiplied by resizeFactor.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            imageFile (string): path of the image file.</span>
+<span class="sd">            resizeFactor (float): resizeFactor used to multiply X and Y dimensions of imageFile to either truncate or enlarge.</span>
+<span class="sd">            threshold (float): threshold used for deciding color intensity of what is considered white or black in numpy array of image</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool_array (numpy Array): numpy array of boolean array which signal if index should be black or white.</span>
+<span class="sd">            *not really needed is used in function to convert and output resized .txt file of image into the resized directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="c1"># Open image file</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">imageFile</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>  <span class="c1"># Convert image to grayscale</span>
+    <span class="c1"># Turn image into a numpy array</span>
+    <span class="n">numpyData</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+    <span class="c1"># Initialize x and y axis of image</span>
+    <span class="n">dimY</span> <span class="o">=</span> <span class="n">numpyData</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dimX</span> <span class="o">=</span> <span class="n">numpyData</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># Resize original image into a new image file</span>
+    <span class="n">partOutfile</span> <span class="o">=</span> <span class="n">imageFile</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">new_image</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">resize</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">dimX</span> <span class="o">*</span> <span class="n">resizeFactor</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">dimY</span> <span class="o">*</span> <span class="n">resizeFactor</span><span class="p">)))</span>
+    <span class="n">new_image</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;resized/resized_</span><span class="si">{</span><span class="n">partOutfile</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">resizeFactor</span><span class="si">}</span><span class="s2">x.png&quot;</span><span class="p">)</span>
+    <span class="n">image2</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;resized/resized_</span><span class="si">{</span><span class="n">partOutfile</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">resizeFactor</span><span class="si">}</span><span class="s2">x.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">image2</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">image2</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">image2</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="c1"># Turn new image into an array and find the Rows and Columns of new image</span>
+    <span class="n">numpyData2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">image2</span><span class="p">)</span>
+    <span class="n">dimX</span> <span class="o">=</span> <span class="n">numpyData2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">dimY</span> <span class="o">=</span> <span class="n">numpyData2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Convert to boolean numpy array using the threshold</span>
+    <span class="n">bool_array</span> <span class="o">=</span> <span class="n">numpyData2</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">bool_array</span><span class="p">)</span>
+    <span class="c1"># Set up output file for new txt file that will be created from the newly shrunken image</span>
+    <span class="n">outfile</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;resized/resized_</span><span class="si">{</span><span class="n">partOutfile</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">resizeFactor</span><span class="si">}</span><span class="s2">x.txt&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dimX</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">dimY</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Loop through new image array and write out into the new file</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">bool_array</span><span class="p">:</span>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;1&#39;</span> <span class="k">if</span> <span class="n">col</span> <span class="k">else</span> <span class="s1">&#39;0&#39;</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">row</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">bool_array</span></div>
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../py_graspi.html#py_graspi.img_to_txt.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">resize_factor</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">resize_factor</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">resize_factor</span><span class="p">)</span>
+    <span class="n">img_to_txt</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="n">resize_factor</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

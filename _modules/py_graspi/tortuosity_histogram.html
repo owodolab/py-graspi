@@ -1,0 +1,249 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py_graspi.tortuosity_histogram &mdash; py-graspi  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://owodolab.github.io/py-graspi/_modules/py_graspi/tortuosity_histogram.html" />
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            py-graspi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiExamples.html">Example of Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_overview.html">API Overview</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">py-graspi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">py_graspi.tortuosity_histogram</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for py_graspi.tortuosity_histogram</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">igraph_testing</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ig</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<span class="n">current_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+<div class="viewcode-block" id="find_coords">
+<a class="viewcode-back" href="../../py_graspi.html#py_graspi.tortuosity_histogram.find_coords">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_coords</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/py_graspi/data/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">dimX</span><span class="p">,</span> <span class="n">dimY</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">header</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">dimZ</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">dimZ</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dimZ</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">dimZ</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># dimZ = dimX * dimY</span>
+            <span class="n">is_2d</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="p">[</span><span class="n">dimX</span><span class="p">,</span> <span class="n">dimY</span><span class="p">,</span> <span class="n">dimZ</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">coords</span></div>
+
+
+<div class="viewcode-block" id="filterGraph">
+<a class="viewcode-back" href="../../py_graspi.html#py_graspi.tortuosity_histogram.filterGraph">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">filterGraph</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
+    <span class="n">keptEdges</span> <span class="o">=</span> <span class="p">[</span><span class="n">edge</span> <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">graph</span><span class="o">.</span><span class="n">get_edgelist</span><span class="p">()</span>
+                 <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]</span>
+                 <span class="ow">or</span> <span class="s1">&#39;red&#39;</span> <span class="ow">in</span> <span class="p">{</span><span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">],</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]}</span>
+                 <span class="ow">or</span> <span class="s1">&#39;blue&#39;</span> <span class="ow">in</span> <span class="p">{</span><span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">],</span> <span class="n">graph</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="n">edge</span><span class="p">[</span><span class="mi">1</span><span class="p">]][</span><span class="s1">&#39;color&#39;</span><span class="p">]}]</span>
+
+    <span class="k">return</span> <span class="n">graph</span><span class="o">.</span><span class="n">subgraph_edges</span><span class="p">(</span><span class="n">keptEdges</span><span class="p">,</span> <span class="n">delete_vertices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="find_BTR_tortuosity">
+<a class="viewcode-back" href="../../py_graspi.html#py_graspi.tortuosity_histogram.find_BTR_tortuosity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_BTR_tortuosity</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">is_2d</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">numVertices</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">vcount</span><span class="p">()</span>
+    <span class="n">redVertex</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">vcount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">2</span>
+    <span class="n">blackToRedList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">filteredGraph</span> <span class="o">=</span> <span class="n">filterGraph</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="n">idOfPixelIn1DArray</span><span class="p">,</span> <span class="n">tort</span> <span class="o">=</span> <span class="n">read_BTR_file_and_extract_numbers</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="c1">#Calculate vertex frequencies</span>
+    <span class="n">vertex_frequency</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">numVertices</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">idOfPixelIn1DArray</span><span class="p">)):</span>
+        <span class="n">vertex_frequency</span><span class="p">[</span><span class="n">idOfPixelIn1DArray</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">tort</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">vertex_frequency</span> <span class="o">=</span> <span class="n">vertex_frequency</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">dimX</span><span class="p">,</span><span class="n">dimY</span><span class="p">,</span><span class="n">dimZ</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">=</span> <span class="n">find_coords</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">data_2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vertex_frequency</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dimY</span><span class="p">,</span> <span class="n">dimX</span><span class="p">)</span>
+
+    <span class="c1"># Create the heatmap</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">})</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Black to Red Tortuosity HeatMap&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data_2d</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>  <span class="c1"># Add a colorbar to show the values</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="find_WTB_tortuosity">
+<a class="viewcode-back" href="../../py_graspi.html#py_graspi.tortuosity_histogram.find_WTB_tortuosity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_WTB_tortuosity</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">is_2d</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+    <span class="n">numVertices</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">vcount</span><span class="p">()</span>
+    <span class="n">blueVertex</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">vcount</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">whiteToBlueList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">filteredGraph</span> <span class="o">=</span> <span class="n">filterGraph</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="n">idOfPixelIn1DArray</span><span class="p">,</span> <span class="n">tort</span> <span class="o">=</span> <span class="n">read_WTB_file_and_extract_numbers</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="c1">#Calculate vertex frequencies</span>
+    <span class="n">vertex_frequency</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">numVertices</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">idOfPixelIn1DArray</span><span class="p">)):</span>
+        <span class="n">vertex_frequency</span><span class="p">[</span><span class="n">idOfPixelIn1DArray</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">tort</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+    <span class="n">vertex_frequency</span> <span class="o">=</span> <span class="n">vertex_frequency</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
+    <span class="n">dimX</span><span class="p">,</span><span class="n">dimY</span><span class="p">,</span><span class="n">dimZ</span> <span class="o">=</span> <span class="n">coords</span> <span class="o">=</span> <span class="n">find_coords</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">data_2d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">vertex_frequency</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dimY</span><span class="p">,</span> <span class="n">dimX</span><span class="p">)</span>
+
+    <span class="c1"># Create the heatmap</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;font.size&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">})</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;White to Blue Tortuosity HeatMap&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">data_2d</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;nearest&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>  <span class="c1"># Add a colorbar to show the values</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+
+<span class="c1"># Define the function to read the file and extract the numbers</span>
+<div class="viewcode-block" id="read_BTR_file_and_extract_numbers">
+<a class="viewcode-back" href="../../py_graspi.html#py_graspi.tortuosity_histogram.read_BTR_file_and_extract_numbers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_BTR_file_and_extract_numbers</span><span class="p">(</span><span class="n">base_filename</span><span class="p">):</span>
+    <span class="n">base_filename</span> <span class="o">=</span> <span class="n">base_filename</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/py_graspi/data/data_</span><span class="si">{</span><span class="n">base_filename</span><span class="si">}</span><span class="s2">_IdTortuosityBlackToRed.txt&quot;</span>
+    <span class="n">idOfPixelIn1DArray</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tort</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Open the file in read mode</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="c1"># Read each line in the file</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="c1"># Split the line into a list of strings</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="c1"># Extract the first and second numbers and convert them to appropriate types</span>
+            <span class="n">first_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">second_number</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="c1"># Append the numbers to their respective lists</span>
+            <span class="n">idOfPixelIn1DArray</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">first_number</span><span class="p">)</span>
+            <span class="n">tort</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">second_number</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">idOfPixelIn1DArray</span><span class="p">,</span> <span class="n">tort</span></div>
+
+
+<div class="viewcode-block" id="read_WTB_file_and_extract_numbers">
+<a class="viewcode-back" href="../../py_graspi.html#py_graspi.tortuosity_histogram.read_WTB_file_and_extract_numbers">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">read_WTB_file_and_extract_numbers</span><span class="p">(</span><span class="n">base_filename</span><span class="p">):</span>
+    <span class="n">base_filename</span> <span class="o">=</span> <span class="n">base_filename</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+    <span class="n">file_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">current_dir</span><span class="si">}</span><span class="s2">/py_graspi/data/data_</span><span class="si">{</span><span class="n">base_filename</span><span class="si">}</span><span class="s2">_IdTortuosityWhiteToBlue.txt&quot;</span>
+    <span class="n">idOfPixelIn1DArray</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">tort</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># Open the file in read mode</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="c1"># Read each line in the file</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">:</span>
+            <span class="c1"># Split the line into a list of strings</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+            <span class="c1"># Extract the first and second numbers and convert them to appropriate types</span>
+            <span class="n">first_number</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">second_number</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="c1"># Append the numbers to their respective lists</span>
+            <span class="n">idOfPixelIn1DArray</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">first_number</span><span class="p">)</span>
+            <span class="n">tort</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">second_number</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">idOfPixelIn1DArray</span><span class="p">,</span> <span class="n">tort</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

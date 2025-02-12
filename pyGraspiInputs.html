@@ -1,0 +1,156 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inputs &mdash; py-graspi  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://owodolab.github.io/py-graspi/pyGraspiInputs.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Example of Usage" href="pyGraspiExamples.html" />
+    <link rel="prev" title="Descriptors" href="pyGraspiDescriptors.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            py-graspi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiExamples.html">Example of Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_overview.html">API Overview</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">py-graspi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Inputs</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pyGraspiInputs.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="inputs">
+<span id="pygraspiinputs"></span><h1>Inputs<a class="headerlink" href="#inputs" title="Link to this heading"></a></h1>
+<p><strong>py-graspi</strong> supports two input formats: one for structured data and one for unstructured data.
+For structured data, the dimensions of discrete points along each axis <span class="math notranslate nohighlight">\(n_x, n_y, n_z\)</span> must be specified in the first line of the input file. The rest of the file contains a row-wise representation of the corresponding matrix, listing the phases using labels from the available set. This data is organized as a single, contiguous block in row-major order (also known as “C order”). Because the data is structured, graspi can build the local neighborhood as it processes the input.</p>
+<a class="reference internal image-reference" href="_images/structuredGraph.png"><img alt="_images/structuredGraph.png" src="_images/structuredGraph.png" style="width: 400px;" />
+</a>
+<p>The input file for the above figure</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span>4 4 1
+<span class="linenos">2</span>1 1 0 0
+<span class="linenos">3</span>0 1 1 0
+<span class="linenos">4</span>0 1 1 0
+<span class="linenos">5</span>0 0 1 0
+</pre></div>
+</div>
+<p>Note that the first row is considered to be adjacent to the cathode (BLUE meta-vertex), while the last row is considered to be adjacent to anode (RED meta vertex).</p>
+<p>The second format corresponds to unstructured data, where information about
+phases needs to provided along with the neighborhood. The input file start with the total number of vertices in the data set.
+Next each line provides the information about each vortex.
+First the index of the vertex is provided followed by the color of the vertex.
+The reminder of the line consist of triplets with information about the neighbors.
+The triplet consists of the index of the neighbor, the distance from to the neighbor and type of the neighbor.
+In this example, two types of neighbors are considered: <code class="docutils literal notranslate"><span class="pre">f</span></code>, <code class="docutils literal notranslate"><span class="pre">s</span></code> and <code class="docutils literal notranslate"><span class="pre">t</span></code> that
+corresponds to first-, second- and third-order neighbors, respectively.
+The set of types may be redefined to encode additional information.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 1</span>  0 1    4 1 f  5 1.42 s   1 1 f   -1 1 f
+<span class="linenos"> 2</span>
+<span class="linenos"> 3</span>  1 1    5 1 f  6 1.42 s   2 1 f   -1 1 f   0 1 f  4 1.42 s
+<span class="linenos"> 4</span>
+<span class="linenos"> 5</span>  2 0    6 1 f  7 1.42 s   3 1 f   -1 1 f   1 1 f  5 1.42 s
+<span class="linenos"> 6</span>
+<span class="linenos"> 7</span>  ...
+<span class="linenos"> 8</span>
+<span class="linenos"> 9</span>  14 1   -2 1 f   15 1 f  11 1.42 s  10 1 f   9 1.42 s  13 1 f
+<span class="linenos">10</span>
+<span class="linenos">11</span>  15 0   -2 1 f   11 1 f  10 1.42 s  14 1 f
+<span class="linenos">12</span>
+<span class="linenos">13</span>  16  0 0 s  1 0 s    2 0 s   3 0 s
+<span class="linenos">14</span>
+<span class="linenos">15</span>  17  15 0 s      14 0 s      13 0 s      12 0 s
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyGraspiDescriptors.html" class="btn btn-neutral float-left" title="Descriptors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyGraspiExamples.html" class="btn btn-neutral float-right" title="Example of Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
