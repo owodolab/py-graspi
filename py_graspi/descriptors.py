@@ -22,7 +22,7 @@ def CC_descriptors(graph,totalBlack, totalWhite):
         float: The fraction of 'black' vertices in connected components with 'black' vertices (top).
         float: The fraction of 'white' vertices in specific connected components (bottom).
     """
-    cc = ig.connectedComponents(graph);
+    cc = ig.connectedComponents(graph)
     countBlack = 0
     countWhite = 0
     countBlack_Red = 0
