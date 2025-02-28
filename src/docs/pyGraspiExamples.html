@@ -1,0 +1,203 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example of Usage &mdash; py-graspi  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://owodolab.github.io/py-graspi/pyGraspiExamples.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Graph-based representation of microstructure" href="pyGraspiRepresentation.html" />
+    <link rel="prev" title="Inputs" href="pyGraspiInputs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            py-graspi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example of Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#running-memory-tests">Running Memory Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#testing-algorithms">Testing Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-the-list-of-descriptors">Get the List of Descriptors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visualize-graphs">Visualize Graphs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_overview.html">API Overview</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">py-graspi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example of Usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pyGraspiExamples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="example-of-usage">
+<span id="pygraspiexamples"></span><h1>Example of Usage<a class="headerlink" href="#example-of-usage" title="Link to this heading"></a></h1>
+<p><strong>py-graspi</strong> is a command line tool. Make sure to install all requirements with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</pre></div>
+</div>
+<section id="running-memory-tests">
+<h2>Running Memory Tests<a class="headerlink" href="#running-memory-tests" title="Link to this heading"></a></h2>
+<p>To run memory tests, run the following command in the terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>main.py<span class="w"> </span>n<span class="w"> </span>dimension<span class="w"> </span><span class="k">function</span>
+</pre></div>
+</div>
+<p><strong>Make sure of the following:</strong></p>
+<ul class="simple">
+<li><p>Replace “n” with the size of the graph you want. <strong>Note:</strong> n should be between 1-1000 for 2D graphs and 1-100 for 3D graphs. Otherwise, the code will timeout.</p></li>
+<li><p>Replace “dimension” with 2D or 3D specify if you want a 2D or 3D graph.</p></li>
+<li><p>Replace “function” with either generage, filter, or shortest_path to choose which function you want to test memory for.</p></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>main.py<span class="w"> </span><span class="m">10</span><span class="w"> </span>2D<span class="w"> </span>generate
+</pre></div>
+</div>
+</section>
+<section id="testing-algorithms">
+<h2>Testing Algorithms<a class="headerlink" href="#testing-algorithms" title="Link to this heading"></a></h2>
+<p>To <strong>generate graphs</strong>, call the generateGraph(file) function which takes in an input-file name</p>
+<ul class="simple">
+<li><p>Returns a graph</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ig.generateGraph<span class="o">(</span><span class="s2">&quot;2D-testFile/testFile-10-2D.txt&quot;</span><span class="o">)</span><span class="w">   </span><span class="c1"># utilizing the test file found in 2D-testFiles folder as an example</span>
+</pre></div>
+</div>
+<p>To <strong>filter graphs</strong>, call filterGraph(graph) function which takes in a graph object</p>
+<ul class="simple">
+<li><p>Can pass a graph generated by generateGraph(file)</p></li>
+<li><p>Returns a filtered graph</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ig.generateGraph<span class="o">(</span><span class="s2">&quot;2D-testFile/testFile-10-2D.txt&quot;</span><span class="o">)</span><span class="w">     </span><span class="c1"># utilizing the test file found in 2D-testFiles folder as an example</span>
+<span class="nb">fg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ig.filterGraph<span class="o">(</span>g<span class="o">)</span>
+</pre></div>
+</div>
+<p>The number of connected components can be found by taking the length of the result produced by the connected_components function:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>print<span class="o">(</span>fg.connected_components<span class="o">())</span>
+</pre></div>
+</div>
+<p>The number of connected components can be found by taking the length of the result produced by the connected_components function</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>print<span class="o">(</span>len<span class="o">(</span>fg.connected_components<span class="o">()))</span>
+</pre></div>
+</div>
+<p>The shortest path between some meta-vertices to all specified vertices calling the function shortest_path(fiteredGraph, specifiedVertices, metaVertex, fileName)</p>
+<ul class="simple">
+<li><p>stores the distance of the paths to from the metaVertex to every single specified Vertices in a text file called fileName</p></li>
+</ul>
+<p>Example:</p>
+<p>the example below finds the shortest path between all black vertices to the blue meta-vertex and stores it in the text file, black_to_blue_paths.txt</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ig.shortest_path<span class="o">(</span>fg,<span class="s1">&#39;black&#39;</span>,<span class="s1">&#39;blue&#39;</span>,<span class="s2">&quot;black_to_blue_paths.txt&quot;</span><span class="o">)</span><span class="w">    </span><span class="c1">#fg is a filtered graph object</span>
+</pre></div>
+</div>
+</section>
+<section id="get-the-list-of-descriptors">
+<h2>Get the List of Descriptors<a class="headerlink" href="#get-the-list-of-descriptors" title="Link to this heading"></a></h2>
+<p>A <strong>descriptor stored in a dictionary</strong> can be found by calling the function descriptors(graph)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ig.descriptors<span class="o">(</span>g<span class="o">)</span><span class="w">      </span><span class="c1"># g is a graph object</span>
+</pre></div>
+</div>
+<p>A <strong>list of descriptors</strong> in a <strong>text file</strong> can be found by calling the function descriptorsToTxt(dictionary,filename)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ig.descriptorsToTxt<span class="o">(</span>dict,<span class="s2">&quot;descriptors_list.txt&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="visualize-graphs">
+<h2>Visualize Graphs<a class="headerlink" href="#visualize-graphs" title="Link to this heading"></a></h2>
+<p>For 2D graphs, call visual2D(graph)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ig.generateGraph<span class="o">(</span><span class="s2">&quot;2D-testFile/testFile-10-2D.txt&quot;</span><span class="o">)</span><span class="w">     </span><span class="c1"># utilizing the test file found in 2D-testFiles folder as an example</span>
+ig.visual2D<span class="o">(</span>g<span class="o">)</span>
+</pre></div>
+</div>
+<p>For 3D graphs, call visual3D(graph)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ig.generateGraph<span class="o">(</span><span class="s2">&quot;3D-testFile/testFile-10-3D.txt&quot;</span><span class="o">)</span><span class="w">     </span><span class="c1"># utilizing the test file found in 2D-testFiles folder as an example</span>
+ig.visual3D<span class="o">(</span>g<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyGraspiInputs.html" class="btn btn-neutral float-left" title="Inputs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyGraspiRepresentation.html" class="btn btn-neutral float-right" title="Graph-based representation of microstructure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
