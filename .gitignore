@@ -55,14 +55,14 @@ coverage.xml
 .ipynb_checkpoints
 
 # PyCharm
-.idea/
+src/.idea/
 *.iml
 
 # VSCode
 .vscode/
 
 # Sphinx documentation
-docs/_build/
+src/docs/_build/
 
 # Environment files
 .env
