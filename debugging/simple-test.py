@@ -1,6 +1,10 @@
+import os
+import sys
+
+sys.path.append(os.path.abspath('../src'))
+
 import igraph_testing as ig
 import descriptors
-import sys
 
 def main():
 

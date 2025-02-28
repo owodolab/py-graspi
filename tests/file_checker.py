@@ -1,10 +1,15 @@
 import os
 
 current_dir = os.getcwd()
-data_path = f"{current_dir}/py_graspi/data/"
-descriptors_path = f"{current_dir}/py_graspi/descriptors/"
-expected_distances_path = f"{current_dir}/py_graspi/distances/"
-results_path = f"{current_dir}/py_graspi/comparisons/"
+# data_path = f"{current_dir}/py_graspi/data/"
+# descriptors_path = f"{current_dir}/py_graspi/descriptors/"
+# expected_distances_path = f"{current_dir}/py_graspi/distances/"
+# results_path = f"{current_dir}/py_graspi/comparisons/"
+parent_dir = os.path.dirname(current_dir)
+data_path = f"{parent_dir}/data/data/"
+descriptors_path = f"{parent_dir}/data/descriptors/"
+expected_distances_path = f"{parent_dir}/data/distances/"
+results_path = f"{parent_dir}/data/comparisons/"
 test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path) if os.path.splitext(file)[0].count("_") > 3]
 epsilon = 1e-5
 
@@ -48,9 +53,10 @@ def file_checker(file1, file2, is_idTor):
 
 def main():
     for test_file in test_files:
+        print(test_file)
         filename, distanceType = test_file.rsplit('_',1)
         expectedFile = data_path + test_file + ".txt"
-        file = f'{expected_distances_path + filename}-{distanceType}.txt' 
+        file = f'{expected_distances_path + filename}-{distanceType}.txt'
         is_idTor = (distanceType[:2] == 'Id')
 
         file_checker(expectedFile, file, is_idTor)

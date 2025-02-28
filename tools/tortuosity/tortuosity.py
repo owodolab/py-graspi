@@ -1,6 +1,10 @@
+import os
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+sys.path.append(os.path.abspath('../../src'))
+# sys.path.append(os.path.abspath('../../data'))
+
 import igraph_testing as ig
 
 def find_coords(filename):
@@ -113,8 +117,8 @@ def read_BTR_file_and_extract_numbers(base_filename):
             idOfPixelIn1DArray(list): list of id of pixel in 1D array
             tort(list): list of tortuosity, index matches that of idOfPixelIn1DArray
         """
-    base_filename = base_filename[5:-4]
-    file_path = f"distances/{base_filename}-IdTortuosityBlackToRed.txt"
+    base_filename = base_filename[16:-4]
+    file_path = f"../../data/distances/{base_filename}-IdTortuosityBlackToRed.txt"
     idOfPixelIn1DArray = []
     tort = []
     # Open the file in read mode
@@ -142,8 +146,10 @@ def read_WTB_file_and_extract_numbers(base_filename):
             idOfPixelIn1DArray(list): list of id of pixel in 1D array
             tort(list): list of tortuosity, index matches that of idOfPixelIn1DArray
         """
-    base_filename = base_filename[5:-4]
-    file_path = f"distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
+    base_filename = base_filename[16:-4]
+    file_path = f"../../data/distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
+    # base_filename = base_filename[5:-4]
+    # file_path = f"distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
     idOfPixelIn1DArray = []
     tort = []
 
@@ -166,6 +172,8 @@ def main():
     filename = sys.argv[1]
     (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, dim, interface_edge_comp_paths,
      shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)  = ig.generateGraphAdj(filename)
+    # filename = filename[6:]
+    # print(filename)
     find_BTR_tortuosity(g, is_2D, filename)
     find_WTB_tortuosity(g, is_2D, filename)
 

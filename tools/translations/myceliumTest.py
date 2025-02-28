@@ -1,8 +1,8 @@
 import os
 import sys
 import igraph
-sys.path.append(os.path.abspath('../src'))
-sys.path.append(os.path.abspath('../tools/translations'))
+sys.path.append(os.path.abspath('../../src'))
+sys.path.append(os.path.abspath('translations'))
 
 import igraph_testing as ig
 import img_to_txt as translate
@@ -229,7 +229,7 @@ def main():
     resize_factor = sys.argv[2]
     resize_factor = float(resize_factor)
     translate.img_to_txt(input_file,resize_factor)
-    txt_filename = "resized/resized_" +input_file[7:-4]+ "_" + str(resize_factor) +"x.txt"
+    txt_filename = "resized/resized_" +input_file[18:-4]+ "_" + str(resize_factor) +"x.txt"
     print("creating graph")
     (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
      dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
