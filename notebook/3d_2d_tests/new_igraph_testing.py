@@ -280,19 +280,19 @@ def generateGraphAdj(file):
             boolean: returns  a boolean to signal if graph is 2D or not
         """
     #get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
-    edges, edge_labels, is_2D = adjList(file)
-    labels = vertexColors(file)
+    edges, edge_labels, is_2D = adjList(file) #?
+    labels = vertexColors(file) #?
     f = open(file, 'r')
     line = f.readline()
     line = line.split()
     dimX = int(line[0])
     dimY = int(line[1])
-    g = ig.Graph.ListDict(edges=edges, directed=False)
+    g = ig.Graph.ListDict(edges=edges, directed=False) #https://python.igraph.org/en/stable/api/igraph.Graph.html#ListDict
     g.vs["color"] = labels
     g.es['label'] = edge_labels
 
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
-    if PERIODICITY:
+    if PERIODICITY: #?
         for i in range(0, g.vcount() - 2, dimX):
             # first add first neighbor wrap around
             g.add_edge(g.vs[i], g.vs[i + (dimX - 1)])
@@ -491,8 +491,8 @@ def connectedComponents(graph):
     edgeList = set(graph.get_edgelist())
     fg = filterGraph(graph)
     cc = fg.connected_components()
-    redVertex = None;
-    blueVertex = None;
+    redVertex = None
+    blueVertex = None
     blackCCList = []
     whiteCCList = []
     # print(len(cc))
