@@ -1,4 +1,4 @@
-import igraph_testing as ig
+from src import igraph_testing as ig
 import time
 import tracemalloc
 import csv

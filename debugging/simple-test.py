@@ -3,8 +3,8 @@ import sys
 
 sys.path.append(os.path.abspath('../src'))
 
-import igraph_testing as ig
-import descriptors
+from src import igraph_testing as ig
+from src import descriptors
 
 def main():
 

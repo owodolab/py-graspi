@@ -1,5 +1,5 @@
-import igraph_testing as ig
-import descriptors
+from src import igraph_testing as ig
+from src import descriptors
 import sys
 
 def main():
