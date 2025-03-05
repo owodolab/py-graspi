@@ -1,5 +1,5 @@
 from src import igraph_testing as ig
-# import igraph_testing as ig
+
 
 def STAT_n(graph):
     """

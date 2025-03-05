@@ -1,8 +1,42 @@
 import math
-
 import numpy as np
-
 import igraph_testing as ig
+
+import igraph as ig2
+
+class GraphData:
+    """
+    Class to store all graph parameters in a single object, reducing redundant function returns.
+    """
+
+    def __init__(self, graph: ig2.Graph, is_2D: bool):
+        """ Initialize the GraphData object with a graph and its properties. """
+
+        self.graph = graph  # Store the igraph graph object
+        self.is_2D = is_2D  # Boolean indicating whether the graph is 2D
+
+        # Store vertex-based attributes
+        self.black_vertices = []
+        self.white_vertices = []
+        self.shortest_path_to_red = None
+        self.shortest_path_to_blue = None
+
+        # Store computed descriptors
+        self.black_green = 0
+        self.black_interface_red = 0
+        self.white_interface_blue = 0
+        self.dim = 0
+        self.interface_edge_comp_paths = 0
+        self.CT_n_D_adj_An = 0
+        self.CT_n_A_adj_Ca = 0
+
+    def compute_shortest_paths(self, red_vertex, blue_vertex):
+        """ Compute and store shortest paths from red and blue vertices. """
+        self.shortest_path_to_red = self.graph.shortest_paths(source=red_vertex, weights=self.graph.es["weight"])[0]
+        self.shortest_path_to_blue = self.graph.shortest_paths(source=blue_vertex, weights=self.graph.es["weight"])[0]
+
+
+######################################
 
 
 def CC_descriptors(graph,totalBlack, totalWhite):
@@ -51,6 +85,7 @@ def CC_descriptors(graph,totalBlack, totalWhite):
                 countWhite_Blue += 1
                 colors = np.array(graph.vs['color'])
                 countWhite_Blue_conn += np.sum(colors[c] == 'white')
+
 
     return countBlack, countWhite, countBlack_Red, countWhite_Blue, float(countBlack_Red_conn / totalBlack), \
         float(countWhite_Blue_conn / totalWhite), countBlack_Red_conn, countWhite_Blue_conn
@@ -258,8 +293,7 @@ def shortest_path_descriptors(graph,filename,black_vertices,white_vertices, dim,
 
 
 
-def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_interface_red, white_interface_blue, \
-                dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca):
+def descriptors(graph_data: GraphData, filename):
     """
     Generates a dictionary of all graph descriptors.
 
@@ -270,21 +304,24 @@ def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_
     Returns:
         dict: A dictionary of descriptors and their calculated values.
     """
+    # graph, filename, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
+    #     dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
+
     dict = {}
 
-    STAT_n_D = len(black_vertices)
-    STAT_n_A = len(white_vertices)
+    STAT_n_D = len(graph_data.black_vertices)
+    STAT_n_A = len(graph_data.white_vertices)
     STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, \
-        countWhite_Blue_conn = CC_descriptors(graph, STAT_n_D,STAT_n_A)
+        countWhite_Blue_conn = CC_descriptors(graph_data.graph, STAT_n_D,STAT_n_A)
 
 
     # shortest path descriptors
     DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1, ABS_wf_D \
-        = shortest_path_descriptors(graph,filename, black_vertices,white_vertices, dim, shortest_path_to_red, \
-                                    shortest_path_to_blue, countBlack_Red_conn, countWhite_Blue_conn)
+        = shortest_path_descriptors(graph_data.graph,filename, graph_data.black_vertices,graph_data.white_vertices, graph_data.dim, graph_data.shortest_path_to_red, \
+                                    graph_data.shortest_path_to_blue, countBlack_Red_conn, countWhite_Blue_conn)
 
     dict["STAT_n"] =  STAT_n_A + STAT_n_D
-    dict["STAT_e"] = black_green
+    dict["STAT_e"] = graph_data.black_green
     dict["STAT_n_D"] = STAT_n_D
     dict["STAT_n_A"] = STAT_n_A
     dict["STAT_CC_D"] = STAT_CC_D
@@ -295,14 +332,14 @@ def descriptors(graph,filename,black_vertices,white_vertices, black_green,black_
     dict["ABS_f_D"] = float(STAT_n_D / (STAT_n_D + STAT_n_A))
     dict["DISS_f10_D"] = DISS_f10_D
     dict["DISS_wf10_D"] = DISS_wf10_D
-    dict["CT_f_e_conn"] = float(interface_edge_comp_paths / black_green)
+    dict["CT_f_e_conn"] = float(graph_data.interface_edge_comp_paths / graph_data.black_green)
     dict["CT_f_conn_D_An"] = CT_f_conn_D_An
     dict["CT_f_conn_A_Ca"] = CT_f_conn_A_Ca
-    dict["CT_e_conn"] = interface_edge_comp_paths
-    dict["CT_e_D_An"] = black_interface_red
-    dict["CT_e_A_Ca"] = white_interface_blue
-    dict["CT_n_D_adj_An"] = CT_n_D_adj_An
-    dict["CT_n_A_adj_Ca"] = CT_n_A_adj_Ca
+    dict["CT_e_conn"] = graph_data.interface_edge_comp_paths
+    dict["CT_e_D_An"] = graph_data.black_interface_red
+    dict["CT_e_A_Ca"] = graph_data.white_interface_blue
+    dict["CT_n_D_adj_An"] = graph_data.CT_n_D_adj_An
+    dict["CT_n_A_adj_Ca"] = graph_data.CT_n_A_adj_Ca
     dict["CT_f_D_tort1"] = CT_f_D_tort1
     dict["CT_f_A_tort1"] = CT_f_A_tort1
 
