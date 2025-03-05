@@ -4,8 +4,8 @@ import igraph
 sys.path.append(os.path.abspath('../../src'))
 sys.path.append(os.path.abspath('translations'))
 
-import igraph_testing as ig
-import img_to_txt as translate
+import src.igraph_testing as ig
+import tools.translations.img_to_txt as translate
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Button
 import numpy as np

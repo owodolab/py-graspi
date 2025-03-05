@@ -3,8 +3,8 @@ import sys
 sys.path.append(os.path.abspath('../src'))
 sys.path.append(os.path.abspath('../tools/tortuosity'))
 
-import igraph_testing as ig
-import descriptors as ds
+import src.igraph_testing as ig
+import src.descriptors as ds
 import fpdf
 import numpy as np
 from PIL import Image, ImageOps
@@ -12,7 +12,7 @@ import webbrowser
 import argparse
 import matplotlib.pyplot as plt
 import math
-import tortuosity_histogram as t
+import tools.tortuosity.tortuosity_histogram as t
 
 current_dir = os.getcwd()
 # data_path = f"{current_dir}/py_graspi/data/"

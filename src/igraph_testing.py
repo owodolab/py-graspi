@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-import descriptors as d
+import src.descriptors as d
 
 import math
 DEBUG = False

@@ -4,8 +4,8 @@ import os
 import sys
 
 sys.path.append(os.path.abspath('../src'))
-import igraph_testing as ig
-import descriptors as d
+import src.igraph_testing as ig
+import src.descriptors as d
 
 
 (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
