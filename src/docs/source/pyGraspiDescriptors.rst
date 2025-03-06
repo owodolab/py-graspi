@@ -23,6 +23,7 @@ For two-phase morphology, current **py-graspi** computes the following descripto
 * **STAT_CC_D_An** - Number of black connected components connected to top (red)
 * **STAT_CC_A_Ca** - Number of white connected components connected to bottom (blue)
 * **ABS_f_D** - Fraction of black vertices
+* **ABS_wf_D** - Weighted fraction of black vertices
 * **CT_f_conn_D_An** - Fraction of black vertices connected to the top
 * **CT_f_conn_A_Ca** - Fraction of white vertices connected to bottom
 
