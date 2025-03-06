@@ -10,7 +10,7 @@ def testFileMaker(num, depth, textFileName):
         textFileName (str): The name of the output text file.
 
     Returns:
-        str: "success" if the file is created successfully.
+        (str) “success” if the file is created successfully.
     """
     # Create the file, raising an error if it already exists.
     f = open(textFileName, "x")
