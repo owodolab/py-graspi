@@ -17,14 +17,24 @@ PERIODICITY = True
 
 def adjList(fileName):
     """
-        Creates an adjacency list from a given file.
+        This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph.
+         Also computed is data such as what type of connection each edge contributes to, edge weights, and where the anode and cathode are within the graph.
 
         Args:
             filename (str): The name of the file containing the graph data.
 
         Returns:
-            list: The adjacency list representing the graph, lists for first, second, and third, ordered pairs
-                  as well as a bool to signal if the graph is a 2D or 3D graph.
+            adjacency_list (dict): This is a dictionary that contains lists that represent each vertice and it’s neighboring vertices. A dictionary stores data in key:value pairs, here, the key is the vertex and the values are a list of ints that contain the neighbors indexes for that vertice. It’s form for indexing is as such: (int,list[int]).
+            edge_labels (list): This list contains string labels for each of the vertices to indicate what kind of connection it contributes to. ‘f’ means first-order pair, ‘s’ means second-order, and ‘t’ means third order.
+            edge_weights (list): This list contains weights that correspond to each edge based on a computed distance. The type of connection that edge contributes to affects the weight.
+            vertex_color (list): This list denotes a color label from either ‘black’ or ‘white’ for each vertice.
+            black_vertices (list): This list contains the indices of vertices that are ‘black’.
+            white_vertices (list): This list contains the indices of vertices that are ‘white’.
+            is_2d (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D structure.
+            redVertex (int): This is the index of the ‘red’ metavertex (anode) in the graph.
+            blueVertex (int): This is the index of the ‘blue’ metavertex (cathode), in the graph.
+            dim (int): This the value of the dimension the graph is represented in.
+
         """
     adjacency_list = {}
     if DEBUG:
@@ -181,14 +191,19 @@ def adjList(fileName):
 
 def graphe_adjList(filename):
     """
-    Creates an adjacency list from a given file.
+    This function creates the adjacency list for graph data given in .graphe format, it categorizes neighbors of vertices into first, second, and third order.
+    This function is called inside the “generateGraphGraphe” function to help create the necessary information to generate the final graph.
 
     Args:
         filename (str): The name of the file containing the graph data.
 
     Returns:
-        list: The adjacency list representing the graph, lists for first, second, and third, ordered pairs
-                  as well as a bool to signal if the graph is a 2D or 3D graph.
+        adjacency_list (list): This is a list of vertices, where each index of this list corresponds to a vertex and contains a sublist to represent it’s neighboring vertices.
+        first_order_neighbors (list): This is a list of all the first-order pairs.
+        second_order_neighbors (list): This is a list of all the second-order pairs.
+        third_order_neighbors (list): This is a list of all the third-order pairs.
+        is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D structure.
+
     """
     adjacency_list = []
     first_order_neighbors = []
@@ -235,13 +250,13 @@ def graphe_adjList(filename):
 
 def adjvertexColors(fileName):
     """
-    Labels the colors of vertices based on a given file and on Graspi Documentation.
+    This function assigns each vertex a color label based on the data in the specified file and returns a list where each index corresponds to a vertex's color.
 
     Args:
         fileName (str): The name of the file containing the vertex color data.
 
     Returns:
-        list: A list of vertex colors.
+        labels (list): This list contains color labels (‘black’, ‘white’, ‘red’, or ‘blue’) for each vertex or metavertex in the graph.
     """
     labels = []
     with open(fileName, 'r') as file:
@@ -265,13 +280,16 @@ def adjvertexColors(fileName):
 '''********* Constructing the Graph **********'''
 def filterGraph_metavertices(graph):
     """
-    Filters the graph by keeping only edges between vertices of the same color and metavertices
+    This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’/cathode metavertex,
+    and one that contains all the edges that connect the vertices of the same color or involve the ‘red’/anode metavertex.
 
     Args:
         graph (ig.Graph): The input graph.
 
     Returns:
-        ig.Graph: The filtered graph.
+        fg_blue (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ vertex.
+        fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ vertex.
+
     """
     edgeList = graph.get_edgelist()
     keptEdges_blue = []
@@ -307,14 +325,15 @@ def filterGraph_metavertices(graph):
 
 def generateGraphGraphe(file):
     """
-    Constructs a graph from an adjacency list and assigns vertex colors.
+    This function takes in graph data in the .graphe format and constructs the graph with adjacency list representation.
 
     Args:
         file (str): The name of the file containing graph data.
 
     Returns:
-        ig.Graph: The constructed graph with assigned vertex colors.
-        boolean: a boolean to signal if grpah is 2D or not
+        g (igraph.Graph): The graph representation of the given data
+        is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D
+
     """
     # gets an adjacency list and first order pairs list from the file input
     adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2d = graphe_adjList(file)
@@ -354,13 +373,16 @@ def generateGraphGraphe(file):
 
 def filterGraph_blue_red(graph):
     """
-    Filters the graph by keeping only edges between vertices of the same color and metavertices
+    This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’ cathode metavertex,
+    and one that contains all the edges that connect the vertices of the same color or involve the ‘red’ anode metavertex.
 
     Args:
         graph (ig.Graph): The input graph.
 
     Returns:
-        ig.Graph: The filtered graph.
+        fg_blue (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ metavertex.
+        fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ metavertex.
+
     """
     edgeList = graph.get_edgelist()
     keptEdges_blue = []
@@ -397,14 +419,27 @@ def filterGraph_blue_red(graph):
 
 def generateGraphAdj(file):
     """
-        Creates an adjacency list from a given file.
+        This function takes in graph data in the .txt format and constructs the graph with adjacency list representation.
+        It additionally computes data about vertex colors, edges, and various statistics relating to the graph data.
 
         Args:
-            filename (str): The name of the file containing the graph data.
+            file (str): The name of the file containing the graph data.
 
         Returns:
-            graph: the graph that holds all the edges and vertices based on file input
-            boolean: returns  a boolean to signal if graph is 2D or not
+            g (igraph.Graph): The graph representation of the given data
+            is_2D (bool):  This is true if the graph represents a 2D structure, and false if it represents a 3D structure.
+            black_vertices (list): This list contains the indices of vertices that are ‘black’.
+            white_vertices (list): This list contains the indices of vertices that are ‘white’.
+            black_green (int): The number of edges between ‘black’ vertices and ‘green’/interface metavertex.
+            black_interface_red (int): The number of ‘black’ vertices connected to the ‘red’/anode metavertex.
+            white_interface_blue (int): The number of ‘white’ vertices connected to the ‘blue’/cathode metavertex.
+            dim (int): This the value of the dimension the graph is represented in.
+            interface_edge_comp_paths (int): This is the number of interface edges for complementary paths.
+            shortest_path_to_red (list): This list contains indices of the vertices that make up the shortest path to the ‘red’ or anode metavertex.
+            shortest_path_to_blue (list): This list contains indices of the vertices that make up the shortest path to the ‘blue’ or cathode metavertex.
+            CT_n_D_adj_An (int): This is the number of ‘black’ vertices that are in direct contact with the ‘red’/anode metavertex.
+            CT_n_A_adj_Ca (int): This is the number of ‘white’ vertices that are in direct contact with the ‘blue’/cathode metavertex.
+
         """
     # get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
     # edges, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2D, \
@@ -610,13 +645,14 @@ def generateGraphAdj(file):
 
 def generateGraph(file):
     """
-    Generates graph based on file input.
+    This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.
 
     Args:
         file (str): The name of the file containing graph data.
 
     Returns:
-        Generated graph based on input
+        This function generates a graph based on the input so the return type depends on the format of graph data that was given.
+        See “generateGraphAdj” if in .txt, or “generateGraphGraphe” if in .graphe.
     """
     if os.path.splitext(file)[1] == ".txt":
         return generateGraphAdj(file)
@@ -626,14 +662,14 @@ def generateGraph(file):
 
 def visualize(graph, is_2D):
     """
-       Creates a visualization from the given graph
+       This function shows a visualization of the given graph in either 2D or 3D depending on the is_2D boolean.
 
        Args:
-           graph (ig.Graph): The graph to visualize
-           is_2D (bool): A boolean to signal if the graph is 2D or not
+            graph (igraph.Graph): The given graph to visualize.
+            is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D
 
        Returns:
-           NONE: but outputs visualization of graph.
+           This function does not return a value, it performs an action by outputting the visualization of the given graph using plt.
        """
     g = graph
     if is_2D:
@@ -703,13 +739,13 @@ def visualize(graph, is_2D):
 
 def filterGraph(graph):
     """
-    Filters the graph by keeping only edges between vertices of the same color.
+    This function returns a subgraph that is created by filtering the given graph to only contain edges that connect vertices of the same color.
 
     Args:
         graph (ig.Graph): The input graph.
 
     Returns:
-        ig.Graph: The filtered graph.
+        filteredGraph (igraph.Graph): The filtered graph with only edges between the same color vertices.
     """
     edgeList = graph.get_edgelist()
     keptEdges = []
@@ -731,13 +767,14 @@ def filterGraph(graph):
 
 def connectedComponents(graph):
     """
-    Identifies the connected components of the filtered graph.
+    This function identifies the connected components of a filtered graph and returns lists that contain the vertices that are part of the connected components.
+    It filters based on ‘black’ vertices that connect to the ‘red’ metavertex and ‘white’ vertices that connect to the ‘blue’ metavertex.
 
     Args:
         graph (ig.Graph): The input graph.
 
     Returns:
-        list: A list of connected components.
+        connected_comp (list): The list will contain a list or several lists, depending on how many connected components there are. Each list contains the vertices that are part of the connected component.
     """
     vertices = graph.vcount()
     edgeList = set(graph.get_edgelist())
