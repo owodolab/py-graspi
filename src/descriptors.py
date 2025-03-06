@@ -29,6 +29,8 @@ class GraphData:
         self.interface_edge_comp_paths = 0
         self.CT_n_D_adj_An = 0
         self.CT_n_A_adj_Ca = 0
+        self.redVertex = None
+        self.blueVertex = None
 
     def compute_shortest_paths(self, red_vertex, blue_vertex):
         """ Compute and store shortest paths from red and blue vertices. """

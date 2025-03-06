@@ -4,17 +4,13 @@ import os
 import sys
 
 sys.path.append(os.path.abspath('../src'))
-from src import igraph_testing as ig
-from src import descriptors as d
+import igraph_testing as ig
+import descriptors as d
 
 
-(g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-             dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-             CT_n_D_adj_An, CT_n_A_adj_Ca) = ig.generateGraphAdj(sys.argv[1])
+graph_data = ig.generateGraphAdj(sys.argv[1])
 
-dic = d.descriptors(g, sys.argv[1], black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-                dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-                CT_n_D_adj_An, CT_n_A_adj_Ca)
+dic = d.descriptors(graph_data, sys.argv[1])
 
 for key, value in dic.items():
     print(key, value)

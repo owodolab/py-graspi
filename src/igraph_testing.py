@@ -1,14 +1,15 @@
 import sys
 
-
 import igraph as ig
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-
-import src.descriptors as d
+import descriptors as d
 
 import math
+
+from urllib3.util import resolve_ssl_version
+
 DEBUG = False
 PERIODICITY = True
 
@@ -38,6 +39,8 @@ class GraphData:
         self.interface_edge_comp_paths = 0
         self.CT_n_D_adj_An = 0
         self.CT_n_A_adj_Ca = 0
+        self.redVertex = None
+        self.blueVertex = None
 
     def compute_shortest_paths(self, red_vertex, blue_vertex):
         """ Compute and store shortest paths from red and blue vertices. """
@@ -70,6 +73,8 @@ def adjList(fileName):
     vertex_color = []
     black_vertices = []
     white_vertices = []
+    redVertex = None
+    blueVertex = None
 
     is_2d = True
     with open(fileName, "r") as file:
@@ -176,7 +181,8 @@ def adjList(fileName):
                 edge_labels.append("s")
                 edge_weights.append(0)
 
-    g = ig.Graph.ListDict(edges=adjacency_list, directed=False)
+    edges_dict = {v: [n for n in neighbors] for v, neighbors in adjacency_list.items()}
+    g = ig.Graph.ListDict(edges=edges_dict, directed=False)
     g.vs["color"] = vertex_color
     g.es['label'] = edge_labels
     g.es['weight'] = edge_weights
@@ -189,7 +195,10 @@ def adjList(fileName):
     graph_data.white_vertices = white_vertices
     graph_data.is_2D = is_2d
     graph_data.dim = dim
-
+    graph_data.redVertex = redVertex
+    graph_data.blueVertex = blueVertex
+    if redVertex is not None and blueVertex is not None:
+        graph_data.compute_shortest_paths(red_vertex=redVertex, blue_vertex=blueVertex)
 
     if DEBUG:
         print("Adjacency List: ", adjacency_list)
@@ -203,7 +212,7 @@ def adjList(fileName):
         print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
-    return graph_data, redVertex, blueVertex
+    return graph_data
 
 
 def graphe_adjList(filename):
@@ -434,25 +443,31 @@ def generateGraphAdj(file):
             boolean: returns  a boolean to signal if graph is 2D or not
         """
     # get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
-    edges, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2D, \
-        redVertex, blueVertex, dim = adjList(file)
+    # edges, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2D, \
+    #     redVertex, blueVertex, dim = adjList(file)
+    graph_data = adjList(file)
+
     # labels, totalWhite, totalBlack = vertexColors(file)
     f = open(file, 'r')
     line = f.readline()
     line = line.split()
     dimX = int(line[0])
     dimY = int(line[1])
-    g = ig.Graph.ListDict(edges=edges, directed=False)
-    g.vs["color"] = vertex_color
-    g.es['label'] = edge_labels
-    g.es['weight'] = edge_weights
+
+    g = graph_data.graph
+    is_2D = graph_data.is_2D
+    black_vertices = graph_data.black_vertices
+    white_vertices = graph_data.white_vertices
+    redVertex = graph_data.redVertex
+    blueVertex = graph_data.blueVertex
+    dim = graph_data.dim
 
     # add color to blue and red metavertices
     g.vs[g.vcount() - 2]['color'] = 'blue'
     g.vs[g.vcount() - 1]['color'] = 'red'
 
-    shortest_path_to_red = g.shortest_paths(source=redVertex, weights=g.es['weight'])[0]
-    shortest_path_to_blue = g.shortest_paths(source=blueVertex, weights=g.es['weight'])[0]
+    shortest_path_to_red = g.shortest_paths(source=graph_data.redVertex, weights=g.es['weight'])[0]
+    shortest_path_to_blue = g.shortest_paths(source=graph_data.blueVertex, weights=g.es['weight'])[0]
 
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY:
@@ -474,8 +489,8 @@ def generateGraphAdj(file):
                 g.es[g.ecount() - 1]['weight'] = math.sqrt(2)
 
     fg_blue, fg_red = filterGraph_blue_red(g)
-    redComponent = set(fg_red.subcomponent(redVertex, mode="ALL"))
-    blueComponent = set(fg_blue.subcomponent(blueVertex, mode="ALL"))
+    redComponent = set(fg_red.subcomponent(graph_data.redVertex, mode="ALL"))
+    blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
 
     # Add Green Interface and it's color
     g.add_vertices(1)
@@ -485,17 +500,12 @@ def generateGraphAdj(file):
     if DEBUG:
         black_green_neighbors = []
 
-    # counter for CT_n_D_adj_An
+    # Initialize counters
     CT_n_D_adj_An = 0
-    # counter for CT_n_A_adj_Ca
     CT_n_A_adj_Ca = 0
-    # counter for green black interface edges
     black_green = 0
-    # counter for black interface vertices to red
     black_interface_red = 0
-    # counter for white interface vertices to blue
     white_interface_blue = 0
-    # counter for interface edges for complementary paths
     interface_edge_comp_paths = 0
 
     edges_index_start = 0
@@ -608,18 +618,17 @@ def generateGraphAdj(file):
         g.es[starting_index:]["label"] = labels
         g.es[starting_index:]["weight"] = weights
 
+
     black_interface_red = len(black)
     white_interface_blue = len(white)
 
-    # Create GraphData object
-    graph_data = GraphData(graph=g, is_2D=is_2D)
-
-    # Store vertex attributes
-    graph_data.black_vertices = black_vertices
-    graph_data.white_vertices = white_vertices
-
-    # Compute shortest paths and store in graph_data
-    graph_data.compute_shortest_paths(red_vertex=redVertex, blue_vertex=blueVertex)
+    # Updating final computed values into graph_data
+    graph_data.black_green = black_green
+    graph_data.black_interface_red = CT_n_D_adj_An
+    graph_data.white_interface_blue = CT_n_A_adj_Ca
+    graph_data.interface_edge_comp_paths = interface_edge_comp_paths
+    graph_data.CT_n_D_adj_An = CT_n_D_adj_An
+    graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
 
     if DEBUG:
         print(g.vs['color'])
@@ -839,17 +848,15 @@ def main():
                     print(key, value)
 
         elif sys.argv[1] != "-g":
-            (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-             dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-             CT_n_D_adj_An, CT_n_A_adj_Ca)= generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+            graph_data= generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+            visualize(graph_data.graph, graph_data.is_2D)
+            filteredGraph = filterGraph(graph_data.graph)
+            visualize(filteredGraph, graph_data.is_2D)
 
             if DEBUG:
-                dic = d.descriptors(g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-                dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-                CT_n_D_adj_An, CT_n_A_adj_Ca)
+                dic = d.descriptors(graph_data.g, graph_data.is_2D, graph_data.black_vertices, graph_data.white_vertices, graph_data.black_green, graph_data.black_interface_red, graph_data.white_interface_blue,
+                graph_data.dim, graph_data.interface_edge_comp_paths, graph_data.shortest_path_to_red, graph_data.shortest_path_to_blue,
+                graph_data.CT_n_D_adj_An, graph_data.CT_n_A_adj_Ca)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
@@ -881,20 +888,18 @@ def main():
 
 
         elif sys.argv[1] != "-g":
-            (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-             dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-             CT_n_D_adj_An, CT_n_A_adj_Ca) = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+            graph_data = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
+            visualize(graph_data.graph, graph_data.is_2D)
+            filteredGraph = filterGraph(graph_data.graph)
+            visualize(filteredGraph, graph_data.is_2D)
 
             if DEBUG:
-                dic = d.descriptors(g)
+                dic = d.descriptors(graph_data.graph)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
             if DEBUG:
-                dic = d.descriptors(g)
+                dic = d.descriptors(graph_data.graph)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
