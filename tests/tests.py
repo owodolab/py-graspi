@@ -199,9 +199,9 @@ def main():
     Outputs the generated pdf to the user.
     """
     if PDF:
-        pdf.output(f"{current_dir}/py_graspi/test_results.pdf")
+        pdf.output(f"{parent_dir}/data/test_results.pdf")
         print("PDF Generated")
-        webbrowser.open_new_tab(f"{current_dir}/py_graspi/test_results.pdf")
+        webbrowser.open_new_tab(f"{parent_dir}/data/test_results.pdf")
 
 if __name__ == "__main__":
     main()
