@@ -17,12 +17,12 @@ def CC_descriptors(graph,totalBlack, totalWhite):
         graph (igraph.Graph): The input graph.
 
     Returns:
-        int: The number of connected components with at least one 'black' vertex.STAT_CC_D
-        int: The number of connected components with at least one 'white' vertex.STAT_CC_A
-        int: The number of connected components with 'black' and 'red' vertices (top).STAT_CC_D_An
-        int: The number of connected components with 'white' and 'blue' vertices (bottom).STAT_CC_A_Ca
-        float: The fraction of 'black' vertices in connected components with 'black' vertices (top).CT_f_conn_D_An
-        float: The fraction of 'white' vertices in specific connected components (bottom).CT_f_conn_A_Ca
+        int: The number of connected components with at least one 'black' vertex.
+        int: The number of connected components with at least one 'white' vertex.
+        int: The number of connected components with 'black' and 'red' vertices (top).
+        int: The number of connected components with 'white' and 'blue' vertices (bottom).
+        float: The fraction of 'black' vertices in connected components with 'black' vertices (top).
+        float: The fraction of 'white' vertices in specific connected components (bottom).
     """
     cc = ig.connectedComponents(graph);
     countBlack = 0
