@@ -4,7 +4,7 @@ import csv
 
 def functionRuntime(count,function, *argv):
     """
-    Measures the average runtime of a function over a specified number of executions.
+    This function measures the average runtime of a function over a specified number of executions.
 
     Args:
         count (int): The number of times to execute the function.
@@ -12,7 +12,8 @@ def functionRuntime(count,function, *argv):
         *argv: Arguments to be passed to the function.
 
     Returns:
-        float: The average execution time in seconds across the `count` executions.
+        avgExecution (float): The average execution time in seconds across the `count` executions.
+
     """
     totaltime = 0
     
@@ -29,14 +30,14 @@ def functionRuntime(count,function, *argv):
 
 def functionMemory(function, *argv):
     """
-    Measures the peak memory usage of a function during its execution.
+    This function measures the peak memory usage of a function during its execution.
 
     Args:
         function (Callable): The function to measure memory usage for.
         *argv: Arguments to be passed to the function.
 
     Returns:
-        int: The memory used in bytes during the function's execution.
+        stats (int): The memory used in bytes during the function's execution.
     """
     tracemalloc.start()
     function(*argv)
@@ -48,8 +49,7 @@ def functionMemory(function, *argv):
 
 def csvMaker(fileName, n, dim, count, graphGen, graphGenPar,graphFilt, graphFiltPar,shortPath, shortPathPar):
     """
-    Runs multiple graph-related functions, records their runtime and memory usage,
-    and stores the results in a CSV file.
+    This function runs multiple graph-related functions, records their runtime and memory usage, and stores the results in a CSV file.
 
     Args:
         fileName (str): The name of the CSV file to write results to.
@@ -64,7 +64,7 @@ def csvMaker(fileName, n, dim, count, graphGen, graphGenPar,graphFilt, graphFilt
         shortPathPar (tuple): Parameters for the shortest path function.
 
     Returns:
-        None: The function writes results to the specified CSV file.
+        This function does not return a value, it performs an action by writing the results to the specified CSV file.
     """
     row = [n,(n**dim)]
     totalTime = 0
