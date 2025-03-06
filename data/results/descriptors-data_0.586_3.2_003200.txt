@@ -1,26 +1,3 @@
-<<<<<<< HEAD
-data_0.586_3.2_003200 Results
-STAT_n passed - 65536 is the same as expected 65536
-STAT_e passed - 2286 is the same as expected 2286
-STAT_n_D passed - 26878 is the same as expected 26878
-STAT_n_A passed - 38658 is the same as expected 38658
-STAT_CC_D passed - 9 is the same as expected 9
-STAT_CC_A passed - 1 is the same as expected 1
-STAT_CC_D_An passed - 1 is the same as expected 1
-STAT_CC_A_Ca passed - 1 is the same as expected 1
-ABS_f_D passed - 0.410125732421875 is the same as expected 0.410126
-DISS_wf10_D failed - 0.3176353809982719 is not the same as expected 0.318549
-DISS_f10_D failed - 0.5896644095542823 is not the same as expected 0.58613
-CT_f_e_conn passed - 0.32720909886264216 is the same as expected 0.327209
-CT_f_conn_D_An passed - 0.40244809881687627 is the same as expected 0.402448
-CT_f_conn_A_Ca passed - 1.0 is the same as expected 1
-CT_e_conn passed - 748 is the same as expected 748
-CT_e_D_An passed - 748 is the same as expected 748
-CT_e_A_Ca passed - 2318 is the same as expected 2318
-CT_f_D_tort1 passed - 1.0 is the same as expected 1
-CT_f_A_tort1 passed - 0.5224274406332454 is the same as expected 0.522427
-{'STAT_n': 65536, 'STAT_e': 2286, 'STAT_n_D': 26878, 'STAT_n_A': 38658, 'STAT_CC_D': 9, 'STAT_CC_A': 1, 'STAT_CC_D_An': 1, 'STAT_CC_A_Ca': 1, 'ABS_f_D': 0.410125732421875, 'DISS_f10_D': 0.5896644095542823, 'DISS_wf10_D': 0.3176353809982719, 'CT_f_e_conn': 0.32720909886264216, 'CT_f_conn_D_An': 0.40244809881687627, 'CT_f_conn_A_Ca': 1.0, 'CT_e_conn': 748, 'CT_e_D_An': 748, 'CT_e_A_Ca': 2318, 'CT_n_D_adj_An': 512, 'CT_n_A_adj_Ca': 512, 'CT_f_D_tort1': 1.0, 'CT_f_A_tort1': 0.5224274406332454}
-=======
 Morphology: data_0.586_3.2_003200
 STAT_n 65536
 STAT_e 2286
@@ -30,17 +7,17 @@ STAT_CC_D 9
 STAT_CC_A 1
 STAT_CC_D_An 1
 STAT_CC_A_Ca 1
+ABS_wf_D 0.254932737591933
 ABS_f_D 0.410125732421875
-DISS_f10_D 0.5861299203809808
-DISS_wf10_D 0.31854894013412693
+DISS_f10_D 0.5896644095542823
+DISS_wf10_D 0.3176353809982719
 CT_f_e_conn 0.32720909886264216
 CT_f_conn_D_An 0.40244809881687627
 CT_f_conn_A_Ca 1.0
 CT_e_conn 748
 CT_e_D_An 748
-CT_e_A_Ca 1538
+CT_e_A_Ca 2318
 CT_n_D_adj_An 512
 CT_n_A_adj_Ca 512
 CT_f_D_tort1 1.0
 CT_f_A_tort1 0.5224274406332454
->>>>>>> 39c1fb50e44f155786ea08ec190e618cf31f3d89
