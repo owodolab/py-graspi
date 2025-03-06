@@ -7,23 +7,25 @@ import igraph_testing as ig
 
 def CC_descriptors(graph,totalBlack, totalWhite):
     """
-    Counts the connected components that contain at least one 'black' vertex.
-    Counts the connected components that contain at least one 'white' vertex.
-    Counts the connected components containing 'black' vertices and 'red' vertex (top).
-    Counts the connected components containing 'white' vertices and 'blue' vertex (bottom).
-    Calculates the fraction of 'black' vertices in specific connected components with red and black vertices (top).
-    Calculates the fraction of 'white' vertices in connected components with 'white' and 'blue' vertices (bottom).
+    This function computes the connected component descriptors that correspond to the following descriptors:
+    STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, and countWhite_Blue_conn.
+    Auxiliary quantities such as, ‘countBlack_Red_conn’ and ‘countWhite_Blue_conn’ are only used to compute CT_f_conn_D_An and CT_f_conn_A_Ca.
 
     Args:
         graph (igraph.Graph): The input graph.
+        totalBlack (int): The number of black vertices (STAT_n_D)
+        totalWhite (int): The number of white vertices (STAT_n_A)
 
     Returns:
-        int: The number of connected components with at least one 'black' vertex.
-        int: The number of connected components with at least one 'white' vertex.
-        int: The number of connected components with 'black' and 'red' vertices (top).
-        int: The number of connected components with 'white' and 'blue' vertices (bottom).
-        float: The fraction of 'black' vertices in connected components with 'black' vertices (top).
-        float: The fraction of 'white' vertices in specific connected components (bottom).
+        STAT_CC_D (int): The number of connected components with at least one 'black' vertex.
+        STAT_CC_A (int): The number of connected components with at least one 'white' vertex.
+        STAT_CC_D_An (int): The number of connected components with 'black' vertices that are connected to the top ‘red’ metavertex/anode.
+        STAT_CC_A_Ca (int): The number of connected components with 'white' vertices that are connected to the bottom ‘blue’ metavertex/cathode.
+        CT_f_conn_D_An (float): The fraction of 'black' vertices that connect to the top.
+        CT_f_conn_A_Ca (float): The fraction of 'white' vertices that connect to the bottom.
+        countBlack_Red_conn (int): The total number of ‘black’ vertices in connected components that connect to the top.
+        countWhite_Blue_conn (int): The total number of ‘white’ vertices in connected components that connect to the bottom.
+
     """
     cc = ig.connectedComponents(graph);
     countBlack = 0
