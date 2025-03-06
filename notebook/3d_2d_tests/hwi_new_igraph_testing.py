@@ -288,20 +288,13 @@ def generateGraphAdj(file):
     import time
     const_adj_start = time.time()
     edges, edge_labels, is_2D = adjList(file) #?
+
+    labels = vertexColors(file) #?
     const_adj_end = time.time()     
     const_adj_time = const_adj_end - const_adj_start
 
-    print("const adj time : ",const_adj_time)    
+    print("PART #1 time : ",const_adj_time)    
 
-    vertexcolor_start = time.time()
-    labels = vertexColors(file) #?
-
-    vertexcolor_end = time.time()     
-    vertexcolor_time = vertexcolor_end - vertexcolor_start
-
-    print("vertexcolor time : ", vertexcolor_time)    
-
-    others_start = time.time()
     f = open(file, 'r')
     line = f.readline()
     line = line.split()
@@ -311,6 +304,7 @@ def generateGraphAdj(file):
     g.vs["color"] = labels
     g.es['label'] = edge_labels
 
+    others_start = time.time()
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY: #?
         for i in range(0, g.vcount() - 2, dimX):
@@ -342,7 +336,7 @@ def generateGraphAdj(file):
     others_end = time.time()     
     others_time = others_end - others_start
 
-    print("others time : ",others_time)    
+    print("PART #2 time : ",others_time)    
 
     loop_start = time.time()
     #Add black/white edges to green interface node.
@@ -366,7 +360,7 @@ def generateGraphAdj(file):
     loop_end = time.time()     
     loop_time = loop_end - loop_start
 
-    print("loop time : ",loop_time)    
+    print("PART #3 time : ",loop_time)    
 
     if DEBUG:
         print(g.vs['color'])
@@ -523,8 +517,8 @@ def connectedComponents(graph):
     edgeList = set(graph.get_edgelist())
     fg = filterGraph(graph)
     cc = fg.connected_components()
-    redVertex = None;
-    blueVertex = None;
+    redVertex = None
+    blueVertex = None
     blackCCList = []
     whiteCCList = []
     # print(len(cc))
@@ -595,7 +589,7 @@ def shortest_path(graph, vertices, toVertex, fileName):
     numVertices = graph.vcount()
     ccp = graph.connected_components()
     listOfShortestPaths = {}
-    vertex = numVertices;
+    vertex = numVertices
 
     if toVertex == 'blue':
         vertex = numVertices - 2

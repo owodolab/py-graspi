@@ -68,7 +68,7 @@ def adjList(fileName):
                 # read each vertice
                 line = file.readline().strip().split(' ')
                 for x in range(dimX):
-                    current_vertex = z * dimY * dimX + y * dimX + x
+                    current_vertex = z * dimY * dimX + y * dimX + x # because it is sequentially stored in memory
                     # adding color to vertices to reduce runtime
                     if len(line[0]) > 0:
                         color_code = line[x]
@@ -83,10 +83,10 @@ def adjList(fileName):
 
                     neighbors = []
                     for dx, dy, dz in offsets:
-                        nx, ny, nz = x + dx, y + dy, z + dz
+                        nx, ny, nz = x + dx, y + dy, z + dz 
                         if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
                             neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
-                            if (dx, dy, dz) == offsets[1] or (dx, dy, dz) == offsets[2] or (dx, dy, dz) == offsets[3]:
+                            if (dx, dy, dz) == offsets[1] or (dx, dy, dz) == offsets[2] or (dx, dy, dz) == offsets[3]: #improvement point : loop by index and compare with index
                                 if DEBUG:
                                     first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("f")
@@ -106,7 +106,9 @@ def adjList(fileName):
                     adjacency_list[current_vertex] = neighbors
 
 
-    if not is_2d:
+    #improvement point 2: combine two loop into 1
+    #improvement point 3: filterGraph_blue_red() 에서의 keptEdge_blue를 여기로 옮길 수도 있는거 아닌가?
+    if not is_2d:   
         # add edges to Blue Node for 3D
         adjacency_list[dimZ * dimY * dimX] = []
         blueVertex = dimZ * dimY * dimX
@@ -350,6 +352,8 @@ def filterGraph_blue_red(graph):
     keptWeights_red= []
 
     #Checks edges and keeps only edges that connect to the same colored vertices
+    #improvement point 4: graph.vs[toNode]['color'] caching? (make a blue_list)
+      
     for edge in edgeList:
         currentNode = edge[0]
         toNode = edge[1]
@@ -364,7 +368,7 @@ def filterGraph_blue_red(graph):
             keptEdges_blue.append(edge)
             keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
         
-        if ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')) :
+        if ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')):
             keptEdges_red.append(edge)
             keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
 
@@ -397,7 +401,7 @@ def generateGraphAdj(file):
     
     const_adj_end = time.time()     
     const_adj_time = const_adj_end - const_adj_start
-    print("const adj time : ",const_adj_time)    
+    print("PART #1 time : ",const_adj_time)    
 
     # labels, totalWhite, totalBlack = vertexColors(file)
     f = open(file, 'r')
@@ -414,15 +418,16 @@ def generateGraphAdj(file):
     g.vs[g.vcount()-2]['color'] = 'blue'
     g.vs[g.vcount()-1]['color'] = 'red'
 
-    shortest_start = time.time()
-    shortest_path_to_red = g.shortest_paths(source = redVertex, weights = g.es['weight'])[0]
+    # shortest_start = time.time()
+    shortest_path_to_red = g.shortest_paths(source = redVertex, weights = g.es['weight'])[0]    #different point 1
     shortest_path_to_blue = g.shortest_paths(source = blueVertex,weights = g.es['weight'])[0]
 
-    shortest_end = time.time()     
-    shortest_time = shortest_end - shortest_start
+    # shortest_end = time.time()     
+    # shortest_time = shortest_end - shortest_start
 
-    print("shortest time : ", shortest_time)    
-    
+    # print("shortest time : ", shortest_time)    
+
+    others_start = time.time()    
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY:
         for i in range(0, g.vcount() - 2, dimX):
@@ -442,11 +447,14 @@ def generateGraphAdj(file):
                 g.es[g.ecount()-1]['label'] = 's'
                 g.es[g.ecount()-1]['weight'] = math.sqrt(2)
 
-
-    fg_blue, fg_red = filterGraph_blue_red(g)
+    filter_start = time.time()
+    fg_blue, fg_red = filterGraph_blue_red(g)   # different point 2
     redComponent = set(fg_red.subcomponent(redVertex, mode="ALL"))
     blueComponent = set(fg_blue.subcomponent(blueVertex, mode="ALL"))
+    filter_end = time.time()
+    filter_time = filter_end - filter_start
 
+    print("filter time (in PART #2):", filter_time)
     
 
     #Add Green Interface and it's color
@@ -479,6 +487,10 @@ def generateGraphAdj(file):
     black = set()
 
     vertices = set()
+    others_end = time.time()     
+    others_time = others_end - others_start
+
+    print("PART #2 time : ",others_time)    
 
     loop_start = time.time()
 
@@ -490,6 +502,7 @@ def generateGraphAdj(file):
         if starting_index == edges_index_start:
             break
         
+        #all edge traversal
         #Add black/white edges to green interface node.
         for edge in g.es[edges_index_start:]:
             edge_count += 1
@@ -593,7 +606,7 @@ def generateGraphAdj(file):
     loop_end = time.time()     
     loop_time = loop_end - loop_start
 
-    print("loop time : ",loop_time)    
+    print("PART #3 time : ",loop_time)    
 
 
     if DEBUG:

@@ -53,6 +53,7 @@ def adjList(fileName):
                 for x in range(dimX):
                     current_vertex = z * dimY * dimX + y * dimX + x
                     neighbors = []
+
                     for dx, dy, dz in offsets:
                         nx, ny, nz = x + dx, y + dy, z + dz
                         if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
