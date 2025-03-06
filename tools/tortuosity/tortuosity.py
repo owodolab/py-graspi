@@ -3,9 +3,9 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 sys.path.append(os.path.abspath('../../src'))
-# sys.path.append(os.path.abspath('../../data'))
+#sys.path.append(os.path.abspath('../../data'))
 
-import igraph_testing as ig
+import src.igraph_testing as ig
 
 def find_coords(filename):
     """

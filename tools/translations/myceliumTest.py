@@ -5,6 +5,7 @@ sys.path.append(os.path.abspath('../../src'))
 sys.path.append(os.path.abspath('translations'))
 
 import igraph_testing as ig
+
 import img_to_txt as translate
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Button
@@ -231,17 +232,17 @@ def main():
     translate.img_to_txt(input_file,resize_factor)
     txt_filename = "resized/resized_" +input_file[18:-4]+ "_" + str(resize_factor) +"x.txt"
     print("creating graph")
-    (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-     dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-     CT_n_D_adj_An, CT_n_A_adj_Ca) = ig.generateGraphAdj(txt_filename)
+    graph_data = ig.generateGraphAdj(txt_filename)
+
+
     print("graph created")
     print("filtering graph)")
-    whiteFilteredGraph = filter_white_vertices(g)
+    whiteFilteredGraph = filter_white_vertices(graph_data.graph)
     lWhiteSubGraph = get_largest_subgraph(whiteFilteredGraph)
     print("graph filtered")
     visualize(lWhiteSubGraph)
     print("filtering graph")
-    blackFilteredGraph = filter_black_vertices(g)
+    blackFilteredGraph = filter_black_vertices(graph_data.graph)
     lBlackSubGraph = get_largest_subgraph(blackFilteredGraph)
     print("graph filtered")
     visualize(lBlackSubGraph)
