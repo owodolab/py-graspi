@@ -7,6 +7,7 @@ class GraphData:
 
     def __init__(self, graph: ig.Graph, is_2D: bool):
         """ Initialize the GraphData object with a graph and its properties. """
+
         self.graph = graph  # Store the igraph graph object
         self.is_2D = is_2D  # Boolean indicating whether the graph is 2D
 
@@ -24,6 +25,8 @@ class GraphData:
         self.interface_edge_comp_paths = 0
         self.CT_n_D_adj_An = 0
         self.CT_n_A_adj_Ca = 0
+        self.redVertex = None
+        self.blueVertex = None
 
     def compute_shortest_paths(self, red_vertex, blue_vertex):
         """ Compute and store shortest paths from red and blue vertices. """

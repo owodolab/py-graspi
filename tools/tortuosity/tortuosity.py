@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 sys.path.append(os.path.abspath('../../src'))
 # sys.path.append(os.path.abspath('../../data'))
 
-from src import igraph_testing as ig
+import igraph_testing as ig
 
 def find_coords(filename):
     """
