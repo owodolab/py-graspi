@@ -152,7 +152,7 @@ def adjList(fileName):
     g.es['weight'] = edge_weights
 
     # Create GraphData object
-    graph_data = GraphData(graph=g, is_2D=is_2d)
+    graph_data = GraphData.GraphData(graph=g, is_2D=is_2d)
 
     # Store vertex attributes
     graph_data.black_vertices = black_vertices
@@ -588,8 +588,8 @@ def generateGraphAdj(file):
 
     # Updating final computed values into graph_data
     graph_data.black_green = black_green
-    graph_data.black_interface_red = CT_n_D_adj_An
-    graph_data.white_interface_blue = CT_n_A_adj_Ca
+    graph_data.black_interface_red = black_interface_red
+    graph_data.white_interface_blue = white_interface_blue
     graph_data.interface_edge_comp_paths = interface_edge_comp_paths
     graph_data.CT_n_D_adj_An = CT_n_D_adj_An
     graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
@@ -818,9 +818,7 @@ def main():
             visualize(filteredGraph, graph_data.is_2D)
 
             if DEBUG:
-                dic = d.descriptors(graph_data.g, graph_data.is_2D, graph_data.black_vertices, graph_data.white_vertices, graph_data.black_green, graph_data.black_interface_red, graph_data.white_interface_blue,
-                graph_data.dim, graph_data.interface_edge_comp_paths, graph_data.shortest_path_to_red, graph_data.shortest_path_to_blue,
-                graph_data.CT_n_D_adj_An, graph_data.CT_n_A_adj_Ca)
+                dic = d.descriptors(graph_data.g)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
