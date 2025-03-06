@@ -206,7 +206,7 @@ python plt_to_txt.py plt/data_4_4.plt
 9. Make sure the translated file with .txt extension has been made and placed in the plt directory to ensure the file has been executed correctly.
 
 ## Translate Image File Into Truncated .txt File
-1. make sure you have py-graspi installed: pip install py-graspi
+1. Make sure you have py-graspi installed: pip install py-graspi
 2. Make sure you cd into py_graspi directory first. 
 3. The command line format to translate an image file into its truncated .txt file is as follows:
 ```
