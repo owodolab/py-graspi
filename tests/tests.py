@@ -2,7 +2,6 @@ import os
 import sys
 sys.path.append(os.path.abspath('../src'))
 sys.path.append(os.path.abspath('../tools/tortuosity'))
-
 import src.igraph_testing as ig
 import src.descriptors as ds
 import fpdf

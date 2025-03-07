@@ -1,5 +1,3 @@
-# from py_graspi import igraph_testing as ig
-# from py_graspi import descriptors as d
 import os
 import sys
 
