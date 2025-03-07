@@ -17,23 +17,14 @@ PERIODICITY = True
 
 def adjList(fileName):
     """
-        This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph.
-         Also computed is data such as what type of connection each edge contributes to, edge weights, and where the anode and cathode are within the graph.
+        This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph. It also generates additional
+        graph data stored in the graph_data object.
 
         Args:
             filename (str): The name of the file containing the graph data.
 
         Returns:
-            adjacency_list (dict): This is a dictionary that contains lists that represent each vertice and it’s neighboring vertices. A dictionary stores data in key:value pairs, here, the key is the vertex and the values are a list of ints that contain the neighbors indexes for that vertice. It’s form for indexing is as such: (int,list[int]).
-            edge_labels (list): This list contains string labels for each of the vertices to indicate what kind of connection it contributes to. ‘f’ means first-order pair, ‘s’ means second-order, and ‘t’ means third order.
-            edge_weights (list): This list contains weights that correspond to each edge based on a computed distance. The type of connection that edge contributes to affects the weight.
-            vertex_color (list): This list denotes a color label from either ‘black’ or ‘white’ for each vertice.
-            black_vertices (list): This list contains the indices of vertices that are ‘black’.
-            white_vertices (list): This list contains the indices of vertices that are ‘white’.
-            is_2d (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D structure.
-            redVertex (int): This is the index of the ‘red’ metavertex (anode) in the graph.
-            blueVertex (int): This is the index of the ‘blue’ metavertex (cathode), in the graph.
-            dim (int): This the value of the dimension the graph is represented in.
+            graph_data (GraphData): The graph data.
 
         """
     adjacency_list = {}
@@ -420,25 +411,13 @@ def filterGraph_blue_red(graph):
 def generateGraphAdj(file):
     """
         This function takes in graph data in the .txt format and constructs the graph with adjacency list representation.
-        It additionally computes data about vertex colors, edges, and various statistics relating to the graph data.
+        It also generates additional graph data stored in the graph_data object.
 
         Args:
             file (str): The name of the file containing the graph data.
 
         Returns:
-            g (igraph.Graph): The graph representation of the given data
-            is_2D (bool):  This is true if the graph represents a 2D structure, and false if it represents a 3D structure.
-            black_vertices (list): This list contains the indices of vertices that are ‘black’.
-            white_vertices (list): This list contains the indices of vertices that are ‘white’.
-            black_green (int): The number of edges between ‘black’ vertices and ‘green’/interface metavertex.
-            black_interface_red (int): The number of ‘black’ vertices connected to the ‘red’/anode metavertex.
-            white_interface_blue (int): The number of ‘white’ vertices connected to the ‘blue’/cathode metavertex.
-            dim (int): This the value of the dimension the graph is represented in.
-            interface_edge_comp_paths (int): This is the number of interface edges for complementary paths.
-            shortest_path_to_red (list): This list contains indices of the vertices that make up the shortest path to the ‘red’ or anode metavertex.
-            shortest_path_to_blue (list): This list contains indices of the vertices that make up the shortest path to the ‘blue’ or cathode metavertex.
-            CT_n_D_adj_An (int): This is the number of ‘black’ vertices that are in direct contact with the ‘red’/anode metavertex.
-            CT_n_A_adj_Ca (int): This is the number of ‘white’ vertices that are in direct contact with the ‘blue’/cathode metavertex.
+            graph_data (GraphData): The graph data.
 
         """
     # get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
