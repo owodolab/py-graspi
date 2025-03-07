@@ -37,7 +37,6 @@ def adjList(fileName):
 
     edge_labels = []
     edge_weights = []
-    vertex_color = []
     black_vertices = []
     white_vertices = []
 
@@ -45,9 +44,9 @@ def adjList(fileName):
     with open(fileName, "r") as file:
         header = file.readline().strip().split(' ')
         print(f"첫 번째 줄 내용: {repr(header)}")  # repr()을 사용하여 줄바꿈 등의 문제 확인
-        dimX = 100
-        dimY = 100
-        # dimX, dimY = int(header[0]), int(header[1])
+        # dimX = 100
+        # dimY = 100
+        dimX, dimY = int(header[0]), int(header[1])
         dim = dimY
         if len(header) < 3:
             dimZ = 1
@@ -63,6 +62,9 @@ def adjList(fileName):
             dim = dimZ
         offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1),
                    (1,0,-1), (1,-1,0)]
+
+        vertex_color = [""] * (dimX * dimY * dimZ)
+
 
         import time
         loadtxt_start = time.time()
@@ -87,28 +89,46 @@ def adjList(fileName):
                     # if len(line[0]) > 0:
                     #     color_code = line[x]
                     if reshaped_data[current_vertex] == 1:
-                        # vertex_color.append('white')
+                        vertex_color[current_vertex] = 'white'
 
                         #append to list of white vertices
                         white_vertices.append(current_vertex)
                     elif reshaped_data[current_vertex] == 0:
-                        # vertex_color.append('black')
+                        vertex_color[current_vertex] = 'black'
 
                         #append to list of black vertices
                         black_vertices.append(current_vertex)
 
+        # for z in range(dimZ):
+        #     for y in range(dimY):
+        #         # read each vertice
+        #         line = file.readline().strip().split(' ')
+        #         for x in range(dimX):
+        #             current_vertex = z * dimY * dimX + y * dimX + x # because it is sequentially stored in memory
+        # #             # adding color to vertices to reduce runtime
+        #             if len(line[0]) > 0:
+        #                 color_code = line[x]
+        #                 if color_code == '1':
+        #                     vertex_color[current_vertex] = 'white'
+        # #                     #append to list of white vertices
+        # #                     white_vertices.append(current_vertex)
+        #                 elif color_code == '0':
+        #                     vertex_color[current_vertex] = 'black'
+        # #                     #append to list of black vertices
+        # #                     black_vertices.append(current_vertex)
+
                     neighbors = []
-                    for dx, dy, dz in offsets:
+                    for i in range(len(offsets)):
+                        dx, dy, dz = offsets[i]
                         nx, ny, nz = x + dx, y + dy, z + dz 
                         if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
                             neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
-                            if (dx, dy, dz) == offsets[1] or (dx, dy, dz) == offsets[2] or (dx, dy, dz) == offsets[3]: #improvement point : loop by index and compare with index
+                            if i >= 1 and i <= 3: #improvement point : loop by index and compare with index
                                 if DEBUG:
                                     first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("f")
                                 edge_weights.append(1)
-                            elif (dx, dy, dz) == offsets[4] or (dx, dy, dz) == offsets[5] or (dx, dy, dz) == offsets[
-                                6] or (dx, dy, dz) == offsets[7] or (dx, dy, dz) == offsets[8]:
+                            elif i >= 4 and i <= 8:
                                 if DEBUG:
                                     third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("t")
@@ -151,7 +171,8 @@ def adjList(fileName):
         blueVertex = dimZ * dimY * dimX
         for z in range(dimZ):
             for x in range(dimX):
-                adjacency_list[dimZ * dimY * dimX].append(z * (dimY * dimX) + x)
+                vertex_index = z * (dimY * dimX) + x
+                adjacency_list[dimZ * dimY * dimX].append(vertex_index)
                 edge_labels.append("s")
                 edge_weights.append(0)
 
@@ -160,9 +181,11 @@ def adjList(fileName):
         redVertex = dimZ * dimY * dimX + 1
         for z in range(dimZ):
             for x in range(dimX):
-                adjacency_list[dimZ * dimY * dimX + 1].append(z * (dimY * dimX) + (dimY - 1) * dimX + x)
+                vertex_index = z * (dimY * dimX) + (dimY - 1) * dimX + x
+                adjacency_list[dimZ * dimY * dimX + 1].append(vertex_index)
                 edge_labels.append("s")
                 edge_weights.append(0)
+
     if DEBUG:
         print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
@@ -394,7 +417,7 @@ def filterGraph_blue_red(graph):
     fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
     fg_red.es['weight'] = keptWeights_red
 
-    return fg_blue, fg_red
+    return fg_blue, fg_red, keptEdges_blue, keptEdges_red
 
 def generateGraphAdj(file):
     """
@@ -426,7 +449,10 @@ def generateGraphAdj(file):
     dimX = int(line[0])
     dimY = int(line[1])
     g = ig.Graph.ListDict(edges=edges, directed=False)
+    color_dict = {0:"black", 1:"white"}
     g.vs["color"] = vertex_color
+
+    # g.vs["color"] = vertex_color
     g.es['label'] = edge_labels
     g.es['weight'] = edge_weights
 
@@ -464,7 +490,7 @@ def generateGraphAdj(file):
                 g.es[g.ecount()-1]['weight'] = math.sqrt(2)
 
     filter_start = time.time()
-    fg_blue, fg_red = filterGraph_blue_red(g)   # different point 2
+    fg_blue, fg_red, keptEdges_blue, keptEdges_red = filterGraph_blue_red(g)   # different point 2
     redComponent = set(fg_red.subcomponent(redVertex, mode="ALL"))
     blueComponent = set(fg_blue.subcomponent(blueVertex, mode="ALL"))
     filter_end = time.time()
@@ -509,6 +535,15 @@ def generateGraphAdj(file):
     print("PART #2 time : ",others_time)    
 
     loop_start = time.time()
+
+    # for edge in keptEdges_red:
+    #     source_vertex = edge.source
+    #     target_vertex = edge.target
+
+    #     source_vertex_color = g.vs[source_vertex]['color']
+    #     target_vertex_color = g.vs[target_vertex]['color']
+
+
 
     while True:
         edges_to_add = []
