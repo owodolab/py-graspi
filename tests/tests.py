@@ -2,7 +2,7 @@ import os
 import tortuosity_histogram as t
 
 import igraph_testing as ig
-import descriptors as ds
+import src.descriptors as ds
 import fpdf
 import numpy as np
 from PIL import Image, ImageOps
