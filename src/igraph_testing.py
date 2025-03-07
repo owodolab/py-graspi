@@ -4,8 +4,8 @@ import igraph as ig
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-import descriptors as d
-import GraphData
+import src.descriptors as d
+import src.GraphData as GraphData
 
 import math
 
