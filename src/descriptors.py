@@ -1,6 +1,6 @@
 import math
 import numpy as np
-import igraph_testing as ig
+import src.igraph_testing as ig
 import GraphData
 
 
