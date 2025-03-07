@@ -4,26 +4,28 @@ import igraph as ig
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-
-import src.descriptors as d
+import descriptors as d
+import GraphData
 
 import math
+
+from urllib3.util import resolve_ssl_version
+
 DEBUG = False
 PERIODICITY = True
-# import tortuosity as t
-'''---------Function to create edges for graph in specified format --------'''
 
 
 def adjList(fileName):
     """
-        Creates an adjacency list from a given file.
+        This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph. It also generates additional
+        graph data stored in the graph_data object.
 
         Args:
             filename (str): The name of the file containing the graph data.
 
         Returns:
-            list: The adjacency list representing the graph, lists for first, second, and third, ordered pairs
-                  as well as a bool to signal if the graph is a 2D or 3D graph.
+            graph_data (GraphData): The graph data.
+
         """
     adjacency_list = {}
     if DEBUG:
@@ -36,6 +38,8 @@ def adjList(fileName):
     vertex_color = []
     black_vertices = []
     white_vertices = []
+    redVertex = None
+    blueVertex = None
 
     is_2d = True
     with open(fileName, "r") as file:
@@ -141,6 +145,26 @@ def adjList(fileName):
                 adjacency_list[dimZ * dimY * dimX + 1].append(z * (dimY * dimX) + (dimY - 1) * dimX + x)
                 edge_labels.append("s")
                 edge_weights.append(0)
+
+    edges_dict = {v: [n for n in neighbors] for v, neighbors in adjacency_list.items()}
+    g = ig.Graph.ListDict(edges=edges_dict, directed=False)
+    g.vs["color"] = vertex_color
+    g.es['label'] = edge_labels
+    g.es['weight'] = edge_weights
+
+    # Create GraphData object
+    graph_data = GraphData.GraphData(graph=g, is_2D=is_2d)
+
+    # Store vertex attributes
+    graph_data.black_vertices = black_vertices
+    graph_data.white_vertices = white_vertices
+    graph_data.is_2D = is_2d
+    graph_data.dim = dim
+    graph_data.redVertex = redVertex
+    graph_data.blueVertex = blueVertex
+    if redVertex is not None and blueVertex is not None:
+        graph_data.compute_shortest_paths(red_vertex=redVertex, blue_vertex=blueVertex)
+
     if DEBUG:
         print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
@@ -153,19 +177,24 @@ def adjList(fileName):
         print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
-    return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim
+    return graph_data
 
 
 def graphe_adjList(filename):
     """
-    Creates an adjacency list from a given file.
+    This function creates the adjacency list for graph data given in .graphe format, it categorizes neighbors of vertices into first, second, and third order.
+    This function is called inside the “generateGraphGraphe” function to help create the necessary information to generate the final graph.
 
     Args:
         filename (str): The name of the file containing the graph data.
 
     Returns:
-        list: The adjacency list representing the graph, lists for first, second, and third, ordered pairs
-                  as well as a bool to signal if the graph is a 2D or 3D graph.
+        adjacency_list (list): This is a list of vertices, where each index of this list corresponds to a vertex and contains a sublist to represent it’s neighboring vertices.
+        first_order_neighbors (list): This is a list of all the first-order pairs.
+        second_order_neighbors (list): This is a list of all the second-order pairs.
+        third_order_neighbors (list): This is a list of all the third-order pairs.
+        is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D structure.
+
     """
     adjacency_list = []
     first_order_neighbors = []
@@ -212,13 +241,13 @@ def graphe_adjList(filename):
 
 def adjvertexColors(fileName):
     """
-    Labels the colors of vertices based on a given file and on Graspi Documentation.
+    This function assigns each vertex a color label based on the data in the specified file and returns a list where each index corresponds to a vertex's color.
 
     Args:
         fileName (str): The name of the file containing the vertex color data.
 
     Returns:
-        list: A list of vertex colors.
+        labels (list): This list contains color labels (‘black’, ‘white’, ‘red’, or ‘blue’) for each vertex or metavertex in the graph.
     """
     labels = []
     with open(fileName, 'r') as file:
@@ -242,13 +271,16 @@ def adjvertexColors(fileName):
 '''********* Constructing the Graph **********'''
 def filterGraph_metavertices(graph):
     """
-    Filters the graph by keeping only edges between vertices of the same color and metavertices
+    This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’/cathode metavertex,
+    and one that contains all the edges that connect the vertices of the same color or involve the ‘red’/anode metavertex.
 
     Args:
         graph (ig.Graph): The input graph.
 
     Returns:
-        ig.Graph: The filtered graph.
+        fg_blue (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ vertex.
+        fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ vertex.
+
     """
     edgeList = graph.get_edgelist()
     keptEdges_blue = []
@@ -284,14 +316,15 @@ def filterGraph_metavertices(graph):
 
 def generateGraphGraphe(file):
     """
-    Constructs a graph from an adjacency list and assigns vertex colors.
+    This function takes in graph data in the .graphe format and constructs the graph with adjacency list representation.
 
     Args:
         file (str): The name of the file containing graph data.
 
     Returns:
-        ig.Graph: The constructed graph with assigned vertex colors.
-        boolean: a boolean to signal if grpah is 2D or not
+        g (igraph.Graph): The graph representation of the given data
+        is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D
+
     """
     # gets an adjacency list and first order pairs list from the file input
     adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2d = graphe_adjList(file)
@@ -331,13 +364,16 @@ def generateGraphGraphe(file):
 
 def filterGraph_blue_red(graph):
     """
-    Filters the graph by keeping only edges between vertices of the same color and metavertices
+    This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’ cathode metavertex,
+    and one that contains all the edges that connect the vertices of the same color or involve the ‘red’ anode metavertex.
 
     Args:
         graph (ig.Graph): The input graph.
 
     Returns:
-        ig.Graph: The filtered graph.
+        fg_blue (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ metavertex.
+        fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ metavertex.
+
     """
     edgeList = graph.get_edgelist()
     keptEdges_blue = []
@@ -374,82 +410,80 @@ def filterGraph_blue_red(graph):
 
 def generateGraphAdj(file):
     """
-        Creates an adjacency list from a given file.
+        This function takes in graph data in the .txt format and constructs the graph with adjacency list representation.
+        It also generates additional graph data stored in the graph_data object.
 
         Args:
-            filename (str): The name of the file containing the graph data.
+            file (str): The name of the file containing the graph data.
 
         Returns:
-            graph: the graph that holds all the edges and vertices based on file input
-            boolean: returns  a boolean to signal if graph is 2D or not
+            graph_data (GraphData): The graph data.
+
         """
-    #get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
-    edges, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2D, \
-        redVertex, blueVertex, dim = adjList(file)
+    # get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
+    # edges, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2D, \
+    #     redVertex, blueVertex, dim = adjList(file)
+    graph_data = adjList(file)
+
     # labels, totalWhite, totalBlack = vertexColors(file)
     f = open(file, 'r')
     line = f.readline()
     line = line.split()
     dimX = int(line[0])
     dimY = int(line[1])
-    g = ig.Graph.ListDict(edges=edges, directed=False)
-    g.vs["color"] = vertex_color
-    g.es['label'] = edge_labels
-    g.es['weight'] = edge_weights
+
+    g = graph_data.graph
+    is_2D = graph_data.is_2D
+    black_vertices = graph_data.black_vertices
+    white_vertices = graph_data.white_vertices
+    redVertex = graph_data.redVertex
+    blueVertex = graph_data.blueVertex
+    dim = graph_data.dim
 
     # add color to blue and red metavertices
-    g.vs[g.vcount()-2]['color'] = 'blue'
-    g.vs[g.vcount()-1]['color'] = 'red'
+    g.vs[g.vcount() - 2]['color'] = 'blue'
+    g.vs[g.vcount() - 1]['color'] = 'red'
 
-    shortest_path_to_red = g.shortest_paths(source = redVertex, weights = g.es['weight'])[0]
-    shortest_path_to_blue = g.shortest_paths(source = blueVertex,weights = g.es['weight'])[0]
+    shortest_path_to_red = g.shortest_paths(source=graph_data.redVertex, weights=g.es['weight'])[0]
+    shortest_path_to_blue = g.shortest_paths(source=graph_data.blueVertex, weights=g.es['weight'])[0]
 
-    
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY:
         for i in range(0, g.vcount() - 2, dimX):
             # first add first neighbor wrap around
             g.add_edge(g.vs[i], g.vs[i + (dimX - 1)])
-            g.es[g.ecount()-1]['label'] = 'f'
-            g.es[g.ecount()-1]['weight'] = 1
+            g.es[g.ecount() - 1]['label'] = 'f'
+            g.es[g.ecount() - 1]['weight'] = 1
 
             # add diagnol wrap arounds
             if i - 1 >= 0:
                 g.add_edge(g.vs[i], g.vs[i - 1])
-                g.es[g.ecount()-1]['label'] = 's'
-                g.es[g.ecount()-1]['weight'] = math.sqrt(2)
+                g.es[g.ecount() - 1]['label'] = 's'
+                g.es[g.ecount() - 1]['weight'] = math.sqrt(2)
 
             if i + (dimX * 2 - 1) <= dimX * dimY:
                 g.add_edge(g.vs[i], g.vs[i + (dimX * 2 - 1)])
-                g.es[g.ecount()-1]['label'] = 's'
-                g.es[g.ecount()-1]['weight'] = math.sqrt(2)
-
+                g.es[g.ecount() - 1]['label'] = 's'
+                g.es[g.ecount() - 1]['weight'] = math.sqrt(2)
 
     fg_blue, fg_red = filterGraph_blue_red(g)
-    redComponent = set(fg_red.subcomponent(redVertex, mode="ALL"))
-    blueComponent = set(fg_blue.subcomponent(blueVertex, mode="ALL"))
+    redComponent = set(fg_red.subcomponent(graph_data.redVertex, mode="ALL"))
+    blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
 
-    
-
-    #Add Green Interface and it's color
+    # Add Green Interface and it's color
     g.add_vertices(1)
-    g.vs[g.vcount()-1]['color'] = 'green'
+    g.vs[g.vcount() - 1]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1].index
 
     if DEBUG:
         black_green_neighbors = []
 
-    # counter for CT_n_D_adj_An
+    # Initialize counters
     CT_n_D_adj_An = 0
-    # counter for CT_n_A_adj_Ca
     CT_n_A_adj_Ca = 0
-    # counter for green black interface edges
     black_green = 0
-    # counter for black interface vertices to red
     black_interface_red = 0
-    # counter for white interface vertices to blue
     white_interface_blue = 0
-    # counter for interface edges for complementary paths
     interface_edge_comp_paths = 0
 
     edges_index_start = 0
@@ -462,7 +496,6 @@ def generateGraphAdj(file):
 
     vertices = set()
 
-
     while True:
         edges_to_add = []
         labels = []
@@ -470,8 +503,8 @@ def generateGraphAdj(file):
         starting_index = len(g.es)
         if starting_index == edges_index_start:
             break
-        
-        #Add black/white edges to green interface node.
+
+        # Add black/white edges to green interface node.
         for edge in g.es[edges_index_start:]:
             edge_count += 1
             source_vertex = edge.source
@@ -480,50 +513,48 @@ def generateGraphAdj(file):
             source_vertex_color = g.vs[source_vertex]['color']
             target_vertex_color = g.vs[target_vertex]['color']
 
-            if(source_vertex_color == 'blue' or target_vertex_color == 'blue'):
-                if(source_vertex_color == 'blue' and target_vertex_color == 'white') \
-                    or (source_vertex_color == 'white' and target_vertex_color == 'blue'):
+            if (source_vertex_color == 'blue' or target_vertex_color == 'blue'):
+                if (source_vertex_color == 'blue' and target_vertex_color == 'white') \
+                        or (source_vertex_color == 'white' and target_vertex_color == 'blue'):
                     CT_n_A_adj_Ca += 1
 
-            if(source_vertex_color == 'red' or target_vertex_color == 'red'):
-                if(source_vertex_color == 'red' and target_vertex_color == 'black') \
-                    or (source_vertex_color == 'black' and target_vertex_color == 'red'):
+            if (source_vertex_color == 'red' or target_vertex_color == 'red'):
+                if (source_vertex_color == 'red' and target_vertex_color == 'black') \
+                        or (source_vertex_color == 'black' and target_vertex_color == 'red'):
                     CT_n_D_adj_An += 1
 
-            #Add black/white edges to green interface node.
+            # Add black/white edges to green interface node.
             if (source_vertex_color == 'black' and target_vertex_color == 'white') \
-                or (source_vertex_color == 'white' and target_vertex_color == 'black'):
+                    or (source_vertex_color == 'white' and target_vertex_color == 'black'):
 
                 if (source_vertex_color == 'black' and source_vertex in redComponent):
                     black.add(source_vertex)
                     vertices.add(source_vertex)
-                if(target_vertex_color == 'black' and target_vertex in redComponent):
+                if (target_vertex_color == 'black' and target_vertex in redComponent):
                     black.add(target_vertex)
                     vertices.add(target_vertex)
-                
+
                 if (source_vertex_color == 'white' and source_vertex in blueComponent):
                     white.add(source_vertex)
                 if (target_vertex_color == 'white' and target_vertex in blueComponent):
                     white.add(target_vertex)
 
-                
                 if edge['label'] == 'f':
                     # increment count when black and white interface pair, black has path to top (red), white has path to (bottom) blue
                     if ((source_vertex_color == 'black' and target_vertex_color == 'white') \
-                        and (source_vertex in redComponent and target_vertex in blueComponent))\
+                        and (source_vertex in redComponent and target_vertex in blueComponent)) \
                             or ((source_vertex_color == 'white' and target_vertex_color == 'black') \
                                 and (source_vertex in blueComponent and target_vertex in redComponent)):
                         interface_edge_comp_paths += 1
-                    
 
                     # increment black_green when black to green edge is added
-                    black_green += 1 
+                    black_green += 1
 
-                # getting all the green interface edges that need to be added
+                    # getting all the green interface edges that need to be added
                 try:
-                    source_vertex,green_vertex = min(source_vertex,green_vertex), max(source_vertex,green_vertex)
+                    source_vertex, green_vertex = min(source_vertex, green_vertex), max(source_vertex, green_vertex)
                     index = list(edges_to_add_set).index((source_vertex, green_vertex))
-                    
+
                     if edge['weight'] / 2 < weights[index]:
                         weights[index] = edge['weight'] / 2
                         labels[index] = edge['label']
@@ -533,11 +564,11 @@ def generateGraphAdj(file):
                         extra_edges += 1
                         edges_to_add.append([source_vertex, green_vertex])
                         labels.append(edge['label'])
-                        weights.append(edge['weight']/2)
+                        weights.append(edge['weight'] / 2)
                         edges_to_add_set.add((source_vertex, green_vertex))
 
                 try:
-                    target_vertex,green_vertex = min(target_vertex, green_vertex), max(target_vertex, green_vertex)
+                    target_vertex, green_vertex = min(target_vertex, green_vertex), max(target_vertex, green_vertex)
                     index = list(edges_to_add_set).index((target_vertex, green_vertex))
 
                     if edge['weight'] / 2 < weights[index]:
@@ -545,14 +576,12 @@ def generateGraphAdj(file):
                         labels[index] = edge['label']
 
                 except ValueError:
-                    if (target_vertex,green_vertex) not in edges_to_add_set:
+                    if (target_vertex, green_vertex) not in edges_to_add_set:
                         extra_edges += 1
-                        edges_to_add.append([target_vertex,green_vertex])
+                        edges_to_add.append([target_vertex, green_vertex])
                         labels.append(edge['label'])
-                        weights.append(edge['weight']/2)
-                        edges_to_add_set.add((target_vertex,green_vertex))
-
-
+                        weights.append(edge['weight'] / 2)
+                        edges_to_add_set.add((target_vertex, green_vertex))
 
                 if DEBUG:
                     if source_vertex_color == 'black':
@@ -566,10 +595,18 @@ def generateGraphAdj(file):
         g.add_edges(edges_to_add)
         g.es[starting_index:]["label"] = labels
         g.es[starting_index:]["weight"] = weights
-        
+
 
     black_interface_red = len(black)
     white_interface_blue = len(white)
+
+    # Updating final computed values into graph_data
+    graph_data.black_green = black_green
+    graph_data.black_interface_red = black_interface_red
+    graph_data.white_interface_blue = white_interface_blue
+    graph_data.interface_edge_comp_paths = interface_edge_comp_paths
+    graph_data.CT_n_D_adj_An = CT_n_D_adj_An
+    graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
 
     if DEBUG:
         print(g.vs['color'])
@@ -583,19 +620,18 @@ def generateGraphAdj(file):
         print("Nodes connected to red: ", g.vs[g.vcount() - 2]['color'], g.neighbors(g.vcount() - 2))
         print("Length: ", len(g.neighbors(g.vcount() - 2)))
         # exit()
-    return g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
-        dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
-
+    return graph_data
 
 def generateGraph(file):
     """
-    Generates graph based on file input.
+    This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.
 
     Args:
         file (str): The name of the file containing graph data.
 
     Returns:
-        Generated graph based on input
+        This function generates a graph based on the input so the return type depends on the format of graph data that was given.
+        See “generateGraphAdj” if in .txt, or “generateGraphGraphe” if in .graphe.
     """
     if os.path.splitext(file)[1] == ".txt":
         return generateGraphAdj(file)
@@ -605,14 +641,14 @@ def generateGraph(file):
 
 def visualize(graph, is_2D):
     """
-       Creates a visualization from the given graph
+       This function shows a visualization of the given graph in either 2D or 3D depending on the is_2D boolean.
 
        Args:
-           graph (ig.Graph): The graph to visualize
-           is_2D (bool): A boolean to signal if the graph is 2D or not
+            graph (igraph.Graph): The given graph to visualize.
+            is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D
 
        Returns:
-           NONE: but outputs visualization of graph.
+           This function does not return a value, it performs an action by outputting the visualization of the given graph using plt.
        """
     g = graph
     if is_2D:
@@ -682,13 +718,13 @@ def visualize(graph, is_2D):
 
 def filterGraph(graph):
     """
-    Filters the graph by keeping only edges between vertices of the same color.
+    This function returns a subgraph that is created by filtering the given graph to only contain edges that connect vertices of the same color.
 
     Args:
         graph (ig.Graph): The input graph.
 
     Returns:
-        ig.Graph: The filtered graph.
+        filteredGraph (igraph.Graph): The filtered graph with only edges between the same color vertices.
     """
     edgeList = graph.get_edgelist()
     keptEdges = []
@@ -710,13 +746,14 @@ def filterGraph(graph):
 
 def connectedComponents(graph):
     """
-    Identifies the connected components of the filtered graph.
+    This function identifies the connected components of a filtered graph and returns lists that contain the vertices that are part of the connected components.
+    It filters based on ‘black’ vertices that connect to the ‘red’ metavertex and ‘white’ vertices that connect to the ‘blue’ metavertex.
 
     Args:
         graph (ig.Graph): The input graph.
 
     Returns:
-        list: A list of connected components.
+        connected_comp (list): The list will contain a list or several lists, depending on how many connected components there are. Each list contains the vertices that are part of the connected component.
     """
     vertices = graph.vcount()
     edgeList = set(graph.get_edgelist())
@@ -791,17 +828,13 @@ def main():
                     print(key, value)
 
         elif sys.argv[1] != "-g":
-            (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-             dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-             CT_n_D_adj_An, CT_n_A_adj_Ca)= generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+            graph_data= generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+            visualize(graph_data.graph, graph_data.is_2D)
+            filteredGraph = filterGraph(graph_data.graph)
+            visualize(filteredGraph, graph_data.is_2D)
 
             if DEBUG:
-                dic = d.descriptors(g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-                dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-                CT_n_D_adj_An, CT_n_A_adj_Ca)
+                dic = d.descriptors(graph_data.g)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
@@ -833,20 +866,18 @@ def main():
 
 
         elif sys.argv[1] != "-g":
-            (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-             dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-             CT_n_D_adj_An, CT_n_A_adj_Ca) = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+            graph_data = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
+            visualize(graph_data.graph, graph_data.is_2D)
+            filteredGraph = filterGraph(graph_data.graph)
+            visualize(filteredGraph, graph_data.is_2D)
 
             if DEBUG:
-                dic = d.descriptors(g)
+                dic = d.descriptors(graph_data.graph)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
             if DEBUG:
-                dic = d.descriptors(g)
+                dic = d.descriptors(graph_data.graph)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
