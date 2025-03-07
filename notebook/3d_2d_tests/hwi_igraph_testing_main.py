@@ -43,8 +43,11 @@ def adjList(fileName):
 
     is_2d = True
     with open(fileName, "r") as file:
-        header = file.readline().split(' ')
-        dimX, dimY = int(header[0]), int(header[1])
+        header = file.readline().strip().split(' ')
+        print(f"첫 번째 줄 내용: {repr(header)}")  # repr()을 사용하여 줄바꿈 등의 문제 확인
+        dimX = 100
+        dimY = 100
+        # dimX, dimY = int(header[0]), int(header[1])
         dim = dimY
         if len(header) < 3:
             dimZ = 1
@@ -61,26 +64,38 @@ def adjList(fileName):
         offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1),
                    (1,0,-1), (1,-1,0)]
 
-        
+        import time
+        loadtxt_start = time.time()
+        input_data = np.loadtxt(fileName, skiprows=1)
+        reshaped_data = input_data.flatten()
+        loadtxt_end = time.time()
+        print("loadtxt time : ", loadtxt_end - loadtxt_start)
+        print(dimX)
+        print(dimY)
+        print(dimZ)
+        print(reshaped_data)
+
         #Loops through input and adds adjacency list of current vertex based on Offsets. Offsets, make it so edges aren't duplicated.
         #Also adds edge labels based on Graspi Documentation
         for z in range(dimZ):
             for y in range(dimY):
                 # read each vertice
-                line = file.readline().strip().split(' ')
+                # line = file.readline().strip().split(' ')
                 for x in range(dimX):
                     current_vertex = z * dimY * dimX + y * dimX + x # because it is sequentially stored in memory
                     # adding color to vertices to reduce runtime
-                    if len(line[0]) > 0:
-                        color_code = line[x]
-                        if color_code == '1':
-                            vertex_color.append('white')
-                            #append to list of white vertices
-                            white_vertices.append(current_vertex)
-                        elif color_code == '0':
-                            vertex_color.append('black')
-                            #append to list of black vertices
-                            black_vertices.append(current_vertex)
+                    # if len(line[0]) > 0:
+                    #     color_code = line[x]
+                    if reshaped_data[current_vertex] == 1:
+                        # vertex_color.append('white')
+
+                        #append to list of white vertices
+                        white_vertices.append(current_vertex)
+                    elif reshaped_data[current_vertex] == 0:
+                        # vertex_color.append('black')
+
+                        #append to list of black vertices
+                        black_vertices.append(current_vertex)
 
                     neighbors = []
                     for dx, dy, dz in offsets:

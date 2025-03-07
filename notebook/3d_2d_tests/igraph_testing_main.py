@@ -43,7 +43,7 @@ def adjList(fileName):
 
     is_2d = True
     with open(fileName, "r") as file:
-        header = file.readline().split(' ')
+        header = file.readline().strip().split(' ')
         dimX, dimY = int(header[0]), int(header[1])
         dim = dimY
         if len(header) < 3:
