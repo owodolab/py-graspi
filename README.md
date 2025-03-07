@@ -12,40 +12,89 @@ The basic algorithm requirements include:
   -  Graph visualization
 
 ## Installation
-Download the packages found in requirements.txt after you have set up your virtual environment. 
-Cone the repo by:
+### Manual Installation of Py-Graspi
+First, activate the virtual environment after opening a new project in your preferred IDE. Run this command: 
+```
+./.venv/Scripts/activate
+```
+Clone the project repository by running this command: 
+
+**Note: You must have Git installed onto your system**
 ```
 git clone https://github.com/owodolab/py-graspi.git
 ```
-**Note: You'd need git installed on your system first**
-<br />
-<br />
-  If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
-<br />
-<br />
-Next, you'd need to navigate to the cloned repo using terminal. An example would be:
+If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
+
+Change directory into the py-graspi/ project directory by running this command:
 ```
-cd py-graspi
+cd py-graspi/
 ```
-Next, install the graspi_igraph package by running the following command:
+Install the py-graspi module from PyPI by running this command:
+
+**Note: You must have Python and pip installed onto your system**
 ```
 pip install py-graspi
 ```
-Once installed, to utilize the package remember to import the package:
+Verify that the module has been installed correctly by ensuring that the following command DOES NOT give you a "Package not found" error.
 ```
-import py_graspi as ig
+pip show py-graspi
 ```
 
-**Note: you must have Python and pip installed onto your system**
-<br />
-<br />
   If you do not have Python installed, please visit: https://www.python.org/downloads/
-<br />
-<br />
+
   If you do not have pip installed or are running into issues with pip, please visit: https://pip.pypa.io/en/stable/installation/
-<br />
-<br />
+
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
+
+### Script Installation of Py-Graspi
+Clone the project repository by running this command: 
+
+**Note: You must have Git installed onto your system**
+```
+git clone https://github.com/owodolab/py-graspi.git
+```
+Run the following script to set up and activate the virtual environment and install the py-graspi package:
+```
+python py-graspi/startup.py
+```
+Verify that the module has been installed correctly by ensuring that the last output line on the command line says "Setup complete!" with no errors.
+
+  If you do not have Python installed, please visit: https://www.python.org/downloads/
+
+  If you do not have pip installed or are running into issues with pip, please visit: https://pip.pypa.io/en/stable/installation/
+
+  If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
+
+### Installation and Set-Up of Jupyter Notebook for Py-Graspi
+First, activate the virtual environment after opening a new project in your preferred IDE. Run this command: 
+```
+./.venv/Scripts/activate
+```
+Clone the project repository by running this command: 
+
+**Note: You must have Git installed onto your system**
+```
+git clone https://github.com/owodolab/py-graspi.git
+```
+Change directory into the py-graspi/ project directory by running this command:
+```
+cd py-graspi/
+```
+Install the py-graspi module from PyPI by running this command:
+
+**Note: You must have Python and pip installed onto your system**
+```
+pip install py-graspi
+```
+Install jupyter notebook by running this command: 
+```
+pip install notebook
+```
+Now, open the package in Jupyter Notebook for testing by running this command: 
+```
+jupyter notebook
+```
+A localhost jupyter notebook should open with the same directories and files as the py-graspi package.
   
 ## View Demo Videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
 Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQuN86RUYXvJG_F9MMq?usp=sharing
