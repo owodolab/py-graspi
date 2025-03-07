@@ -107,8 +107,6 @@ Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQu
 
 Now that we have cloned the REPO lets talk about testing.
 
-\*\*\*First and foremost make sure you are in the py-graspi/py_graspi directory. If not you may run into some errors\*\*\*
-
 In this GitHub Repo, you can find test files in the data directory or the 2D-testFile and 3D-testFile directories.
 Inside these directories, some files hold information about either 2d or 3d graphs based on the directory name. 
 When running from command lines you will need to know the complete pathname of the test file you are trying to run.
@@ -116,14 +114,13 @@ When running from command lines you will need to know the complete pathname of t
 There are 2 type of input file formats: *.txt & *.graphe
 ### _*.txt input format:_
 
-
 The command line input to run a graph creation for *.txt files will have the following format:
 ```
 python igraph_testing.py {total pathname of test file}
 ```
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 10x10 graph.
 ```
-python igraph_testing.py 2D-testFile/testFile-10-2D.txt 
+python igraph_testing.py ../data/2D-testFile/testFile-10-2D.txt 
 ```
 ### _*.graphe input format:_
 *.graphe input format is not that different, only extra parameter you need to input is a '-g' before the total pathname of the test file.
@@ -134,7 +131,7 @@ python igraph_testing.py -g {total pathname of test file}
 ````
 If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
 ```
-python igraph_testing.py -g data_4_3.graphe
+python igraph_testing.py -g ../data/data_4_3.graphe
 ```
 ### _Running with Periodicity:_
 We include the option of running any test case with periodicity turned on (only for .txt files). This 
@@ -156,25 +153,26 @@ As long as the inputs follow the format above and a file exists the program shal
 4. Exit out this window following same steps as step 2.
 5. Make sure program exits correctly (code 0).
 
-DISCLAIMER: if any issues occur you may not be in the right directory (py_graspi) or the test file may not exists or be poorly formatted.
+DISCLAIMER: if any issues occur you may not be in the right directory (src) or the test file may not exists or be poorly formatted.
 
 ## To Test Algorithms
 
 To **generate graphs**, call the generateGraph(_file_) function which takes in a input-file name
 returns:
-  - g: graph object
-  - s_2D: bool of whether the graph is 2D
-  - black_vertices: list of all black vertices
-  - white_vertices: list of all white vertices
-  - black_green: number of edges from black to interface (green vertex)
-  - black_interface_red: number of black interface vertices that has a path to top (red)
-  - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
-  - dim: value of vertices in y direction for 2D and z direction for 3D
-  - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
-  - shortest_path_to_red: shortest paths from all vertices to red 
-  - shortest_path_to_blue: shortest paths from all vertices to blue
-  - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
-  - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
+  - graph_Data object - The graph data. It contains the following:
+    - g: graph object
+    - s_2D: bool of whether the graph is 2D
+    - black_vertices: list of all black vertices
+    - white_vertices: list of all white vertices
+    - black_green: number of edges from black to interface (green vertex)
+    - black_interface_red: number of black interface vertices that has a path to top (red)
+    - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
+    - dim: value of vertices in y direction for 2D and z direction for 3D
+    - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
+    - shortest_path_to_red: shortest paths from all vertices to red 
+    - shortest_path_to_blue: shortest paths from all vertices to blue
+    - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
+    - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
 
 ```
 ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
@@ -191,19 +189,20 @@ fg = ig.filterGraph(g)
 ### To get dictionary of descriptors
 
 To test if descriptors are computed correctly, you can run the following script in the terminal to check.
-  -  make sure you are in the py_graspi directory after git cloning
-  -  if not in directory py-graspi/py_graspi, in the terminal, run the command
+  -  make sure you are in the py-graspi directory after git cloning
+  -  if not in directory tests, in the terminal, run the command
      ```
-     cd py_graspi
+     cd tests
      ```
 
 ```
-python simple-test.py data/data_0.5_2.2_001900.txt
+python descriptor_testing.py ../data/data/data_0.5_2.2_001900.txt 
 ```
 This will print out whether the descriptor computation is correct and should take around 10-15 seconds.
 
 The **descriptors stored in a dictionary** can be computed by calling the function descriptors(...)
 It take in values returned from generateGraph() and a input filename as the parameters:
+- graph_Data object - The graph data. It contains the following:
   - graph: graph object
   - filename: input filename used to generate graph
   - black_vertices: list of all black vertices
@@ -250,13 +249,13 @@ python plt_to_txt.py [pathname]
 7. Some files have been placed in the .plt directory for testing.
 8. If you wish to run an example, first delete the translated version of a .plt file if it has been created, and run the following command line input:
 ```
-python plt_to_txt.py plt/data_4_4.plt 
+python plt_to_txt.py plt/5x4x3.plt
 ```
 9. Make sure the translated file with .txt extension has been made and placed in the plt directory to ensure the file has been executed correctly.
 
 ## Translate Image File Into Truncated .txt File
 1. Make sure you have py-graspi installed: pip install py-graspi
-2. Make sure you cd into py_graspi directory first. 
+2. Make sure you cd into the py-graspi directory first. From there, cd into the tools then translations by running 'cd tools/translations'. 
 3. The command line format to translate an image file into its truncated .txt file is as follows:
 ```
 python img_to_txt.py {pathname of image file} {Resize calculation amount}
@@ -266,7 +265,7 @@ python img_to_txt.py {pathname of image file} {Resize calculation amount}
 6. They will be named "resized_" followed by the image file name and correct extension. 
 7. An example command line input that should work for this repo is as follows:
 ```
-python img_to_txt.py images/data_0.5_2.2_001900.png 0.25
+python img_to_txt.py ../../data/images/data_0.5_2.2_001900.png 0.15
 ```
 
 ## 2D & 3D Morphologies Tests
@@ -298,10 +297,10 @@ On this file you will be able to run and view the 2d and 3d morphologies.
 Repeat the above instructions from "2D & 3D Morphologies Tests". New tests are located in the same notebook at the bottom two.
 
 ## Running All 33 Morphologies Tests
-To run the morphologies tests, first make sure you're on the `py-graspi` directory and not `py-graspi/py_graspi`.
+To run the morphologies tests, first make sure you're on the `py-graspi` directory.
 <br>
 <br>
-If you're on `py-graspi/py_graspi`, run the following command:
+Run the following command to start at the py-graspi directory:
 ```
 cd ..
 ```
@@ -347,7 +346,7 @@ PDF Generated (If on pdf mode)
 ### Text Files
 For text files, navigate to the results directory by using the following command:
 ```
-cd py_graspi/results
+cd data/results
 ```
 Use the following command to view the list of text files generated:
 ```
@@ -388,7 +387,7 @@ sudo apt install evince
 
 ## Tortuosity HeatMap Visualization
 This are the steps for visualizing tortuosity via HeatMap.
-1. Make sure you cd into the py_graspi directory.
+1. Make sure you cd into the py-graspi directory, then into tools then tortousity. Run cd tools/tortousity to get there. 
 2. All necessary functions are in the tortuosity.py file.
 3. Code necessary to visualize the tortuosity HeatMap is as follows:
 ```
@@ -399,7 +398,7 @@ have been found and outputted to it's corresponding file in the distances direct
 5. For now there are some file examples in this directory so an example code
 to visualize a heatmap is as follows:
 ```
-python tortuosity.py data/data_0.5_2.2_001900.txt
+Python tortuosity.py ../../data/data/data_0.5_2.2_001900.txt 
 ```
 6. First a tortuosity heatmap will output for Black To Red vertices.
 7. Exit out of this pop up window.
@@ -432,7 +431,7 @@ The mycelium image used is included in the "images" directory called "mycelium.p
 
 The following are steps on how to visualize the graph from this image.
 1. Make sure you have py-graspi installed: pip install py-graspi
-2. Make sure you cd into py_graspi directory first.
+2. Make sure you cd into py-graspi directory first.
 3. The command line format input is as follows
 ```
 python myceliumTest.py {pathname of image file} {Resize calculation amount}
@@ -442,7 +441,7 @@ python myceliumTest.py {pathname of image file} {Resize calculation amount}
 6. If you wish to not resize the original image just input a '1' for the Resize calculation amount, this will keep the original size.
 7. Example command line input is as follows:
 ```
-python myceliumTest.py images/mycelium.png 0.25
+python myceliumTest.py ../../data/images/data_0.5_2.2_001900.png 0.15
 ```
 8. This creates a truncated version of the mycelium image (for runtime purposes) and outputs the largest subgraph of the following filtered graphs:
    1. The first one is a white only vertex graph 
