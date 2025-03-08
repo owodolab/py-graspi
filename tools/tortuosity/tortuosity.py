@@ -176,5 +176,6 @@ def main():
     find_BTR_tortuosity(graphData.graph, graphData.is_2D, filename)
     find_WTB_tortuosity(graphData.graph, graphData.is_2D, filename)
 
+
 if __name__ == '__main__':
     main()

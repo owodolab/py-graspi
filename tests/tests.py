@@ -1,8 +1,7 @@
 import os
-import sys
-sys.path.append(os.path.abspath('../src'))
-sys.path.append(os.path.abspath('../tools/tortuosity'))
-import src.igraph_testing as ig
+import tortuosity_histogram as t
+
+import igraph_testing as ig
 import src.descriptors as ds
 import fpdf
 import numpy as np
@@ -11,7 +10,8 @@ import webbrowser
 import argparse
 import matplotlib.pyplot as plt
 import math
-import tools.tortuosity.tortuosity_histogram as t
+
+
 
 current_dir = os.getcwd()
 # data_path = f"{current_dir}/py_graspi/data/"
@@ -119,6 +119,7 @@ def main():
         Generates the graph for each of the morphology descriptors
         """
         graphData = ig.generateGraph(
+
             data_path + test_file + ".txt")
         print(f"{test_file} Graph Generated")
 
@@ -134,6 +135,7 @@ def main():
                     pdf.cell(40, 8, txt=line, ln=True, align="L")
         else:
             stats = ds.descriptors(graphData, test_file)
+
             print(f"{test_file} Descriptors Generated")
             with open(results_path + "descriptors-" + test_file + ".txt", "w") as txt:
                 txt.write(f"Morphology: {test_file}\n")
@@ -184,6 +186,7 @@ def main():
             pdf.image(hist_path + test_file + "7.png", x=80, y=160, w=60)
 
             heat2 = t.find_WTB_tortuosity(graphData.graph, graphData.is_2D, test_file + ".txt", hist_path + test_file + "8.png","Tortuosity of A-paths to Ca")
+        
             pdf.image(hist_path + test_file + "8.png", x=142, y=160, w=60)
 
 
