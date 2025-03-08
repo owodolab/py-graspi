@@ -12,58 +12,167 @@ The basic algorithm requirements include:
   -  Graph visualization
 
 ## Installation
-Download the packages found in requirements.txt after you have set up your virtual environment. 
-Cone the repo by:
+### Manual Installation of Py-Graspi
+First, activate the virtual environment after opening a new project in your preferred IDE. Run this command: 
+```
+./.venv/Scripts/activate
+```
+Clone the project repository by running this command: 
+
+**Note: You must have Git installed onto your system**
 ```
 git clone https://github.com/owodolab/py-graspi.git
 ```
-**Note: You'd need git installed on your system first**
-<br />
-<br />
-  If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
-<br />
-<br />
-Next, you'd need to navigate to the cloned repo using terminal. An example would be:
+If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
+
+Change directory into the py-graspi/ project directory by running this command:
 ```
-cd py-graspi
+cd py-graspi/
 ```
-Next, install the graspi_igraph package by running the following command:
+Install the py-graspi module from PyPI by running this command:
+
+**Note: You must have Python and pip installed onto your system**
 ```
 pip install py-graspi
 ```
-Once installed, to utilize the package remember to import the package:
+Verify that the module has been installed correctly by ensuring that the following command DOES NOT give you a "Package not found" error.
 ```
-import py_graspi as ig
+pip show py-graspi
 ```
 
-**Note: you must have Python and pip installed onto your system**
-<br />
-<br />
   If you do not have Python installed, please visit: https://www.python.org/downloads/
-<br />
-<br />
+
   If you do not have pip installed or are running into issues with pip, please visit: https://pip.pypa.io/en/stable/installation/
-<br />
-<br />
+
   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
+
+### Script Installation of Py-Graspi
+Clone the project repository by running this command: 
+
+**Note: You must have Git installed onto your system**
+```
+git clone https://github.com/owodolab/py-graspi.git
+```
+Run the following script to set up and activate the virtual environment and install the py-graspi package:
+```
+python py-graspi/startup.py
+```
+Verify that the module has been installed correctly by ensuring that the last output line on the command line says "Setup complete!" with no errors.
+
+  If you do not have Python installed, please visit: https://www.python.org/downloads/
+
+  If you do not have pip installed or are running into issues with pip, please visit: https://pip.pypa.io/en/stable/installation/
+
+  If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
+
+### Installation and Set-Up of Jupyter Notebook for Py-Graspi
+First, activate the virtual environment after opening a new project in your preferred IDE. Run this command: 
+```
+./.venv/Scripts/activate
+```
+Clone the project repository by running this command: 
+
+**Note: You must have Git installed onto your system**
+```
+git clone https://github.com/owodolab/py-graspi.git
+```
+Change directory into the py-graspi/ project directory by running this command:
+```
+cd py-graspi/
+```
+Install the py-graspi module from PyPI by running this command:
+
+**Note: You must have Python and pip installed onto your system**
+```
+pip install py-graspi
+```
+Install jupyter notebook by running this command: 
+```
+pip install notebook
+```
+Now, open the package in Jupyter Notebook for testing by running this command: 
+```
+jupyter notebook
+```
+A localhost jupyter notebook should open with the same directories and files as the py-graspi package.
+  
+## View Demo Videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
+Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQuN86RUYXvJG_F9MMq?usp=sharing
+### Videos
+* **py_graspi_installation**: How to install Py-Graspi and run basic commands.
+* **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
+* **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
+
+## Testing from Command Line
+
+Now that we have cloned the REPO lets talk about testing.
+
+In this GitHub Repo, you can find test files in the data directory or the 2D-testFile and 3D-testFile directories.
+Inside these directories, some files hold information about either 2d or 3d graphs based on the directory name. 
+When running from command lines you will need to know the complete pathname of the test file you are trying to run.
+
+There are 2 type of input file formats: *.txt & *.graphe
+### _*.txt input format:_
+
+The command line input to run a graph creation for *.txt files will have the following format:
+```
+python igraph_testing.py {total pathname of test file}
+```
+If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 10x10 graph.
+```
+python igraph_testing.py ../data/2D-testFile/testFile-10-2D.txt 
+```
+### _*.graphe input format:_
+*.graphe input format is not that different, only extra parameter you need to input is a '-g' before the total pathname of the test file.
+
+The command line input to run a graph creation for *.graphe files will have the following format:
+````
+python igraph_testing.py -g {total pathname of test file} 
+````
+If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
+```
+python igraph_testing.py -g ../data/data_4_3.graphe
+```
+### _Running with Periodicity:_
+We include the option of running any test case with periodicity turned on (only for .txt files). This 
+is done with an added '-p' parameter. This parameter is added first before inputting the test case
+format.
+
+For example, for *.txt cases with periodicity turned on will look like the following:
+```
+python igraph_testing.py -p {total pathname of test file}
+```
+To test this out run the example test case above but with the added '-p' parameter
+to turn periodicity on.
+
+## Output of Command Line Input
+As long as the inputs follow the format above and a file exists the program shall do the following:
+1. Pop up window should appear, this will be the initial visualization of the graph along with red, blue, and green meta vertices.
+2. Exit out of this pop up window with the top right "X" button.
+3. Now a second pop up window should appear, this window will now show a visualization of the filtered version of the graph in step 1.
+4. Exit out this window following same steps as step 2.
+5. Make sure program exits correctly (code 0).
+
+DISCLAIMER: if any issues occur you may not be in the right directory (src) or the test file may not exists or be poorly formatted.
 
 ## To Test Algorithms
 
 To **generate graphs**, call the generateGraph(_file_) function which takes in a input-file name
 returns:
-  - g: graph object
-  - s_2D: bool of whether the graph is 2D
-  - black_vertices: list of all black vertices
-  - white_vertices: list of all white vertices
-  - black_green: number of edges from black to interface (green vertex)
-  - black_interface_red: number of black interface vertices that has a path to top (red)
-  - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
-  - dim: value of vertices in y direction for 2D and z direction for 3D
-  - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
-  - shortest_path_to_red: shortest paths from all vertices to red 
-  - shortest_path_to_blue: shortest paths from all vertices to blue
-  - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
-  - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
+  - graph_Data object - The graph data. It contains the following:
+    - g: graph object
+    - s_2D: bool of whether the graph is 2D
+    - black_vertices: list of all black vertices
+    - white_vertices: list of all white vertices
+    - black_green: number of edges from black to interface (green vertex)
+    - black_interface_red: number of black interface vertices that has a path to top (red)
+    - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
+    - dim: value of vertices in y direction for 2D and z direction for 3D
+    - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
+    - shortest_path_to_red: shortest paths from all vertices to red 
+    - shortest_path_to_blue: shortest paths from all vertices to blue
+    - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
+    - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
 
 ```
 ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
@@ -80,19 +189,20 @@ fg = ig.filterGraph(g)
 ### To get dictionary of descriptors
 
 To test if descriptors are computed correctly, you can run the following script in the terminal to check.
-  -  make sure you are in the py_graspi directory after git cloning
-  -  if not in directory py-graspi/py_graspi, in the terminal, run the command
+  -  make sure you are in the py-graspi directory after git cloning
+  -  if not in directory tests, in the terminal, run the command
      ```
-     cd py_graspi
+     cd tests
      ```
 
 ```
-python simple-test.py data/data_0.5_2.2_001900.txt
+python descriptor_testing.py ../data/data/data_0.5_2.2_001900.txt 
 ```
 This will print out whether the descriptor computation is correct and should take around 10-15 seconds.
 
 The **descriptors stored in a dictionary** can be computed by calling the function descriptors(...)
 It take in values returned from generateGraph() and a input filename as the parameters:
+- graph_Data object - The graph data. It contains the following:
   - graph: graph object
   - filename: input filename used to generate graph
   - black_vertices: list of all black vertices
@@ -126,62 +236,37 @@ To visualize graphs, call visualize(_graph_, _is_2D_)
 g, is_2D = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0:1]     # utilizing the test file found in 2D-testFiles folder as an example
 ig.visual2D(g, is_2D)
 ```
-
-## Testing from Command Line
-
-
-Now that we have cloned the REPO lets talk about testing.
-
-\*\*\*First and foremost make sure you are in the py-graspi/py_graspi directory. If not you may run into some errors\*\*\*
-
-In this GitHub Repo, you can find test files in the data directory or the 2D-testFile and 3D-testFile directories.
-Inside these directories, some files hold information about either 2d or 3d graphs based on the directory name. 
-When running from command lines you will need to know the complete pathname of the test file you are trying to run.
-
-There are 2 type of input file formats: *.txt & *.graphe
-### _*.txt input format:_
-
-
-The command line input to run a graph creation for *.txt files will have the following format:
+## Translating .plt files to .txt files
+These are the steps for translating .plt files to .txt files in order to be turned into graphs.
+1. Make sure you cd into the py_graspi directory.
+2. All necessary functions are in the plt_to_txt.py file.
+3. The command line input format for this file is as follows:
 ```
-python igraph_testing.py {total pathname of test file}
+python plt_to_txt.py [pathname]
 ```
-If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 10x10 graph.
+5. The file in pathname should be in the plt directory and end with the .plt extension, if not this will not work.
+6. It's translated .plt file should show up in the same directory but now with a .txt extension and in .txt formatting when executed with no errors.
+7. Some files have been placed in the .plt directory for testing.
+8. If you wish to run an example, first delete the translated version of a .plt file if it has been created, and run the following command line input:
 ```
-python igraph_testing.py 2D-testFile/testFile-10-2D.txt 
+python plt_to_txt.py plt/5x4x3.plt
 ```
-### _*.graphe input format:_
-*.graphe input format is not that different, only extra parameter you need to input is a '-g' before the total pathname of the test file.
+9. Make sure the translated file with .txt extension has been made and placed in the plt directory to ensure the file has been executed correctly.
 
-The command line input to run a graph creation for *.graphe files will have the following format:
-````
-python igraph_testing.py -g {total pathname of test file} 
-````
-If you have the same test directories as this GitHub Repo you should be able to run the following command line argument to output a 2D 4x3 graph.
+## Translate Image File Into Truncated .txt File
+1. Make sure you have py-graspi installed: pip install py-graspi
+2. Make sure you cd into the py-graspi directory first. From there, cd into the tools then translations by running 'cd tools/translations'. 
+3. The command line format to translate an image file into its truncated .txt file is as follows:
 ```
-python igraph_testing.py -g data_4_3.graphe
+python img_to_txt.py {pathname of image file} {Resize calculation amount}
 ```
-### _Running with Periodicity:_
-We include the option of running any test case with periodicity turned on (only for .txt files). This 
-is done with an added '-p' parameter. This parameter is added first before inputting the test case
-format.
-
-For example, for *.txt cases with periodicity turned on will look like the following:
+4. The "resize calculation amount" is multiplied to the X and Y axis of the original image and this will alter the size of the image's final resized .txt file. 
+5. This should place both a truncated image file and truncated .txt file of the original image file into the "resized" directory. 
+6. They will be named "resized_" followed by the image file name and correct extension. 
+7. An example command line input that should work for this repo is as follows:
 ```
-python igraph_testing.py -p {total pathname of test file}
+python img_to_txt.py ../../data/images/data_0.5_2.2_001900.png 0.15
 ```
-To test this out run the example test case above but with the added '-p' parameter
-to turn periodicity on.
-
-## Output of Command Line Input
-As long as the inputs follow the format above and a file exists the program shall do the following:
-1. Pop up window should appear, this will be the initial visualization of the graph along with red, blue, and green meta vertices.
-2. Exit out of this pop up window with the top right "X" button.
-3. Now a second pop up window should appear, this window will now show a visualization of the filtered version of the graph in step 1.
-4. Exit out this window following same steps as step 2.
-5. Make sure program exits correctly (code 0).
-
-DISCLAIMER: if any issues occur you may not be in the right directory (py_graspi) or the test file may not exists or be poorly formatted.
 
 ## 2D & 3D Morphologies Tests
 To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.
@@ -212,10 +297,10 @@ On this file you will be able to run and view the 2d and 3d morphologies.
 Repeat the above instructions from "2D & 3D Morphologies Tests". New tests are located in the same notebook at the bottom two.
 
 ## Running All 33 Morphologies Tests
-To run the morphologies tests, first make sure you're on the `py-graspi` directory and not `py-graspi/py_graspi`.
+To run the morphologies tests, first make sure you're on the `py-graspi` directory.
 <br>
 <br>
-If you're on `py-graspi/py_graspi`, run the following command:
+Run the following command to start at the py-graspi directory:
 ```
 cd ..
 ```
@@ -261,7 +346,7 @@ PDF Generated (If on pdf mode)
 ### Text Files
 For text files, navigate to the results directory by using the following command:
 ```
-cd py_graspi/results
+cd data/results
 ```
 Use the following command to view the list of text files generated:
 ```
@@ -302,7 +387,7 @@ sudo apt install evince
 
 ## Tortuosity HeatMap Visualization
 This are the steps for visualizing tortuosity via HeatMap.
-1. Make sure you cd into the py_graspi directory.
+1. Make sure you cd into the py-graspi directory, then into tools then tortousity. Run cd tools/tortousity to get there. 
 2. All necessary functions are in the tortuosity.py file.
 3. Code necessary to visualize the tortuosity HeatMap is as follows:
 ```
@@ -313,7 +398,7 @@ have been found and outputted to it's corresponding file in the distances direct
 5. For now there are some file examples in this directory so an example code
 to visualize a heatmap is as follows:
 ```
-python tortuosity.py data/data_0.5_2.2_001900.txt
+Python tortuosity.py ../../data/data/data_0.5_2.2_001900.txt 
 ```
 6. First a tortuosity heatmap will output for Black To Red vertices.
 7. Exit out of this pop up window.
@@ -326,7 +411,6 @@ python tortuosity.py data/data_0.5_2.2_001900.txt
 * Following is the matplotlib api section for more information on this gradiant: https://matplotlib.org/stable/users/explain/colors/colormaps.html#cyclic
 
   
-
 ## Jupyter NoteBook to Visualize HeatMap
 1. Make sure Jupyter Notebook is installed:
 ```
@@ -340,45 +424,14 @@ jupyter notebook
 4. Click the Run tab on the top.
 5. Click "Run All Cells"
 6. Wait a bit and the HeatMaps of some files will be created and visualized.
-## Translating .plt files to .txt files
-These are the steps for translating .plt files to .txt files in order to be turned into graphs.
-1. Make sure you cd into the py_graspi directory.
-2. All necessary functions are in the plt_to_txt.py file.
-3. The command line input format for this file is as follows:
-```
-python plt_to_txt.py [pathname]
-```
-5. The file in pathname should be in the plt directory and end with the .plt extension, if not this will not work.
-6. It's translated .plt file should show up in the same directory but now with a .txt extension and in .txt formatting when executed with no errors.
-7. Some files have been placed in the .plt directory for testing.
-8. If you wish to run an example, first delete the translated version of a .plt file if it has been created, and run the following command line input:
-```
-python plt_to_txt.py plt/data_4_4.plt 
-```
-9. Make sure the translated file with .txt extension has been made and placed in the plt directory to ensure the file has been executed correctly.
-
-## Translate Image File Into Truncated .txt File
-1. make sure you have py-graspi installed: pip install py-graspi
-2. Make sure you cd into py_graspi directory first. 
-3. The command line format to translate an image file into its truncated .txt file is as follows:
-```
-python img_to_txt.py {pathname of image file} {Resize calculation amount}
-```
-4. The "resize calculation amount" is multiplied to the X and Y axis of the original image and this will alter the size of the image's final resized .txt file. 
-5. This should place both a truncated image file and truncated .txt file of the original image file into the "resized" directory. 
-6. They will be named "resized_" followed by the image file name and correct extension. 
-7. An example command line input that should work for this repo is as follows:
-```
-python img_to_txt.py images/data_0.5_2.2_001900.png 0.25
-```
-
+   
 ## Mycelium Filtered Vertices Visualization
 This section explains how to visualize a mycelium image by both it's white and black vertices filtered versions.
 The mycelium image used is included in the "images" directory called "mycelium.png".
 
 The following are steps on how to visualize the graph from this image.
 1. Make sure you have py-graspi installed: pip install py-graspi
-2. Make sure you cd into py_graspi directory first.
+2. Make sure you cd into py-graspi directory first.
 3. The command line format input is as follows
 ```
 python myceliumTest.py {pathname of image file} {Resize calculation amount}
@@ -388,7 +441,7 @@ python myceliumTest.py {pathname of image file} {Resize calculation amount}
 6. If you wish to not resize the original image just input a '1' for the Resize calculation amount, this will keep the original size.
 7. Example command line input is as follows:
 ```
-python myceliumTest.py images/mycelium.png 0.25
+python myceliumTest.py ../../data/images/data_0.5_2.2_001900.png 0.15
 ```
 8. This creates a truncated version of the mycelium image (for runtime purposes) and outputs the largest subgraph of the following filtered graphs:
    1. The first one is a white only vertex graph 
@@ -460,11 +513,3 @@ start docs/index.html
 open docs/index.html
 ```
 This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
-
-## View Demo Videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
-Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQuN86RUYXvJG_F9MMq?usp=sharing
-### Videos
-* **py_graspi_installation**: How to install Py-Graspi and run basic commands.
-* **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
-* **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of graph, etc of provided input files via command line.
-
