@@ -2,7 +2,7 @@ import os
 import tortuosity_histogram as t
 
 import igraph_testing as ig
-import descriptors as ds
+import src.descriptors as ds
 import fpdf
 import numpy as np
 from PIL import Image, ImageOps
@@ -118,7 +118,7 @@ def main():
         """
         Generates the graph for each of the morphology descriptors
         """
-        g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca = ig.generateGraph(
+        graph_data = ig.generateGraph(
             data_path + test_file + ".txt")
         print(f"{test_file} Graph Generated")
 
@@ -133,9 +133,7 @@ def main():
                 for line in txt.readlines():
                     pdf.cell(40, 8, txt=line, ln=True, align="L")
         else:
-            stats = ds.descriptors(g, data_path + test_file + ".txt", black_vertices, white_vertices, black_green,
-                                   black_interface_red, white_interface_blue, dim, interface_edge_comp_paths,
-                                   shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca)
+            stats = ds.descriptors(graph_data.graph, data_path + test_file + ".txt")
             print(f"{test_file} Descriptors Generated")
             with open(results_path + "descriptors-" + test_file + ".txt", "w") as txt:
                 txt.write(f"Morphology: {test_file}\n")
@@ -182,10 +180,10 @@ def main():
             """
             Generates the heat map of tortuosity between black and red, and white to blue
             """
-            heat1 = t.find_BTR_tortuosity(g, is_2D, test_file + ".txt", hist_path + test_file + "7.png", "Tortuosity of D-paths to An")
+            heat1 = t.find_BTR_tortuosity(graph_data.graph, graph_data.is_2D, test_file + ".txt", hist_path + test_file + "7.png", "Tortuosity of D-paths to An")
             pdf.image(hist_path + test_file + "7.png", x=80, y=160, w=60)
 
-            heat2 = t.find_WTB_tortuosity(g, is_2D, test_file + ".txt", hist_path + test_file + "8.png","Tortuosity of A-paths to Ca")
+            heat2 = t.find_WTB_tortuosity(graph_data.graph, graph_data.is_2D, test_file + ".txt", hist_path + test_file + "8.png","Tortuosity of A-paths to Ca")
             pdf.image(hist_path + test_file + "8.png", x=142, y=160, w=60)
 
 
@@ -198,9 +196,9 @@ def main():
     Outputs the generated pdf to the user.
     """
     if PDF:
-        pdf.output(f"{current_dir}/py_graspi/test_results.pdf")
+        pdf.output(f"{parent_dir}/data/test_results.pdf")
         print("PDF Generated")
-        webbrowser.open_new_tab(f"{current_dir}/py_graspi/test_results.pdf")
+        webbrowser.open_new_tab(f"{parent_dir}/data/test_results.pdf")
 
 if __name__ == "__main__":
     main()
