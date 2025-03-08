@@ -1,0 +1,21 @@
+source package
+==============
+
+Submodules
+----------
+
+source.conf module
+------------------
+
+.. automodule:: source.conf
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: source
+   :members:
+   :show-inheritance:
+   :undoc-members:

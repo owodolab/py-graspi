@@ -1,7 +1,7 @@
-py_graspi
-=========
+source
+======
 
 .. toctree::
    :maxdepth: 4
 
-   py_graspi
+   source
