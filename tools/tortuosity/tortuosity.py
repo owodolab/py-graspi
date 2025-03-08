@@ -170,11 +170,12 @@ def read_WTB_file_and_extract_numbers(base_filename):
 
 def main():
     filename = sys.argv[1]
-    graph_data  = ig.generateGraphAdj(filename)
+    graphData  = ig.generateGraphAdj(filename)
     # filename = filename[6:]
     # print(filename)
-    find_BTR_tortuosity(graph_data.g, graph_data.is_2D, filename)
-    find_WTB_tortuosity(graph_data.g, graph_data.is_2D, filename)
+    find_BTR_tortuosity(graphData.graph, graphData.is_2D, filename)
+    find_WTB_tortuosity(graphData.graph, graphData.is_2D, filename)
+
 
 if __name__ == '__main__':
     main()
