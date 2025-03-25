@@ -1,7 +1,12 @@
 py-graspi Documentation
 ========================
 
-Welcome to the documentation for py-graspi, a library for GraSPI and graph operations using igraph.
+Welcome to the documentation for **Py-Graspi**.
+Py-GraSPI is Graph-based Structure Property Identifier software implemented as a Python package.
+Py-GraSPI computes a library of descriptors for a segmented microstructure as well as performs graph operations using igraph.
+The package represents microstructures as a graph and harnesses the graph-based theory to compute wide range of descriptors at low computational cost.
+A suite of tools for data conversion between various formats and for post-processing the raw results from the graph analysis is provided.
+This is a Python implementation of the GraSPI package which is originally implemented in C/C++
 
 .. contents::
    :local:
