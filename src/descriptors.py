@@ -126,79 +126,6 @@ def CC_descriptors(graph,totalBlack, totalWhite):
     return countBlack, countWhite, countBlack_Red, countWhite_Blue, float(countBlack_Red_conn / totalBlack), \
         float(countWhite_Blue_conn / totalWhite), countBlack_Red_conn, countWhite_Blue_conn
 
-'''--------------- Shortest Path Descriptors ---------------'''
-def filterGraph_metavertices(graph):
-    """
-    This function filters a graph by only keeping the edges that connect vertices of the same color and metavertices.
-
-    Args:
-        graph (ig.Graph): The input graph.
-
-    Returns:
-        ig.Graph: The filtered graph of vertices of the same color and green metavertex.
-        ig.Graph: The filtered graph of vertices of the same color and blue metavertex.
-        ig.Graph: The filtered graph of vertices of the same color and green metavertex.
-        ig.Graph: The filtered graph of vertices of the same color and red metavertex.
-
-    """
-    edgeList = graph.get_edgelist()
-    keptEdges = []
-    keptWeights = []
-    keptEdges_blue = []
-    keptWeights_blue = []
-    keptEdges_red = []
-    keptWeights_red= []
-    keptEdges_red_unfiltered = []
-    keptWeights_red_unfiltered = []
-
-    #Checks edges and keeps only edges that connect to the same colored vertices
-    for edge in edgeList:
-        currentNode = edge[0]
-        toNode = edge[1]
-
-        weight = graph.es[graph.get_eid(currentNode, toNode)]['weight']
-        color_current = graph.vs[currentNode]['color']
-        color_toNode = graph.vs[toNode]['color']
-
-        if (color_current == color_toNode):
-            keptEdges.append(edge)
-            keptEdges_blue.append(edge)
-            keptEdges_red.append(edge)
-            keptWeights.append(weight)
-            keptWeights_blue.append(weight)
-            keptWeights_red.append(weight)
-
-        if ((color_current == 'green') or (color_toNode == 'green')):
-            keptEdges.append(edge)
-            keptWeights.append(weight)
-        elif ((color_current == 'blue') or (color_toNode == 'blue')):
-            keptEdges_blue.append(edge)
-            keptWeights_blue.append(weight)
-        elif ((color_current == 'red') or (color_toNode == 'red')) :
-            keptEdges_red.append(edge)
-            keptWeights_red.append(weight)
-
-        if((color_current != 'blue') and (color_toNode != 'blue') \
-           and (color_current != 'green') and (color_toNode != 'green')):
-            keptEdges_red_unfiltered.append(edge)
-            keptWeights_red_unfiltered.append(weight)
-
-
-
-    filteredGraph_green = graph.subgraph_edges(keptEdges, delete_vertices=False)
-    filteredGraph_green.es['weight'] = keptWeights
-
-    fg_blue = graph.subgraph_edges(keptEdges_blue, delete_vertices=False)
-    fg_blue.es['weight'] = keptWeights_blue
-
-    fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
-    fg_red.es['weight'] = keptWeights_red
-
-    fg_red_unfiltered = graph.subgraph_edges(keptEdges_red_unfiltered, delete_vertices=False)
-    fg_red_unfiltered['weight'] = keptWeights_red_unfiltered
-
-    return filteredGraph_green, fg_blue, fg_red, fg_red_unfiltered
-
 def shortest_path_descriptors(graph_data: GraphData, filename, countBlack_Red_conn, countWhite_Blue_conn):
   
     """
@@ -354,3 +281,76 @@ def shortest_path_descriptors(graph_data: GraphData, filename, countBlack_Red_co
 
     return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), \
         float(white_tor / countWhite_Blue_conn), float(total_weighted_black_red / (totalBlacks + totalWhite))
+
+'''--------------- Shortest Path Descriptors ---------------'''
+def filterGraph_metavertices(graph):
+    """
+    This function filters a graph by only keeping the edges that connect vertices of the same color and metavertices.
+
+    Args:
+        graph (ig.Graph): The input graph.
+
+    Returns:
+        ig.Graph: The filtered graph of vertices of the same color and green metavertex.
+        ig.Graph: The filtered graph of vertices of the same color and blue metavertex.
+        ig.Graph: The filtered graph of vertices of the same color and green metavertex.
+        ig.Graph: The filtered graph of vertices of the same color and red metavertex.
+
+    """
+    edgeList = graph.get_edgelist()
+    keptEdges = []
+    keptWeights = []
+    keptEdges_blue = []
+    keptWeights_blue = []
+    keptEdges_red = []
+    keptWeights_red= []
+    keptEdges_red_unfiltered = []
+    keptWeights_red_unfiltered = []
+
+    #Checks edges and keeps only edges that connect to the same colored vertices
+    for edge in edgeList:
+        currentNode = edge[0]
+        toNode = edge[1]
+
+        weight = graph.es[graph.get_eid(currentNode, toNode)]['weight']
+        color_current = graph.vs[currentNode]['color']
+        color_toNode = graph.vs[toNode]['color']
+
+        if (color_current == color_toNode):
+            keptEdges.append(edge)
+            keptEdges_blue.append(edge)
+            keptEdges_red.append(edge)
+            keptWeights.append(weight)
+            keptWeights_blue.append(weight)
+            keptWeights_red.append(weight)
+
+        if ((color_current == 'green') or (color_toNode == 'green')):
+            keptEdges.append(edge)
+            keptWeights.append(weight)
+        elif ((color_current == 'blue') or (color_toNode == 'blue')):
+            keptEdges_blue.append(edge)
+            keptWeights_blue.append(weight)
+        elif ((color_current == 'red') or (color_toNode == 'red')) :
+            keptEdges_red.append(edge)
+            keptWeights_red.append(weight)
+
+        if((color_current != 'blue') and (color_toNode != 'blue') \
+           and (color_current != 'green') and (color_toNode != 'green')):
+            keptEdges_red_unfiltered.append(edge)
+            keptWeights_red_unfiltered.append(weight)
+
+
+
+    filteredGraph_green = graph.subgraph_edges(keptEdges, delete_vertices=False)
+    filteredGraph_green.es['weight'] = keptWeights
+
+    fg_blue = graph.subgraph_edges(keptEdges_blue, delete_vertices=False)
+    fg_blue.es['weight'] = keptWeights_blue
+
+    fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
+    fg_red.es['weight'] = keptWeights_red
+
+    fg_red_unfiltered = graph.subgraph_edges(keptEdges_red_unfiltered, delete_vertices=False)
+    fg_red_unfiltered['weight'] = keptWeights_red_unfiltered
+
+    return filteredGraph_green, fg_blue, fg_red, fg_red_unfiltered
