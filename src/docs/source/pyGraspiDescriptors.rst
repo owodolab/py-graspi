@@ -47,7 +47,7 @@ For two-phase morphology, current **py-graspi** computes the following descripto
 
 Below we provide the definition of all above descriptors and their code implementations.
 
-   .. automodule:: py_graspi.descriptors
+   .. automodule:: src.descriptors
       :members:
       :undoc-members:
       :show-inheritance:
