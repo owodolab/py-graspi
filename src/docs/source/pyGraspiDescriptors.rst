@@ -51,6 +51,7 @@ Below we provide the definition of all above descriptors and their code implemen
       :members:
       :undoc-members:
       :show-inheritance:
+      :exclude-members: filterGraph_metavertices
 
 
 
