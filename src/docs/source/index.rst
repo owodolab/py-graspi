@@ -2,11 +2,11 @@ py-graspi Documentation
 ========================
 
 Welcome to the documentation for **Py-Graspi**.
-Py-GraSPI is Graph-based Structure Property Identifier software implemented as a Python package.
-Py-GraSPI computes a library of descriptors for a segmented microstructure as well as performs graph operations using igraph.
-The package represents microstructures as a graph and harnesses the graph-based theory to compute wide range of descriptors at low computational cost.
-A suite of tools for data conversion between various formats and for post-processing the raw results from the graph analysis is provided.
-This is a Python implementation of the GraSPI package which is originally implemented in C/C++
+**Py-GraSPI** (Graph-based Structure Property Identifier) is a Python package designed to compute a comprehensive set of
+descriptors for segmented microstructures using a graph-based approach. It leverages the **igraph** library to represent microstructures
+as graphs, enabling efficient computation of a wide range of descriptors with low computational overhead. Py-GraSPI is the Python
+implementation of the original **GraSPI package**, which was developed in C/C++. In addition to descriptor computation,
+Py-GraSPI offers tools for data conversion across various formats and for post-processing the raw outputs of the graph analysis.
 
 .. contents::
    :local:
