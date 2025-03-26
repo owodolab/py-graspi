@@ -4,8 +4,8 @@
 Functionality
 ==============================================
 
-**py-graspi** is a Python implemented version of GraSPI, which computes a library of descriptors for a segmented microstructure
-and computes descriptors that are relevant for organic solar cells performance.
+**Py-GraSPI** (Graph-based Structure Property Identifier) is a Python package designed to compute a comprehensive set of
+descriptors for segmented microstructures using a graph-based approach.
 
 **py-graspi** assumes that input microstructure is segmented into two phases: BLACK and WHITE.
 In our application, organic solar cells, BLACK pixels correspond to electron-donating materials,
