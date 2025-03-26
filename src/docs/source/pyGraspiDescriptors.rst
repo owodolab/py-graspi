@@ -331,7 +331,3 @@ Below we provide the API of the descriptor functions.
       :undoc-members:
       :show-inheritance:
       :exclude-members: filterGraph_metavertices
-
-
-
-
