@@ -229,13 +229,13 @@ def adjList(fileName):
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
     if DEBUG2:
-        greenv_list = {}
+        greenv_dic = {}
         for vertex in vertices_with_green_v:
-            greenv_list[vertex] = vertices_with_green_v[vertex].weight
+            greenv_dic[vertex] = vertices_with_green_v[vertex].weight
 
         print("Green Edges len : ", len(vertices_with_green_v))
 
-    return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, greenv_list
+    return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, greenv_dic
 
 
 def graphe_adjList(filename):
@@ -473,7 +473,7 @@ def generateGraphAdj(file):
 
     #get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
     edges, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2D, \
-        redVertex, blueVertex, dim, greenv_list = adjList(file)
+        redVertex, blueVertex, dim, greenv_dic = adjList(file)
     
     # const_adj_end = time.time()     
     # const_adj_time = const_adj_end - const_adj_start
@@ -581,6 +581,7 @@ def generateGraphAdj(file):
     #     target_vertex_color = g.vs[target_vertex]['color']
 
 
+    prev_greenv_dic= {}
 
     while True:
         edges_to_add = []
@@ -647,6 +648,7 @@ def generateGraphAdj(file):
                     if edge['weight'] / 2 < weights[index]: # if there is already edge between green - white/black -> update edges
                         weights[index] = edge['weight'] / 2
                         labels[index] = edge['label']
+                        prev_greenv_dic[source_vertex] = edge['weight']/2
 
                 except ValueError:
                     if (source_vertex, green_vertex) not in edges_to_add_set:
@@ -655,6 +657,9 @@ def generateGraphAdj(file):
                         labels.append(edge['label'])
                         weights.append(edge['weight']/2)
                         edges_to_add_set.add((source_vertex, green_vertex))
+                        prev_greenv_dic[source_vertex] = edge['weight']/2
+
+
 
                 try:
                     target_vertex,green_vertex = min(target_vertex, green_vertex), max(target_vertex, green_vertex)
@@ -663,6 +668,7 @@ def generateGraphAdj(file):
                     if edge['weight'] / 2 < weights[index]:
                         weights[index] = edge['weight'] / 2
                         labels[index] = edge['label']
+                        prev_greenv_dic[target_vertex] = edge['weight']/2
 
                 except ValueError:
                     if (target_vertex,green_vertex) not in edges_to_add_set:
@@ -671,6 +677,7 @@ def generateGraphAdj(file):
                         labels.append(edge['label'])
                         weights.append(edge['weight']/2)
                         edges_to_add_set.add((target_vertex,green_vertex))
+                        prev_greenv_dic[target_vertex] = edge['weight']/2
 
                 if DEBUG:
                     if source_vertex_color == 'black':
@@ -710,11 +717,32 @@ def generateGraphAdj(file):
     if DEBUG2:
         print("Green vertex neighbors: ", g.neighbors(green_vertex))
         print("Green vertex neighbors LENGTH: ", len(g.neighbors(green_vertex)))
+        print("Green vertex prev list len ", len(prev_greenv_dic))
+        cnt = 0
+        for key in prev_greenv_dic:
+            if key in greenv_dic:                 
+                cnt += 1
+                
+        if cnt == len(g.neighbors(green_vertex)):
+            print("all vertices stored well!")
 
-        for i in g.neighbors(green_vertex):
-            if i not in greenv_list:
-                print ("not matched with f{i} : not in the list")
-                continue
+        if prev_greenv_dic == greenv_dic:
+            print("all weights same!")
+        else:
+            print("different at some point!")
+
+            # 1. 값이 다른 key 출력
+            for key in prev_greenv_dic.keys() & greenv_dic.keys():
+                if prev_greenv_dic[key] != greenv_dic[key]:
+                    print(f"Value differs at key '{key}': {prev_greenv_dic[key]} -> {greenv_dic[key]}")
+
+            # 2. prev에는 있고 greenv에는 없는 key
+            for key in prev_greenv_dic.keys() - greenv_dic.keys():
+                print(f"Key '{key}' only in prev_greenv_dic: {prev_greenv_dic[key]}")
+
+            # 3. greenv에는 있고 prev에는 없는 key
+            for key in greenv_dic.keys() - prev_greenv_dic.keys():
+                print(f"Key '{key}' only in greenv_dic: {greenv_dic[key]}")
 
     return g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
         dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
@@ -855,8 +883,8 @@ def connectedComponents(graph):
     edgeList = set(graph.get_edgelist())
     fg = filterGraph(graph)
     cc = fg.connected_components()
-    redVertex = None;
-    blueVertex = None;
+    redVertex = None
+    blueVertex = None
     blackCCList = []
     whiteCCList = []
 
