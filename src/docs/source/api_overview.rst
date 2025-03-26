@@ -21,6 +21,7 @@ Below is the list of all functions available in **py-graspi**:
       :members:
       :undoc-members:
       :show-inheritance:
+      :exclude-members: main
 
 .. details:: CSV File Making
    :open:
