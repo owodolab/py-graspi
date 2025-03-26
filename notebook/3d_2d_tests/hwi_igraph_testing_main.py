@@ -18,7 +18,7 @@ PERIODICITY = True
 # import tortuosity as t
 
 
-''' data structure for storing info about newly added edges regarding with green_vertex'''
+''' data structure for storing info about newly added edges regarding green_vertex'''
 class edge_info():
     def __init__(self):
         self.index = None
@@ -26,7 +26,7 @@ class edge_info():
         self.order = None
         self.weight = None
 
-'''for updating edge info about  '''
+'''for updating edge info based on rule '''
 def update_edges(v_with_green_vertex, index, color, order, weight):
     if index in v_with_green_vertex:
         cur_v = v_with_green_vertex[index]
@@ -229,11 +229,11 @@ def adjList(fileName):
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
     if DEBUG2:
-        greenv_dic = {}
+        greenv_dic = {} # dictionary for vertex index with green v and weight of the edge
         for vertex in vertices_with_green_v:
             greenv_dic[vertex] = vertices_with_green_v[vertex].weight
 
-        print("Green Edges len : ", len(vertices_with_green_v))
+        print("new method Green Edges len : ", len(vertices_with_green_v))
 
     return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, greenv_dic
 
@@ -715,9 +715,9 @@ def generateGraphAdj(file):
         print("Length: ", len(g.neighbors(g.vcount() - 2)))
         # exit()
     if DEBUG2:
-        print("Green vertex neighbors: ", g.neighbors(green_vertex))
-        print("Green vertex neighbors LENGTH: ", len(g.neighbors(green_vertex)))
-        print("Green vertex prev list len ", len(prev_greenv_dic))
+        print("previous method Green vertex neighbors: ", g.neighbors(green_vertex))
+        print("previous method Green vertex neighbors LENGTH: ", len(g.neighbors(green_vertex)))
+        # print("Green vertex prev list len ", len(prev_greenv_dic))
         cnt = 0
         for key in prev_greenv_dic:
             if key in greenv_dic:                 
@@ -731,18 +731,11 @@ def generateGraphAdj(file):
         else:
             print("different at some point!")
 
-            # 1. 값이 다른 key 출력
+            # 1. print different values
             for key in prev_greenv_dic.keys() & greenv_dic.keys():
                 if prev_greenv_dic[key] != greenv_dic[key]:
                     print(f"Value differs at key '{key}': {prev_greenv_dic[key]} -> {greenv_dic[key]}")
 
-            # 2. prev에는 있고 greenv에는 없는 key
-            for key in prev_greenv_dic.keys() - greenv_dic.keys():
-                print(f"Key '{key}' only in prev_greenv_dic: {prev_greenv_dic[key]}")
-
-            # 3. greenv에는 있고 prev에는 없는 key
-            for key in greenv_dic.keys() - prev_greenv_dic.keys():
-                print(f"Key '{key}' only in greenv_dic: {greenv_dic[key]}")
 
     return g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
         dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
