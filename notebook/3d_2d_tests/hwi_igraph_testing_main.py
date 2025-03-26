@@ -12,9 +12,39 @@ from numpy import character
 
 import descriptors as d
 import math
-DEBUG = False
+DEBUG = False # debugging mode
+DEBUG2 = True
 PERIODICITY = True
 # import tortuosity as t
+
+
+''' data structure for storing info about newly added edges regarding with green_vertex'''
+class edge_info():
+    def __init__(self):
+        self.index = None
+        self.color = None
+        self.order = None
+        self.weight = None
+
+'''for updating edge info about  '''
+def update_edges(v_with_green_vertex, index, color, order, weight):
+    if index in v_with_green_vertex:
+        cur_v = v_with_green_vertex[index]
+        if cur_v.order > order:
+            cur_v.order = order            
+            if order == 1:
+                cur_v.weight = 0.5
+            else:
+                cur_v.weight = weight * 0.3                     
+    else:
+        newEdge = edge_info()
+        newEdge.color = color
+        newEdge.index = index
+        newEdge.order = order
+        newEdge.weight = weight
+        
+        v_with_green_vertex[index] = newEdge
+
 '''---------Function to create edges for graph in specified format --------'''
 
 
@@ -40,10 +70,11 @@ def adjList(fileName):
     black_vertices = []
     white_vertices = []
 
+
     is_2d = True
     with open(fileName, "r") as file:
         header = file.readline().strip().split(' ')
-        print(f"첫 번째 줄 내용: {repr(header)}")  # repr()을 사용하여 줄바꿈 등의 문제 확인
+        # print(f"contents of first line: {repr(header)}")  # repr()을 사용하여 줄바꿈 등의 문제 확인
         # dimX = 100
         # dimY = 100
         dimX, dimY = int(header[0]), int(header[1])
@@ -66,19 +97,22 @@ def adjList(fileName):
         vertex_color = [""] * (dimX * dimY * dimZ)
 
 
-        import time
-        loadtxt_start = time.time()
+        # import time
+        # loadtxt_start = time.time()
         input_data = np.loadtxt(fileName, skiprows=1)
         reshaped_data = input_data.flatten()
-        loadtxt_end = time.time()
-        print("loadtxt time : ", loadtxt_end - loadtxt_start)
-        print(dimX)
-        print(dimY)
-        print(dimZ)
-        print(reshaped_data)
+        # loadtxt_end = time.time()
+        # print("loadtxt time : ", loadtxt_end - loadtxt_start)
+        # print(dimX)
+        # print(dimY)
+        # print(dimZ)
+        # print(reshaped_data)
 
         #Loops through input and adds adjacency list of current vertex based on Offsets. Offsets, make it so edges aren't duplicated.
         #Also adds edge labels based on Graspi Documentation
+
+        vertices_with_green_v = {}   # dictionary for storing vertices connected with green vertex
+
         for z in range(dimZ):
             for y in range(dimY):
                 # read each vertice
@@ -99,25 +133,8 @@ def adjList(fileName):
                         #append to list of black vertices
                         black_vertices.append(current_vertex)
 
-        # for z in range(dimZ):
-        #     for y in range(dimY):
-        #         # read each vertice
-        #         line = file.readline().strip().split(' ')
-        #         for x in range(dimX):
-        #             current_vertex = z * dimY * dimX + y * dimX + x # because it is sequentially stored in memory
-        # #             # adding color to vertices to reduce runtime
-        #             if len(line[0]) > 0:
-        #                 color_code = line[x]
-        #                 if color_code == '1':
-        #                     vertex_color[current_vertex] = 'white'
-        # #                     #append to list of white vertices
-        # #                     white_vertices.append(current_vertex)
-        #                 elif color_code == '0':
-        #                     vertex_color[current_vertex] = 'black'
-        # #                     #append to list of black vertices
-        # #                     black_vertices.append(current_vertex)
-
                     neighbors = []
+
                     for i in range(len(offsets)):
                         dx, dy, dz = offsets[i]
                         nx, ny, nz = x + dx, y + dy, z + dz 
@@ -128,16 +145,29 @@ def adjList(fileName):
                                     first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("f")
                                 edge_weights.append(1)
+
+                                if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
+                                    update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)                                    
+                                    update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)                                    
+                                    
                             elif i >= 4 and i <= 8:
                                 if DEBUG:
                                     third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("t")
                                 edge_weights.append(float(math.sqrt(3)))
+
+                                if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
+                                    update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 3, float(math.sqrt(3)))                                    
+                                    update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 3, float(math.sqrt(3)))                                    
                             else:
                                 if DEBUG:
                                     second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("s")
                                 edge_weights.append(float(math.sqrt(2)))
+                                if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
+                                    update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 2, float(math.sqrt(2)))                                    
+                                    update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 2, float(math.sqrt(2)))                                    
+
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
@@ -198,7 +228,14 @@ def adjList(fileName):
         print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
-    return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim
+    if DEBUG2:
+        greenv_list = {}
+        for vertex in vertices_with_green_v:
+            greenv_list[vertex] = vertices_with_green_v[vertex].weight
+
+        print("Green Edges len : ", len(vertices_with_green_v))
+
+    return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, greenv_list
 
 
 def graphe_adjList(filename):
@@ -431,16 +468,16 @@ def generateGraphAdj(file):
             boolean: returns  a boolean to signal if graph is 2D or not
         """
 
-    import time
-    const_adj_start = time.time()
+    # import time
+    # const_adj_start = time.time()
 
     #get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
     edges, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2D, \
-        redVertex, blueVertex, dim = adjList(file)
+        redVertex, blueVertex, dim, greenv_list = adjList(file)
     
-    const_adj_end = time.time()     
-    const_adj_time = const_adj_end - const_adj_start
-    print("PART #1 time : ",const_adj_time)    
+    # const_adj_end = time.time()     
+    # const_adj_time = const_adj_end - const_adj_start
+    # print("PART #1 time : ",const_adj_time)    
 
     # labels, totalWhite, totalBlack = vertexColors(file)
     f = open(file, 'r')
@@ -469,7 +506,7 @@ def generateGraphAdj(file):
 
     # print("shortest time : ", shortest_time)    
 
-    others_start = time.time()    
+    # others_start = time.time()    
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY:
         for i in range(0, g.vcount() - 2, dimX):
@@ -489,14 +526,14 @@ def generateGraphAdj(file):
                 g.es[g.ecount()-1]['label'] = 's'
                 g.es[g.ecount()-1]['weight'] = math.sqrt(2)
 
-    filter_start = time.time()
+    # filter_start = time.time()
     fg_blue, fg_red, keptEdges_blue, keptEdges_red = filterGraph_blue_red(g)   # different point 2
     redComponent = set(fg_red.subcomponent(redVertex, mode="ALL"))
     blueComponent = set(fg_blue.subcomponent(blueVertex, mode="ALL"))
-    filter_end = time.time()
-    filter_time = filter_end - filter_start
+    # filter_end = time.time()
+    # filter_time = filter_end - filter_start
 
-    print("filter time (in PART #2):", filter_time)
+    # print("filter time (in PART #2):", filter_time)
     
 
     #Add Green Interface and it's color
@@ -529,12 +566,12 @@ def generateGraphAdj(file):
     black = set()
 
     vertices = set()
-    others_end = time.time()     
-    others_time = others_end - others_start
+    # others_end = time.time()     
+    # others_time = others_end - others_start
 
-    print("PART #2 time : ",others_time)    
+    # print("PART #2 time : ",others_time)    
 
-    loop_start = time.time()
+    # loop_start = time.time()
 
     # for edge in keptEdges_red:
     #     source_vertex = edge.source
@@ -604,10 +641,10 @@ def generateGraphAdj(file):
 
                 # getting all the green interface edges that need to be added
                 try:
-                    source_vertex,green_vertex = min(source_vertex,green_vertex), max(source_vertex,green_vertex)
+                    source_vertex,green_vertex = min(source_vertex,green_vertex), max(source_vertex,green_vertex) # green 
                     index = list(edges_to_add_set).index((source_vertex, green_vertex))
                     
-                    if edge['weight'] / 2 < weights[index]:
+                    if edge['weight'] / 2 < weights[index]: # if there is already edge between green - white/black -> update edges
                         weights[index] = edge['weight'] / 2
                         labels[index] = edge['label']
 
@@ -635,8 +672,6 @@ def generateGraphAdj(file):
                         weights.append(edge['weight']/2)
                         edges_to_add_set.add((target_vertex,green_vertex))
 
-
-
                 if DEBUG:
                     if source_vertex_color == 'black':
                         black_green_neighbors.append(source_vertex)
@@ -654,10 +689,10 @@ def generateGraphAdj(file):
     black_interface_red = len(black)
     white_interface_blue = len(white)
 
-    loop_end = time.time()     
-    loop_time = loop_end - loop_start
+    # loop_end = time.time()     
+    # loop_time = loop_end - loop_start
 
-    print("PART #3 time : ",loop_time)    
+    # print("PART #3 time : ",loop_time)    
 
 
     if DEBUG:
@@ -672,6 +707,15 @@ def generateGraphAdj(file):
         print("Nodes connected to red: ", g.vs[g.vcount() - 2]['color'], g.neighbors(g.vcount() - 2))
         print("Length: ", len(g.neighbors(g.vcount() - 2)))
         # exit()
+    if DEBUG2:
+        print("Green vertex neighbors: ", g.neighbors(green_vertex))
+        print("Green vertex neighbors LENGTH: ", len(g.neighbors(green_vertex)))
+
+        for i in g.neighbors(green_vertex):
+            if i not in greenv_list:
+                print ("not matched with f{i} : not in the list")
+                continue
+
     return g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
         dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
 
