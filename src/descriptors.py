@@ -3,7 +3,7 @@ import numpy as np
 import src.igraph_testing as ig
 import src.GraphData as GraphData
 
-def descriptors(graph_data: GraphData, filename):
+def descriptors(graph_data, filename):
     """
     This function computes all the descriptors for the graph given and saves them  in a dictionary.
 
@@ -126,7 +126,7 @@ def CC_descriptors(graph,totalBlack, totalWhite):
     return countBlack, countWhite, countBlack_Red, countWhite_Blue, float(countBlack_Red_conn / totalBlack), \
         float(countWhite_Blue_conn / totalWhite), countBlack_Red_conn, countWhite_Blue_conn
 
-def shortest_path_descriptors(graph_data: GraphData, filename, countBlack_Red_conn, countWhite_Blue_conn):
+def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWhite_Blue_conn):
   
     """
         This function computes descriptors related to shortest paths with vertex and metavertex colorations that correspond to the following descriptors:
