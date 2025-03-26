@@ -22,19 +22,3 @@ Below is the list of all functions available in **py-graspi**:
       :undoc-members:
       :show-inheritance:
       :exclude-members: main
-
-.. details:: CSV File Making
-   :open:
-
-   .. automodule:: py_graspi.csvFileMaker
-      :members:
-      :undoc-members:
-      :show-inheritance:
-
-.. details:: Test Files Generation
-   :open:
-
-   .. automodule:: py_graspi.testFileMaker
-      :members:
-      :undoc-members:
-      :show-inheritance:
