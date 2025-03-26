@@ -1,7 +1,7 @@
 import math
 import numpy as np
-import src.igraph_testing as ig
-import src.GraphData as GraphData
+import src.igraph as ig
+import src.graph_data_class as GraphData
 
 
 def CC_descriptors(graph,totalBlack, totalWhite):
