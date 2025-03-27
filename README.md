@@ -105,17 +105,7 @@ Follow these steps to manually install the Py-Graspi package.
    ```
 3. Verify that the module has been installed correctly by ensuring that the last output line on the command line says "Setup complete!" with no errors.
    If you do not have Python installed, please visit: https://www.python.org/downloads/
-
-   If you do not have pip installed or are running into issues with pip, please visit: https://pip.pypa.io/en/stable/installation/
-
-   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
-4. Once installed, import the package to utilize it in your project
-   ```python
-   import py_graspi as ig
-   ```
-5. To learn how to use and run graph algorithms in your project files, [Go to the Test Algorithms section in the README](#to-test-algorithms)
-  
-6. To run test files on the command line and view the output, [Go to the Testing From Command Line section of the README](#testing-from-command-line)
+   
 
 ### Installation and Set-Up of Jupyter Notebook for Py-Graspi
 1. After opening a new project in your preferred IDE, activate the virtual environment for your project by running this command:
@@ -157,11 +147,6 @@ Follow these steps to manually install the Py-Graspi package.
    jupyter notebook
    ```
    A localhost jupyter notebook should open with the same directories and files as the py-graspi package.
-7. Once installed, import the package to utilize it in your project
-   ```python
-   import py_graspi as ig
-   ```
-8. To learn how to use and run graph algorithms in your project files, [Go to the Test Algorithms section in the README](#to-test-algorithms)
    
   
 ## View Demo Videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
