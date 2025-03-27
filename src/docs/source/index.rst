@@ -28,6 +28,7 @@ This project provides tools for creating, filtering, and analyzing graphs, with 
    pyGraspiRepresentation
    pyGraspiDefinitions
    api_overview
+   advanced
 
 Installation
 ------------
