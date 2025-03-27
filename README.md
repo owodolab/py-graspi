@@ -13,16 +13,16 @@ The basic algorithm requirements include:
 
 
 ## Getting Started
-## Testing Py-Graspi Online
+### Testing Py-Graspi Online
 Follow these steps to explore the capabilities of Py-Graspi using an online Jupyter Notebook environment like Google Colab.
 
-### To run an existing test notebook
+To run an existing test notebook
 1. Open [Google Colab](https://colab.research.google.com/).
 2. Click the GitHub tab, and paste the following link:
    ```https://github.com/owodolab/py-graspi/blob/dev/tests/pip_install_descriptors_example.ipynb```
 3. Since this is an existing notebook, you can run each code block to view the output.
 
-### To create your own notebook and use the py-graspi package
+To create your own notebook and use the py-graspi package
 1. Open [Google Colab](https://colab.research.google.com/).
 2. In the notebook, install Py-Graspi by running the following command:
    ```python
@@ -91,24 +91,31 @@ Follow these steps to manually install the Py-Graspi package.
 
 
 ### Script Installation of Py-Graspi
-Clone the project repository by running this command: 
+1. Clone the project repository by running this command:
 
-**Note: You must have Git installed onto your system**
-```
-git clone https://github.com/owodolab/py-graspi.git
-```
-Run the following script to set up and activate the virtual environment and install the py-graspi package:
-```
-python py-graspi/startup.py
-```
-Verify that the module has been installed correctly by ensuring that the last output line on the command line says "Setup complete!" with no errors.
+   **Note: You must have Git installed on your system**
+   ```bash
+   git clone https://github.com/owodolab/py-graspi.git
+   ```
+   If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
+   
+2. Run the following script to set up and activate the virtual environment and install the py-graspi package:
+   ```
+   python py-graspi/startup.py
+   ```
+3. Verify that the module has been installed correctly by ensuring that the last output line on the command line says "Setup complete!" with no errors.
+   If you do not have Python installed, please visit: https://www.python.org/downloads/
 
-  If you do not have Python installed, please visit: https://www.python.org/downloads/
+   If you do not have pip installed or are running into issues with pip, please visit: https://pip.pypa.io/en/stable/installation/
 
-  If you do not have pip installed or are running into issues with pip, please visit: https://pip.pypa.io/en/stable/installation/
-
-  If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
-
+   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
+4. Once installed, import the package to utilize it in your project
+   ```python
+   import py_graspi as ig
+   ```
+5. To learn how to use and run graph algorithms in your project files, [Go to the Test Algorithms section in the README](#to-test-algorithms)
+  
+6. To run test files on the command line and view the output, [Go to the Testing From Command Line section of the README](#testing-from-command-line)
 
 ### Installation and Set-Up of Jupyter Notebook for Py-Graspi
 1. After opening a new project in your preferred IDE, activate the virtual environment for your project by running this command:
@@ -145,11 +152,16 @@ Verify that the module has been installed correctly by ensuring that the last ou
    pip install notebook
    ```
    
-7. Now, open the package in Jupyter Notebook for testing by running this command:
+6. Now, open the package in Jupyter Notebook for testing by running this command:
    ```
    jupyter notebook
    ```
    A localhost jupyter notebook should open with the same directories and files as the py-graspi package.
+7. Once installed, import the package to utilize it in your project
+   ```python
+   import py_graspi as ig
+   ```
+8. To learn how to use and run graph algorithms in your project files, [Go to the Test Algorithms section in the README](#to-test-algorithms)
    
   
 ## View Demo Videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
