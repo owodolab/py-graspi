@@ -1,4 +1,4 @@
-py-graspi Documentation
+Py-GraSPI Documentation
 ========================
 
 Welcome to the documentation for **Py-Graspi**.

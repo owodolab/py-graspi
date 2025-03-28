@@ -4,7 +4,7 @@
 Example of Usage
 ==============================================
 
-**py-graspi** is a command line tool. Make sure to install all requirements with:
+**Py-GraSPI** can be a command line tool. Make sure to install all requirements with:
 
 .. code-block:: bash
 

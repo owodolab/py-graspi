@@ -3,12 +3,8 @@
 ==============================================
 Advanced
 ==============================================
-
-**py-graspi** can be a command line tool. Make sure to install all requirements with:
-
-.. code-block:: bash
-
-    pip install -r requirements.txt
+The Py-GraSPI package also offers advanced functionality for developers and users with advanced
+technical skills.
 
 Running Memory Tests
 ====================
