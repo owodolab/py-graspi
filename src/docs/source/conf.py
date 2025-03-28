@@ -46,4 +46,5 @@ autodoc_default_options = {
 }
 
 autodoc_mock_imports = ["matplotlib", "mpl_toolkits.mplot3d"]
+autodoc_member_order = 'bysource'
 

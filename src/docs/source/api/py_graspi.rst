@@ -4,66 +4,34 @@ py\_graspi package
 Submodules
 ----------
 
-py\_graspi.bugfix\_descriptors module
--------------------------------------
-
-.. automodule:: py_graspi.bugfix_descriptors
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-py\_graspi.csvFileMaker module
-------------------------------
-
-.. automodule:: py_graspi.csvFileMaker
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-py\_graspi.csvFileTest module
+src.descriptors module
 -----------------------------
 
-.. automodule:: py_graspi.csvFileTest
+.. automodule:: src.descriptors
    :members:
    :undoc-members:
    :show-inheritance:
 
-py\_graspi.descriptors module
------------------------------
-
-.. automodule:: py_graspi.descriptors
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-py\_graspi.igraph\_testing module
+src.igraph\_testing module
 ---------------------------------
 
-.. automodule:: py_graspi.igraph_testing
+.. automodule:: src.igraph_testing
    :members:
    :undoc-members:
    :show-inheritance:
 
-py\_graspi.simple\-test module
-------------------------------
+src.GraphData module
+---------------------------------
 
-.. automodule:: py_graspi.simple-test
+.. automodule:: src.GraphData
    :members:
    :undoc-members:
    :show-inheritance:
 
-py\_graspi.testFileMaker module
--------------------------------
-
-.. automodule:: py_graspi.testFileMaker
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-py\_graspi.tests module
+tests.tests module
 -----------------------
 
-.. automodule:: py_graspi.tests
+.. automodule:: tests.tests
    :members:
    :undoc-members:
    :show-inheritance:
@@ -71,7 +39,7 @@ py\_graspi.tests module
 Module contents
 ---------------
 
-.. automodule:: py_graspi
+.. automodule:: src
    :members:
    :undoc-members:
    :show-inheritance:
