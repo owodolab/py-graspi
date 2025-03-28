@@ -874,7 +874,6 @@ def main():
                 for key, value in dic.items():
                     print(key, value)
 
-
         elif sys.argv[1] != "-g":
             graph_data = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
             visualize(graph_data.graph, graph_data.is_2D)
