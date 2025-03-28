@@ -12,7 +12,7 @@ from numpy import character
 
 import descriptors as d
 import math
-DEBUG = True
+DEBUG = False
 PERIODICITY = True
 # import tortuosity as t
 '''---------Function to create edges for graph in specified format --------'''
@@ -401,7 +401,8 @@ def generateGraphAdj(file):
     
     const_adj_end = time.time()     
     const_adj_time = const_adj_end - const_adj_start
-    print("PART #1 time : ",const_adj_time)    
+    if DEBUG:
+        print("PART #1 time : ",const_adj_time)    
 
     # labels, totalWhite, totalBlack = vertexColors(file)
     f = open(file, 'r')
@@ -454,7 +455,8 @@ def generateGraphAdj(file):
     filter_end = time.time()
     filter_time = filter_end - filter_start
 
-    print("filter time (in PART #2):", filter_time)
+    if DEBUG:
+        print("filter time (in PART #2):", filter_time)
     
 
     #Add Green Interface and it's color
@@ -490,7 +492,8 @@ def generateGraphAdj(file):
     others_end = time.time()     
     others_time = others_end - others_start
 
-    print("PART #2 time : ",others_time)    
+    if DEBUG:
+        print("PART #2 time : ",others_time)    
 
     loop_start = time.time()
 
@@ -606,7 +609,8 @@ def generateGraphAdj(file):
     loop_end = time.time()     
     loop_time = loop_end - loop_start
 
-    print("PART #3 time : ",loop_time)    
+    if DEBUG:
+        print("PART #3 time : ",loop_time)    
 
 
     if DEBUG:
