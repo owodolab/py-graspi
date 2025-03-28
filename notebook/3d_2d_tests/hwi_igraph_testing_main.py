@@ -30,8 +30,8 @@ class edge_info():
 def update_edges(v_with_green_vertex, index, color, order, weight):
     if index in v_with_green_vertex:
         cur_v = v_with_green_vertex[index]
-        if cur_v.order > order:
-            cur_v.order = order            
+        if cur_v.order > order:     # if previous order is higher than new one
+            cur_v.order = order     # change it to lower order      
             if order == 1:
                 cur_v.weight = 0.5
             else:
@@ -228,14 +228,14 @@ def adjList(fileName):
         print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
-    if DEBUG2:
-        greenv_dic = {} # dictionary for vertex index with green v and weight of the edge
-        for vertex in vertices_with_green_v:
-            greenv_dic[vertex] = vertices_with_green_v[vertex].weight
+    # if DEBUG2:
+    #     greenv_dic = {} # dictionary for vertex index with green v and weight of the edge
+    #     for vertex in vertices_with_green_v:
+    #         greenv_dic[vertex] = vertices_with_green_v[vertex].weight
 
-        print("new method Green Edges len : ", len(vertices_with_green_v))
+    #     print("new method Green Edges len : ", len(vertices_with_green_v))
 
-    return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, greenv_dic
+    return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, vertices_with_green_v
 
 
 def graphe_adjList(filename):
@@ -580,7 +580,22 @@ def generateGraphAdj(file):
     #     source_vertex_color = g.vs[source_vertex]['color']
     #     target_vertex_color = g.vs[target_vertex]['color']
 
+    green_edges_to_add = []
+    green_edges_labels = []
+    green_edges_weights = []
 
+    for i in greenv_dic:
+        green_edges_to_add.append((i, green_vertex))
+        label = ""
+        if greenv_dic[i].order == 1:
+            label = "f"
+        elif greenv_dic[i].order == 2:
+            label = "s"
+        elif greenv_dic[i].order == 3:
+            label = "t"
+        green_edges_labels.append(label) 
+
+        green_edges_weights.append(greenv_dic[i].weight)
     prev_greenv_dic= {}
 
     while True:
@@ -717,7 +732,10 @@ def generateGraphAdj(file):
     if DEBUG2:
         print("previous method Green vertex neighbors: ", g.neighbors(green_vertex))
         print("previous method Green vertex neighbors LENGTH: ", len(g.neighbors(green_vertex)))
-        # print("Green vertex prev list len ", len(prev_greenv_dic))
+
+        for i in range(len(green_edges_to_add)):
+            print ("edge: ", green_edges_to_add[i], "label: ", green_edges_labels[i], "weight: ", green_edges_weights[i])
+
         cnt = 0
         for key in prev_greenv_dic:
             if key in greenv_dic:                 
@@ -733,8 +751,8 @@ def generateGraphAdj(file):
 
             # 1. print different values
             for key in prev_greenv_dic.keys() & greenv_dic.keys():
-                if prev_greenv_dic[key] != greenv_dic[key]:
-                    print(f"Value differs at key '{key}': {prev_greenv_dic[key]} -> {greenv_dic[key]}")
+                if prev_greenv_dic[key] != greenv_dic[key].weight:
+                    print(f"Value differs at key '{key}': {prev_greenv_dic[key]} -> {greenv_dic[key].weight}")
 
 
     return g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
