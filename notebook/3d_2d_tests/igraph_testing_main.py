@@ -12,7 +12,7 @@ from numpy import character
 
 import descriptors as d
 import math
-DEBUG = False
+DEBUG = True
 PERIODICITY = True
 # import tortuosity as t
 '''---------Function to create edges for graph in specified format --------'''

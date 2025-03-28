@@ -12,8 +12,8 @@ from numpy import character
 
 import descriptors as d
 import math
-DEBUG = False # debugging mode
-DEBUG2 = True
+DEBUG = True # debugging mode
+DEBUG2 = False
 PERIODICITY = True
 # import tortuosity as t
 
@@ -31,17 +31,19 @@ def update_edges(v_with_green_vertex, index, color, order, weight):
     if index in v_with_green_vertex:
         cur_v = v_with_green_vertex[index]
         if cur_v.order > order:     # if previous order is higher than new one
+            # print("previous order : ", cur_v.order, "new order: ", order)
             cur_v.order = order     # change it to lower order      
-            if order == 1:
-                cur_v.weight = 0.5
-            else:
-                cur_v.weight = weight * 0.3                     
+            # if cur_v.order == 1:
+            #     cur_v.weight = 0.5
+            # else:
+            cur_v.weight = weight * 0.5                     
     else:
+        # print("just new order : ", order)
         newEdge = edge_info()
         newEdge.color = color
         newEdge.index = index
         newEdge.order = order
-        newEdge.weight = weight
+        newEdge.weight = weight * 0.5
         
         v_with_green_vertex[index] = newEdge
 
@@ -97,7 +99,7 @@ def adjList(fileName):
         vertex_color = [""] * (dimX * dimY * dimZ)
 
 
-        # import time
+        import time
         # loadtxt_start = time.time()
         input_data = np.loadtxt(fileName, skiprows=1)
         reshaped_data = input_data.flatten()
@@ -147,6 +149,10 @@ def adjList(fileName):
                                 edge_weights.append(1)
 
                                 if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
+                                    # if DEBUG2:
+                                    #     print("order : 3")
+                                    #     print("index: ", current_vertex)
+                                    #     print("==================")
                                     update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)                                    
                                     update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)                                    
                                     
@@ -165,6 +171,11 @@ def adjList(fileName):
                                 edge_labels.append("s")
                                 edge_weights.append(float(math.sqrt(2)))
                                 if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
+                                    # if DEBUG2:
+                                        # print("order : 2")
+                                        # print("index: ", current_vertex)
+                                        # print("==================")
+
                                     update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 2, float(math.sqrt(2)))                                    
                                     update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 2, float(math.sqrt(2)))                                    
 
@@ -468,16 +479,16 @@ def generateGraphAdj(file):
             boolean: returns  a boolean to signal if graph is 2D or not
         """
 
-    # import time
-    # const_adj_start = time.time()
+    import time
+    const_adj_start = time.time()
 
     #get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
     edges, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2D, \
         redVertex, blueVertex, dim, greenv_dic = adjList(file)
     
-    # const_adj_end = time.time()     
-    # const_adj_time = const_adj_end - const_adj_start
-    # print("PART #1 time : ",const_adj_time)    
+    const_adj_end = time.time()     
+    const_adj_time = const_adj_end - const_adj_start
+    print("PART #1 time : ",const_adj_time)    
 
     # labels, totalWhite, totalBlack = vertexColors(file)
     f = open(file, 'r')
@@ -506,7 +517,7 @@ def generateGraphAdj(file):
 
     # print("shortest time : ", shortest_time)    
 
-    # others_start = time.time()    
+    others_start = time.time()    
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY:
         for i in range(0, g.vcount() - 2, dimX):
@@ -566,12 +577,12 @@ def generateGraphAdj(file):
     black = set()
 
     vertices = set()
-    # others_end = time.time()     
-    # others_time = others_end - others_start
+    others_end = time.time()     
+    others_time = others_end - others_start
 
-    # print("PART #2 time : ",others_time)    
+    print("PART #2 time : ",others_time)    
 
-    # loop_start = time.time()
+    loop_start = time.time()
 
     # for edge in keptEdges_red:
     #     source_vertex = edge.source
@@ -585,7 +596,7 @@ def generateGraphAdj(file):
     green_edges_weights = []
 
     for i in greenv_dic:
-        green_edges_to_add.append((i, green_vertex))
+        green_edges_to_add.append([i, green_vertex])
         label = ""
         if greenv_dic[i].order == 1:
             label = "f"
@@ -598,123 +609,81 @@ def generateGraphAdj(file):
         green_edges_weights.append(greenv_dic[i].weight)
     prev_greenv_dic= {}
 
-    while True:
-        edges_to_add = []
-        labels = []
-        weights = []
-        starting_index = len(g.es)
-        if starting_index == edges_index_start:
-            break
-        
+
         #all edge traversal
         #Add black/white edges to green interface node.
-        for edge in g.es[edges_index_start:]:
-            edge_count += 1
-            source_vertex = edge.source
-            target_vertex = edge.target
+    for edge in g.es[edges_index_start:]:
+        edge_count += 1
+        source_vertex = edge.source
+        target_vertex = edge.target
 
-            source_vertex_color = g.vs[source_vertex]['color']
-            target_vertex_color = g.vs[target_vertex]['color']
+        source_vertex_color = g.vs[source_vertex]['color']
+        target_vertex_color = g.vs[target_vertex]['color']
 
-            if(source_vertex_color == 'blue' or target_vertex_color == 'blue'):
-                if(source_vertex_color == 'blue' and target_vertex_color == 'white') \
-                    or (source_vertex_color == 'white' and target_vertex_color == 'blue'):
-                    CT_n_A_adj_Ca += 1
+        if(source_vertex_color == 'blue' or target_vertex_color == 'blue'):
+            if(source_vertex_color == 'blue' and target_vertex_color == 'white') \
+                or (source_vertex_color == 'white' and target_vertex_color == 'blue'):
+                CT_n_A_adj_Ca += 1
 
-            if(source_vertex_color == 'red' or target_vertex_color == 'red'):
-                if(source_vertex_color == 'red' and target_vertex_color == 'black') \
-                    or (source_vertex_color == 'black' and target_vertex_color == 'red'):
-                    CT_n_D_adj_An += 1
+        if(source_vertex_color == 'red' or target_vertex_color == 'red'):
+            if(source_vertex_color == 'red' and target_vertex_color == 'black') \
+                or (source_vertex_color == 'black' and target_vertex_color == 'red'):
+                CT_n_D_adj_An += 1
 
-            #Add black/white edges to green interface node.
-            if (source_vertex_color == 'black' and target_vertex_color == 'white') \
-                or (source_vertex_color == 'white' and target_vertex_color == 'black'):
+        #Add black/white edges to green interface node.
+        if (source_vertex_color == 'black' and target_vertex_color == 'white') \
+            or (source_vertex_color == 'white' and target_vertex_color == 'black'):
 
-                if (source_vertex_color == 'black' and source_vertex in redComponent):
-                    black.add(source_vertex)
-                    vertices.add(source_vertex)
-                if(target_vertex_color == 'black' and target_vertex in redComponent):
-                    black.add(target_vertex)
-                    vertices.add(target_vertex)
+            if (source_vertex_color == 'black' and source_vertex in redComponent):
+                black.add(source_vertex)
+                vertices.add(source_vertex)
+            if(target_vertex_color == 'black' and target_vertex in redComponent):
+                black.add(target_vertex)
+                vertices.add(target_vertex)
+            
+            if (source_vertex_color == 'white' and source_vertex in blueComponent):
+                white.add(source_vertex)
+            if (target_vertex_color == 'white' and target_vertex in blueComponent):
+                white.add(target_vertex)
+
+            
+            if edge['label'] == 'f':
+                # increment count when black and white interface pair, black has path to top (red), white has path to (bottom) blue
+                if ((source_vertex_color == 'black' and target_vertex_color == 'white') \
+                    and (source_vertex in redComponent and target_vertex in blueComponent))\
+                        or ((source_vertex_color == 'white' and target_vertex_color == 'black') \
+                            and (source_vertex in blueComponent and target_vertex in redComponent)):
+                    interface_edge_comp_paths += 1
                 
-                if (source_vertex_color == 'white' and source_vertex in blueComponent):
-                    white.add(source_vertex)
-                if (target_vertex_color == 'white' and target_vertex in blueComponent):
-                    white.add(target_vertex)
 
-                
-                if edge['label'] == 'f':
-                    # increment count when black and white interface pair, black has path to top (red), white has path to (bottom) blue
-                    if ((source_vertex_color == 'black' and target_vertex_color == 'white') \
-                        and (source_vertex in redComponent and target_vertex in blueComponent))\
-                            or ((source_vertex_color == 'white' and target_vertex_color == 'black') \
-                                and (source_vertex in blueComponent and target_vertex in redComponent)):
-                        interface_edge_comp_paths += 1
-                    
-
-                    # increment black_green when black to green edge is added
-                    black_green += 1 
-
-                # getting all the green interface edges that need to be added
-                try:
-                    source_vertex,green_vertex = min(source_vertex,green_vertex), max(source_vertex,green_vertex) # green 
-                    index = list(edges_to_add_set).index((source_vertex, green_vertex))
-                    
-                    if edge['weight'] / 2 < weights[index]: # if there is already edge between green - white/black -> update edges
-                        weights[index] = edge['weight'] / 2
-                        labels[index] = edge['label']
-                        prev_greenv_dic[source_vertex] = edge['weight']/2
-
-                except ValueError:
-                    if (source_vertex, green_vertex) not in edges_to_add_set:
-                        extra_edges += 1
-                        edges_to_add.append([source_vertex, green_vertex])
-                        labels.append(edge['label'])
-                        weights.append(edge['weight']/2)
-                        edges_to_add_set.add((source_vertex, green_vertex))
-                        prev_greenv_dic[source_vertex] = edge['weight']/2
+                # increment black_green when black to green edge is added
+                black_green += 1 
 
 
+            if DEBUG:
+                if source_vertex_color == 'black':
+                    black_green_neighbors.append(source_vertex)
+            if DEBUG:
+                if target_vertex_color == 'black':
+                    black_green_neighbors.append(target_vertex)
 
-                try:
-                    target_vertex,green_vertex = min(target_vertex, green_vertex), max(target_vertex, green_vertex)
-                    index = list(edges_to_add_set).index((target_vertex, green_vertex))
+    starting_index = g.ecount()
 
-                    if edge['weight'] / 2 < weights[index]:
-                        weights[index] = edge['weight'] / 2
-                        labels[index] = edge['label']
-                        prev_greenv_dic[target_vertex] = edge['weight']/2
+    # 2. green vertex 연결 edge들 한 번에 추가
+    g.add_edges(green_edges_to_add)
 
-                except ValueError:
-                    if (target_vertex,green_vertex) not in edges_to_add_set:
-                        extra_edges += 1
-                        edges_to_add.append([target_vertex,green_vertex])
-                        labels.append(edge['label'])
-                        weights.append(edge['weight']/2)
-                        edges_to_add_set.add((target_vertex,green_vertex))
-                        prev_greenv_dic[target_vertex] = edge['weight']/2
+    # 3. 새로 추가된 엣지 범위에 label, weight 설정
+    g.es[starting_index:]["label"] = green_edges_labels
+    g.es[starting_index:]["weight"] = green_edges_weights    
 
-                if DEBUG:
-                    if source_vertex_color == 'black':
-                        black_green_neighbors.append(source_vertex)
-                if DEBUG:
-                    if target_vertex_color == 'black':
-                        black_green_neighbors.append(target_vertex)
-
-        # bulk adding green interface edges and their respective weights and labels
-        edges_index_start = starting_index
-        g.add_edges(edges_to_add)
-        g.es[starting_index:]["label"] = labels
-        g.es[starting_index:]["weight"] = weights
-        
 
     black_interface_red = len(black)
     white_interface_blue = len(white)
 
-    # loop_end = time.time()     
-    # loop_time = loop_end - loop_start
+    loop_end = time.time()     
+    loop_time = loop_end - loop_start
 
-    # print("PART #3 time : ",loop_time)    
+    print("PART #3 time : ",loop_time)    
 
 
     if DEBUG:
