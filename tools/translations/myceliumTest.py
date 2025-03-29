@@ -4,7 +4,7 @@ import igraph
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 sys.path.append(os.path.abspath('translations'))
 
-import src.igraph as ig
+import src.graph as ig
 
 import tools.translations.img_to_txt as translate
 import matplotlib.pyplot as plt
