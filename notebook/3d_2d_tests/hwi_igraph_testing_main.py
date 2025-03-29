@@ -13,7 +13,7 @@ from numpy import character
 import descriptors as d
 import math
 DEBUG = False # debugging mode
-DEBUG2 = False
+DEBUG2 = True
 PERIODICITY = True
 # import tortuosity as t
 
@@ -234,12 +234,12 @@ def adjList(fileName):
         print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
-    # if DEBUG2:
+    if DEBUG2:
     #     greenv_dic = {} # dictionary for vertex index with green v and weight of the edge
     #     for vertex in vertices_with_green_v:
     #         greenv_dic[vertex] = vertices_with_green_v[vertex].weight
 
-    #     print("new method Green Edges len : ", len(vertices_with_green_v))
+        print("new method Green Edges len : ", len(vertices_with_green_v))
 
     return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, vertices_with_green_v
 
@@ -300,7 +300,7 @@ def graphe_adjList(filename):
 
 def adjvertexColors(fileName):
     """
-    Labels the colors of vertices based on a given file and on Graspi Documentation.
+    Labels the colors of verti gces based on a given file and on Graspi Documentation.
 
     Args:
         fileName (str): The name of the file containing the vertex color data.
