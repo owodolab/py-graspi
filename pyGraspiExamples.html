@@ -49,6 +49,7 @@
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiDescriptors.html">Descriptors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiInputs.html">Inputs</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Example of Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#get-the-list-of-descriptors">Get the List of Descriptors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#visualize-graphs">Visualize Graphs</a></li>
 </ul>
@@ -85,10 +86,32 @@
              
   <section id="example-of-usage">
 <span id="pygraspiexamples"></span><h1>Example of Usage<a class="headerlink" href="#example-of-usage" title="Link to this heading"></a></h1>
-<p><strong>Py-GraSPI</strong> can be a command line tool. Make sure to install all requirements with:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
+<p><strong>Testing Py-Graspi Online</strong></p>
+<p>Follow these steps to explore the capabilities of Py-Graspi using an online Jupyter Notebook environment like Google Colab.</p>
+<p><strong>To run an existing test notebook</strong></p>
+<ol class="arabic simple">
+<li><p>Open Google Colab.</p></li>
+<li><p>Click the GitHub tab, and paste the following link: <a class="reference external" href="https://github.com/owodolab/py-graspi/blob/dev/tests/pip_install_descriptors_example.ipynb">https://github.com/owodolab/py-graspi/blob/dev/tests/pip_install_descriptors_example.ipynb</a></p></li>
+<li><p>Since this is an existing notebook, you can run each code block to view the output.</p></li>
+</ol>
+<p><strong>To create your own notebook and use the Py-GraSPI package</strong></p>
+<ol class="arabic simple">
+<li><p>Open Google Colab.</p></li>
+</ol>
+<p>2. In the notebook, install Py-Graspi by running the following command:
+.. code-block:: bash</p>
+<blockquote>
+<div><p>!pip install py-graspi</p>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>Import the py-graspi package by running this command in the notebook:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>import<span class="w"> </span>py_graspi<span class="w"> </span>as<span class="w"> </span>ig
 </pre></div>
 </div>
+</section>
 <section id="get-the-list-of-descriptors">
 <h2>Get the List of Descriptors<a class="headerlink" href="#get-the-list-of-descriptors" title="Link to this heading"></a></h2>
 <p>A <strong>descriptor stored in a dictionary</strong> can be found by calling the function descriptors(graph)</p>
