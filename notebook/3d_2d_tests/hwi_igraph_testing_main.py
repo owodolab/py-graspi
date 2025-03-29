@@ -28,24 +28,19 @@ class edge_info():
 
 '''for updating edge info based on rule '''
 def update_edges(v_with_green_vertex, index, color, order, weight):
-    if index in v_with_green_vertex:
-        cur_v = v_with_green_vertex[index]
-        if cur_v.order > order:     # if previous order is higher than new one
-            # print("previous order : ", cur_v.order, "new order: ", order)
-            cur_v.order = order     # change it to lower order      
-            # if cur_v.order == 1:
-            #     cur_v.weight = 0.5
-            # else:
-            cur_v.weight = weight * 0.5                     
+    if (index, order) in v_with_green_vertex:
+        cur_v = v_with_green_vertex[(index, order)]
+        if v_with_green_vertex[(index, order)].weight > weight * 0.5:     # if previous order is higher than new one
+            v_with_green_vertex[(index, order)].weight = weight * 0.5     # change it to lower order      
+
     else:
-        # print("just new order : ", order)
         newEdge = edge_info()
         newEdge.color = color
         newEdge.index = index
-        newEdge.order = order
+        newEdge.order = order   #order = 1,2,3
         newEdge.weight = weight * 0.5
         
-        v_with_green_vertex[index] = newEdge
+        v_with_green_vertex[(index, order)] = newEdge
 
 '''---------Function to create edges for graph in specified format --------'''
 
@@ -598,18 +593,18 @@ def generateGraphAdj(file):
     green_edges_labels = []
     green_edges_weights = []
 
-    for i in greenv_dic:
+    for (i, order) in greenv_dic:
         green_edges_to_add.append([i, green_vertex])
         label = ""
-        if greenv_dic[i].order == 1:
+        if order == 1:
             label = "f"
-        elif greenv_dic[i].order == 2:
+        elif order == 2:
             label = "s"
-        elif greenv_dic[i].order == 3:
+        elif order == 3:
             label = "t"
         green_edges_labels.append(label) 
 
-        green_edges_weights.append(greenv_dic[i].weight)
+        green_edges_weights.append(greenv_dic[(i,order)].weight)
     prev_greenv_dic= {}
 
 
