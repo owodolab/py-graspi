@@ -54,6 +54,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#running-memory-tests">Running Memory Tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing-algorithms">Testing Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generate-and-run-files-for-py-graspi-api">Generate and Run Files for Py-Graspi API</a></li>
 </ul>
 </li>
 </ul>
@@ -138,6 +139,25 @@ technical skills.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ig.shortest_path<span class="o">(</span>fg,<span class="s1">&#39;black&#39;</span>,<span class="s1">&#39;blue&#39;</span>,<span class="s2">&quot;black_to_blue_paths.txt&quot;</span><span class="o">)</span><span class="w">    </span><span class="c1">#fg is a filtered graph object</span>
 </pre></div>
 </div>
+</section>
+<section id="generate-and-run-files-for-py-graspi-api">
+<h2>Generate and Run Files for Py-Graspi API<a class="headerlink" href="#generate-and-run-files-for-py-graspi-api" title="Link to this heading"></a></h2>
+<p>In order to generate an API using sphinx, you need to follow the installation of py-graspi:</p>
+<p>Install ghp-import in the project root directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>ghp-import
+</pre></div>
+</div>
+<p>To generate the rst files into the local html, run this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-build<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span>docs/source<span class="w"> </span>docs/build
+</pre></div>
+</div>
+<p>Ensure that the files have been generated in docs/build.</p>
+<p>To push the changes reflected on the html to the gh-pages branch on GitHub, essentially pushing changes to the site, run this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ghp-import<span class="w"> </span>-n<span class="w"> </span>-p<span class="w"> </span>-f<span class="w"> </span>docs/build/
+</pre></div>
+</div>
+<p>Go to the GitHub repo and verify that the files were pushed to the gh-pages branch</p>
+<p>Access and verify the documentation through the following URL: <a class="reference external" href="https://owodolab.github.io/py-graspi/">https://owodolab.github.io/py-graspi/</a></p>
 </section>
 </section>
 

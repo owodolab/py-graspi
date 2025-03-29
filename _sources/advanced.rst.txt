@@ -71,3 +71,32 @@ the example below finds the shortest path between all black vertices to the blue
 .. code-block:: bash
 
     ig.shortest_path(fg,'black','blue',"black_to_blue_paths.txt")    #fg is a filtered graph object
+
+Generate and Run Files for Py-Graspi API
+==================
+
+In order to generate an API using sphinx, you need to follow the installation of py-graspi:
+
+Install ghp-import in the project root directory:
+
+.. code-block:: bash
+
+   pip install ghp-import
+
+To generate the rst files into the local html, run this command:
+
+.. code-block:: bash
+
+   sphinx-build -b html docs/source docs/build
+
+Ensure that the files have been generated in docs/build.
+
+To push the changes reflected on the html to the gh-pages branch on GitHub, essentially pushing changes to the site, run this command:
+
+.. code-block:: bash
+
+   ghp-import -n -p -f docs/build/
+
+Go to the GitHub repo and verify that the files were pushed to the gh-pages branch
+
+Access and verify the documentation through the following URL: https://owodolab.github.io/py-graspi/
