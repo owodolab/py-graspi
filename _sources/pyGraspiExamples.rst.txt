@@ -21,6 +21,7 @@ Follow these steps to explore the capabilities of Py-Graspi using an online Jupy
 
 1. Open Google Colab.
 2. In the notebook, install Py-Graspi by running the following command:
+
 .. code-block:: bash
 
     !pip install py-graspi
@@ -31,8 +32,11 @@ Follow these steps to explore the capabilities of Py-Graspi using an online Jupy
 
     import py_graspi as ig
 
+User Functionality
+==================
+
 Get the List of Descriptors
-===========================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A **descriptor stored in a dictionary** can be found by calling the function descriptors(graph)
 
@@ -47,7 +51,7 @@ A **list of descriptors** in a **text file** can be found by calling the functio
     ig.descriptorsToTxt(dict,"descriptors_list.txt")
 
 Visualize Graphs
-================
+~~~~~~~~~~~~~~~~
 
 For 2D graphs, call visual2D(graph)
 

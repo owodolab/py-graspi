@@ -50,8 +50,11 @@
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiInputs.html">Inputs</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Example of Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#get-the-list-of-descriptors">Get the List of Descriptors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#visualize-graphs">Visualize Graphs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#user-functionality">User Functionality</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-the-list-of-descriptors">Get the List of Descriptors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualize-graphs">Visualize Graphs</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
@@ -99,12 +102,11 @@
 <p><strong>To create your own notebook and use the Py-GraSPI package</strong></p>
 <ol class="arabic simple">
 <li><p>Open Google Colab.</p></li>
+<li><p>In the notebook, install Py-Graspi by running the following command:</p></li>
 </ol>
-<p>2. In the notebook, install Py-Graspi by running the following command:
-.. code-block:: bash</p>
-<blockquote>
-<div><p>!pip install py-graspi</p>
-</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!pip<span class="w"> </span>install<span class="w"> </span>py-graspi
+</pre></div>
+</div>
 <ol class="arabic simple" start="3">
 <li><p>Import the py-graspi package by running this command in the notebook:</p></li>
 </ol>
@@ -112,8 +114,10 @@
 </pre></div>
 </div>
 </section>
+<section id="user-functionality">
+<h2>User Functionality<a class="headerlink" href="#user-functionality" title="Link to this heading"></a></h2>
 <section id="get-the-list-of-descriptors">
-<h2>Get the List of Descriptors<a class="headerlink" href="#get-the-list-of-descriptors" title="Link to this heading"></a></h2>
+<h3>Get the List of Descriptors<a class="headerlink" href="#get-the-list-of-descriptors" title="Link to this heading"></a></h3>
 <p>A <strong>descriptor stored in a dictionary</strong> can be found by calling the function descriptors(graph)</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ig.descriptors<span class="o">(</span>g<span class="o">)</span><span class="w">      </span><span class="c1"># g is a graph object</span>
 </pre></div>
@@ -124,7 +128,7 @@
 </div>
 </section>
 <section id="visualize-graphs">
-<h2>Visualize Graphs<a class="headerlink" href="#visualize-graphs" title="Link to this heading"></a></h2>
+<h3>Visualize Graphs<a class="headerlink" href="#visualize-graphs" title="Link to this heading"></a></h3>
 <p>For 2D graphs, call visual2D(graph)</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ig.generateGraph<span class="o">(</span><span class="s2">&quot;2D-testFile/testFile-10-2D.txt&quot;</span><span class="o">)</span><span class="w">     </span><span class="c1"># utilizing the test file found in 2D-testFiles folder as an example</span>
 ig.visual2D<span class="o">(</span>g<span class="o">)</span>
@@ -135,6 +139,7 @@ ig.visual2D<span class="o">(</span>g<span class="o">)</span>
 ig.visual3D<span class="o">(</span>g<span class="o">)</span>
 </pre></div>
 </div>
+</section>
 </section>
 </section>
 
