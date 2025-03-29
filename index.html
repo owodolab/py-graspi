@@ -144,26 +144,45 @@ Py-GraSPI offers tools for data conversion across various formats and for post-p
 </section>
 <section id="installation">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Installation</a><a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
-<p><strong>Manual Installation</strong></p>
-<p>Note: You must have Git, Python and pip installed onto your system</p>
-<p>First, activate the virtual environment after opening a new project in your preferred IDE. Run this command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./.venv/Scripts/activate
+<p><strong>Manual Installation of Py-Graspi</strong></p>
+<p>Follow these steps to manually install the Py-Graspi package.</p>
+<ol class="arabic simple">
+<li><p>After opening a new project environment, activate the virtual environment for your project by running this command:</p></li>
+</ol>
+<ul class="simple">
+<li><p>On Windows (Command Prompt):</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.<span class="se">\.</span>venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
 </pre></div>
 </div>
-<p>Clone the project repository by running this command:</p>
+<ul class="simple">
+<li><p>On Mac/Linux:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>./.venv/bin/activate
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Clone the project repository by running this command:</p></li>
+</ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/owodolab/py-graspi.git
 </pre></div>
 </div>
-<p>If you do not have git installed or run into issues with git, please visit: <a class="reference external" href="https://github.com/git-guides/install-git">https://github.com/git-guides/install-git</a>.</p>
-<p>Change directory into the py-graspi/ project directory by running this command:</p>
+<p>If you do not have git installed or run into issues with git, please visit: <a class="reference external" href="https://github.com/git-guides/install-git">https://github.com/git-guides/install-git</a></p>
+<ol class="arabic simple" start="3">
+<li><p>Navigate to the Py-Graspi project directory by running this command:</p></li>
+</ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>py-graspi/
 </pre></div>
 </div>
-<p>Install the py-graspi module from PyPI by running this command:</p>
+<ol class="arabic simple" start="4">
+<li><p>Install the py-graspi module from PyPI by running this command:</p></li>
+</ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>py-graspi
 </pre></div>
 </div>
-<p>Verify that the module has been installed correctly by ensuring that the following command DOES NOT give you a “Package not found” error.</p>
+<ol class="arabic simple" start="5">
+<li><p>Verify that the module has been installed correctly by ensuring that the following command DOES NOT give you a “Package not found” error.</p></li>
+</ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>show<span class="w"> </span>py-graspi
 </pre></div>
 </div>
@@ -172,41 +191,65 @@ Py-GraSPI offers tools for data conversion across various formats and for post-p
 <p>If there are any other issues with installation, please visit: <a class="reference external" href="https://python.igraph.org/en/stable/">https://python.igraph.org/en/stable/</a></p>
 <p><strong>Script Installation of Py-Graspi</strong></p>
 <p>Note: You must have Git installed onto your system</p>
-<p>Clone the project repository by running this command:</p>
+<ol class="arabic simple">
+<li><p>Clone the project repository by running this command:</p></li>
+</ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/owodolab/py-graspi.git
 </pre></div>
 </div>
-<p>Run the following script to set up and activate the virtual environment and install the py-graspi package:</p>
+<p>If you do not have git installed or run into issues with git, please visit: <a class="reference external" href="https://github.com/git-guides/install-git">https://github.com/git-guides/install-git</a></p>
+<ol class="arabic simple" start="2">
+<li><p>Run the following script to set up and activate the virtual environment and install the py-graspi package:</p></li>
+</ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>py-graspi/startup.py
 </pre></div>
 </div>
 <p>Verify that the module has been installed correctly by ensuring that the last output line on the command line says “Setup complete!” with no errors.</p>
 <p>If you do not have Python installed, please visit: <a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></p>
-<p>If you do not have pip installed or are running into issues with pip, please visit: <a class="reference external" href="https://pip.pypa.io/en/stable/installation/">https://pip.pypa.io/en/stable/installation/</a></p>
-<p>If there are any other issues with installation, please visit: <a class="reference external" href="https://python.igraph.org/en/stable/">https://python.igraph.org/en/stable/</a></p>
 <p><strong>Installation and Set-Up of Jupyter Notebook for Py-Graspi</strong></p>
-<p>First, activate the virtual environment after opening a new project in your preferred IDE. Run this command:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./.venv/Scripts/activate
+<ol class="arabic simple">
+<li><p>After opening a new project in your preferred environment, activate the virtual environment for your project by running this command:</p></li>
+</ol>
+<ul class="simple">
+<li><p>On Windows (Command Prompt):</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>.<span class="se">\.</span>venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
 </pre></div>
 </div>
-<p>Clone the project repository by running this command:</p>
+<ul class="simple">
+<li><p>On Mac/Linux:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>./.venv/bin/activate
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Clone the project repository by running this command:</p></li>
+</ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/owodolab/py-graspi.git
 </pre></div>
 </div>
-<p>If you do not have git installed or run into issues with git, please visit: <a class="reference external" href="https://github.com/git-guides/install-git">https://github.com/git-guides/install-git</a>.</p>
-<p>Change directory into the py-graspi/ project directory by running this command:</p>
+<p>If you do not have git installed or run into issues with git, please visit: <a class="reference external" href="https://github.com/git-guides/install-git">https://github.com/git-guides/install-git</a></p>
+<ol class="arabic simple" start="3">
+<li><p>Navigate to the Py-Graspi project directory by running this command:</p></li>
+</ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>py-graspi/
 </pre></div>
 </div>
-<p>Install the py-graspi module from PyPI by running this command:</p>
+<ol class="arabic simple" start="4">
+<li><p>Install the py-graspi module from PyPI by running this command:</p></li>
+</ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>py-graspi
 </pre></div>
 </div>
-<p>Install jupyter notebook by running this command:</p>
+<ol class="arabic simple" start="5">
+<li><p>Install jupyter notebook by running this command:</p></li>
+</ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>notebook
 </pre></div>
 </div>
-<p>Now, open the package in Jupyter Notebook for testing by running this command:</p>
+<ol class="arabic simple" start="6">
+<li><p>Now, open the package in Jupyter Notebook for testing by running this command:</p></li>
+</ol>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter<span class="w"> </span>notebook
 </pre></div>
 </div>
