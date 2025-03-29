@@ -13,7 +13,7 @@ from numpy import character
 import descriptors as d
 import math
 DEBUG = False # debugging mode
-DEBUG2 = True
+DEBUG2 = False
 PERIODICITY = True
 # import tortuosity as t
 
