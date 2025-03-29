@@ -1,4 +1,4 @@
-import igraph_testing as ig
+import src.igraph as ig
 
 
 def STAT_n(graph):

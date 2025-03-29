@@ -1,10 +1,10 @@
 import os
 import sys
 import igraph
-sys.path.append(os.path.abspath('../../src'))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 sys.path.append(os.path.abspath('translations'))
 
-import src.igraph_testing as ig
+import src.igraph as ig
 
 import tools.translations.img_to_txt as translate
 import matplotlib.pyplot as plt
