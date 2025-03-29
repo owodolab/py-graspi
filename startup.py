@@ -30,6 +30,8 @@ def activate_virtualenv():
     """Activate the virtual environment based on the operating system."""
     os_type = platform.system()
 
+    print("Activating virtualenv...")
+
     if os_type == "Windows":
         activate_command = ".\\.venv\\Scripts\\activate"
     elif os_type == "Darwin" or os_type == "Linux":  # macOS and Linux
@@ -44,8 +46,7 @@ def create_virtualenv():
     """Create a virtual environment if it doesn't exist."""
     if not os.path.exists(".venv"):
         print("Creating virtual environment...")
-        python_command = get_python_command()  # Get the appropriate Python command
-        run_command(f"{python_command} -m venv .venv")
+        run_command("python -m venv .venv")
     else:
         print("Virtual environment already exists.")
 
@@ -71,7 +72,11 @@ def main():
     print("Starting setup...")
 
     # Ensure Python is installed
-    get_python_command()  # This will check for python or python3, and exit if not found
+    try:
+        subprocess.run(["python", "--version"], check=True)
+    except subprocess.CalledProcessError:
+        print("Python is not installed. Please install Python first.")
+        sys.exit(1)
 
     # Create the virtual environment if it doesn't exist
     create_virtualenv()
