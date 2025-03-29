@@ -4,14 +4,39 @@
 Example of Usage
 ==============================================
 
-**Py-GraSPI** can be a command line tool. Make sure to install all requirements with:
+Getting Started
+===========================
+
+**Testing Py-Graspi Online**
+
+Follow these steps to explore the capabilities of Py-Graspi using an online Jupyter Notebook environment like Google Colab.
+
+**To run an existing test notebook**
+
+1. Open Google Colab.
+2. Click the GitHub tab, and paste the following link: https://github.com/owodolab/py-graspi/blob/dev/tests/pip_install_descriptors_example.ipynb
+3. Since this is an existing notebook, you can run each code block to view the output.
+
+**To create your own notebook and use the Py-GraSPI package**
+
+1. Open Google Colab.
+2. In the notebook, install Py-Graspi by running the following command:
 
 .. code-block:: bash
 
-    pip install -r requirements.txt
+    !pip install py-graspi
+
+3. Import the py-graspi package by running this command in the notebook:
+
+.. code-block:: bash
+
+    import py_graspi as ig
+
+User Functionality
+==================
 
 Get the List of Descriptors
-===========================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 A **descriptor stored in a dictionary** can be found by calling the function descriptors(graph)
 
@@ -26,7 +51,7 @@ A **list of descriptors** in a **text file** can be found by calling the functio
     ig.descriptorsToTxt(dict,"descriptors_list.txt")
 
 Visualize Graphs
-================
+~~~~~~~~~~~~~~~~
 
 For 2D graphs, call visual2D(graph)
 

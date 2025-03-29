@@ -99,4 +99,4 @@ To push the changes reflected on the html to the gh-pages branch on GitHub, esse
 
 Go to the GitHub repo and verify that the files were pushed to the gh-pages branch
 
-Access and verify the documentation through the following URL: https://owodolab.github.io/py-graspi/
+Access and verify the documentation through the following URL: https://owodolab.github.io/py-graspi/.
