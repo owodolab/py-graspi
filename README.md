@@ -11,90 +11,139 @@ The basic algorithm requirements include:
   -  Provide a list of descriptors
   -  Graph visualization
 
+
+## Getting Started
+### Testing Py-Graspi Online
+To run an existing test notebook to explore the capabilities of Py-Graspi,
+
+[![Check out this kaggle notebook](https://img.shields.io/badge/Open_Kaggle_Notebook-green)](https://www.kaggle.com/code/elyuzz/pygraspi-test)
+
+To create your own notebook and use the py-graspi package
+1. Open [Google Colab](https://colab.research.google.com/).
+2. In the notebook, install Py-Graspi by running the following command:
+   ```python
+   !pip install py-graspi
+   ```
+3. Import the py-graspi package by running this command in the notebook:
+   ```python
+   import py_graspi as ig
+   ```
+4. Run any py-graspi function you wish to use as described in the [To Test Algorithms section](#to-test-algorithms)
+
+
 ## Installation
 ### Manual Installation of Py-Graspi
-First, activate the virtual environment after opening a new project in your preferred IDE. Run this command: 
-```
-./.venv/Scripts/activate
-```
-Clone the project repository by running this command: 
+Follow these steps to manually install the Py-Graspi package.
 
-**Note: You must have Git installed onto your system**
-```
-git clone https://github.com/owodolab/py-graspi.git
-```
-If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
+1. After opening a new project in your preferred IDE, activate the virtual environment for your project by running this command:
+   - On Windows (Command Prompt):
+     ```cmd
+     .\.venv\Scripts\activate
+     ```
+   - On Mac/Linux:
+     ```bash
+     source ./.venv/bin/activate
+     ```
 
-Change directory into the py-graspi/ project directory by running this command:
-```
-cd py-graspi/
-```
-Install the py-graspi module from PyPI by running this command:
+2. Clone the project repository by running this command:
 
-**Note: You must have Python and pip installed onto your system**
-```
-pip install py-graspi
-```
-Verify that the module has been installed correctly by ensuring that the following command DOES NOT give you a "Package not found" error.
-```
-pip show py-graspi
-```
+   **Note: You must have Git installed on your system**
+   ```bash
+   git clone https://github.com/owodolab/py-graspi.git
+   ```
+   If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
 
-  If you do not have Python installed, please visit: https://www.python.org/downloads/
+3. Navigate to the Py-Graspi project directory by running this command:
+   ```bash
+   cd py-graspi/
+   ```
 
-  If you do not have pip installed or are running into issues with pip, please visit: https://pip.pypa.io/en/stable/installation/
+4. Install the py-graspi module from PyPI by running this command:
 
-  If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
+   **Note: You must have Python and pip installed onto your system**
+   ```bash
+   pip install py-graspi
+   ```
+
+5. Verify that the module has been installed correctly by ensuring that the following command DOES NOT give you a "Package not found" error.
+   ```bash
+   pip show py-graspi
+   ```
+   
+   If you do not have Python installed, please visit: https://www.python.org/downloads/
+
+   If you do not have pip installed or are running into issues with pip, please visit: https://pip.pypa.io/en/stable/installation/
+
+   If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
+
+6. Once installed, import the package to utilize it in your project
+   ```python
+   import py_graspi as ig
+   ```
+7. To learn how to use and run graph algorithms in your project files, [Go to the Test Algorithms section in the README](#to-test-algorithms)
+  
+8. To run test files on the command line and view the output, [Go to the Testing From Command Line section of the README](#testing-from-command-line)
+
+
 
 ### Script Installation of Py-Graspi
-Clone the project repository by running this command: 
+1. Clone the project repository by running this command:
 
-**Note: You must have Git installed onto your system**
-```
-git clone https://github.com/owodolab/py-graspi.git
-```
-Run the following script to set up and activate the virtual environment and install the py-graspi package:
-```
-python py-graspi/startup.py
-```
-Verify that the module has been installed correctly by ensuring that the last output line on the command line says "Setup complete!" with no errors.
-
-  If you do not have Python installed, please visit: https://www.python.org/downloads/
-
-  If you do not have pip installed or are running into issues with pip, please visit: https://pip.pypa.io/en/stable/installation/
-
-  If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/ 
+   **Note: You must have Git installed on your system**
+   ```bash
+   git clone https://github.com/owodolab/py-graspi.git
+   ```
+   If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
+   
+2. Run the following script to set up and activate the virtual environment and install the py-graspi package:
+   ```
+   python py-graspi/startup.py
+   ```
+3. Verify that the module has been installed correctly by ensuring that the last output line on the command line says "Setup complete!" with no errors.
+   If you do not have Python installed, please visit: https://www.python.org/downloads/
+   
 
 ### Installation and Set-Up of Jupyter Notebook for Py-Graspi
-First, activate the virtual environment after opening a new project in your preferred IDE. Run this command: 
-```
-./.venv/Scripts/activate
-```
-Clone the project repository by running this command: 
+1. After opening a new project in your preferred IDE, activate the virtual environment for your project by running this command:
+   - On Windows (Command Prompt):
+     ```cmd
+     .\.venv\Scripts\activate
+     ```
+   - On Mac/Linux:
+     ```bash
+     source ./.venv/bin/activate
+     ```
 
-**Note: You must have Git installed onto your system**
-```
-git clone https://github.com/owodolab/py-graspi.git
-```
-Change directory into the py-graspi/ project directory by running this command:
-```
-cd py-graspi/
-```
-Install the py-graspi module from PyPI by running this command:
+2. Clone the project repository by running this command:
 
-**Note: You must have Python and pip installed onto your system**
-```
-pip install py-graspi
-```
-Install jupyter notebook by running this command: 
-```
-pip install notebook
-```
-Now, open the package in Jupyter Notebook for testing by running this command: 
-```
-jupyter notebook
-```
-A localhost jupyter notebook should open with the same directories and files as the py-graspi package.
+   **Note: You must have Git installed on your system**
+   ```bash
+   git clone https://github.com/owodolab/py-graspi.git
+   ```
+   If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
+
+3. Navigate to the Py-Graspi project directory by running this command:
+   ```bash
+   cd py-graspi/
+   ```
+
+4. Install the py-graspi module from PyPI by running this command:
+   **Note: You must have Python and pip installed onto your system**
+   ```bash
+   pip install py-graspi
+   ```
+   
+5. Install jupyter notebook by running this command:
+   ```
+   pip install notebook
+   ```
+   
+6. Now, open the package in Jupyter Notebook for testing by running this command:
+   ```
+   jupyter notebook
+   ```
+   A localhost jupyter notebook should open with the same directories and files as the py-graspi package.
+   
   
 ## View Demo Videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
 Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQuN86RUYXvJG_F9MMq?usp=sharing
@@ -157,36 +206,34 @@ DISCLAIMER: if any issues occur you may not be in the right directory (src) or t
 
 ## To Test Algorithms
 
-To **generate graphs**, call the generateGraph(_file_) function which takes in a input-file name
+### To **generate graphs**, call the generateGraph(_file_) function which takes in a input-file name
 returns:
   - graph_Data object - The graph data. It contains the following:
-    - g: graph object
-    - s_2D: bool of whether the graph is 2D
-    - black_vertices: list of all black vertices
-    - white_vertices: list of all white vertices
-    - black_green: number of edges from black to interface (green vertex)
-    - black_interface_red: number of black interface vertices that has a path to top (red)
-    - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
-    - dim: value of vertices in y direction for 2D and z direction for 3D
-    - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
-    - shortest_path_to_red: shortest paths from all vertices to red 
-    - shortest_path_to_blue: shortest paths from all vertices to blue
-    - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
-    - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
+      - g: graph object
+      - s_2D: bool of whether the graph is 2D
+      - black_vertices: list of all black vertices
+      - white_vertices: list of all white vertices
+      - black_green: number of edges from black to interface (green vertex)
+      - black_interface_red: number of black interface vertices that has a path to top (red)
+      - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
+      - dim: value of vertices in y direction for 2D and z direction for 3D
+      - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
+      - shortest_path_to_red: shortest paths from all vertices to red 
+      - shortest_path_to_blue: shortest paths from all vertices to blue
+      - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
+      - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
+    ```
+    ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
+    ```
 
-```
-ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
-```
-
-To **filter graphs**, call filterGraph(_graph_) function which takes in a graph object 
+### To **filter graphs**, call filterGraph(_graph_) function which takes in a graph object 
   -  can pass a graph generated by generateGraph(_file_)
   -  returns a filtered graph
-```
+    ```
 g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0]     # utilizing the test file found in 2D-testFiles folder as an example
-fg = ig.filterGraph(g)
-```
+fg = ig.filterGraph(g)```
 
-### To get dictionary of descriptors
+### To get a dictionary of descriptors
 
 To test if descriptors are computed correctly, you can run the following script in the terminal to check.
   -  make sure you are in the py-graspi directory after git cloning
@@ -194,37 +241,20 @@ To test if descriptors are computed correctly, you can run the following script 
      ```
      cd tests
      ```
+     ```
+     python descriptor_testing.py ../data/data/data_0.5_2.2_001900.txt
+     ```
+     This will print out whether the descriptor computation is correct and should take around 10-15 seconds.
 
-```
-python descriptor_testing.py ../data/data/data_0.5_2.2_001900.txt 
-```
-This will print out whether the descriptor computation is correct and should take around 10-15 seconds.
-
-The **descriptors stored in a dictionary** can be computed by calling the function descriptors(...)
-It take in values returned from generateGraph() and a input filename as the parameters:
-- graph_Data object - The graph data. It contains the following:
-  - graph: graph object
-  - filename: input filename used to generate graph
-  - black_vertices: list of all black vertices
-  - white_vertices: list of all white vertices
-  - black_green: number of edges from black to interface (green vertex)
-  - black_interface_red: number of black interface vertices that has a path to top (red)
-  - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
-  - dim: value of vertices in y direction for 2D and z direction for 3D
-  - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
-  - shortest_path_to_red: shortest paths from all vertices to red 
-  - shortest_path_to_blue: shortest paths from all vertices to blue
-  - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
-  - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
-
-```
-ig.descriptors(graph,filename,black_vertices,white_vertices, black_green, black_interface_red, white_interface_blue, dim,interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca) 
-```
+The **descriptors stored in a dictionary** can be computed by calling the function descriptors(graph_data, filename).
+It takes in the graph_data_class object returned from generateGraph() and an input filename as the parameters.
+      ```
+      ig.descriptors(graph_data,filename) 
+      ```
 The ** descriptors in a text file** can be computed by calling the function descriptorsToTxt(_dictionary_,_filename_)
   -  _dict_ is a dictionary of descriptors that is returned by calling ig.descriptors(...)
-```
-ig.descriptorsToTxt(dict,"descriptors_list.txt") 
-```
+    ```
+ig.descriptorsToTxt(dict,"descriptors_list.txt") ```
 
 
 ### To visualize graphs
@@ -232,10 +262,10 @@ ig.descriptorsToTxt(dict,"descriptors_list.txt")
 To visualize graphs, call visualize(_graph_, _is_2D_)
   -  _graph_ is a graph object
   -  _is_2D_ is a bool of whether a graph is 2D, also a return value when _generateGraph()_ is called
-```
+    ```
 g, is_2D = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0:1]     # utilizing the test file found in 2D-testFiles folder as an example
-ig.visual2D(g, is_2D)
-```
+ig.visual2D(g, is_2D)```
+
 ## Translating .plt files to .txt files
 These are the steps for translating .plt files to .txt files in order to be turned into graphs.
 1. Make sure you cd into the py_graspi directory.
