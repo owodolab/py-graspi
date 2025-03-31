@@ -154,25 +154,35 @@ def adjList(fileName):
                             elif i >= 4 and i <= 8:
                                 if DEBUG:
                                     third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
-                                edge_labels.append("t")
-                                edge_weights.append(float(math.sqrt(3)))
 
                                 if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
-                                    update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 3, float(math.sqrt(3)))                                    
-                                    update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 3, float(math.sqrt(3)))                                    
+                                    # update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 3, float(math.sqrt(3)))                                    
+                                    # update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 3, float(math.sqrt(3)))                                    
+                                    edge_labels.append("t")
+                                    edge_weights.append(float(math.sqrt(3) * 0.5))
+
+                                else:
+                                    edge_labels.append("t")
+                                    edge_weights.append(float(math.sqrt(3)))
+
                             else:
                                 if DEBUG:
                                     second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
-                                edge_labels.append("s")
-                                edge_weights.append(float(math.sqrt(2)))
                                 if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
                                     # if DEBUG2:
                                         # print("order : 2")
                                         # print("index: ", current_vertex)
                                         # print("==================")
 
-                                    update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 2, float(math.sqrt(2)))                                    
-                                    update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 2, float(math.sqrt(2)))                                    
+                                    # update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 2, float(math.sqrt(2)))                                    
+                                    # update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 2, float(math.sqrt(2)))                                    
+                                    edge_labels.append("s")
+                                    edge_weights.append(float(math.sqrt(2) * 0.5))
+
+                                else:
+
+                                    edge_labels.append("s")
+                                    edge_weights.append(float(math.sqrt(2)))
 
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
