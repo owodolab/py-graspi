@@ -13,7 +13,7 @@ from numpy import character
 import descriptors as d
 import math
 DEBUG = False # debugging mode
-DEBUG2 = False
+DEBUG2 = False   # for green edges
 PERIODICITY = True
 # import tortuosity as t
 
@@ -27,11 +27,12 @@ class edge_info():
         self.weight = None
 
 '''for updating edge info based on rule '''
+'''green vertex can only connect with interface(first order) vertices'''
 def update_edges(v_with_green_vertex, index, color, order, weight):
-    if (index, order) in v_with_green_vertex:
-        cur_v = v_with_green_vertex[(index, order)]
-        if v_with_green_vertex[(index, order)].weight > weight * 0.5:     # if previous order is higher than new one
-            v_with_green_vertex[(index, order)].weight = weight * 0.5     # change it to lower order      
+    if index in v_with_green_vertex:
+        cur_v = v_with_green_vertex[index]
+        if v_with_green_vertex[index].weight > weight * 0.5:     # if previous order is higher than new one
+            v_with_green_vertex[index].weight = weight * 0.5     # change it to lower order      
 
     else:
         newEdge = edge_info()
@@ -40,7 +41,7 @@ def update_edges(v_with_green_vertex, index, color, order, weight):
         newEdge.order = order   #order = 1,2,3
         newEdge.weight = weight * 0.5
         
-        v_with_green_vertex[(index, order)] = newEdge
+        v_with_green_vertex[index] = newEdge
 
 '''---------Function to create edges for graph in specified format --------'''
 
@@ -71,9 +72,6 @@ def adjList(fileName):
     is_2d = True
     with open(fileName, "r") as file:
         header = file.readline().strip().split(' ')
-        # print(f"contents of first line: {repr(header)}")  # repr()을 사용하여 줄바꿈 등의 문제 확인
-        # dimX = 100
-        # dimY = 100
         dimX, dimY = int(header[0]), int(header[1])
         dim = dimY
         if len(header) < 3:
@@ -100,10 +98,6 @@ def adjList(fileName):
         reshaped_data = input_data.flatten()
         # loadtxt_end = time.time()
         # print("loadtxt time : ", loadtxt_end - loadtxt_start)
-        # print(dimX)
-        # print(dimY)
-        # print(dimZ)
-        # print(reshaped_data)
 
         #Loops through input and adds adjacency list of current vertex based on Offsets. Offsets, make it so edges aren't duplicated.
         #Also adds edge labels based on Graspi Documentation
@@ -144,10 +138,6 @@ def adjList(fileName):
                                 edge_weights.append(1)
 
                                 if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
-                                    # if DEBUG2:
-                                    #     print("order : 3")
-                                    #     print("index: ", current_vertex)
-                                    #     print("==================")
                                     update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)                                    
                                     update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)                                    
                                     
@@ -155,11 +145,9 @@ def adjList(fileName):
                                 if DEBUG:
                                     third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
 
-                                if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
-                                    # update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 3, float(math.sqrt(3)))                                    
-                                    # update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 3, float(math.sqrt(3)))                                    
+                                if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> black white pair
                                     edge_labels.append("t")
-                                    edge_weights.append(float(math.sqrt(3) * 0.5))
+                                    edge_weights.append(float(math.sqrt(3) * 0.5))  
 
                                 else:
                                     edge_labels.append("t")
@@ -168,19 +156,11 @@ def adjList(fileName):
                             else:
                                 if DEBUG:
                                     second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
-                                if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
-                                    # if DEBUG2:
-                                        # print("order : 2")
-                                        # print("index: ", current_vertex)
-                                        # print("==================")
-
-                                    # update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 2, float(math.sqrt(2)))                                    
-                                    # update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 2, float(math.sqrt(2)))                                    
+                                if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> black white pair ASSUME : there are only 0 and 1 in input file
                                     edge_labels.append("s")
                                     edge_weights.append(float(math.sqrt(2) * 0.5))
 
                                 else:
-
                                     edge_labels.append("s")
                                     edge_weights.append(float(math.sqrt(2)))
 
@@ -245,10 +225,6 @@ def adjList(fileName):
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
     if DEBUG2:
-    #     greenv_dic = {} # dictionary for vertex index with green v and weight of the edge
-    #     for vertex in vertices_with_green_v:
-    #         greenv_dic[vertex] = vertices_with_green_v[vertex].weight
-
         print("new method Green Edges len : ", len(vertices_with_green_v))
 
     return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, vertices_with_green_v
@@ -603,20 +579,11 @@ def generateGraphAdj(file):
     green_edges_labels = []
     green_edges_weights = []
 
-    for (i, order) in greenv_dic:
+    for i in greenv_dic:
         green_edges_to_add.append([i, green_vertex])
-        label = ""
-        if order == 1:
-            label = "f"
-        elif order == 2:
-            label = "s"
-        elif order == 3:
-            label = "t"
-        green_edges_labels.append(label) 
+        green_edges_labels.append("f")  #every edges with green vertex are first order 
 
-        green_edges_weights.append(greenv_dic[(i,order)].weight)
-    prev_greenv_dic= {}
-
+        green_edges_weights.append(greenv_dic[i].weight)
 
         #all edge traversal
         #Add black/white edges to green interface node.
@@ -710,27 +677,15 @@ def generateGraphAdj(file):
     if DEBUG2:
         print("previous method Green vertex neighbors: ", g.neighbors(green_vertex))
         print("previous method Green vertex neighbors LENGTH: ", len(g.neighbors(green_vertex)))
-
+        print("new method Green vertex neighbors: ", green_edges_to_add)
+        print("new method Green vertex LENGTH: ", len(green_edges_to_add))
         for i in range(len(green_edges_to_add)):
             print ("edge: ", green_edges_to_add[i], "label: ", green_edges_labels[i], "weight: ", green_edges_weights[i])
 
         cnt = 0
-        for key in prev_greenv_dic:
-            if key in greenv_dic:                 
-                cnt += 1
                 
         if cnt == len(g.neighbors(green_vertex)):
             print("all vertices stored well!")
-
-        if prev_greenv_dic == greenv_dic:
-            print("all weights same!")
-        else:
-            print("different at some point!")
-
-            # 1. print different values
-            for key in prev_greenv_dic.keys() & greenv_dic.keys():
-                if prev_greenv_dic[key] != greenv_dic[key].weight:
-                    print(f"Value differs at key '{key}': {prev_greenv_dic[key]} -> {greenv_dic[key].weight}")
 
 
     return g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
