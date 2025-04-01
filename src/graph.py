@@ -15,7 +15,7 @@ import math
 from urllib3.util import resolve_ssl_version
 
 DEBUG = False
-PERIODICITY = True
+PERIODICITY = False #reflects default status from c++ implementation
 
 
 def adjList(fileName):
@@ -816,75 +816,52 @@ def connectedComponents(graph):
 
 
 def main():
-    if sys.argv[1] == "-p":
-        # global PERIODICITY
-        # PERIODICITY = True
-        if sys.argv[2] == "-g":
-            graph_data = generateGraphGraphe(sys.argv[3])  # utilizing the test file found in 2D-testFiles folder
-            visualize(graph_data.graph, graph_data.is_2D)
-            filteredGraph = filterGraph(graph_data.graph)
-            visualize(filteredGraph, graph_data.is_2D)
+    global PERIODICITY
+    # Validate and parse command-line arguments
+    if len(sys.argv) < 3:
+        print("Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) OR -g <INPUT_FILE.graphe>")
+        return
 
-            if DEBUG:
-                dic = d.descriptors(graph_data.graph)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
-
-        elif sys.argv[1] != "-g":
-            graph_data= generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(graph_data.graph, graph_data.is_2D)
-            filteredGraph = filterGraph(graph_data.graph)
-            visualize(filteredGraph, graph_data.is_2D)
-
-            if DEBUG:
-                dic = d.descriptors(graph_data.g)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
-
+    # Check if -a (structured data with .txt file)
+    if sys.argv[1] == "-a":
+        # Check periodicity flag
+        if len(sys.argv) > 3 and sys.argv[2] == "-p":
+            if sys.argv[3] == "1": #If periodicity flag 1
+                PERIODICITY = True  #Set PERIODICITY to True
+            elif sys.argv[3] == "0": #If periodicity flag 0
+                PERIODICITY = False  #Set PERIODICITY to False
+            else: #Error in formatting
+                print("Invalid argument for -p. Use 0 or 1.")
+                return
+            #The filename should be at sys.argv[4]
+            graph_data = generateGraphAdj(sys.argv[4])  #generate graph using sys.argv[4]
         else:
-            if sys.argv[1] == "-g":
-                graph_data = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-                visualize(graph_data.graph, graph_data.is_2D)
-                filteredGraph = filterGraph(graph_data.g)
-                visualize(filteredGraph, graph_data.is_2D)
-                if DEBUG:
-                    print(connectedComponents(filteredGraph))
-                    dic = d.descriptors(graph_data.graph)
-                    print(connectedComponents(filteredGraph))
-                    for key, value in dic.items():
-                        print(key, value)
-    else:
-        if sys.argv[1] == "-g":
-            graph_data = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(graph_data.graph, graph_data.is_2D)
-            filteredGraph = filterGraph(graph_data.graph)
-            visualize(filteredGraph, graph_data.is_2D)
-            if DEBUG:
-                print(connectedComponents(filteredGraph))
-                dic = d.descriptors(graph_data.graph)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
+            # No -p flag. Default is false so will run with periodicity false.
+            graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
 
+    #Check if -g (unstructured data with .graphe file)
+    elif sys.argv[1] == "-g":
+        # -g should error if -p flag is given
+        if len(sys.argv) > 3 and sys.argv[2] == "-p":
+            print("Error: Periodicity option (-p) cannot be used with -g flag. Only -a supports periodicity.")
+            return
+        graph_data = generateGraphGraphe(sys.argv[2])  # graph generation using sys.argv[2]
 
-        elif sys.argv[1] != "-g":
-            graph_data = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-            visualize(graph_data.graph, graph_data.is_2D)
-            filteredGraph = filterGraph(graph_data.graph)
-            visualize(filteredGraph, graph_data.is_2D)
+    else: #Edge case handling
+        print("Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) OR -g <INPUT_FILE.graphe>")
+        return
 
-            if DEBUG:
-                dic = d.descriptors(graph_data.graph)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
-            if DEBUG:
-                dic = d.descriptors(graph_data.graph)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
+    #Visualize the graph and filter it
+    visualize(graph_data.graph, graph_data.is_2D)
+    filteredGraph = filterGraph(graph_data.graph)
+    visualize(filteredGraph, graph_data.is_2D)
+
+    #Debugging: print descriptors and connected components if DEBUG is True
+    if DEBUG:
+        dic = d.descriptors(graph_data.graph)
+        print(connectedComponents(filteredGraph))
+        for key, value in dic.items():
+            print(key, value)
 
 
 
