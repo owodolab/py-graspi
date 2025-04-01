@@ -100,3 +100,37 @@ To push the changes reflected on the html to the gh-pages branch on GitHub, esse
 Go to the GitHub repo and verify that the files were pushed to the gh-pages branch
 
 Access and verify the documentation through the following URL: https://owodolab.github.io/py-graspi/.
+
+Update Py-pi Package
+====================
+
+If there are changes made to the to the PyGraspi package locally, these instructions can help push to Py-Pi.
+
+1. To install setuptools, wheel and twine, run this command in terminal:
+.. code-block:: bash
+
+   pip install setuptools wheel twine
+
+Ensure that the project already contains setup.py, README.md, _init_.py, LICENSE and other core files.
+
+If the current package was never pushed to PyPI, continue to step 2. If the package has already been pushed before, make sure you update the version number in the setup.py file.
+
+2. Build the distribution files, which creates a dist/ directory containing the .tar.gz and .whl files.
+
+First, CD into project root directory. Then, run this command in terminal:
+.. code-block:: bash
+
+   python setup.py sdist bdist_wheel
+
+(Optional) It's safe to delete the .tar.gz and .whl file of old versions so that the correct version gets pushed to PyPI
+
+3. Login to PyPI, and in settings
+
+4. Use twine to upload the distribution securely by running this command in terminal:
+.. code-block:: bash
+
+   twine upload dist/*
+
+When prompted for your API token, retrieve the API token that you can generate from PyPI. The token will not be visible on the terminal, so press enter after entering the token.
+
+Verify that the new version has been uploaded successfully at the link https://pypi.org/project/py-graspi/
