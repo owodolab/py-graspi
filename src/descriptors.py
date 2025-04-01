@@ -2,6 +2,75 @@ import math
 import numpy as np
 import src.graph as ig
 
+def descriptors(graph_data, filename):
+    """
+    This function computes all the descriptors for the graph given and saves them  in a dictionary.
+
+    Args:
+        graph_data (GraphData): The graph data.
+        filename (str): The file used to generate graphs to compute on.
+
+    Returns:
+        dict: A dictionary containing all the descriptors. The dictionary stores the outputted data in key:value pairs, the unique keys are linked to the associated value.
+         The keys of the descriptors are as follow: STAT_n, STAT_e, STAT_n_D, STAT_n_A, STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, ABS_wf_D, ABS_f_D, DISS_f10_D, DISS_wf10_D, CT_f_e_conn, CT_f_conn_D_An, CT_f_conn_A_Ca, CT_e_conn, CT_e_D_An, CT_e_A_Ca, CT_n_D_adj_An, CT_n_A_adj_Ca, CT_f_D_tort1, CT_f_A_tort1.
+         For full definitions see the “Descriptors” tab on the Py-Graspi documentation website.
+    """
+    # graph, filename, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
+    #     dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
+
+    dict = {}
+
+    STAT_n_D = len(graph_data.black_vertices)
+    STAT_n_A = len(graph_data.white_vertices)
+    STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, \
+        countWhite_Blue_conn = CC_descriptors(graph_data.graph, STAT_n_D,STAT_n_A)
+
+    # shortest path descriptors
+    DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1, ABS_wf_D \
+        = shortest_path_descriptors(graph_data,filename, countBlack_Red_conn, countWhite_Blue_conn)
+
+
+    dict["STAT_n"] =  STAT_n_A + STAT_n_D
+    dict["STAT_e"] = graph_data.black_green
+    dict["STAT_n_D"] = STAT_n_D
+    dict["STAT_n_A"] = STAT_n_A
+    dict["STAT_CC_D"] = STAT_CC_D
+    dict["STAT_CC_A"] = STAT_CC_A
+    dict["STAT_CC_D_An"] = STAT_CC_D_An
+    dict["STAT_CC_A_Ca"] = STAT_CC_A_Ca
+    dict['ABS_wf_D'] = ABS_wf_D
+    dict["ABS_f_D"] = float(STAT_n_D / (STAT_n_D + STAT_n_A))
+    dict["DISS_f10_D"] = DISS_f10_D
+    dict["DISS_wf10_D"] = DISS_wf10_D
+    dict["CT_f_e_conn"] = float(graph_data.interface_edge_comp_paths / graph_data.black_green)
+    dict["CT_f_conn_D_An"] = CT_f_conn_D_An
+    dict["CT_f_conn_A_Ca"] = CT_f_conn_A_Ca
+    dict["CT_e_conn"] = graph_data.interface_edge_comp_paths
+    dict["CT_e_D_An"] = graph_data.black_interface_red
+    dict["CT_e_A_Ca"] = graph_data.white_interface_blue
+    dict["CT_n_D_adj_An"] = graph_data.CT_n_D_adj_An
+    dict["CT_n_A_adj_Ca"] = graph_data.CT_n_A_adj_Ca
+    dict["CT_f_D_tort1"] = CT_f_D_tort1
+    dict["CT_f_A_tort1"] = CT_f_A_tort1
+
+    return dict
+
+#Marked for improvement. This function should return bool - the status of the writing process.
+def descriptorsToTxt(dict, fileName):
+    """
+    This function writes a dictionary of descriptors to the specified text file.
+
+    Args:
+        dict (dict): The dictionary of descriptors.
+        fileName (str): The name of the file to write to.
+
+    Returns:
+        None
+    """
+
+    with open(fileName,'w') as f:
+        for d in dict:
+            f.write(d + " " + str(float(dict[d])) + '\n')
 
 def CC_descriptors(graph,totalBlack, totalWhite):
     """
@@ -55,79 +124,6 @@ def CC_descriptors(graph,totalBlack, totalWhite):
 
     return countBlack, countWhite, countBlack_Red, countWhite_Blue, float(countBlack_Red_conn / totalBlack), \
         float(countWhite_Blue_conn / totalWhite), countBlack_Red_conn, countWhite_Blue_conn
-
-'''--------------- Shortest Path Descriptors ---------------'''
-def filterGraph_metavertices(graph):
-    """
-    This function filters a graph by only keeping the edges that connect vertices of the same color and metavertices.
-
-    Args:
-        graph (ig.Graph): The input graph.
-
-    Returns:
-        ig.Graph: The filtered graph of vertices of the same color and green metavertex.
-        ig.Graph: The filtered graph of vertices of the same color and blue metavertex.
-        ig.Graph: The filtered graph of vertices of the same color and green metavertex.
-        ig.Graph: The filtered graph of vertices of the same color and red metavertex.
-
-    """
-    edgeList = graph.get_edgelist()
-    keptEdges = []
-    keptWeights = []
-    keptEdges_blue = []
-    keptWeights_blue = []
-    keptEdges_red = []
-    keptWeights_red= []
-    keptEdges_red_unfiltered = []
-    keptWeights_red_unfiltered = []
-
-    #Checks edges and keeps only edges that connect to the same colored vertices
-    for edge in edgeList:
-        currentNode = edge[0]
-        toNode = edge[1]
-
-        weight = graph.es[graph.get_eid(currentNode, toNode)]['weight']
-        color_current = graph.vs[currentNode]['color']
-        color_toNode = graph.vs[toNode]['color']
-
-        if (color_current == color_toNode):
-            keptEdges.append(edge)
-            keptEdges_blue.append(edge)
-            keptEdges_red.append(edge)
-            keptWeights.append(weight)
-            keptWeights_blue.append(weight)
-            keptWeights_red.append(weight)
-
-        if ((color_current == 'green') or (color_toNode == 'green')):
-            keptEdges.append(edge)
-            keptWeights.append(weight)
-        elif ((color_current == 'blue') or (color_toNode == 'blue')):
-            keptEdges_blue.append(edge)
-            keptWeights_blue.append(weight)
-        elif ((color_current == 'red') or (color_toNode == 'red')) :
-            keptEdges_red.append(edge)
-            keptWeights_red.append(weight)
-
-        if((color_current != 'blue') and (color_toNode != 'blue') \
-           and (color_current != 'green') and (color_toNode != 'green')):
-            keptEdges_red_unfiltered.append(edge)
-            keptWeights_red_unfiltered.append(weight)
-
-
-
-    filteredGraph_green = graph.subgraph_edges(keptEdges, delete_vertices=False)
-    filteredGraph_green.es['weight'] = keptWeights
-
-    fg_blue = graph.subgraph_edges(keptEdges_blue, delete_vertices=False)
-    fg_blue.es['weight'] = keptWeights_blue
-
-    fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
-    fg_red.es['weight'] = keptWeights_red
-
-    fg_red_unfiltered = graph.subgraph_edges(keptEdges_red_unfiltered, delete_vertices=False)
-    fg_red_unfiltered['weight'] = keptWeights_red_unfiltered
-
-    return filteredGraph_green, fg_blue, fg_red, fg_red_unfiltered
 
 def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWhite_Blue_conn):
   
@@ -285,74 +281,76 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
     return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), \
         float(white_tor / countWhite_Blue_conn), float(total_weighted_black_red / (totalBlacks + totalWhite))
 
+'''--------------- Shortest Path Descriptors ---------------'''
+def filterGraph_metavertices(graph):
 
-
-def descriptors(graph_data, filename):
     """
-    This function computes all the descriptors for the graph given and saves them  in a dictionary.
+    This function filters a graph by only keeping the edges that connect vertices of the same color and metavertices.
 
     Args:
-        graph_data (graph_data_class): The graph data.
-        filename (str): The file used to generate graphs to compute on.
-
+        graph (ig.Graph): The input graph.
+        
     Returns:
-        dict: A dictionary containing all the descriptors. The dictionary stores the outputted data in key:value pairs, the unique keys are linked to the associated value.
-         The keys of the descriptors are as follow: STAT_n, STAT_e, STAT_n_D, STAT_n_A, STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, ABS_wf_D, ABS_f_D, DISS_f10_D, DISS_wf10_D, CT_f_e_conn, CT_f_conn_D_An, CT_f_conn_A_Ca, CT_e_conn, CT_e_D_An, CT_e_A_Ca, CT_n_D_adj_An, CT_n_A_adj_Ca, CT_f_D_tort1, CT_f_A_tort1.
-         For full definitions see the “Descriptors” tab on the Py-Graspi documentation website.
+        ig.Graph: The filtered graph of vertices of the same color and green metavertex.
+        ig.Graph: The filtered graph of vertices of the same color and blue metavertex.
+        ig.Graph: The filtered graph of vertices of the same color and green metavertex.
+        ig.Graph: The filtered graph of vertices of the same color and red metavertex.
+
     """
-    # graph, filename, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
-    #     dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
+    edgeList = graph.get_edgelist()
+    keptEdges = []
+    keptWeights = []
+    keptEdges_blue = []
+    keptWeights_blue = []
+    keptEdges_red = []
+    keptWeights_red= []
+    keptEdges_red_unfiltered = []
+    keptWeights_red_unfiltered = []
 
-    dict = {}
+    #Checks edges and keeps only edges that connect to the same colored vertices
+    for edge in edgeList:
+        currentNode = edge[0]
+        toNode = edge[1]
 
-    STAT_n_D = len(graph_data.black_vertices)
-    STAT_n_A = len(graph_data.white_vertices)
-    STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, \
-        countWhite_Blue_conn = CC_descriptors(graph_data.graph, STAT_n_D,STAT_n_A)
+        weight = graph.es[graph.get_eid(currentNode, toNode)]['weight']
+        color_current = graph.vs[currentNode]['color']
+        color_toNode = graph.vs[toNode]['color']
 
-    # shortest path descriptors
-    DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1, ABS_wf_D \
-        = shortest_path_descriptors(graph_data,filename, countBlack_Red_conn, countWhite_Blue_conn)
+        if (color_current == color_toNode):
+            keptEdges.append(edge)
+            keptEdges_blue.append(edge)
+            keptEdges_red.append(edge)
+            keptWeights.append(weight)
+            keptWeights_blue.append(weight)
+            keptWeights_red.append(weight)
+
+        if ((color_current == 'green') or (color_toNode == 'green')):
+            keptEdges.append(edge)
+            keptWeights.append(weight)
+        elif ((color_current == 'blue') or (color_toNode == 'blue')):
+            keptEdges_blue.append(edge)
+            keptWeights_blue.append(weight)
+        elif ((color_current == 'red') or (color_toNode == 'red')) :
+            keptEdges_red.append(edge)
+            keptWeights_red.append(weight)
+
+        if((color_current != 'blue') and (color_toNode != 'blue') \
+           and (color_current != 'green') and (color_toNode != 'green')):
+            keptEdges_red_unfiltered.append(edge)
+            keptWeights_red_unfiltered.append(weight)
 
 
-    dict["STAT_n"] =  STAT_n_A + STAT_n_D
-    dict["STAT_e"] = graph_data.black_green
-    dict["STAT_n_D"] = STAT_n_D
-    dict["STAT_n_A"] = STAT_n_A
-    dict["STAT_CC_D"] = STAT_CC_D
-    dict["STAT_CC_A"] = STAT_CC_A
-    dict["STAT_CC_D_An"] = STAT_CC_D_An
-    dict["STAT_CC_A_Ca"] = STAT_CC_A_Ca
-    dict['ABS_wf_D'] = ABS_wf_D
-    dict["ABS_f_D"] = float(STAT_n_D / (STAT_n_D + STAT_n_A))
-    dict["DISS_f10_D"] = DISS_f10_D
-    dict["DISS_wf10_D"] = DISS_wf10_D
-    dict["CT_f_e_conn"] = float(graph_data.interface_edge_comp_paths / graph_data.black_green)
-    dict["CT_f_conn_D_An"] = CT_f_conn_D_An
-    dict["CT_f_conn_A_Ca"] = CT_f_conn_A_Ca
-    dict["CT_e_conn"] = graph_data.interface_edge_comp_paths
-    dict["CT_e_D_An"] = graph_data.black_interface_red
-    dict["CT_e_A_Ca"] = graph_data.white_interface_blue
-    dict["CT_n_D_adj_An"] = graph_data.CT_n_D_adj_An
-    dict["CT_n_A_adj_Ca"] = graph_data.CT_n_A_adj_Ca
-    dict["CT_f_D_tort1"] = CT_f_D_tort1
-    dict["CT_f_A_tort1"] = CT_f_A_tort1
 
-    return dict
+    filteredGraph_green = graph.subgraph_edges(keptEdges, delete_vertices=False)
+    filteredGraph_green.es['weight'] = keptWeights
 
-#Marked for improvement. This function should return bool - the status of the writing process.
-def descriptorsToTxt(dict, fileName):
-    """
-    This function writes a dictionary of descriptors to the specified text file.
+    fg_blue = graph.subgraph_edges(keptEdges_blue, delete_vertices=False)
+    fg_blue.es['weight'] = keptWeights_blue
 
-    Args:
-        dict (dict): The dictionary of descriptors.
-        fileName (str): The name of the file to write to.
+    fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
+    fg_red.es['weight'] = keptWeights_red
 
-    Returns:
-        None
-    """
+    fg_red_unfiltered = graph.subgraph_edges(keptEdges_red_unfiltered, delete_vertices=False)
+    fg_red_unfiltered['weight'] = keptWeights_red_unfiltered
 
-    with open(fileName,'w') as f:
-        for d in dict:
-            f.write(d + " " + str(float(dict[d])) + '\n')
+    return filteredGraph_green, fg_blue, fg_red, fg_red_unfiltered
