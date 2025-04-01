@@ -1,11 +1,14 @@
 import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import igraph as ig
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 import src.descriptors as d
-import src.GraphData as GraphData
+import src.graph_data_class as GraphData
 
 import math
 
@@ -24,7 +27,7 @@ def adjList(fileName):
             filename (str): The name of the file containing the graph data.
 
         Returns:
-            graph_data (GraphData): The graph data.
+            graph_data (graph_data_class): The graph data.
 
         """
     adjacency_list = {}
@@ -152,8 +155,8 @@ def adjList(fileName):
     g.es['label'] = edge_labels
     g.es['weight'] = edge_weights
 
-    # Create GraphData object
-    graph_data = GraphData.GraphData(graph=g, is_2D=is_2d)
+    # Create graph_data_class object
+    graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2d)
 
     # Store vertex attributes
     graph_data.black_vertices = black_vertices
@@ -358,8 +361,9 @@ def generateGraphGraphe(file):
             g.add_edge(green_vertex, source_vertex)
             g.add_edge(green_vertex, target_vertex)
 
-    # print(test)
-    return g, is_2d
+
+    graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2d)
+    return graph_data
 
 
 def filterGraph_blue_red(graph):
@@ -417,7 +421,7 @@ def generateGraphAdj(file):
             file (str): The name of the file containing the graph data.
 
         Returns:
-            graph_data (GraphData): The graph data.
+            graph_data (graph_data_class): The graph data.
 
         """
     # get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
@@ -816,13 +820,13 @@ def main():
         # global PERIODICITY
         # PERIODICITY = True
         if sys.argv[2] == "-g":
-            g, is_2D = generateGraphGraphe(sys.argv[3])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+            graph_data = generateGraphGraphe(sys.argv[3])  # utilizing the test file found in 2D-testFiles folder
+            visualize(graph_data.graph, graph_data.is_2D)
+            filteredGraph = filterGraph(graph_data.graph)
+            visualize(filteredGraph, graph_data.is_2D)
 
             if DEBUG:
-                dic = d.descriptors(g)
+                dic = d.descriptors(graph_data.graph)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
@@ -841,25 +845,25 @@ def main():
 
         else:
             if sys.argv[1] == "-g":
-                g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-                visualize(g, is_2D)
-                filteredGraph = filterGraph(g)
-                visualize(filteredGraph, is_2D)
+                graph_data = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+                visualize(graph_data.graph, graph_data.is_2D)
+                filteredGraph = filterGraph(graph_data.g)
+                visualize(filteredGraph, graph_data.is_2D)
                 if DEBUG:
                     print(connectedComponents(filteredGraph))
-                    dic = d.descriptors(g)
+                    dic = d.descriptors(graph_data.graph)
                     print(connectedComponents(filteredGraph))
                     for key, value in dic.items():
                         print(key, value)
     else:
         if sys.argv[1] == "-g":
-            g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+            graph_data = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+            visualize(graph_data.graph, graph_data.is_2D)
+            filteredGraph = filterGraph(graph_data.graph)
+            visualize(filteredGraph, graph_data.is_2D)
             if DEBUG:
                 print(connectedComponents(filteredGraph))
-                dic = d.descriptors(g)
+                dic = d.descriptors(graph_data.graph)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
