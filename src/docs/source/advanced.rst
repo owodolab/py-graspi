@@ -107,6 +107,7 @@ Update Py-pi Package
 If there are changes made to the to the PyGraspi package locally, these instructions can help push to Py-Pi.
 
 1. To install setuptools, wheel and twine, run this command in terminal:
+
 .. code-block:: bash
 
    pip install setuptools wheel twine
@@ -118,6 +119,7 @@ If the current package was never pushed to PyPI, continue to step 2. If the pack
 2. Build the distribution files, which creates a dist/ directory containing the .tar.gz and .whl files.
 
 First, CD into project root directory. Then, run this command in terminal:
+
 .. code-block:: bash
 
    python setup.py sdist bdist_wheel
@@ -127,6 +129,7 @@ First, CD into project root directory. Then, run this command in terminal:
 3. Login to PyPI, and in settings
 
 4. Use twine to upload the distribution securely by running this command in terminal:
+
 .. code-block:: bash
 
    twine upload dist/*
