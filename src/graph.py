@@ -1,18 +1,21 @@
 import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import igraph as ig
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 import src.descriptors as d
-import src.GraphData as GraphData
+import src.graph_data_class as GraphData
 
 import math
 
 from urllib3.util import resolve_ssl_version
 
 DEBUG = False
-PERIODICITY = True
+PERIODICITY = False #reflects default status from c++ implementation
 
 
 def adjList(fileName):
@@ -24,7 +27,7 @@ def adjList(fileName):
             filename (str): The name of the file containing the graph data.
 
         Returns:
-            graph_data (GraphData): The graph data.
+            graph_data (graph_data_class): The graph data.
 
         """
     adjacency_list = {}
@@ -152,8 +155,8 @@ def adjList(fileName):
     g.es['label'] = edge_labels
     g.es['weight'] = edge_weights
 
-    # Create GraphData object
-    graph_data = GraphData.GraphData(graph=g, is_2D=is_2d)
+    # Create graph_data_class object
+    graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2d)
 
     # Store vertex attributes
     graph_data.black_vertices = black_vertices
@@ -358,8 +361,9 @@ def generateGraphGraphe(file):
             g.add_edge(green_vertex, source_vertex)
             g.add_edge(green_vertex, target_vertex)
 
-    # print(test)
-    return g, is_2d
+
+    graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2d)
+    return graph_data
 
 
 def filterGraph_blue_red(graph):
@@ -417,7 +421,7 @@ def generateGraphAdj(file):
             file (str): The name of the file containing the graph data.
 
         Returns:
-            graph_data (GraphData): The graph data.
+            graph_data (graph_data_class): The graph data.
 
         """
     # get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
@@ -812,75 +816,52 @@ def connectedComponents(graph):
 
 
 def main():
-    if sys.argv[1] == "-p":
-        # global PERIODICITY
-        # PERIODICITY = True
-        if sys.argv[2] == "-g":
-            g, is_2D = generateGraphGraphe(sys.argv[3])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+    global PERIODICITY
+    # Validate and parse command-line arguments
+    if len(sys.argv) < 3:
+        print("Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) OR -g <INPUT_FILE.graphe>")
+        return
 
-            if DEBUG:
-                dic = d.descriptors(g)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
-
-        elif sys.argv[1] != "-g":
-            graph_data= generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(graph_data.graph, graph_data.is_2D)
-            filteredGraph = filterGraph(graph_data.graph)
-            visualize(filteredGraph, graph_data.is_2D)
-
-            if DEBUG:
-                dic = d.descriptors(graph_data.g)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
-
+    # Check if -a (structured data with .txt file)
+    if sys.argv[1] == "-a":
+        # Check periodicity flag
+        if len(sys.argv) > 3 and sys.argv[2] == "-p":
+            if sys.argv[3] == "1": #If periodicity flag 1
+                PERIODICITY = True  #Set PERIODICITY to True
+            elif sys.argv[3] == "0": #If periodicity flag 0
+                PERIODICITY = False  #Set PERIODICITY to False
+            else: #Error in formatting
+                print("Invalid argument for -p. Use 0 or 1.")
+                return
+            #The filename should be at sys.argv[4]
+            graph_data = generateGraphAdj(sys.argv[4])  #generate graph using sys.argv[4]
         else:
-            if sys.argv[1] == "-g":
-                g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-                visualize(g, is_2D)
-                filteredGraph = filterGraph(g)
-                visualize(filteredGraph, is_2D)
-                if DEBUG:
-                    print(connectedComponents(filteredGraph))
-                    dic = d.descriptors(g)
-                    print(connectedComponents(filteredGraph))
-                    for key, value in dic.items():
-                        print(key, value)
-    else:
-        if sys.argv[1] == "-g":
-            g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
-            if DEBUG:
-                print(connectedComponents(filteredGraph))
-                dic = d.descriptors(g)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
+            # No -p flag. Default is false so will run with periodicity false.
+            graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
 
+    #Check if -g (unstructured data with .graphe file)
+    elif sys.argv[1] == "-g":
+        # -g should error if -p flag is given
+        if len(sys.argv) > 3 and sys.argv[2] == "-p":
+            print("Error: Periodicity option (-p) cannot be used with -g flag. Only -a supports periodicity.")
+            return
+        graph_data = generateGraphGraphe(sys.argv[2])  # graph generation using sys.argv[2]
 
-        elif sys.argv[1] != "-g":
-            graph_data = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-            visualize(graph_data.graph, graph_data.is_2D)
-            filteredGraph = filterGraph(graph_data.graph)
-            visualize(filteredGraph, graph_data.is_2D)
+    else: #Edge case handling
+        print("Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) OR -g <INPUT_FILE.graphe>")
+        return
 
-            if DEBUG:
-                dic = d.descriptors(graph_data.graph)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
-            if DEBUG:
-                dic = d.descriptors(graph_data.graph)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
+    #Visualize the graph and filter it
+    visualize(graph_data.graph, graph_data.is_2D)
+    filteredGraph = filterGraph(graph_data.graph)
+    visualize(filteredGraph, graph_data.is_2D)
+
+    #Debugging: print descriptors and connected components if DEBUG is True
+    if DEBUG:
+        dic = d.descriptors(graph_data.graph)
+        print(connectedComponents(filteredGraph))
+        for key, value in dic.items():
+            print(key, value)
 
 
 

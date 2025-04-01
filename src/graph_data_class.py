@@ -1,12 +1,12 @@
 import igraph as ig
 
-class GraphData:
+class graph_data_class:
     """
     Class to store all graph parameters in a single object, reducing redundant function returns.
     """
 
     def __init__(self, graph: ig.Graph, is_2D: bool):
-        """ Initialize the GraphData object with a graph and its properties. """
+        """ Initialize the graph_data_class object with a graph and its properties. """
 
         self.graph = graph  # Store the igraph graph object
         self.is_2D = is_2D  # Boolean indicating whether the graph is 2D
