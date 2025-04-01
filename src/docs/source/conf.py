@@ -35,6 +35,9 @@ exclude_patterns = [
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 html_baseurl = 'https://owodolab.github.io/py-graspi/'
+html_sidebars = {
+    '**': ['localtoc.html'],  #Ensure the table of contents and search box are on every page
+}
 
 autodoc_default_options = {
     'members': True,
