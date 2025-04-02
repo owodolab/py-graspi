@@ -88,6 +88,21 @@ def adjList(fileName):
             dim = dimZ
         offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1),
                    (1,0,-1), (1,-1,0)]
+        # offsets = [
+        #     (-1,  0,  0),  # x-
+        #     ( 0, -1,  0),  # y-
+        #     ( 0,  0, -1),  # z-
+        #     (-1, -1,  0),
+        #     (-1,  0, -1),
+        #     ( 0, -1, -1),
+        #     (-1, -1, -1),
+        #     ( 1, -1, -1),
+        #     ( 1,  0, -1),
+        #     ( 1, -1,  0),
+        #     ( 0, -1,  1),
+        #     (-1,  0,  1),
+        #     (-1,  1,  0)
+        # ]
 
         vertex_color = [""] * (dimX * dimY * dimZ)
 
@@ -128,20 +143,23 @@ def adjList(fileName):
 
                     for i in range(len(offsets)):
                         dx, dy, dz = offsets[i]
+                        dist = dx**2 + dy**2 + dz**2
                         nx, ny, nz = x + dx, y + dy, z + dz 
                         if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
                             neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
-                            if i >= 1 and i <= 3: #improvement point : loop by index and compare with index
+                            if dist == 1: #improvement point : loop by index and compare with index
                                 if DEBUG:
                                     first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("f")
                                 edge_weights.append(1)
 
                                 if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
+                                    if DEBUG2:
+                                        print(current_vertex, neighbor_vertex)
                                     update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)                                    
                                     update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)                                    
                                     
-                            elif i >= 4 and i <= 8:
+                            elif dist == 3:
                                 if DEBUG:
                                     third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
 
@@ -479,6 +497,9 @@ def generateGraphAdj(file):
     line = line.split()
     dimX = int(line[0])
     dimY = int(line[1])
+    dimZ = int(line[2])
+
+    # print("xyz:", dimX, dimY, dimZ)
     g = ig.Graph.ListDict(edges=edges, directed=False)
     color_dict = {0:"black", 1:"white"}
     g.vs["color"] = vertex_color
@@ -501,13 +522,34 @@ def generateGraphAdj(file):
     # print("shortest time : ", shortest_time)    
 
     others_start = time.time()    
+
+    #Add Green Interface and it's color
+    g.add_vertices(1)
+    g.vs[g.vcount()-1]['color'] = 'green'
+    green_vertex = g.vs[g.vcount() - 1].index
+    green_vertex_index = g.vcount()-1
+
+
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY:
-        for i in range(0, g.vcount() - 2, dimX):
+        for i in range(0, g.vcount() - 3, dimX):
             # first add first neighbor wrap around
             g.add_edge(g.vs[i], g.vs[i + (dimX - 1)])
             g.es[g.ecount()-1]['label'] = 'f'
             g.es[g.ecount()-1]['weight'] = 1
+
+            if (g.vs[i]["color"] == "black" and g.vs[i + (dimX - 1)]["color"] == "white") or \
+                (g.vs[i]["color"] == "white" and g.vs[i + (dimX - 1)]["color"] == "black"): # interface -> add edges 
+                    if DEBUG2:
+                        print("Periodicity detected: ", i, i+(dimX - 1))
+                    g.add_edge(g.vs[i], g.vs[green_vertex_index])
+                    g.es[g.ecount()-1]['label'] = 'f'
+                    g.es[g.ecount()-1]['weight'] = 1
+
+                    g.add_edge(g.vs[i + (dimX - 1)], g.vs[green_vertex_index])
+                    g.es[g.ecount()-1]['label'] = 'f'
+                    g.es[g.ecount()-1]['weight'] = 1
+                
 
             # add diagnol wrap arounds
             if i - 1 >= 0:
@@ -520,6 +562,20 @@ def generateGraphAdj(file):
                 g.es[g.ecount()-1]['label'] = 's'
                 g.es[g.ecount()-1]['weight'] = math.sqrt(2)
 
+            
+
+
+    green_edges_to_add = []
+    green_edges_labels = []
+    green_edges_weights = []
+
+    for i in greenv_dic:
+        green_edges_to_add.append([i, green_vertex])
+        green_edges_labels.append("f")  #every edges with green vertex are first order 
+
+        green_edges_weights.append(greenv_dic[i].weight)
+
+
     # filter_start = time.time()
     fg_blue, fg_red, keptEdges_blue, keptEdges_red = filterGraph_blue_red(g)   # different point 2
     redComponent = set(fg_red.subcomponent(redVertex, mode="ALL"))
@@ -530,10 +586,6 @@ def generateGraphAdj(file):
     # print("filter time (in PART #2):", filter_time)
     
 
-    #Add Green Interface and it's color
-    g.add_vertices(1)
-    g.vs[g.vcount()-1]['color'] = 'green'
-    green_vertex = g.vs[g.vcount() - 1].index
 
     if DEBUG:
         black_green_neighbors = []
@@ -575,15 +627,6 @@ def generateGraphAdj(file):
     #     source_vertex_color = g.vs[source_vertex]['color']
     #     target_vertex_color = g.vs[target_vertex]['color']
 
-    green_edges_to_add = []
-    green_edges_labels = []
-    green_edges_weights = []
-
-    for i in greenv_dic:
-        green_edges_to_add.append([i, green_vertex])
-        green_edges_labels.append("f")  #every edges with green vertex are first order 
-
-        green_edges_weights.append(greenv_dic[i].weight)
 
         #all edge traversal
         #Add black/white edges to green interface node.
@@ -632,7 +675,7 @@ def generateGraphAdj(file):
                 
 
                 # increment black_green when black to green edge is added
-                black_green += 1 
+                black_green += 1 #useless?
 
 
             if DEBUG:
