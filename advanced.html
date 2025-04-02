@@ -163,30 +163,29 @@ technical skills.</p>
 <section id="update-py-pi-package">
 <h2>Update Py-pi Package<a class="headerlink" href="#update-py-pi-package" title="Link to this heading"></a></h2>
 <p>If there are changes made to the to the PyGraspi package locally, these instructions can help push to Py-Pi.</p>
-<p>1. To install setuptools, wheel and twine, run this command in terminal:
-.. code-block:: bash</p>
-<blockquote>
-<div><p>pip install setuptools wheel twine</p>
-</div></blockquote>
+<ol class="arabic simple">
+<li><p>To install setuptools, wheel and twine, run this command in terminal:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>setuptools<span class="w"> </span>wheel<span class="w"> </span>twine
+</pre></div>
+</div>
 <p>Ensure that the project already contains setup.py, README.md, _init_.py, LICENSE and other core files.</p>
 <p>If the current package was never pushed to PyPI, continue to step 2. If the package has already been pushed before, make sure you update the version number in the setup.py file.</p>
 <ol class="arabic simple" start="2">
 <li><p>Build the distribution files, which creates a dist/ directory containing the .tar.gz and .whl files.</p></li>
 </ol>
-<p>First, CD into project root directory. Then, run this command in terminal:
-.. code-block:: bash</p>
-<blockquote>
-<div><p>python setup.py sdist bdist_wheel</p>
-</div></blockquote>
+<p>First, CD into project root directory. Then, run this command in terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>setup.py<span class="w"> </span>sdist<span class="w"> </span>bdist_wheel
+</pre></div>
+</div>
 <p>(Optional) It’s safe to delete the .tar.gz and .whl file of old versions so that the correct version gets pushed to PyPI</p>
 <ol class="arabic simple" start="3">
 <li><p>Login to PyPI, and in settings</p></li>
+<li><p>Use twine to upload the distribution securely by running this command in terminal:</p></li>
 </ol>
-<p>4. Use twine to upload the distribution securely by running this command in terminal:
-.. code-block:: bash</p>
-<blockquote>
-<div><p>twine upload dist/*</p>
-</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>twine<span class="w"> </span>upload<span class="w"> </span>dist/*
+</pre></div>
+</div>
 <p>When prompted for your API token, retrieve the API token that you can generate from PyPI. The token will not be visible on the terminal, so press enter after entering the token.</p>
 <p>Verify that the new version has been uploaded successfully at the link <a class="reference external" href="https://pypi.org/project/py-graspi/">https://pypi.org/project/py-graspi/</a></p>
 </section>
