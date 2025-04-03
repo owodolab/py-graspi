@@ -562,7 +562,30 @@ def generateGraphAdj(file):
                 g.es[g.ecount()-1]['label'] = 's'
                 g.es[g.ecount()-1]['weight'] = math.sqrt(2)
 
-            
+        # ✅ 추가: Y축 방향 wrap-around 처리 (dimZ > 1 일 때만)
+        if dimZ > 1:
+            for z in range(dimZ):
+                for x in range(dimX):
+                    i = x + z * dimX * dimY
+                    top = i
+                    bottom = i + dimX * (dimY - 1)
+
+                    # Y축 wrap-around edge
+                    g.add_edge(g.vs[top], g.vs[bottom])
+                    g.es[g.ecount()-1]['label'] = 'f'
+                    g.es[g.ecount()-1]['weight'] = 1
+
+                    if (g.vs[top]["color"] == "black" and g.vs[bottom]["color"] == "white") or \
+                    (g.vs[top]["color"] == "white" and g.vs[bottom]["color"] == "black"):
+                        if DEBUG2:
+                            print("Y-periodicity detected:", top, bottom)
+                        g.add_edge(g.vs[top], g.vs[green_vertex_index])
+                        g.es[g.ecount()-1]['label'] = 'f'
+                        g.es[g.ecount()-1]['weight'] = 1
+
+                        g.add_edge(g.vs[bottom], g.vs[green_vertex_index])
+                        g.es[g.ecount()-1]['label'] = 'f'
+                        g.es[g.ecount()-1]['weight'] = 1            
 
 
     green_edges_to_add = []
