@@ -223,7 +223,7 @@ returns:
       - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
       - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
     ```
-    ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
+    g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
     ```
 
 ### To **filter graphs**, call filterGraph(_graph_) function which takes in a graph object 
@@ -231,7 +231,9 @@ returns:
   -  returns a filtered graph
     ```
 g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0]     # utilizing the test file found in 2D-testFiles folder as an example
-fg = ig.filterGraph(g)```
+fg = ig.filterGraph(g)
+print(f"Number of Connected Components: {len(fg.connected_components())}")
+print(f"Connected Components: {fg.connected_components()}")```
 
 ### To get a dictionary of descriptors
 
@@ -249,7 +251,7 @@ To test if descriptors are computed correctly, you can run the following script 
 The **descriptors stored in a dictionary** can be computed by calling the function descriptors(graph_data, filename).
 It takes in the graph_data_class object returned from generateGraph() and an input filename as the parameters.
       ```
-      ig.descriptors(graph_data,filename) 
+      dict = ig.descriptors(graph_data,filename) 
       ```
 The ** descriptors in a text file** can be computed by calling the function descriptorsToTxt(_dictionary_,_filename_)
   -  _dict_ is a dictionary of descriptors that is returned by calling ig.descriptors(...)
@@ -263,8 +265,8 @@ To visualize graphs, call visualize(_graph_, _is_2D_)
   -  _graph_ is a graph object
   -  _is_2D_ is a bool of whether a graph is 2D, also a return value when _generateGraph()_ is called
     ```
-g, is_2D = ig.generateGraph("2D-testFile/testFile-10-2D.txt")[0:1]     # utilizing the test file found in 2D-testFiles folder as an example
-ig.visual2D(g, is_2D)```
+g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
+ig.visualize(g, "graph")```
 
 ## Translating .plt files to .txt files
 These are the steps for translating .plt files to .txt files in order to be turned into graphs.
