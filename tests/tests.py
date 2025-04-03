@@ -1,5 +1,5 @@
 import os
-import tortuosity_histogram as t
+import tools.tortuosity.tortuosity_histogram as t
 
 import src.graph as ig
 import src.descriptors as ds
