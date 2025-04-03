@@ -17,7 +17,16 @@ Below is the list of all functions available in **py-graspi**:
 .. details:: py-graspi Functions
    :open:
 
-   .. automodule:: src.igraph_testing
+   .. automodule:: src.graph
+      :members:
+      :undoc-members:
+      :show-inheritance:
+      :exclude-members: main
+
+.. details:: Graph Class
+   :open:
+
+   .. automodule:: src.graph_data_class
       :members:
       :undoc-members:
       :show-inheritance:

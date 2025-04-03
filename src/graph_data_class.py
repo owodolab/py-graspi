@@ -3,6 +3,27 @@ import igraph as ig
 class graph_data_class:
     """
     Class to store all graph parameters in a single object, reducing redundant function returns.
+
+    **Attributes:**
+        - **graph** (*ig.Graph*): Stores the igraph graph object.
+        - **is_2D** (*bool*): Indicates whether the graph is 2D.
+        - **black_vertices** (*list*): A list to store black vertices in the graph.
+        - **white_vertices** (*list*): A list to store white vertices in the graph.
+        - **shortest_path_to_red** (*Optional[list]*): Stores the shortest path to the red vertex.
+        - **shortest_path_to_blue** (*Optional[list]*): Stores the shortest path to the blue vertex.
+        - **black_green** (*int*): Computed descriptor for black-green interaction.
+        - **black_interface_red** (*int*): Computed descriptor for the black-red interface.
+        - **white_interface_blue** (*int*): Computed descriptor for the white-blue interface.
+        - **dim** (*int*): Dimension descriptor for the graph.
+        - **interface_edge_comp_paths** (*int*): Number of interface edges in computed paths.
+        - **CT_n_D_adj_An** (*int*): Some computed descriptor.
+        - **CT_n_A_adj_Ca** (*int*): Another computed descriptor.
+        - **redVertex** (*Optional[Any]*): Reference to the red vertex.
+        - **blueVertex** (*Optional[Any]*): Reference to the blue vertex.
+
+    Args:
+        graph (ig.Graph): The igraph graph object representing the structure.
+        is_2D (str): Boolean indicating whether the graph is 2D
     """
 
     def __init__(self, graph: ig.Graph, is_2D: bool):
