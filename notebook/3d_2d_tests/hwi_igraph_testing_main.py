@@ -28,7 +28,7 @@ class edge_info():
 
 '''for updating edge info based on rule '''
 '''green vertex can only connect with interface(first order) vertices'''
-def update_edges(v_with_green_vertex, index, color, order, weight):
+def store_green_edges(v_with_green_vertex, index, color, order, weight):
     if index in v_with_green_vertex:
         cur_v = v_with_green_vertex[index]
         if v_with_green_vertex[index].weight > weight * 0.5:     # if previous order is higher than new one
@@ -88,21 +88,6 @@ def adjList(fileName):
             dim = dimZ
         offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1),
                    (1,0,-1), (1,-1,0)]
-        # offsets = [
-        #     (-1,  0,  0),  # x-
-        #     ( 0, -1,  0),  # y-
-        #     ( 0,  0, -1),  # z-
-        #     (-1, -1,  0),
-        #     (-1,  0, -1),
-        #     ( 0, -1, -1),
-        #     (-1, -1, -1),
-        #     ( 1, -1, -1),
-        #     ( 1,  0, -1),
-        #     ( 1, -1,  0),
-        #     ( 0, -1,  1),
-        #     (-1,  0,  1),
-        #     (-1,  1,  0)
-        # ]
 
         vertex_color = [""] * (dimX * dimY * dimZ)
 
@@ -149,8 +134,8 @@ def adjList(fileName):
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
                                 if DEBUG2:
                                     print(current_vertex, neighbor_vertex)
-                                update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
-                                update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
+                                store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
+                                store_green_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
                         elif dist == 3:
                             if DEBUG:
@@ -174,9 +159,9 @@ def adjList(fileName):
 
                 adjacency_list[current_vertex] = neighbors
 
-                # 🔁 PERIODIC WRAP-AROUND 처리 (x축, y축)
+                #  PERIODIC WRAP-AROUND edges
                 if PERIODICITY:
-                    # --- X축 wrap-around (row-wise) ---
+                    # --- X axis wrap-around (row-wise) ---
                     if x == 0:
                         right = current_vertex + (dimX - 1)
                         if DEBUG:
@@ -187,13 +172,13 @@ def adjList(fileName):
                         if reshaped_data[current_vertex] + reshaped_data[right] == 1:
                             if DEBUG2:
                                 print("X-periodicity detected:", current_vertex, right)
-                            update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            update_edges(vertices_with_green_v, right, reshaped_data[right], 1, 1)
+                            store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_green_edges(vertices_with_green_v, right, reshaped_data[right], 1, 1)
 
                         neighbors.append(right)
 
-                    # --- Y축 wrap-around (col-wise) ---
-                    if dimZ > 1 and y == 0:
+                    # --- Y axis wrap-around (col-wise) ---
+                    if not is_2d and y == 0:
                         bottom = current_vertex + dimX * (dimY - 1)
                         if DEBUG:
                             first_order_pairs.append([min(current_vertex, bottom), max(current_vertex, bottom)])
@@ -203,8 +188,8 @@ def adjList(fileName):
                         if reshaped_data[current_vertex] + reshaped_data[bottom] == 1:
                             if DEBUG2:
                                 print("Y-periodicity detected:", current_vertex, bottom)
-                            update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            update_edges(vertices_with_green_v, bottom, reshaped_data[bottom], 1, 1)
+                            store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_green_edges(vertices_with_green_v, bottom, reshaped_data[bottom], 1, 1)
 
                         neighbors.append(bottom)
 
@@ -546,23 +531,6 @@ def generateGraphAdj(file):
 
     others_start = time.time()    
 
-    #Add Green Interface and it's color
-    g.add_vertices(1)
-    g.vs[g.vcount()-1]['color'] = 'green'
-    green_vertex = g.vs[g.vcount() - 1].index
-    green_vertex_index = g.vcount()-1
-
-
-
-    green_edges_to_add = []
-    green_edges_labels = []
-    green_edges_weights = []
-
-    for i in greenv_dic:
-        green_edges_to_add.append([i, green_vertex])
-        green_edges_labels.append("f")  #every edges with green vertex are first order 
-
-        green_edges_weights.append(greenv_dic[i].weight)
 
 
     # filter_start = time.time()
@@ -676,10 +644,25 @@ def generateGraphAdj(file):
 
     starting_index = g.ecount()
 
-    # 2. green vertex 연결 edge들 한 번에 추가
+
+    #Add Green Interface and it's color
+    g.add_vertices(1)
+    g.vs[g.vcount()-1]['color'] = 'green'
+    green_vertex = g.vs[g.vcount() - 1].index
+
+    green_edges_to_add = []
+    green_edges_labels = []
+    green_edges_weights = []
+
+    for i in greenv_dic:
+        green_edges_to_add.append([i, green_vertex])
+        green_edges_labels.append("f")  #every edges with green vertex are first order 
+        green_edges_weights.append(greenv_dic[i].weight)
+
+    # add green vertex edges at once (without loop) 
     g.add_edges(green_edges_to_add)
 
-    # 3. 새로 추가된 엣지 범위에 label, weight 설정
+    # label, weight set
     g.es[starting_index:]["label"] = green_edges_labels
     g.es[starting_index:]["weight"] = green_edges_weights    
 
