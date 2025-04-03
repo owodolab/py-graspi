@@ -168,7 +168,7 @@ for a microstructure is thorough. A full list of descriptors and their definitio
 .. code-block:: python
 
    # Visualize the graph (2D)
-   ig.visual2D(g, "graph")
+   ig.visualize(g, "graph")
 
 4. To filter a graph and compute the number of connected components, call filterGraph(graph)
 
