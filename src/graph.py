@@ -15,7 +15,7 @@ import math
 from urllib3.util import resolve_ssl_version
 
 DEBUG = False
-PERIODICITY = False #reflects default status from c++ implementation
+PERIODICITY = True #reflects default status from c++ implementation
 n_flag = 2
 
 
