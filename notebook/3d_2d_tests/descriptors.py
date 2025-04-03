@@ -1,4 +1,4 @@
-import src.igraph as ig
+import src.graph as ig
 
 
 def STAT_n(graph):

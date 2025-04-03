@@ -1,6 +1,6 @@
 import math
 import numpy as np
-import src.igraph as ig
+import src.graph as ig
 
 
 def CC_descriptors(graph,totalBlack, totalWhite):

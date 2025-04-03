@@ -15,7 +15,7 @@ import math
 from urllib3.util import resolve_ssl_version
 
 DEBUG = False
-PERIODICITY = True
+PERIODICITY = False #reflects default status from c++ implementation
 
 
 '''********* Constructing the Graph **********'''
