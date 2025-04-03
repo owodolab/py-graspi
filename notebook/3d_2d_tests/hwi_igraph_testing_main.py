@@ -119,71 +119,94 @@ def adjList(fileName):
 
         vertices_with_green_v = {}   # dictionary for storing vertices connected with green vertex
 
-        for z in range(dimZ):
-            for y in range(dimY):
-                # read each vertice
-                # line = file.readline().strip().split(' ')
-                for x in range(dimX):
-                    current_vertex = z * dimY * dimX + y * dimX + x # because it is sequentially stored in memory
-                    # adding color to vertices to reduce runtime
-                    # if len(line[0]) > 0:
-                    #     color_code = line[x]
-                    if reshaped_data[current_vertex] == 1:
-                        vertex_color[current_vertex] = 'white'
 
-                        #append to list of white vertices
-                        white_vertices.append(current_vertex)
-                    elif reshaped_data[current_vertex] == 0:
-                        vertex_color[current_vertex] = 'black'
+    for z in range(dimZ):
+        for y in range(dimY):
+            for x in range(dimX):
+                current_vertex = z * dimY * dimX + y * dimX + x
+                if reshaped_data[current_vertex] == 1:
+                    vertex_color[current_vertex] = 'white'
+                    white_vertices.append(current_vertex)
+                elif reshaped_data[current_vertex] == 0:
+                    vertex_color[current_vertex] = 'black'
+                    black_vertices.append(current_vertex)
 
-                        #append to list of black vertices
-                        black_vertices.append(current_vertex)
+                neighbors = []
 
-                    neighbors = []
+                for i in range(len(offsets)):
+                    dx, dy, dz = offsets[i]
+                    dist = dx**2 + dy**2 + dz**2
+                    nx, ny, nz = x + dx, y + dy, z + dz 
+                    if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
+                        neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
 
-                    for i in range(len(offsets)):
-                        dx, dy, dz = offsets[i]
-                        dist = dx**2 + dy**2 + dz**2
-                        nx, ny, nz = x + dx, y + dy, z + dz 
-                        if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
-                            neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
-                            if dist == 1: #improvement point : loop by index and compare with index
-                                if DEBUG:
-                                    first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
-                                edge_labels.append("f")
-                                edge_weights.append(1)
+                        if dist == 1:
+                            if DEBUG:
+                                first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
+                            edge_labels.append("f")
+                            edge_weights.append(1)
 
-                                if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> add green vertices. ASSUME : there are only 0 and 1 in input file
-                                    if DEBUG2:
-                                        print(current_vertex, neighbor_vertex)
-                                    update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)                                    
-                                    update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)                                    
-                                    
-                            elif dist == 3:
-                                if DEBUG:
-                                    third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
+                                if DEBUG2:
+                                    print(current_vertex, neighbor_vertex)
+                                update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
+                                update_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
-                                if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> black white pair
-                                    edge_labels.append("t")
-                                    edge_weights.append(float(math.sqrt(3) * 0.5))  
-
-                                else:
-                                    edge_labels.append("t")
-                                    edge_weights.append(float(math.sqrt(3)))
-
+                        elif dist == 3:
+                            if DEBUG:
+                                third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
+                            edge_labels.append("t")
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
+                                edge_weights.append(float(math.sqrt(3) * 0.5))
                             else:
-                                if DEBUG:
-                                    second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
-                                if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # 0 1 or 1 0 -> black white pair ASSUME : there are only 0 and 1 in input file
-                                    edge_labels.append("s")
-                                    edge_weights.append(float(math.sqrt(2) * 0.5))
+                                edge_weights.append(float(math.sqrt(3)))
 
-                                else:
-                                    edge_labels.append("s")
-                                    edge_weights.append(float(math.sqrt(2)))
+                        else:
+                            if DEBUG:
+                                second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
+                            edge_labels.append("s")
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
+                                edge_weights.append(float(math.sqrt(2) * 0.5))
+                            else:
+                                edge_weights.append(float(math.sqrt(2)))
 
-                            neighbors.append(neighbor_vertex)
-                    adjacency_list[current_vertex] = neighbors
+                        neighbors.append(neighbor_vertex)
+
+                adjacency_list[current_vertex] = neighbors
+
+                # 🔁 PERIODIC WRAP-AROUND 처리 (x축, y축)
+                if PERIODICITY:
+                    # --- X축 wrap-around (row-wise) ---
+                    if x == 0:
+                        right = current_vertex + (dimX - 1)
+                        if DEBUG:
+                            first_order_pairs.append([min(current_vertex, right), max(current_vertex, right)])
+                        edge_labels.append("f")
+                        edge_weights.append(1)
+
+                        if reshaped_data[current_vertex] + reshaped_data[right] == 1:
+                            if DEBUG2:
+                                print("X-periodicity detected:", current_vertex, right)
+                            update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            update_edges(vertices_with_green_v, right, reshaped_data[right], 1, 1)
+
+                        neighbors.append(right)
+
+                    # --- Y축 wrap-around (col-wise) ---
+                    if dimZ > 1 and y == 0:
+                        bottom = current_vertex + dimX * (dimY - 1)
+                        if DEBUG:
+                            first_order_pairs.append([min(current_vertex, bottom), max(current_vertex, bottom)])
+                        edge_labels.append("f")
+                        edge_weights.append(1)
+
+                        if reshaped_data[current_vertex] + reshaped_data[bottom] == 1:
+                            if DEBUG2:
+                                print("Y-periodicity detected:", current_vertex, bottom)
+                            update_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            update_edges(vertices_with_green_v, bottom, reshaped_data[bottom], 1, 1)
+
+                        neighbors.append(bottom)
 
 
     #improvement point 2: combine two loop into 1
@@ -529,63 +552,6 @@ def generateGraphAdj(file):
     green_vertex = g.vs[g.vcount() - 1].index
     green_vertex_index = g.vcount()-1
 
-
-    # add wrap around edges and it's edge labels if periodicity boolean is set to True.
-    if PERIODICITY:
-        for i in range(0, g.vcount() - 3, dimX):
-            # first add first neighbor wrap around
-            g.add_edge(g.vs[i], g.vs[i + (dimX - 1)])
-            g.es[g.ecount()-1]['label'] = 'f'
-            g.es[g.ecount()-1]['weight'] = 1
-
-            if (g.vs[i]["color"] == "black" and g.vs[i + (dimX - 1)]["color"] == "white") or \
-                (g.vs[i]["color"] == "white" and g.vs[i + (dimX - 1)]["color"] == "black"): # interface -> add edges 
-                    if DEBUG2:
-                        print("Periodicity detected: ", i, i+(dimX - 1))
-                    g.add_edge(g.vs[i], g.vs[green_vertex_index])
-                    g.es[g.ecount()-1]['label'] = 'f'
-                    g.es[g.ecount()-1]['weight'] = 1
-
-                    g.add_edge(g.vs[i + (dimX - 1)], g.vs[green_vertex_index])
-                    g.es[g.ecount()-1]['label'] = 'f'
-                    g.es[g.ecount()-1]['weight'] = 1
-                
-
-            # add diagnol wrap arounds
-            if i - 1 >= 0:
-                g.add_edge(g.vs[i], g.vs[i - 1])
-                g.es[g.ecount()-1]['label'] = 's'
-                g.es[g.ecount()-1]['weight'] = math.sqrt(2)
-
-            if i + (dimX * 2 - 1) <= dimX * dimY:
-                g.add_edge(g.vs[i], g.vs[i + (dimX * 2 - 1)])
-                g.es[g.ecount()-1]['label'] = 's'
-                g.es[g.ecount()-1]['weight'] = math.sqrt(2)
-
-        # ✅ 추가: Y축 방향 wrap-around 처리 (dimZ > 1 일 때만)
-        if dimZ > 1:
-            for z in range(dimZ):
-                for x in range(dimX):
-                    i = x + z * dimX * dimY
-                    top = i
-                    bottom = i + dimX * (dimY - 1)
-
-                    # Y축 wrap-around edge
-                    g.add_edge(g.vs[top], g.vs[bottom])
-                    g.es[g.ecount()-1]['label'] = 'f'
-                    g.es[g.ecount()-1]['weight'] = 1
-
-                    if (g.vs[top]["color"] == "black" and g.vs[bottom]["color"] == "white") or \
-                    (g.vs[top]["color"] == "white" and g.vs[bottom]["color"] == "black"):
-                        if DEBUG2:
-                            print("Y-periodicity detected:", top, bottom)
-                        g.add_edge(g.vs[top], g.vs[green_vertex_index])
-                        g.es[g.ecount()-1]['label'] = 'f'
-                        g.es[g.ecount()-1]['weight'] = 1
-
-                        g.add_edge(g.vs[bottom], g.vs[green_vertex_index])
-                        g.es[g.ecount()-1]['label'] = 'f'
-                        g.es[g.ecount()-1]['weight'] = 1            
 
 
     green_edges_to_add = []
