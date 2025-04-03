@@ -5,54 +5,15 @@ Descriptors
 ==============================================
 
 For two-phase morphology, current **py-graspi** computes the following descriptors:
-
-* **STAT_n** - Number of vertices, excluding meta ones
-* **STAT_e** - Number of interface edges
-
-    .. image:: imgs/stat_n_e.png
-        :scale: 50%
-        :align: center
-* **STAT_n_D** - Number of black vertices
-* **STAT_n_A** - Number of white vertices
-* **STAT_CC_D** - Number of black connected components
-* **STAT_CC_A** - Number of white connected components
-
-    .. image:: imgs/c_a.png
-        :scale: 50%
-        :align: center
-* **STAT_CC_D_An** - Number of black connected components connected to top (red)
-* **STAT_CC_A_Ca** - Number of white connected components connected to bottom (blue)
-* **ABS_f_D** - Fraction of black vertices
-* **ABS_wf_D** - Weighted fraction of black vertices
-* **CT_f_conn_D_An** - Fraction of black vertices connected to the top
-* **CT_f_conn_A_Ca** - Fraction of white vertices connected to bottom
-
-    .. image:: imgs/conn_d_a.png
-        :scale: 50%
-        :align: center
-* **CT_n_D_adj_An** - Number of black vertices in direct contact with top (An - top/anode)
-* **CT_n_A_adj_Ca** - Number of white vertices in direct contact with bottom (Ca - bottom/cathode)
-* **DISS_f10_D** - Fraction of black vertices in 10 distances to interface
-* **DISS_wf10_D** - Fraction of black vertices in 10 distances to interface (weighted)
-* **CT_f_E_conn** - Fraction of interface with complementary paths to bottom and top
-* **CT_e_conn** - Number of interface edges with complementary paths
-* **CT_e_D_An** - Number of black interface vertices with path to top
-* **CT_e_A_Ca** - Number of white interface vertices with path to bottom
-* **CT_f_D_tort1** - Fraction of black vertices with straight rising paths (t = 1)
-* **CT_f_A_tort1** - Fraction of white vertices with straight rising paths (t = 1)
-
-    .. image:: imgs/tort.png
-        :scale: 50%
-        :align: center
-
-Below we provide the definitions of all above descriptors.
 We refer to graph-centric terms defined in basic definitions section.
 
 **STAT_n**
 
-``STAT_n`` is number of vertices in the morphology. It is the total number of vertices in the graph.
+``STAT_n`` is number of vertices excluding meta ones in the morphology. It is the total number of vertices in the graph.
 It simply the cardinality of set :math:`V`.
-
+    .. image:: imgs/stat_n.png
+        :scale: 50%
+        :align: center
 **STAT_e**
 
 ``STAT_e`` is the number of interface edges. It is the interfacial area,
@@ -62,7 +23,9 @@ connecting BLACK and WHITE vertices. Three steps are involved:
 1. Input: Given labeled, weighted, undirected graph :math:`G=(V,E,W,L,L_e)``.
 2. Construct set of edges, :math:`I=\{e=(u,v)\in E\;|\; (L_e(e)=f)\;\land\; ( L(u)=BLACK \land L(v)=WHITE\}`.
 3. Output: :math:`|I|` -- the cardinality of interface edges.
-
+    .. image:: imgs/stat_e.png
+        :scale: 50%
+        :align: center
 **STAT_n_D**
 
 ``STAT_n_D`` - number of black vertices
@@ -89,6 +52,9 @@ connecting BLACK and WHITE vertices. Three steps are involved:
    :math:`E'`` is a set of all edges between vertices in :math:`V'`.
 3. Compute the set of connected components, :math:`C_B`, in :math:`G'`.
 4. Output: :math:`|C_B|`.
+    .. image:: imgs/cc_d.png
+        :scale: 50%
+        :align: center
 
 **STAT_CC_A**
 
@@ -100,10 +66,13 @@ connecting BLACK and WHITE vertices. Three steps are involved:
    :math:`E'`` is a set of all edges between vertices in :math:`V'`.
 3. Compute the set of connected components, :math:`C_W`, in :math:`G'`.
 4. Output: :math:`|C_W|`.
+    .. image:: imgs/cc_a.png
+        :scale: 50%
+        :align: center
 
 **STAT_CC_D_An**
 
-``STAT_CC_D_An`` - number of black connected components connected to top
+``STAT_CC_D_An`` - number of black connected components connected to top (red)
 
 1. Input: Given labeled, weighted, undirected graph, :math:`G=(V,E,W,L)`.
 2. Reconstruct the neighborhood of RED vertex :math:`ngbr_R` in :math:`G`.
@@ -114,18 +83,9 @@ connecting BLACK and WHITE vertices. Three steps are involved:
 5. Compute the set :math:`C_B^R` of indices of connected components in :math:`ngbr_R` using the set :math:`C_B`.
 6. Output: :math:`|C_B^R|`.
 
-**CT_f_conn_D_An**
-
-``CT_f_conn_D_An`` - fraction of black vertices connected to top
-
-We use the same steps as in ``STAT_CC_D_An``. With one more step:
-
-6. Let :math:`P` be the union of all BLACK vertices in :math:`C_B^R`.
-7. Output: :math:`|P|/|B|`, where :math:`B` is the set of BLACK vertices.
-
 **STAT_CC_A_Ca**
 
-``STAT_CC_A_Ca`` - number of white connected components connected to bottom
+``STAT_CC_A_Ca`` - number of white connected components connected to bottom (blue)
 
 1. Input: Given labeled, weighted, undirected graph, :math:`G=(V,E,W,L)`.
 2. Reconstruct the neighborhood of BLUE vertex :math:`ngbr_B` in :math:`G`.
@@ -136,6 +96,20 @@ We use the same steps as in ``STAT_CC_D_An``. With one more step:
 5. Compute the set :math:`C_W^B` of indices of connected components in :math:`ngbr_B` using the set :math:`C_W`.
 6. Output: :math:`|C_W^B|`.
 
+
+**CT_f_conn_D_An**
+
+``CT_f_conn_D_An`` - fraction of black vertices connected to top
+
+We use the same steps as in ``STAT_CC_D_An``. With one more step:
+
+6. Let :math:`P` be the union of all BLACK vertices in :math:`C_B^R`.
+7. Output: :math:`|P|/|B|`, where :math:`B` is the set of BLACK vertices.
+    .. image:: imgs/conn_d.png
+        :scale: 50%
+        :align: center
+
+
 **CT_f_conn_A_Ca**
 
 ``CT_f_conn_A_Ca`` - fraction of white vertices connected to bottom
@@ -144,12 +118,9 @@ We use the same steps as in ``STAT_CC_D_An``. With one more step:
 
 6. Let :math:`P` be the union of all WHITE vertices in :math:`C_W^B`.
 7. Output: :math:`|P|/|B|`, where :math:`W` is the set of WHITE vertices.
-
-
-**ABS_wf_D**
-
-``ABS_wf_D`` - weighted fraction of black vertices
-
+    .. image:: imgs/conn_a.png
+        :scale: 50%
+        :align: center
 
 **ABS_f_D**
 
@@ -158,6 +129,11 @@ We use the same steps as in ``STAT_CC_D_An``. With one more step:
 1. Input: Given labeled, weighted, undirected graph, :math:`G=(V,E,W,L)`.
 2. Identify set :math:`B` of all BLACK vertices.
 3. Output: :math:`|B|/|V|``, where :math:`|.|`` is the cardinality of the set.
+
+
+**ABS_wf_D**
+
+``ABS_wf_D`` - weighted fraction of black vertices
 
 
 **DISS_f10_D**
@@ -289,6 +265,9 @@ The graph-based algorithm to compute the fraction is given below:
 6. For each BLACK vertex compute the tortuosity using the shortest paths from step 5 and 4.
 7. Filter the set :math:`V_{Bt1}` with all BLACK vertices that have the shortest path with :math:`t=1`.
 8. Output: The fraction of BLACK vertices with straight rising paths :math:`|V_{Bt1}|/|V_B|`.
+    .. image:: imgs/tort_d.png
+        :scale: 50%
+        :align: center
 
 **CT_f_A_tort1**
 
@@ -309,6 +288,9 @@ The graph-based algorithm to compute the fraction is given below:
 6. For each WHITE vertex compute the tortuosity using the shortest paths from step 5 and 4.
 7. Filter the set :math:`V_{Wt1}` with all WHITE vertices that have the shortest path with :math:`t=1`.
 8. Output: The fraction of WHITE vertices with straight rising paths :math:`|V_{Wt1}|/|V_W|` .
+    .. image:: imgs/tort_a.png
+        :scale: 50%
+        :align: center
 
 **CT_n_D_adj_An**
 
@@ -323,11 +305,3 @@ To compute this descriptor, post processing of distance vector is performed. By 
 
 This descriptor computes the number of WHITE vertices with distance to BLUE (Cathode/bottom) vertex.
 To compute this descriptor, post processing of distance vector is performed. By counting the number of WHITE vertices with zero distance to the BLUE vertex.
-
-Below we provide the API of the descriptor functions.
-
-   .. automodule:: src.descriptors
-      :members:
-      :undoc-members:
-      :show-inheritance:
-      :exclude-members: filterGraph_metavertices

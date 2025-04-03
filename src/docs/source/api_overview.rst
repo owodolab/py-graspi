@@ -22,3 +22,12 @@ Below is the list of all functions available in **py-graspi**:
       :undoc-members:
       :show-inheritance:
       :exclude-members: main
+
+.. details:: Graph Class
+   :open:
+
+   .. automodule:: src.graph_data_class
+      :members:
+      :undoc-members:
+      :show-inheritance:
+      :exclude-members: main

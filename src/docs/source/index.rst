@@ -159,33 +159,46 @@ A localhost jupyter notebook should open with the same directories and files as 
 
 Usage
 -----
-Below is a quick example of how to use the package to generate a test graph file, construct a graph from the file,
-visualize it in 2D, compute the connected components, and finally, extract the descriptors.
+Below is are quick examples of how to use the package to construct a graph from an input file,
+visualize it in 2D, filter it to compute the connected components, and finally, extract the descriptors.
 
 This example usage will output the number of connected components and additional details as well as
 return a txt file containing a list of the descriptors. This package's functionality in returning the descriptors
 for a microstructure is thorough. A full list of descriptors and their definitions can be found on the descriptors tab.
 
+1. To use the package in your project files, import the py-graspi package.
+
 .. code-block:: python
 
    import graspi_igraph as ig
 
-   # Generate a test file
-   fileName = "10x10-testFile.txt"
-   ig.testFileMaker(10, 1, fileName)
+2. To generate graphs, call the generateGraph(file) function which takes in an input test file name.
+
+.. code-block:: python
 
    # Generate a graph from the test file
-   g = ig.generateGraph(fileName)
+   g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
+
+3. To visualize graphs, call the visualize(graph, is_2D) function.
+
+.. code-block:: python
 
    # Visualize the graph (2D)
-   ig.visual2D(g, "graph")
+   ig.visualize(g, "graph")
+
+4. To filter a graph and compute the number of connected components, call filterGraph(graph)
+
+.. code-block:: python
 
    # Compute connected components
    fg = ig.filterGraph(g)
    print(f"Number of Connected Components: {len(fg.connected_components())}")
    print(f"Connected Components: {fg.connected_components()}")
 
+5. To get a dictionary of descriptors for a given graph, call descriptors(graph)
+
+.. code-block:: python
+
    # Produce a list of descriptors
    ig.descriptorsToTxt(ig.descriptors(g), "descriptors_list.txt")
-
 
