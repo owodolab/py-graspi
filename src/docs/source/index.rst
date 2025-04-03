@@ -159,8 +159,8 @@ A localhost jupyter notebook should open with the same directories and files as 
 
 Usage
 -----
-Below is a quick example of how to use the package to generate a test graph file, construct a graph from the file,
-visualize it in 2D, compute the connected components, and finally, extract the descriptors.
+Below is are quick examples of how to use the package to construct a graph from an input file,
+visualize it in 2D, filter it to compute the connected components, and finally, extract the descriptors.
 
 This example usage will output the number of connected components and additional details as well as
 return a txt file containing a list of the descriptors. This package's functionality in returning the descriptors
