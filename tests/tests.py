@@ -206,6 +206,7 @@ def main():
         pdf.output(f"{parent_dir}/data/test_results.pdf")
         print("PDF Generated")
         webbrowser.open_new_tab(f"{parent_dir}/data/test_results.pdf")
+    #result pdf in data/test_results.pdf
 
 if __name__ == "__main__":
     main()
