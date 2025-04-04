@@ -6,12 +6,12 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API Overview &mdash; py-graspi  documentation</title>
+  <title>src package &mdash; py-graspi  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-    <link rel="canonical" href="https://owodolab.github.io/py-graspi/api_overview.html" />
+    <link rel="canonical" href="https://owodolab.github.io/py-graspi/src.html" />
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=5929fcd5"></script>
@@ -19,9 +19,7 @@
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Advanced" href="advanced.html" />
-    <link rel="prev" title="Basic Definitions" href="pyGraspiDefinitions.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,37 +42,14 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiFunctionality.html">Functionality</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiDescriptors.html">Descriptors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiInputs.html">Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiExamples.html">Example of Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiDefinitions.html">Basic Definitions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#src.descriptors.descriptors"><code class="docutils literal notranslate"><span class="pre">descriptors()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.descriptors.descriptorsToTxt"><code class="docutils literal notranslate"><span class="pre">descriptorsToTxt()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.descriptors.CC_descriptors"><code class="docutils literal notranslate"><span class="pre">CC_descriptors()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.descriptors.shortest_path_descriptors"><code class="docutils literal notranslate"><span class="pre">shortest_path_descriptors()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.descriptors.filterGraph_metavertices"><code class="docutils literal notranslate"><span class="pre">filterGraph_metavertices()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph.generateGraph"><code class="docutils literal notranslate"><span class="pre">generateGraph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph.generateGraphAdj"><code class="docutils literal notranslate"><span class="pre">generateGraphAdj()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph.generateGraphGraphe"><code class="docutils literal notranslate"><span class="pre">generateGraphGraphe()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph.adjList"><code class="docutils literal notranslate"><span class="pre">adjList()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph.graphe_adjList"><code class="docutils literal notranslate"><span class="pre">graphe_adjList()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph.adjvertexColors"><code class="docutils literal notranslate"><span class="pre">adjvertexColors()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph.visualize"><code class="docutils literal notranslate"><span class="pre">visualize()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph.connectedComponents"><code class="docutils literal notranslate"><span class="pre">connectedComponents()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph.filterGraph"><code class="docutils literal notranslate"><span class="pre">filterGraph()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph.filterGraph_metavertices"><code class="docutils literal notranslate"><span class="pre">filterGraph_metavertices()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph.filterGraph_blue_red"><code class="docutils literal notranslate"><span class="pre">filterGraph_blue_red()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#src.graph_data_class.graph_data_class"><code class="docutils literal notranslate"><span class="pre">graph_data_class</span></code></a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#src.graph_data_class.graph_data_class.__init__"><code class="docutils literal notranslate"><span class="pre">graph_data_class.__init__()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#src.graph_data_class.graph_data_class.compute_shortest_paths"><code class="docutils literal notranslate"><span class="pre">graph_data_class.compute_shortest_paths()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="api_overview.html">API Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced</a></li>
 </ul>
 
@@ -92,9 +67,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">API Overview</li>
+      <li class="breadcrumb-item active">src package</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/api_overview.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/src.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -102,12 +77,34 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="api-overview">
-<span id="id1"></span><h1>API Overview<a class="headerlink" href="#api-overview" title="Link to this heading"></a></h1>
-<p>Below is the list of all functions available in <strong>py-graspi</strong>:</p>
-<details open="open">
-<summary>
-Descriptor Functions</summary><dl class="py function" id="module-src.descriptors">
+  <section id="src-package">
+<h1>src package<a class="headerlink" href="#src-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.docs.html">src.docs package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.docs.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.docs.source.html">src.docs.source package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.docs.source.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.docs.source.html#module-src.docs.source.conf">src.docs.source.conf module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.docs.source.html#module-src.docs.source">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.docs.html#module-src.docs">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.descriptors">
+<span id="src-descriptors-module"></span><h2>src.descriptors module<a class="headerlink" href="#module-src.descriptors" title="Link to this heading"></a></h2>
+<dl class="py function">
 <dt class="sig sig-object py" id="src.descriptors.descriptors">
 <span class="sig-prename descclassname"><span class="pre">src.descriptors.</span></span><span class="sig-name descname"><span class="pre">descriptors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/descriptors.html#descriptors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.descriptors.descriptors" title="Link to this definition"></a></dt>
 <dd><p>This function computes all the descriptors for the graph given and saves them  in a dictionary.</p>
@@ -227,9 +224,10 @@ ig.Graph: The filtered graph of vertices of the same color and red metavertex.</
 </dl>
 </dd></dl>
 
-</details><details open="open">
-<summary>
-py-graspi Functions</summary><dl class="py function" id="module-src.graph">
+</section>
+<section id="module-src.graph">
+<span id="src-graph-module"></span><h2>src.graph module<a class="headerlink" href="#module-src.graph" title="Link to this heading"></a></h2>
+<dl class="py function">
 <dt class="sig sig-object py" id="src.graph.generateGraph">
 <span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">generateGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/graph.html#generateGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.generateGraph" title="Link to this definition"></a></dt>
 <dd><p>This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.</p>
@@ -427,9 +425,15 @@ fg_red (igraph.Graph): This is a subgraph that only contains the edges that eith
 </dl>
 </dd></dl>
 
-</details><details open="open">
-<summary>
-Graph Class</summary><dl class="py class" id="module-src.graph_data_class">
+<dl class="py function">
+<dt class="sig sig-object py" id="src.graph.main">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/graph.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.main" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-src.graph_data_class">
+<span id="src-graph-data-class-module"></span><h2>src.graph_data_class module<a class="headerlink" href="#module-src.graph_data_class" title="Link to this heading"></a></h2>
+<dl class="py class">
 <dt class="sig sig-object py" id="src.graph_data_class.graph_data_class">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.graph_data_class.</span></span><span class="sig-name descname"><span class="pre">graph_data_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_2D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/graph_data_class.html#graph_data_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph_data_class.graph_data_class" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -476,15 +480,16 @@ Graph Class</summary><dl class="py class" id="module-src.graph_data_class">
 
 </dd></dl>
 
-</details></section>
+</section>
+<section id="module-src">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src" title="Link to this heading"></a></h2>
+</section>
+</section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="pyGraspiDefinitions.html" class="btn btn-neutral float-left" title="Basic Definitions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="advanced.html" class="btn btn-neutral float-right" title="Advanced" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

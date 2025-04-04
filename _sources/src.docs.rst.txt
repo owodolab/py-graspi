@@ -1,0 +1,18 @@
+src.docs package
+================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   src.docs.source
+
+Module contents
+---------------
+
+.. automodule:: src.docs
+   :members:
+   :show-inheritance:
+   :undoc-members:
