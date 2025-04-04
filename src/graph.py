@@ -19,7 +19,6 @@ PERIODICITY = False #reflects default status from c++ implementation
 n_flag = 2
 
 
-'''********* Constructing the Graph **********'''
 def generateGraph(file):
     """
     This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.
