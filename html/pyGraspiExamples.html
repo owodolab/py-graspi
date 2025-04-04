@@ -1,0 +1,217 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Example of Usage &mdash; py-graspi  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://owodolab.github.io/py-graspi/pyGraspiExamples.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Graph-based representation of microstructure" href="pyGraspiRepresentation.html" />
+    <link rel="prev" title="Inputs" href="pyGraspiInputs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            py-graspi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Example of Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#user-functionality">User Functionality</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#get-the-list-of-descriptors">Get the List of Descriptors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#visualize-graphs">Visualize Graphs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_overview.html">API Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">py-graspi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Example of Usage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pyGraspiExamples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="example-of-usage">
+<span id="pygraspiexamples"></span><h1>Example of Usage<a class="headerlink" href="#example-of-usage" title="Link to this heading"></a></h1>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h2>
+<p><strong>Testing Py-Graspi Online</strong></p>
+<p>Follow these steps to explore the capabilities of Py-Graspi using an online Jupyter Notebook environment like Google Colab.</p>
+<p><strong>To run an existing test notebook</strong></p>
+<ol class="arabic simple">
+<li><p>Open Google Colab.</p></li>
+<li><p>Click the GitHub tab, and paste the following link: <a class="reference external" href="https://github.com/owodolab/py-graspi/blob/dev/tests/pip_install_descriptors_example.ipynb">https://github.com/owodolab/py-graspi/blob/dev/tests/pip_install_descriptors_example.ipynb</a></p></li>
+<li><p>Since this is an existing notebook, you can run each code block to view the output.</p></li>
+</ol>
+<p><strong>To create your own notebook and use the Py-GraSPI package</strong></p>
+<ol class="arabic simple">
+<li><p>Open Google Colab.</p></li>
+<li><p>In the notebook, install Py-Graspi by running the following command:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>!pip<span class="w"> </span>install<span class="w"> </span>py-graspi
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Import the py-graspi package by running this command in the notebook:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>import<span class="w"> </span>py_graspi<span class="w"> </span>as<span class="w"> </span>ig
+</pre></div>
+</div>
+</section>
+<section id="command-line-usage">
+<h2>Command Line Usage<a class="headerlink" href="#command-line-usage" title="Link to this heading"></a></h2>
+<p>The user can use Py-GraSPI from the command line. To begin, ensure that the environment is in the src directory.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>src<span class="w"> </span><span class="c1">#Starting at the root directory, cd into the src directory</span>
+</pre></div>
+</div>
+<p>To learn the formatting of the command line arguments, the user is encouraged to run</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py
+</pre></div>
+</div>
+<p>The usage message will provide the list of parameters that can be used. Py-GraSPI accepts input data in two formats: graph and array.</p>
+<p>If graph is constructed externally data can be inputted in the graph format, for example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-g<span class="w"> </span>&lt;INPUT_FILE.graphe&gt;<span class="w"> </span><span class="c1">#Cannot use flags</span>
+</pre></div>
+</div>
+<p>Example of usage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-g<span class="w"> </span>../data/test_data.graphe
+</pre></div>
+</div>
+<p>If data is structured (e.g., image), the following options are available</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>&lt;INPUT_FILE.txt&gt;<span class="w"> </span>-p<span class="w"> </span>&lt;<span class="o">{</span><span class="m">0</span>,1<span class="o">}</span>&gt;<span class="w"> </span><span class="o">(</span>default<span class="w"> </span><span class="m">0</span>-false<span class="o">)</span><span class="w"> </span>-n<span class="w"> </span>&lt;<span class="o">{</span><span class="m">2</span>,3<span class="o">}</span>&gt;<span class="w"> </span><span class="o">(</span>default<span class="w"> </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="c1">#Can use flags</span>
+</pre></div>
+</div>
+<p>This can be used with both the -p and -n flag, just one of the flags, or none of the flags.</p>
+<p>Examples of usage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span>-p<span class="w"> </span><span class="m">0</span><span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c1">#Both flags</span>
+python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1">#Only periodicity flag</span>
+python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span>-n<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="c1">#Only phase flag</span>
+python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span><span class="c1">#No flag</span>
+</pre></div>
+</div>
+<p>Py-GraSPI requires one one mandatory input parameter: the name of the input file &lt;INPUT_FILE&gt;. Ensure that filepath is correctly formatted.
+Using “../” allows access to files that may not be in the src directory.</p>
+<p>The remaining parameters are optional, and have the default values set up, if the parameter is not explicitly provided.</p>
+<ul class="simple">
+<li><p>-a &lt;INPUT_FILE.txt&gt; (row-major order) this is the option to input information about structured data. With this assumption, neighborhood of each voxel/pixel can be determined as the graph is constructed.</p></li>
+<li><p>-g &lt;INPUT_FILE.graphe&gt; this is the option to input information about the unstructured data. Input file must provide all information about the graph, this means that neighborhood of each vertex in the graph needs to be determined externally. Meta-vertices and the associated edges need to be defines in the input file. When this option is called, GraSPI reads the text file and initializes the set of vertices and edges from the input file, and need to be in agreement with these defined in the package for a given usage case.</p></li>
+<li><p>-p &lt;{0,1}&gt; (default 0-false) this option specifies if periodicity on the side faces is to be applied (valid only morphology inputted as the array option -a).</p></li>
+<li><p>-n &lt;{2,3}&gt; default 2 (black and white, electron-donor and electron accepting material) – this option specifies the number of phases. For three-phase morphology (option -n 3, black, white and grey vertices are read, that correspond to electron-donor, electron-accepting and mixed phase material, respectively).</p></li>
+</ul>
+</section>
+<section id="user-functionality">
+<h2>User Functionality<a class="headerlink" href="#user-functionality" title="Link to this heading"></a></h2>
+<section id="get-the-list-of-descriptors">
+<h3>Get the List of Descriptors<a class="headerlink" href="#get-the-list-of-descriptors" title="Link to this heading"></a></h3>
+<p>A <strong>descriptor stored in a dictionary</strong> can be found by calling the function descriptors(graph)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">dict</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ig.descriptors<span class="o">(</span>g<span class="o">)</span><span class="w">      </span><span class="c1"># g is a graph object</span>
+</pre></div>
+</div>
+<p>A <strong>list of descriptors</strong> in a <strong>text file</strong> can be found by calling the function descriptorsToTxt(dictionary,filename)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ig.descriptorsToTxt<span class="o">(</span>dict,<span class="s2">&quot;descriptors_list.txt&quot;</span><span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="visualize-graphs">
+<h3>Visualize Graphs<a class="headerlink" href="#visualize-graphs" title="Link to this heading"></a></h3>
+<p>For 2D graphs, call visualize(graph, is_2D)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a graph from the test file</span>
+<span class="nv">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ig.generateGraph<span class="o">(</span><span class="s2">&quot;2D-testFile/testFile-10-2D.txt&quot;</span><span class="o">)</span><span class="w">   </span><span class="c1"># utilizing the test file found in 2D-testFiles folder as an example</span>
+
+<span class="c1"># Visualize the graph (2D)</span>
+ig.visualize<span class="o">(</span>g,<span class="w"> </span><span class="nb">true</span><span class="o">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyGraspiInputs.html" class="btn btn-neutral float-left" title="Inputs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyGraspiRepresentation.html" class="btn btn-neutral float-right" title="Graph-based representation of microstructure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

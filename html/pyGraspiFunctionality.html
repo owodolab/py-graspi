@@ -1,0 +1,169 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Functionality &mdash; py-graspi  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://owodolab.github.io/py-graspi/pyGraspiFunctionality.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Descriptors" href="pyGraspiDescriptors.html" />
+    <link rel="prev" title="Py-GraSPI Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            py-graspi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiExamples.html">Example of Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_overview.html">API Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">py-graspi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Functionality</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pyGraspiFunctionality.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="functionality">
+<span id="pygraspifunctionality"></span><h1>Functionality<a class="headerlink" href="#functionality" title="Link to this heading"></a></h1>
+<p><strong>Py-GraSPI</strong> (Graph-based Structure Property Identifier) is a Python package designed to compute a comprehensive set of
+descriptors for segmented microstructures using a graph-based approach.</p>
+<p><strong>py-graspi</strong> assumes that input microstructure is segmented into two phases: BLACK and WHITE.
+In our application, organic solar cells, BLACK pixels correspond to electron-donating materials,
+and WHITE pixels correspond to electron-accepting material - as marked in the figure below.
+Three meta-vertices are added to the network:</p>
+<ul class="simple">
+<li><p>BLUE corresponds to cathode,</p></li>
+<li><p>RED corresponds to anode,</p></li>
+<li><p>GREEN corresponds to the interface.</p></li>
+</ul>
+<p>As graph is being constructed, the meta-vertices are added to the graph. For the
+morphology inputed as an array, the BLUE vertex is added to all vertices in the first row,
+and RED vertex is added to all vertices corresponding to the last row in the input file.
+<strong>py-graspi</strong> reads the colors of the pixels starting from the bottom left corner.
+GREEN vertices are added as the graph is constructed, when BLACK pixel has any WHITE
+voxel in the neighborhood, two additional edges are added (between BLACK and GREEN, and between WHITE and GREEN).</p>
+<a class="reference internal image-reference" href="_images/graphLayout.png"><img alt="_images/graphLayout.png" src="_images/graphLayout.png" style="width: 600px;" />
+</a>
+<p>The package computes two types of descriptors: scalar descriptors and array descriptors.
+The scalar descriptors are directed to the standard output, while array descriptors are directed to the corresponding file.
+The array descriptors correspond to the shortest distances and are saved to a directory named <strong>descriptors</strong></p>
+<p><strong>py-graspi</strong> provides multiple functions where a set of descriptors are computed - see the documentation for more details:</p>
+<p><a class="reference internal" href="pyGraspiDescriptors.html#pygraspidescriptors"><span class="std std-ref">Descriptors</span></a></p>
+<p>For two-phase morphology, <strong>py-graspi</strong> computes the following set of descriptors:</p>
+<ul class="simple">
+<li><p>STAT_n - number of vertices</p></li>
+<li><p>STAT_e - number of interface edges</p></li>
+<li><p>STAT_n_D - number of black vertices</p></li>
+<li><p>STAT_n_A - number of white vertices</p></li>
+<li><p>STAT_CC_D - number of black connected components</p></li>
+<li><p>STAT_CC_A - number of white connected components</p></li>
+<li><p>STAT_CC_D_An - number of black connected components connected to top</p></li>
+<li><p>STAT_CC_A_Ca - number of white connected components connected to bottom</p></li>
+<li><p>ABS_wf_D - weighted fraction of black vertices</p></li>
+<li><p>ABS_f_D - fraction of black vertices</p></li>
+<li><p>DISS_f10_D - fraction of black vertices in 10 distance to interface</p></li>
+<li><p>CT_f_e_conn - fraction of interface with complementary paths to bottom and top</p></li>
+<li><p>CT_f_conn_D_An - fraction of black vertices connected to top</p></li>
+<li><p>CT_f_conn_A_Ca - fraction of white vertices connected to bottom</p></li>
+<li><p>CT_e_conn - number of interface edges with complementary paths</p></li>
+<li><p>CT_e_D_An - number of black interface vertices with path to top</p></li>
+<li><p>CT_e_A_Ca - number of white interface vertices with path to bottom</p></li>
+<li><p>CT_f_D_tort1 - fraction of black vertices with straight rising paths (t=1)</p></li>
+<li><p>CT_f_A_tort1 - fraction of white vertices with straight rising paths (t=1)</p></li>
+<li><p>CT_n_D_adj_An - number of black vertices in direct contact with top (An - top/anode)</p></li>
+<li><p>CT_n_A_adj_Ca - number of white vertices in direct contact with bottom (Ca - bottom/cathode)</p></li>
+</ul>
+<p>The name of each descriptor starts with the abbreviation of the step in the photovoltaic process
+in organic solar cells (OSC): light absorption (ABS), exciton dissociation (DISS), and charge transport (CT).
+We additionally compute few statistical descriptors (STATS). The extra information is intended to facilitate
+the modeling of structure-property maps in OSC.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Py-GraSPI Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyGraspiDescriptors.html" class="btn btn-neutral float-right" title="Descriptors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

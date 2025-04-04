@@ -1,0 +1,390 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Descriptors &mdash; py-graspi  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://owodolab.github.io/py-graspi/pyGraspiDescriptors.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Inputs" href="pyGraspiInputs.html" />
+    <link rel="prev" title="Functionality" href="pyGraspiFunctionality.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            py-graspi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiExamples.html">Example of Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_overview.html">API Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">py-graspi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Descriptors</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pyGraspiDescriptors.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="descriptors">
+<span id="pygraspidescriptors"></span><h1>Descriptors<a class="headerlink" href="#descriptors" title="Link to this heading"></a></h1>
+<p>For two-phase morphology, current <strong>py-graspi</strong> computes the following descriptors:
+We refer to graph-centric terms defined in basic definitions section.</p>
+<p><strong>STAT_n</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">STAT_n</span></code> is number of vertices excluding meta ones in the morphology. It is the total number of vertices in the graph.
+It simply the cardinality of set <span class="math notranslate nohighlight">\(V\)</span>.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/stat_n.png"><img alt="_images/stat_n.png" class="align-center" src="_images/stat_n.png" style="width: 245.5px; height: 146.0px;" />
+</a>
+</div></blockquote>
+<p><strong>STAT_e</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">STAT_e</span></code> is the number of interface edges. It is the interfacial area,
+this is the total number of edges in the graph
+connecting BLACK and WHITE vertices. Three steps are involved:</p>
+<ol class="arabic">
+<li><p>Input: Given labeled, weighted, undirected graph <span class="math notranslate nohighlight">\(G=(V,E,W,L,L_e)`\)</span>.</p></li>
+<li><p>Construct set of edges, <span class="math notranslate nohighlight">\(I=\{e=(u,v)\in E\;|\; (L_e(e)=f)\;\land\; ( L(u)=BLACK \land L(v)=WHITE\}\)</span>.</p></li>
+<li><dl>
+<dt>Output: <span class="math notranslate nohighlight">\(|I|\)</span> – the cardinality of interface edges.</dt><dd><a class="reference internal image-reference" href="_images/stat_e.png"><img alt="_images/stat_e.png" class="align-center" src="_images/stat_e.png" style="width: 239.5px; height: 146.0px;" />
+</a>
+</dd>
+</dl>
+</li>
+</ol>
+<p><strong>STAT_n_D</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">STAT_n_D</span></code> - number of black vertices</p>
+<ol class="arabic simple">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Identify set <span class="math notranslate nohighlight">\(B\)</span> of all (electron donor) black vertices.</p></li>
+<li><p>Output: <span class="math notranslate nohighlight">\(|B|`\)</span>, where <span class="math notranslate nohighlight">\(|.|`\)</span> is the cardinality of the set.</p></li>
+</ol>
+<p><strong>STAT_n_A</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">STAT_n_A</span></code> - number of white vertices</p>
+<ol class="arabic simple">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Identify set <span class="math notranslate nohighlight">\(W\)</span> of all (electron donor) black vertices.</p></li>
+<li><p>Output: <span class="math notranslate nohighlight">\(|W|\)</span>, where <span class="math notranslate nohighlight">\(|.|`\)</span> is the cardinality of the set.</p></li>
+</ol>
+<p><strong>STAT_CC_D</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">STAT_CC_D</span></code> - number of black connected components</p>
+<ol class="arabic">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Construct vertex-induced subgraph, <span class="math notranslate nohighlight">\(G'=(V',E')\)</span>, where
+<span class="math notranslate nohighlight">\(V'=\{v \in V\}\)</span> is a set of all BLACK vertices in <span class="math notranslate nohighlight">\(V\)</span>,
+<span class="math notranslate nohighlight">\(E'`\)</span> is a set of all edges between vertices in <span class="math notranslate nohighlight">\(V'\)</span>.</p></li>
+<li><p>Compute the set of connected components, <span class="math notranslate nohighlight">\(C_B\)</span>, in <span class="math notranslate nohighlight">\(G'\)</span>.</p></li>
+<li><dl>
+<dt>Output: <span class="math notranslate nohighlight">\(|C_B|\)</span>.</dt><dd><a class="reference internal image-reference" href="_images/cc_d.png"><img alt="_images/cc_d.png" class="align-center" src="_images/cc_d.png" style="width: 240.0px; height: 122.5px;" />
+</a>
+</dd>
+</dl>
+</li>
+</ol>
+<p><strong>STAT_CC_A</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">STAT_CC_A</span></code> - number of white connected components</p>
+<ol class="arabic">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Construct vertex-induced subgraph, <span class="math notranslate nohighlight">\(G'=(V',E')\)</span>, where
+<span class="math notranslate nohighlight">\(V'=\{v \in V\}\)</span> is a set of all WHITE vertices in <span class="math notranslate nohighlight">\(V\)</span>,
+<span class="math notranslate nohighlight">\(E'`\)</span> is a set of all edges between vertices in <span class="math notranslate nohighlight">\(V'\)</span>.</p></li>
+<li><p>Compute the set of connected components, <span class="math notranslate nohighlight">\(C_W\)</span>, in <span class="math notranslate nohighlight">\(G'\)</span>.</p></li>
+<li><dl>
+<dt>Output: <span class="math notranslate nohighlight">\(|C_W|\)</span>.</dt><dd><a class="reference internal image-reference" href="_images/cc_a.png"><img alt="_images/cc_a.png" class="align-center" src="_images/cc_a.png" style="width: 240.0px; height: 122.5px;" />
+</a>
+</dd>
+</dl>
+</li>
+</ol>
+<p><strong>STAT_CC_D_An</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">STAT_CC_D_An</span></code> - number of black connected components connected to top (red)</p>
+<ol class="arabic simple">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Reconstruct the neighborhood of RED vertex <span class="math notranslate nohighlight">\(ngbr_R\)</span> in <span class="math notranslate nohighlight">\(G\)</span>.</p></li>
+<li><p>Construct vertex-induced subgraph, <span class="math notranslate nohighlight">\(G'=(V',E')\)</span>, where
+<span class="math notranslate nohighlight">\(V'=\{v \in V\}\)</span> is a set of all BLACK vertices in <span class="math notranslate nohighlight">\(V\)</span>,
+<span class="math notranslate nohighlight">\(E'`\)</span> is a set of all edges between vertices in <span class="math notranslate nohighlight">\(V'\)</span>.</p></li>
+<li><p>Compute the set of connected components, <span class="math notranslate nohighlight">\(C_B\)</span>, in <span class="math notranslate nohighlight">\(G'\)</span>.</p></li>
+<li><p>Compute the set <span class="math notranslate nohighlight">\(C_B^R\)</span> of indices of connected components in <span class="math notranslate nohighlight">\(ngbr_R\)</span> using the set <span class="math notranslate nohighlight">\(C_B\)</span>.</p></li>
+<li><p>Output: <span class="math notranslate nohighlight">\(|C_B^R|\)</span>.</p></li>
+</ol>
+<p><strong>STAT_CC_A_Ca</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">STAT_CC_A_Ca</span></code> - number of white connected components connected to bottom (blue)</p>
+<ol class="arabic simple">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Reconstruct the neighborhood of BLUE vertex <span class="math notranslate nohighlight">\(ngbr_B\)</span> in <span class="math notranslate nohighlight">\(G\)</span>.</p></li>
+<li><p>Construct vertex-induced subgraph, <span class="math notranslate nohighlight">\(G'=(V',E')\)</span>, where
+<span class="math notranslate nohighlight">\(V'=\{v \in V\}\)</span> is a set of all WHITE vertices in <span class="math notranslate nohighlight">\(V\)</span>,
+<span class="math notranslate nohighlight">\(E'`\)</span> is a set of all edges between vertices in <span class="math notranslate nohighlight">\(V'\)</span>.</p></li>
+<li><p>Compute the set of connected components, <span class="math notranslate nohighlight">\(C_W\)</span>, in <span class="math notranslate nohighlight">\(G'\)</span>.</p></li>
+<li><p>Compute the set <span class="math notranslate nohighlight">\(C_W^B\)</span> of indices of connected components in <span class="math notranslate nohighlight">\(ngbr_B\)</span> using the set <span class="math notranslate nohighlight">\(C_W\)</span>.</p></li>
+<li><p>Output: <span class="math notranslate nohighlight">\(|C_W^B|\)</span>.</p></li>
+</ol>
+<p><strong>CT_f_conn_D_An</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">CT_f_conn_D_An</span></code> - fraction of black vertices connected to top</p>
+<p>We use the same steps as in <code class="docutils literal notranslate"><span class="pre">STAT_CC_D_An</span></code>. With one more step:</p>
+<ol class="arabic" start="6">
+<li><p>Let <span class="math notranslate nohighlight">\(P\)</span> be the union of all BLACK vertices in <span class="math notranslate nohighlight">\(C_B^R\)</span>.</p></li>
+<li><dl>
+<dt>Output: <span class="math notranslate nohighlight">\(|P|/|B|\)</span>, where <span class="math notranslate nohighlight">\(B\)</span> is the set of BLACK vertices.</dt><dd><a class="reference internal image-reference" href="_images/conn_d.png"><img alt="_images/conn_d.png" class="align-center" src="_images/conn_d.png" style="width: 241.0px; height: 116.0px;" />
+</a>
+</dd>
+</dl>
+</li>
+</ol>
+<p><strong>CT_f_conn_A_Ca</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">CT_f_conn_A_Ca</span></code> - fraction of white vertices connected to bottom</p>
+<p>We use the same steps as in <code class="docutils literal notranslate"><span class="pre">STAT_CC_D_An</span></code>. With one more step:</p>
+<ol class="arabic" start="6">
+<li><p>Let <span class="math notranslate nohighlight">\(P\)</span> be the union of all WHITE vertices in <span class="math notranslate nohighlight">\(C_W^B\)</span>.</p></li>
+<li><dl>
+<dt>Output: <span class="math notranslate nohighlight">\(|P|/|B|\)</span>, where <span class="math notranslate nohighlight">\(W\)</span> is the set of WHITE vertices.</dt><dd><a class="reference internal image-reference" href="_images/conn_a.png"><img alt="_images/conn_a.png" class="align-center" src="_images/conn_a.png" style="width: 241.0px; height: 116.0px;" />
+</a>
+</dd>
+</dl>
+</li>
+</ol>
+<p><strong>ABS_f_D</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">ABS_f_D</span></code> - fraction of black vertices</p>
+<ol class="arabic simple">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Identify set <span class="math notranslate nohighlight">\(B\)</span> of all BLACK vertices.</p></li>
+<li><p>Output: <span class="math notranslate nohighlight">\(|B|/|V|`\)</span>, where <span class="math notranslate nohighlight">\(|.|`\)</span> is the cardinality of the set.</p></li>
+</ol>
+<p><strong>ABS_wf_D</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">ABS_wf_D</span></code> - weighted fraction of black vertices</p>
+<p><strong>DISS_f10_D</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">DISS_f10_D</span></code> - fraction of black vertices in 10 distance to interface</p>
+<p>This descriptor is constructed in three steps. First, we construct the subgraph
+induced by a set of BLACK and GREEN vertices. Next, using Dijkstra’s algorithm
+the shortest paths between GREEN vertex and all other vertices in the induced
+subgraph are determined. The distance is weighted by the physics-informed function
+(here: <span class="math notranslate nohighlight">\(f(d)=exp(-d/L_d)\)</span>, where <span class="math notranslate nohighlight">\(L_d\)</span> is the exciton diffusion length).
+Formally:</p>
+<ol class="arabic simple">
+<li><p>Input: Given labeled, weighted, undirected graph <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Construct vertex-induced subgraph, <span class="math notranslate nohighlight">\(G'=(V',E')`\)</span>, where: <span class="math notranslate nohighlight">\(V'`\)</span> is a
+set of all BLACK and GREEN vertices in <span class="math notranslate nohighlight">\(V\)</span>, <span class="math notranslate nohighlight">\(E'\)</span> is a set of all
+edges between vertices in <span class="math notranslate nohighlight">\(V'`\)</span>.</p></li>
+<li><p>Find all shortest paths in <span class="math notranslate nohighlight">\(G'\)</span> from GREEN vertex <span class="math notranslate nohighlight">\(u' :math:`(L(u) = GREEN)\)</span>.</p></li>
+<li><p>Identify vertex set <span class="math notranslate nohighlight">\(V_d=\{v \in V'\;|\;\)</span> (shortest_path(<span class="math notranslate nohighlight">\(v\)</span>) <span class="math notranslate nohighlight">\(&lt;d\)</span>) <span class="math notranslate nohighlight">\(\land (L(v) = BLACK)\}\)</span>.
+Shortest_path (<span class="math notranslate nohighlight">\(v\)</span>) denotes the distance between <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> in <span class="math notranslate nohighlight">\(G'`\)</span>.</p></li>
+<li><p>Weight each distance <span class="math notranslate nohighlight">\(d\)</span> with the weighting function (<span class="math notranslate nohighlight">\(f(d)=exp(-d/L_d)\)</span>).</p></li>
+<li><p>Output: <span class="math notranslate nohighlight">\(\sum_{i=1..|B|} f(d)i)/|B|`\)</span>, where <span class="math notranslate nohighlight">\(|B|\)</span> is the cardinality of a set that consists of BLACK vertices.</p></li>
+</ol>
+<p><strong>CT_f_e_conn</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">CT_f_e_conn</span></code> - fraction of interface with complementary paths to bottom and top</p>
+<p>We search for interface edges in the graph that connect BLACK and WHITE vertices (interface),
+where both vertices have paths to relevant electrodes (BLACK vertex has path to
+RED meta-vertex and WHITE vertex has path to BLUE meta-vertex). Formally,</p>
+<ul class="simple">
+<li><p>Let <span class="math notranslate nohighlight">\(G_B\)</span> be the vertex-induced subgraph with BLACK and RED vertices.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(G_W\)</span> be the vertex-induced subgraph with WHITE and BLUE vertices.</p></li>
+<li><p>Find a set <span class="math notranslate nohighlight">\(I_c\subset I\)</span> of interface edges in the graph, such that the
+path from the BLACK vertex to RED exists in <span class="math notranslate nohighlight">\(G_B\)</span> and the path from WHITE
+vertex to BLUE exists in <span class="math notranslate nohighlight">\(G_W\)</span>.</p></li>
+</ul>
+<p>This is computed using the following algorithm:</p>
+<ol class="arabic simple">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Construct a filtered graph, <span class="math notranslate nohighlight">\(G'=(V,E')`\)</span>, where  <span class="math notranslate nohighlight">\(E'`\)</span> is a set
+of edges connecting vertices of the same color.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(I\)</span> be the set of all interface edges.</p></li>
+<li><p>Identify connected components, <span class="math notranslate nohighlight">\(C\)</span>, in <span class="math notranslate nohighlight">\(G'\)</span>.</p></li>
+<li><p>Compute subset <span class="math notranslate nohighlight">\(R_r \subset C\)</span> of all components <span class="math notranslate nohighlight">\(c\in C\)</span>,
+such that <span class="math notranslate nohighlight">\(c\)</span> has BLACK vertices adjacent to RED in <span class="math notranslate nohighlight">\(G\)</span> (from <code class="docutils literal notranslate"><span class="pre">CT_f_conn_D_An</span></code>).</p></li>
+<li><p>Compute subset <span class="math notranslate nohighlight">\(R_b \subset C\)</span> of all components <span class="math notranslate nohighlight">\(c\in C\)</span>, such
+that <span class="math notranslate nohighlight">\(c\)</span> has WHITE vertices adjacent to BLUE in <span class="math notranslate nohighlight">\(G\)</span> (from <code class="docutils literal notranslate"><span class="pre">CT_f_conn_A_Ca</span></code>).</p></li>
+<li><p>Identify subset, <span class="math notranslate nohighlight">\(I_{rb} \subset I\)</span> where BLACK vertex belongs to
+set of vertices in <span class="math notranslate nohighlight">\(R_r\)</span> and WHITE vertex belongs to set of vertices
+in <span class="math notranslate nohighlight">\(R_b\)</span>.</p></li>
+<li><p>Output: <span class="math notranslate nohighlight">\(|I_{rb}|/|I|\)</span>.</p></li>
+</ol>
+<p>This descriptor is formulated in a hierarchical way using <code class="docutils literal notranslate"><span class="pre">CT_f_conn_D_An</span></code>
+and <code class="docutils literal notranslate"><span class="pre">CT_f_conn_A_Ca</span></code>. This hierarchical construction is one additional
+advantage of our graph-based approach. Moreover, the next descriptor is
+computed using intermediate data from this descriptor.</p>
+<p><strong>CT_e_conn</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">CT_e_conn</span></code> - number of interface edges with complementary paths</p>
+<p>This descriptor is computed as an intermediate step in the algorithm from
+<code class="docutils literal notranslate"><span class="pre">CT_f_e_conn</span></code>. The number of interface edges is the cardinality of the set
+<span class="math notranslate nohighlight">\(|I_{rb}|\)</span>.</p>
+<p><strong>CT_e_D_An</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">CT_e_D_An</span></code> - number of black interface vertices with path to top</p>
+<p>This descriptor is computed as an analogous way as
+<code class="docutils literal notranslate"><span class="pre">CT_f_e_conn</span></code>.</p>
+<ol class="arabic simple">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Construct a filtered graph, <span class="math notranslate nohighlight">\(G'=(V,E')`\)</span>, where  <span class="math notranslate nohighlight">\(E'`\)</span> is a set
+of edges connecting vertices of the same color.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(I\)</span> be the set of all interface edges.</p></li>
+<li><p>Identify connected components, <span class="math notranslate nohighlight">\(C\)</span>, in <span class="math notranslate nohighlight">\(G'\)</span>.</p></li>
+<li><p>Compute subset <span class="math notranslate nohighlight">\(R_r \subset C\)</span> of all components <span class="math notranslate nohighlight">\(c\in C\)</span>,
+such that <span class="math notranslate nohighlight">\(c\)</span> has BLACK vertices adjacent to RED in <span class="math notranslate nohighlight">\(G\)</span> (from <code class="docutils literal notranslate"><span class="pre">CT_f_conn_D_An</span></code>).</p></li>
+<li><p>Compute subset <span class="math notranslate nohighlight">\(R_b \subset C\)</span> of all components <span class="math notranslate nohighlight">\(c\in C\)</span>, such
+that <span class="math notranslate nohighlight">\(c\)</span> has WHITE vertices adjacent to BLUE in <span class="math notranslate nohighlight">\(G\)</span> (from <code class="docutils literal notranslate"><span class="pre">CT_f_conn_A_Ca</span></code>).</p></li>
+<li><p>Identify subset, <span class="math notranslate nohighlight">\(I_{r} \subset I\)</span> where BLACK vertex belongs to
+set of vertices in <span class="math notranslate nohighlight">\(R_r\)</span>.</p></li>
+<li><p>Output: <span class="math notranslate nohighlight">\(|I_{r}|\)</span>.</p></li>
+</ol>
+<p><strong>CT_e_A_Ca</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">CT_e_A_Ca</span></code> - number of white interface vertices with path to bottom</p>
+<p>This descriptor is computed as an analogous way as
+<code class="docutils literal notranslate"><span class="pre">CT_f_e_conn</span></code>.</p>
+<ol class="arabic simple">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Construct a filtered graph, <span class="math notranslate nohighlight">\(G'=(V,E')`\)</span>, where  <span class="math notranslate nohighlight">\(E'`\)</span> is a set
+of edges connecting vertices of the same color.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(I\)</span> be the set of all interface edges.</p></li>
+<li><p>Identify connected components, <span class="math notranslate nohighlight">\(C\)</span>, in <span class="math notranslate nohighlight">\(G'\)</span>.</p></li>
+<li><p>Compute subset <span class="math notranslate nohighlight">\(R_r \subset C\)</span> of all components <span class="math notranslate nohighlight">\(c\in C\)</span>,
+such that <span class="math notranslate nohighlight">\(c\)</span> has BLACK vertices adjacent to RED in <span class="math notranslate nohighlight">\(G\)</span> (from <code class="docutils literal notranslate"><span class="pre">CT_f_conn_D_An</span></code>).</p></li>
+<li><p>Compute subset <span class="math notranslate nohighlight">\(R_b \subset C\)</span> of all components <span class="math notranslate nohighlight">\(c\in C\)</span>, such
+that <span class="math notranslate nohighlight">\(c\)</span> has WHITE vertices adjacent to BLUE in <span class="math notranslate nohighlight">\(G\)</span> (from <code class="docutils literal notranslate"><span class="pre">CT_f_conn_A_Ca</span></code>).</p></li>
+<li><p>Identify subset, <span class="math notranslate nohighlight">\(I_{b} \subset I\)</span> where WHITE vertex belongs to set
+of vertices in <span class="math notranslate nohighlight">\(R_b\)</span>.</p></li>
+<li><p>Output: <span class="math notranslate nohighlight">\(|I_{b}|\)</span>.</p></li>
+</ol>
+<p><strong>CT_f_D_tort1</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">CT_f_D_tort1</span></code> - fraction of black vertices with straight rising paths (t=1)</p>
+<p>Straight rising paths are paths with tortuosity one (<span class="math notranslate nohighlight">\(t\)</span>). Tortuosity is the ratio
+between the path length to the relevant electrode through morphology, and ideal
+straight path length to the electrode without any constraints.
+Tortuosity is computed for domains that are connected to relevant electrode.
+In case of this descriptor, the donor domains (BLACK vertices) connected to top
+boundary (RED meta-vertex) are considered.</p>
+<p>The graph-based algorithm to compute the fraction is given below:</p>
+<ol class="arabic">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Construct vertex-induced graph, <span class="math notranslate nohighlight">\(G'=(V',E')\)</span>, where <span class="math notranslate nohighlight">\(V'=\{v \in V\}\)</span>
+is a set of all BLACK and RED vertices in <span class="math notranslate nohighlight">\(V\)</span>, <span class="math notranslate nohighlight">\(E'\)</span> is a set
+of all edges between vertices in <span class="math notranslate nohighlight">\(V'\)</span>.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(V_B\subset V'\)</span> be a set of BLACK vertices in <span class="math notranslate nohighlight">\(V'\)</span> in <span class="math notranslate nohighlight">\(G\)</span>.</p></li>
+<li><p>Find the shortest paths from the RED to all BLACK vertices in <span class="math notranslate nohighlight">\(G'\)</span> (filtered graph - step 2).</p></li>
+<li><p>Find the shortest paths from the RED to all BLACK vertices in <span class="math notranslate nohighlight">\(G\)</span> (original graph).</p></li>
+<li><p>For each BLACK vertex compute the tortuosity using the shortest paths from step 5 and 4.</p></li>
+<li><p>Filter the set <span class="math notranslate nohighlight">\(V_{Bt1}\)</span> with all BLACK vertices that have the shortest path with <span class="math notranslate nohighlight">\(t=1\)</span>.</p></li>
+<li><dl>
+<dt>Output: The fraction of BLACK vertices with straight rising paths <span class="math notranslate nohighlight">\(|V_{Bt1}|/|V_B|\)</span>.</dt><dd><a class="reference internal image-reference" href="_images/tort_d.png"><img alt="_images/tort_d.png" class="align-center" src="_images/tort_d.png" style="width: 208.0px; height: 86.0px;" />
+</a>
+</dd>
+</dl>
+</li>
+</ol>
+<p><strong>CT_f_A_tort1</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">CT_f_A_tort1</span></code> - fraction of white vertices with straight rising paths (t=1)</p>
+<p>Similar to previous descriptor, the acceptor domains (WHITE vertices) connected to bottom
+boundary (BLUE meta-vertex) are considered.</p>
+<p>The graph-based algorithm to compute the fraction is given below:</p>
+<ol class="arabic">
+<li><p>Input: Given labeled, weighted, undirected graph, <span class="math notranslate nohighlight">\(G=(V,E,W,L)\)</span>.</p></li>
+<li><p>Construct vertex-induced graph, <span class="math notranslate nohighlight">\(G'=(V',E')\)</span>, where <span class="math notranslate nohighlight">\(V'=\{v \in V\}\)</span>
+is a set of all WHITE and BLUE vertices in <span class="math notranslate nohighlight">\(V\)</span>, <span class="math notranslate nohighlight">\(E'\)</span> is a set
+of all edges between vertices in <span class="math notranslate nohighlight">\(V'\)</span>.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(V_W\subset V'\)</span> be a set of WHITE vertices in <span class="math notranslate nohighlight">\(V'\)</span> in <span class="math notranslate nohighlight">\(G\)</span>.</p></li>
+<li><p>Find the shortest paths from the BLUE to all WHITE vertices in <span class="math notranslate nohighlight">\(G'\)</span> (filtered graph - step 2).</p></li>
+<li><p>Find the shortest paths from the BLUE to all WHITE vertices in <span class="math notranslate nohighlight">\(G\)</span> (original graph).</p></li>
+<li><p>For each WHITE vertex compute the tortuosity using the shortest paths from step 5 and 4.</p></li>
+<li><p>Filter the set <span class="math notranslate nohighlight">\(V_{Wt1}\)</span> with all WHITE vertices that have the shortest path with <span class="math notranslate nohighlight">\(t=1\)</span>.</p></li>
+<li><dl>
+<dt>Output: The fraction of WHITE vertices with straight rising paths <span class="math notranslate nohighlight">\(|V_{Wt1}|/|V_W|\)</span> .</dt><dd><a class="reference internal image-reference" href="_images/tort_a.png"><img alt="_images/tort_a.png" class="align-center" src="_images/tort_a.png" style="width: 213.5px; height: 86.0px;" />
+</a>
+</dd>
+</dl>
+</li>
+</ol>
+<p><strong>CT_n_D_adj_An</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">CT_n_D_adj_An</span></code> - number of black vertices in direct contact with top (An - top/anode)</p>
+<p>This descriptor computes the number of BLACK vertices with distance to RED (Anode/top) vertex.
+To compute this descriptor, post processing of distance vector is performed. By counting the number of BLACK vertices with zero distance to the RED vertex.</p>
+<p><strong>CT_n_A_adj_Ca</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">CT_n_A_adj_Ca</span></code> - number of white vertices in direct contact with bottom (Ca - bottom/cathode)</p>
+<p>This descriptor computes the number of WHITE vertices with distance to BLUE (Cathode/bottom) vertex.
+To compute this descriptor, post processing of distance vector is performed. By counting the number of WHITE vertices with zero distance to the BLUE vertex.</p>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyGraspiFunctionality.html" class="btn btn-neutral float-left" title="Functionality" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyGraspiInputs.html" class="btn btn-neutral float-right" title="Inputs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
