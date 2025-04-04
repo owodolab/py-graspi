@@ -100,7 +100,7 @@ A **descriptor stored in a dictionary** can be found by calling the function des
 
 .. code-block:: bash
 
-    ig.descriptors(g)      # g is a graph object
+    dict = ig.descriptors(g)      # g is a graph object
 
 A **list of descriptors** in a **text file** can be found by calling the function descriptorsToTxt(dictionary,filename)
 
@@ -111,17 +111,13 @@ A **list of descriptors** in a **text file** can be found by calling the functio
 Visualize Graphs
 ~~~~~~~~~~~~~~~~
 
-For 2D graphs, call visual2D(graph)
+For 2D graphs, call visualize(graph, is_2D)
 
 .. code-block:: bash
 
-    g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")     # utilizing the test file found in 2D-testFiles folder as an example
-    ig.visual2D(g)
+    # Generate a graph from the test file
+    g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
 
-For 3D graphs, call visual3D(graph)
-
-.. code-block:: bash
-
-    g = ig.generateGraph("3D-testFile/testFile-10-3D.txt")     # utilizing the test file found in 2D-testFiles folder as an example
-    ig.visual3D(g)
+    # Visualize the graph (2D)
+    ig.visualize(g, true)
 
