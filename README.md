@@ -1,5 +1,5 @@
 # py-graspi
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/d0255ae11d01305f597ed22eeab9ed6ba8a38341?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/3d7bf5df17b015612ab1b8261c63d0bbb00a268f?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb)
 
 Python-Igraph is a graph-based library contender for the library that works with the GraSPI package. 
 
