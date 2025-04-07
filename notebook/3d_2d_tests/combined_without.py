@@ -1,14 +1,9 @@
 import sys
-from fileinput import filename
 
 import igraph as ig
 import matplotlib.pyplot as plt
-from igraph.drawing.plotly.graph import plotly
-from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import os
-
-from numpy import character
 
 import descriptors as d
 import math

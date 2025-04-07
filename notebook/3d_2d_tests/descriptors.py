@@ -49,7 +49,7 @@ def STAT_n_D(graph):
         int: The number of vertices with the color 'black'.
     """
     vertices = graph.vcount()
-    count = 0;
+    count = 0 
 
     for vertex in range(vertices):
         if graph.vs[vertex]['color'] == 'black':
@@ -68,7 +68,7 @@ def STAT_n_A(graph):
         int: The number of vertices with the color 'white'.
     """
     vertices = graph.vcount()
-    count = 0;
+    count = 0 
 
     for vertex in range(vertices):
         if graph.vs[vertex]['color'] == 'white':
@@ -86,7 +86,7 @@ def STAT_CC_D(graph):
     Returns:
         int: The number of connected components with at least one 'black' vertex.
     """
-    # cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph) 
     cc = cc_global
     count = 0
 
@@ -106,7 +106,7 @@ def STAT_CC_A(graph):
     Returns:
         int: The number of connected components with at least one 'white' vertex.
     """
-    # cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph) 
     cc = cc_global
     count = 0
 
@@ -126,9 +126,9 @@ def STAT_CC_D_An(graph):
     Returns:
         int: The number of connected components with 'black' and 'red' vertices (top).
     """
-    # cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph) 
     cc = cc_global
-    count = 0;
+    count = 0 
 
     for c in cc:
         if graph.vs[c][0]['color'] == 'black' and 'red' in graph.vs[c]['color']:
@@ -146,9 +146,9 @@ def STAT_CC_A_Ca(graph):
     Returns:
         int: The number of connected components with 'white' and 'blue' vertices (bottom).
     """
-    # cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph) 
     cc = cc_global
-    count = 0;
+    count = 0 
 
     for c in cc:
         if graph.vs[c][0]['color'] == 'white' and 'blue' in graph.vs[c]['color']:
@@ -180,7 +180,7 @@ def CT_f_conn_D_An(graph):
     Returns:
         float: The fraction of 'black' vertices in connected components with 'black' vertices (top).
     """
-    # cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph) 
     cc = cc_global
     count = 0
     
@@ -205,7 +205,7 @@ def CT_f_conn_A_Ca(graph):
     Returns:
         float: The fraction of 'white' vertices in specific connected components (bottom).
     """
-    # cc = ig.connectedComponents(graph);
+    # cc = ig.connectedComponents(graph) 
     cc = cc_global
     count = 0
 
