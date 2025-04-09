@@ -193,9 +193,6 @@ def adjList(fileName):
 
                         neighbors.append(bottom)
 
-
-    #improvement point 2: combine two loop into 1
-    #improvement point 3: filterGraph_blue_red() 에서의 keptEdge_blue를 여기로 옮길 수도 있는거 아닌가?
     if not is_2d:   
         # add edges to Blue Node for 3D
         adjacency_list[dimZ * dimY * dimX] = []
