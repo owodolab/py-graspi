@@ -12,8 +12,6 @@ import src.graph_data_class as GraphData
 
 import math
 
-from urllib3.util import resolve_ssl_version
-
 DEBUG = False
 PERIODICITY = True #reflects default status from c++ implementation
 n_flag = 2
