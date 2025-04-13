@@ -7,10 +7,11 @@ from igraph.drawing.plotly.graph import plotly
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import os
+import src.graph_data_class as GraphData
 
 from numpy import character
 
-import descriptors as d
+import src.descriptors as d
 import math
 DEBUG = False # debugging mode
 DEBUG2 = False   # for green edges
@@ -234,6 +235,7 @@ def adjList(fileName):
                 adjacency_list[dimZ * dimY * dimX + 1].append(vertex_index)
                 edge_labels.append("s")
                 edge_weights.append(0)
+
 
     if DEBUG:
         print("Adjacency List: ", adjacency_list)
@@ -502,7 +504,10 @@ def generateGraphAdj(file):
     line = line.split()
     dimX = int(line[0])
     dimY = int(line[1])
-    dimZ = int(line[2])
+    if len(line) > 2:
+        dimZ = int(line[2])
+    else:
+        dimZ = 1
 
     # print("xyz:", dimX, dimY, dimZ)
     g = ig.Graph.ListDict(edges=edges, directed=False)
@@ -663,9 +668,31 @@ def generateGraphAdj(file):
     g.es[starting_index:]["label"] = green_edges_labels
     g.es[starting_index:]["weight"] = green_edges_weights    
 
-
     black_interface_red = len(black)
     white_interface_blue = len(white)
+
+    # Create graph_data_class object
+    graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2D)
+
+    # Store vertex attributes
+    graph_data.graph = g
+    graph_data.is_2D = is_2D
+    graph_data.black_vertices = black_vertices
+    graph_data.white_vertices = white_vertices
+    graph_data.black_green = black_green
+    graph_data.black_interface_red = black_interface_red
+    graph_data.white_interface_blue = white_interface_blue
+    graph_data.dim = dim
+    graph_data.interface_edge_comp_paths = interface_edge_comp_paths
+    graph_data.redVertex = redVertex
+    graph_data.blueVertex = blueVertex
+    graph_data.CT_n_D_adj_An = CT_n_D_adj_An
+    graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
+
+
+    if redVertex is not None and blueVertex is not None:
+        graph_data.compute_shortest_paths(red_vertex=redVertex, blue_vertex=blueVertex)
+
 
     loop_end = time.time()     
     loop_time = loop_end - loop_start
@@ -700,9 +727,9 @@ def generateGraphAdj(file):
             print("all vertices stored well!")
 
 
-    return g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
-        dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
-
+    # return g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
+    #     dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
+    return graph_data
 
 def generateGraph(file):
     """
@@ -895,24 +922,27 @@ def main():
     if sys.argv[1] == "-p":
         # global PERIODICITY
         # PERIODICITY = True
+        filename = sys.argv[2]
         if sys.argv[2] == "-g":
+            filename = sys.argv[3]
             g, is_2D = generateGraphGraphe(sys.argv[3])  # utilizing the test file found in 2D-testFiles folder
             visualize(g, is_2D)
             filteredGraph = filterGraph(g)
             visualize(filteredGraph, is_2D)
 
             if DEBUG:
-                dic = d.descriptors(g)
+                dic = d.descriptors(g, filename)
                 print(connectedComponents(filteredGraph))
                 for key, value in dic.items():
                     print(key, value)
 
         elif sys.argv[1] != "-g":
-            (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-             dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-             CT_n_D_adj_An, CT_n_A_adj_Ca)= generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
+            # (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
+            #  dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
+            #  CT_n_D_adj_An, CT_n_A_adj_Ca)= generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
+            graph_data = generateGraphAdj(sys.argv[2])
+            visualize(g.graph, is_2D)
+            filteredGraph = filterGraph(g.graph)
             visualize(filteredGraph, is_2D)
 
             if DEBUG:

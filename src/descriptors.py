@@ -264,34 +264,43 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
             id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
 
 
-    file = open(f"{filename}_TortuosityBlackToRed.txt", 'w')
+    file = open(f"./results/{filename}_TortuosityBlackToRed.txt", 'w')
     file.writelines(tort_black_to_red)
     file.close()
 
-    file = open(f"{filename}_IdTortuosityBlackToRed.txt", 'w')
+    file = open(f"./results/{filename}_IdTortuosityBlackToRed.txt", 'w')
     file.writelines(id_tort_black_to_red)
     file.close()
 
-    file = open(f"{filename}_DistancesBlackToGreen.txt", 'w')
+    file = open(f"./results/{filename}_DistancesBlackToGreen.txt", 'w')
     file.writelines(dist_black_to_green)
     file.close()
 
-    file = open(f"{filename}_DistancesBlackToRed.txt", 'w')
+    file = open(f"./results/{filename}_DistancesBlackToRed.txt", 'w')
     file.writelines(dist_black_to_red)
     file.close()
 
-    file = open(f"{filename}_DistancesWhiteToBlue.txt", 'w')
+    file = open(f"./results/{filename}_DistancesWhiteToBlue.txt", 'w')
     file.writelines(dist_white_to_blue)
     file.close()
 
-    file = open(f"{filename}_TortuosityWhiteToBlue.txt", 'w')
+    file = open(f"./results/{filename}_TortuosityWhiteToBlue.txt", 'w')
     file.writelines(tort_white_to_blue)
     file.close()
 
-    file = open(f"{filename}_IdTortuosityWhiteToBlue.txt", 'w')
+    file = open(f"./results/{filename}_IdTortuosityWhiteToBlue.txt", 'w')
     file.writelines(id_tort_white_to_blue)
     file.close()
 
+    if totalBlacks == 0:
+        print("totalblack")
+    if countBlack_Red_conn == 0:
+        print("countblack_red")
+    if countWhite_Blue_conn == 0:
+        print("countwhite")
+    if totalWhite == 0:
+        print("totalwhites")
+        
     return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), \
         float(white_tor / countWhite_Blue_conn), float(total_weighted_black_red / (totalBlacks + totalWhite))
 
