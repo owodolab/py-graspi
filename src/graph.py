@@ -13,7 +13,7 @@ import src.graph_data_class as GraphData
 import math
 
 DEBUG = False
-PERIODICITY = True #reflects default status from c++ implementation
+PERIODICITY = False #reflects default status from c++ implementation
 n_flag = 2
 
 
@@ -822,6 +822,7 @@ def filterGraph_blue_red(graph):
 def main():
     global PERIODICITY
     global n_flag
+    PERIODICITY = False
 
     # Validate and parse command-line arguments
     if len(sys.argv) < 3:
