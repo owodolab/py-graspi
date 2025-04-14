@@ -6,7 +6,7 @@ setup(
     author_email = "wenqizhe@buffalo.edu",
     version = "0.1.1.9",
     description = "Utilize Python-igraph to produce similar functionality as GraSPI",
-    packages = ['py_graspi'],
+    packages = find_packages,
     classifiers = ["Programming Language :: Python"],
     install_requires=[
         "igraph",
