@@ -3,16 +3,13 @@ from fileinput import filename
 
 import igraph as ig
 import matplotlib.pyplot as plt
-from igraph.drawing.plotly.graph import plotly
-from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import os
 import src.graph_data_class as GraphData
 
-from numpy import character
-
 import src.descriptors as d
 import math
+
 DEBUG = False # debugging mode
 DEBUG2 = False   # for green edges
 PERIODICITY = True #reflects default status from c++ implementation
@@ -32,11 +29,11 @@ class edge_info():
 
 '''for updating edge info based on rule '''
 '''green vertex can only connect with interface(first order) vertices'''
-def store_green_edges(v_with_green_vertex, index, color, order, weight):
-    if index in v_with_green_vertex:
-        cur_v = v_with_green_vertex[index]
-        if v_with_green_vertex[index].weight > weight * 0.5:     # if previous order is higher than new one
-            v_with_green_vertex[index].weight = weight * 0.5     # change it to lower order      
+def store_interface_edges(edges_with_greenVertex, index, color, order, weight):
+    if index in edges_with_greenVertex:
+        cur_v = edges_with_greenVertex[index]
+        if edges_with_greenVertex[index].weight > weight * 0.5:     # if previous order is higher than new one
+            edges_with_greenVertex[index].weight = weight * 0.5     # change it to lower order      
 
     else:
         newEdge = edge_info()
@@ -45,7 +42,7 @@ def store_green_edges(v_with_green_vertex, index, color, order, weight):
         newEdge.order = order   #order = 1,2,3
         newEdge.weight = weight * 0.5
         
-        v_with_green_vertex[index] = newEdge
+        edges_with_greenVertex[index] = newEdge
 
 
 
@@ -57,8 +54,7 @@ def generateGraph(file):
         file (str): The name of the file containing graph data.
 
     Returns:
-         This function generates a graph based on the input so the return type depends on the format of graph data that was given.
-
+        This function generates a graph based on the input so the return type depends on the format of graph data that was given.
         See “generateGraphAdj” if in .txt, or “generateGraphGraphe” if in .graphe.
     """
     if os.path.splitext(file)[1] == ".txt":
@@ -82,7 +78,7 @@ def generateGraphAdj(file):
     const_adj_start = time.time()
 
     #get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
-    graph_data, greenv_dic = adjList(file)
+    graph_data, interface_vertices_dic = adjList(file)
     
     const_adj_end = time.time()     
     const_adj_time = const_adj_end - const_adj_start
@@ -91,15 +87,6 @@ def generateGraphAdj(file):
         print("PART #1 time : ",const_adj_time)    
 
     # labels, totalWhite, totalBlack = vertexColors(file)
-    f = open(file, 'r')
-    line = f.readline()
-    line = line.split()
-    dimX = int(line[0])
-    dimY = int(line[1])
-    if len(line) > 2:
-        dimZ = int(line[2])
-    else:
-        dimZ = 1
 
     g = graph_data.graph
     is_2D = graph_data.is_2D
@@ -109,23 +96,16 @@ def generateGraphAdj(file):
     blueVertex = graph_data.blueVertex
     dim = graph_data.dim
 
-    # print("xyz:", dimX, dimY, dimZ)
-
     # add color to blue and red metavertices
     g.vs[g.vcount()-2]['color'] = 'blue'
     g.vs[g.vcount()-1]['color'] = 'red'
 
     # shortest_start = time.time()
-    shortest_path_to_red = g.shortest_paths(source=graph_data.redVertex, weights=g.es['weight'])[0]
-    shortest_path_to_blue = g.shortest_paths(source=graph_data.blueVertex, weights=g.es['weight'])[0]
 
     # shortest_end = time.time()     
     # shortest_time = shortest_end - shortest_start
 
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
-
-
-
 
     # print("shortest time : ", shortest_time)    
 
@@ -137,20 +117,7 @@ def generateGraphAdj(file):
     blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
 
     # Add Green Interface and it's color
-
-    # # filter_start = time.time()
-    # fg_blue, fg_red, keptEdges_blue, keptEdges_red = filterGraph_blue_red(g)   # different point 2
-    # redComponent = set(fg_red.subcomponent(redVertex, mode="ALL"))
-    # blueComponent = set(fg_blue.subcomponent(blueVertex, mode="ALL"))
-    # filter_end = time.time()
-    # filter_time = filter_end - filter_start
-
-    # print("filter time (in PART #2):", filter_time)
     
-
-
-
-
     if DEBUG:
         black_green_neighbors = []
 
@@ -227,7 +194,6 @@ def generateGraphAdj(file):
                 white.add(source_vertex)
             if (target_vertex_color == 'white' and target_vertex in blueComponent):
                 white.add(target_vertex)
-
             
             if edge['label'] == 'f':
                 # increment count when black and white interface pair, black has path to top (red), white has path to (bottom) blue
@@ -237,9 +203,8 @@ def generateGraphAdj(file):
                             and (source_vertex in blueComponent and target_vertex in redComponent)):
                     interface_edge_comp_paths += 1
                 
-
                 # increment black_green when black to green edge is added
-                black_green += 1 #useless?
+                black_green += 1 
 
 
             if DEBUG:
@@ -261,10 +226,10 @@ def generateGraphAdj(file):
     green_edges_labels = []
     green_edges_weights = []
 
-    for i in greenv_dic:
+    for i in interface_vertices_dic:
         green_edges_to_add.append([i, green_vertex])
         green_edges_labels.append("f")  #every edges with green vertex are first order 
-        green_edges_weights.append(greenv_dic[i].weight)
+        green_edges_weights.append(interface_vertices_dic[i].weight)
 
     # add green vertex edges at once (without loop) 
     g.add_edges(green_edges_to_add)
@@ -388,14 +353,16 @@ def adjList(fileName):
     """
         This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph. It also generates additional
         graph data stored in the graph_data object.
+        It also counts the vertices connected to interface edges.
 
         Args:
             filename (str): The name of the file containing the graph data.
 
         Returns:
-            list: The adjacency list representing the graph, lists for first, second, and third, ordered pairs
-                  as well as a bool to signal if the graph is a 2D or 3D graph.
-        """
+            graph_data (graph_data_class): The graph data.
+            edges_with_greenVertex(dictionary): Storing vertices connected with green vertex
+)
+    """
     adjacency_list = {}
     if DEBUG:
         first_order_pairs = []
@@ -443,7 +410,7 @@ def adjList(fileName):
         #Loops through input and adds adjacency list of current vertex based on Offsets. Offsets, make it so edges aren't duplicated.
         #Also adds edge labels based on Graspi Documentation
 
-        vertices_with_green_v = {}   # dictionary for storing vertices connected with green vertex
+        edges_with_greenVertex = {}   # dictionary for storing vertices connected with green vertex
 
 
     for z in range(dimZ):
@@ -475,8 +442,8 @@ def adjList(fileName):
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
                                 if DEBUG2:
                                     print(current_vertex, neighbor_vertex)
-                                store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
-                                store_green_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
+                                store_interface_edges(edges_with_greenVertex, current_vertex, reshaped_data[current_vertex], 1, 1)
+                                store_interface_edges(edges_with_greenVertex, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
                         elif dist == 3:
                             if DEBUG:
@@ -513,8 +480,8 @@ def adjList(fileName):
                         if reshaped_data[current_vertex] + reshaped_data[right] == 1:
                             if DEBUG2:
                                 print("X-periodicity detected:", current_vertex, right)
-                            store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_green_edges(vertices_with_green_v, right, reshaped_data[right], 1, 1)
+                            store_interface_edges(edges_with_greenVertex, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_interface_edges(edges_with_greenVertex, right, reshaped_data[right], 1, 1)
 
                         neighbors.append(right)
 
@@ -529,8 +496,8 @@ def adjList(fileName):
                         if reshaped_data[current_vertex] + reshaped_data[bottom] == 1:
                             if DEBUG2:
                                 print("Y-periodicity detected:", current_vertex, bottom)
-                            store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_green_edges(vertices_with_green_v, bottom, reshaped_data[bottom], 1, 1)
+                            store_interface_edges(edges_with_greenVertex, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_interface_edges(edges_with_greenVertex, bottom, reshaped_data[bottom], 1, 1)
 
                         neighbors.append(bottom)
 
@@ -596,9 +563,6 @@ def adjList(fileName):
     if redVertex is not None and blueVertex is not None:
         graph_data.compute_shortest_paths(red_vertex=redVertex, blue_vertex=blueVertex)
 
-
-
-
     if DEBUG:
         print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
@@ -612,10 +576,10 @@ def adjList(fileName):
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
     if DEBUG2:
-        print("new method Green Edges len : ", len(vertices_with_green_v))
+        print("new method Green Edges len : ", len(edges_with_greenVertex))
 
-    # return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, vertices_with_green_v
-    return graph_data, vertices_with_green_v
+    # return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, edges_with_greenVertex
+    return graph_data, edges_with_greenVertex
 
 
 def graphe_adjList(filename):
