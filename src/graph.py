@@ -29,11 +29,11 @@ class edge_info():
 
 '''for updating edge info based on rule '''
 '''green vertex can only connect with interface(first order) vertices'''
-def store_interface_edges(edges_with_greenVertex, index, color, order, weight):
-    if index in edges_with_greenVertex:
-        cur_v = edges_with_greenVertex[index]
-        if edges_with_greenVertex[index].weight > weight * 0.5:     # if previous order is higher than new one
-            edges_with_greenVertex[index].weight = weight * 0.5     # change it to lower order      
+def store_interface_edges(edges_with_green, index, color, order, weight):
+    if index in edges_with_green:
+        cur_v = edges_with_green[index]
+        if edges_with_green[index].weight > weight * 0.5:     # if previous order is higher than new one
+            edges_with_green[index].weight = weight * 0.5     # change it to lower order      
 
     else:
         newEdge = edge_info()
@@ -42,7 +42,7 @@ def store_interface_edges(edges_with_greenVertex, index, color, order, weight):
         newEdge.order = order   #order = 1,2,3
         newEdge.weight = weight * 0.5
         
-        edges_with_greenVertex[index] = newEdge
+        edges_with_green[index] = newEdge
 
 
 
@@ -78,7 +78,7 @@ def generateGraphAdj(file):
     const_adj_start = time.time()
 
     #get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
-    graph_data, interface_vertices_dic = adjList(file)
+    graph_data, green_edges_dic, DarkGreen_dic, LightGreen_dic = adjList(file)
     
     const_adj_end = time.time()     
     const_adj_time = const_adj_end - const_adj_start
@@ -214,7 +214,7 @@ def generateGraphAdj(file):
                 if target_vertex_color == 'black':
                     black_green_neighbors.append(target_vertex)
 
-    starting_index = g.ecount()
+    edge_count = g.ecount()
 
 
     #Add Green Interface and it's color
@@ -222,21 +222,40 @@ def generateGraphAdj(file):
     g.vs[g.vcount()-1]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1].index
 
+    g.add_vertices(1)
+    g.vs[g.vcount()-1]['color'] = 'DarkGreen'
+    dark_green = g.vs[g.vcount() - 1].index
+
+    g.add_vertices(1)
+    g.vs[g.vcount()-1]['color'] = 'LightGreen'
+    light_green = g.vs[g.vcount() - 1].index
+
     green_edges_to_add = []
     green_edges_labels = []
     green_edges_weights = []
 
-    for i in interface_vertices_dic:
+    for i in green_edges_dic:
         green_edges_to_add.append([i, green_vertex])
         green_edges_labels.append("f")  #every edges with green vertex are first order 
-        green_edges_weights.append(interface_vertices_dic[i].weight)
+        green_edges_weights.append(green_edges_dic[i].weight)
+
+    for i in DarkGreen_dic:
+        green_edges_to_add.append([i, dark_green])
+        green_edges_labels.append("f")  #every edges with green vertex are first order 
+        green_edges_weights.append(DarkGreen_dic[i].weight)
+
+    for i in LightGreen_dic:
+        green_edges_to_add.append([i, light_green])
+        green_edges_labels.append("f")  #every edges with green vertex are first order 
+        green_edges_weights.append(LightGreen_dic[i].weight)
+
 
     # add green vertex edges at once (without loop) 
     g.add_edges(green_edges_to_add)
 
     # label, weight set
-    g.es[starting_index:]["label"] = green_edges_labels
-    g.es[starting_index:]["weight"] = green_edges_weights    
+    g.es[edge_count:]["label"] = green_edges_labels
+    g.es[edge_count:]["weight"] = green_edges_weights    
 
     black_interface_red = len(black)
     white_interface_blue = len(white)
@@ -246,7 +265,6 @@ def generateGraphAdj(file):
 
     # Store vertex attributes
     graph_data.graph = g
-    graph_data.is_2D = is_2D
     graph_data.black_vertices = black_vertices
     graph_data.white_vertices = white_vertices
     graph_data.black_green = black_green
@@ -360,7 +378,7 @@ def adjList(fileName):
 
         Returns:
             graph_data (graph_data_class): The graph data.
-            edges_with_greenVertex({vertex : edge_info}dictionary): Storing edges connected with green vertex
+            edges_with_green({vertex : edge_info}dictionary): Storing edges connected with green vertex
 )
     """
     adjacency_list = {}
@@ -410,8 +428,9 @@ def adjList(fileName):
         #Loops through input and adds adjacency list of current vertex based on Offsets. Offsets, make it so edges aren't duplicated.
         #Also adds edge labels based on Graspi Documentation
 
-        edges_with_greenVertex = {}   # dictionary for storing vertices connected with green vertex
-
+        edges_with_green = {}   # dictionary for storing vertices connected with green vertex
+        edges_with_LightGreen = {}
+        edges_with_DarkGreen = {}
 
     for z in range(dimZ):
         for y in range(dimY):
@@ -439,11 +458,23 @@ def adjList(fileName):
                             edge_labels.append("f")
                             edge_weights.append(1)
 
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1: #interface edges
                                 if DEBUG2:
                                     print(current_vertex, neighbor_vertex)
-                                store_interface_edges(edges_with_greenVertex, current_vertex, reshaped_data[current_vertex], 1, 1)
-                                store_interface_edges(edges_with_greenVertex, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
+                                store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex], 1, 1)
+                                store_interface_edges(edges_with_green, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
+
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3:
+                                if DEBUG2:
+                                    print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
+                                store_interface_edges(edges_with_LightGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
+
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4:
+                                if DEBUG2:
+                                    print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_DarkGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
+                                store_interface_edges(edges_with_DarkGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
                         elif dist == 3:
                             if DEBUG:
@@ -480,8 +511,20 @@ def adjList(fileName):
                         if reshaped_data[current_vertex] + reshaped_data[right] == 1:
                             if DEBUG2:
                                 print("X-periodicity detected:", current_vertex, right)
-                            store_interface_edges(edges_with_greenVertex, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_interface_edges(edges_with_greenVertex, right, reshaped_data[right], 1, 1)
+                            store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_interface_edges(edges_with_green, right, reshaped_data[right], 1, 1)
+
+                        if reshaped_data[current_vertex] + reshaped_data[right] == 3:
+                            if DEBUG2:
+                                print(current_vertex, right)
+                            store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_interface_edges(edges_with_LightGreen, right, reshaped_data[right], 1, 1)
+
+                        if reshaped_data[current_vertex] + reshaped_data[right] == 4:
+                            if DEBUG2:
+                                print(current_vertex, right)
+                            store_interface_edges(edges_with_DarkGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_interface_edges(edges_with_DarkGreen, right, reshaped_data[right], 1, 1)
 
                         neighbors.append(right)
 
@@ -496,8 +539,21 @@ def adjList(fileName):
                         if reshaped_data[current_vertex] + reshaped_data[bottom] == 1:
                             if DEBUG2:
                                 print("Y-periodicity detected:", current_vertex, bottom)
-                            store_interface_edges(edges_with_greenVertex, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_interface_edges(edges_with_greenVertex, bottom, reshaped_data[bottom], 1, 1)
+                            store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_interface_edges(edges_with_green, bottom, reshaped_data[bottom], 1, 1)
+
+                        if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3:
+                            if DEBUG2:
+                                print(current_vertex, neighbor_vertex)
+                            store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_interface_edges(edges_with_LightGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
+
+                        if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4:
+                            if DEBUG2:
+                                print(current_vertex, neighbor_vertex)
+                            store_interface_edges(edges_with_DarkGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_interface_edges(edges_with_DarkGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
+
 
                         neighbors.append(bottom)
 
@@ -576,10 +632,10 @@ def adjList(fileName):
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         # exit()
     if DEBUG2:
-        print("new method Green Edges len : ", len(edges_with_greenVertex))
+        print("new method Green Edges len : ", len(edges_with_green))
 
-    # return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, edges_with_greenVertex
-    return graph_data, edges_with_greenVertex
+    # return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, edges_with_green
+    return graph_data, edges_with_green, edges_with_DarkGreen, edges_with_LightGreen
 
 
 def graphe_adjList(filename):
