@@ -360,7 +360,7 @@ def adjList(fileName):
 
         Returns:
             graph_data (graph_data_class): The graph data.
-            edges_with_greenVertex(dictionary): Storing vertices connected with green vertex
+            edges_with_greenVertex({vertex : edge_info}dictionary): Storing edges connected with green vertex
 )
     """
     adjacency_list = {}
