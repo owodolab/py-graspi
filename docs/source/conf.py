@@ -2,9 +2,9 @@ import os
 import sys
 import inspect
 
-sys.path.insert(0, os.path.abspath('../../..'))
-sys.path.insert(0, os.path.abspath('../../..'))
-print(f"TEST: {os.path.abspath('../../..')}")
+sys.path.insert(0, os.path.abspath('../..'))
+sys.path.insert(0, os.path.abspath('../..'))
+print(f"TEST: {os.path.abspath('../..')}")
 
 
 project = 'py-graspi'
