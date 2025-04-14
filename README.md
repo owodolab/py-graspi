@@ -1,5 +1,6 @@
 # py-graspi
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/3d7bf5df17b015612ab1b8261c63d0bbb00a268f?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/3d7bf5df17b015612ab1b8261c63d0bbb00a268f?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb) [![PyPi Package](https://img.shields.io/badge/PyPi-package-blue)](https://pypi.org/project/py-graspi/) [![Go to About](https://img.shields.io/badge/Section-about-green)](#about)
+
 
 Python-Igraph is a graph-based library contender for the library that works with the GraSPI package. 
 
@@ -546,3 +547,6 @@ start docs/index.html
 open docs/index.html
 ```
 This would create a local view. You can see the official API on Github pages at: https://owodolab.github.io/py-graspi/
+
+# ABOUT
+Py-GraSPI (Graph-based Structure Property Identifier) is a Python package designed to compute a comprehensive set of descriptors for segmented microstructures using a graph-based approach. It leverages the igraph library to represent microstructures as graphs, enabling efficient computation of a wide range of descriptors with low computational overhead. Py-GraSPI is the Python implementation of the original GraSPI package, which was developed in C/C++. In addition to descriptor computation, Py-GraSPI offers tools for data conversion across various formats and for post-processing the raw outputs of the graph analysis.
