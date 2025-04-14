@@ -513,11 +513,22 @@ def graphe_adjList(filename):
     adjacency_list.append([])
     adjacency_list.append([])
 
-    #only input files that have third order neighbors are 3D input files, this checks for that
+    # the only input files that have third order neighbors are 3D input files, this checks for that
     is_2D = False
     if len(third_order_neighbors) <= 0:
         is_2D = True
-    return adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2D
+
+    edges_dict = {v: neighbors for v, neighbors in enumerate(adjacency_list)}
+    g = ig.Graph.ListDict(edges=edges_dict, directed=False)
+
+    # Create graph_data_class object
+    graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2D)
+    graph_data.is_2D = is_2D
+    graph_data.first_order_neighbors = first_order_neighbors
+    graph_data.second_order_neighbors = second_order_neighbors
+    graph_data.third_order_neighbors = third_order_neighbors
+
+    return graph_data
 
 
 

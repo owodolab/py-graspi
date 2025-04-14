@@ -20,10 +20,13 @@ class graph_data_class:
         - **CT_n_A_adj_Ca** (*int*): Another computed descriptor.
         - **redVertex** (*Optional[Any]*): Reference to the red vertex.
         - **blueVertex** (*Optional[Any]*): Reference to the blue vertex.
+        - **first_order_neighbors** (*list*): This is a list of all the first-order pairs.
+        - **second_order_neighbors** (*list*): This is a list of all the second-order pairs.
+        - **third_order_neighbors** (*list*): This is a list of all the third-order pairs.
 
     Args:
         graph (ig.Graph): The igraph graph object representing the structure.
-        is_2D (str): Boolean indicating whether the graph is 2D
+        is_2D (bool): Boolean indicating whether the graph is 2D
     """
 
     def __init__(self, graph: ig.Graph, is_2D: bool):
@@ -48,6 +51,9 @@ class graph_data_class:
         self.CT_n_A_adj_Ca = 0
         self.redVertex = None
         self.blueVertex = None
+        self.first_order_neighbors = []
+        self.second_order_neighbors = []
+        self.third_order_neighbors = []
 
     def compute_shortest_paths(self, red_vertex, blue_vertex):
         """ Compute and store shortest paths from red and blue vertices. """
