@@ -15,7 +15,10 @@ import src.descriptors as d
 import math
 DEBUG = False # debugging mode
 DEBUG2 = False   # for green edges
-PERIODICITY = True
+PERIODICITY = True #reflects default status from c++ implementation
+
+n_flag = 2
+
 # import tortuosity as t
 
 
@@ -44,446 +47,36 @@ def store_green_edges(v_with_green_vertex, index, color, order, weight):
         
         v_with_green_vertex[index] = newEdge
 
-'''---------Function to create edges for graph in specified format --------'''
 
 
-def adjList(fileName):
+def generateGraph(file):
     """
-        Creates an adjacency list from a given file.
-
-        Args:
-            filename (str): The name of the file containing the graph data.
-
-        Returns:
-            list: The adjacency list representing the graph, lists for first, second, and third, ordered pairs
-                  as well as a bool to signal if the graph is a 2D or 3D graph.
-        """
-    adjacency_list = {}
-    if DEBUG:
-        first_order_pairs = []
-        second_order_pairs = []
-        third_order_pairs = []
-
-    edge_labels = []
-    edge_weights = []
-    black_vertices = []
-    white_vertices = []
-
-
-    is_2d = True
-    with open(fileName, "r") as file:
-        header = file.readline().strip().split(' ')
-        dimX, dimY = int(header[0]), int(header[1])
-        dim = dimY
-        if len(header) < 3:
-            dimZ = 1
-        else:
-            if int(header[2]) == 0:
-                dimZ = 1
-            else:
-                dimZ = int(header[2])
-
-        if dimZ > 1:
-            # dimZ = dimX * dimY
-            is_2d = False
-            dim = dimZ
-        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1),
-                   (1,0,-1), (1,-1,0)]
-
-        vertex_color = [""] * (dimX * dimY * dimZ)
-
-
-        import time
-        # loadtxt_start = time.time()
-        input_data = np.loadtxt(fileName, skiprows=1)
-        reshaped_data = input_data.flatten()
-        # loadtxt_end = time.time()
-        # print("loadtxt time : ", loadtxt_end - loadtxt_start)
-
-        #Loops through input and adds adjacency list of current vertex based on Offsets. Offsets, make it so edges aren't duplicated.
-        #Also adds edge labels based on Graspi Documentation
-
-        vertices_with_green_v = {}   # dictionary for storing vertices connected with green vertex
-
-
-    for z in range(dimZ):
-        for y in range(dimY):
-            for x in range(dimX):
-                current_vertex = z * dimY * dimX + y * dimX + x
-                if reshaped_data[current_vertex] == 1:
-                    vertex_color[current_vertex] = 'white'
-                    white_vertices.append(current_vertex)
-                elif reshaped_data[current_vertex] == 0:
-                    vertex_color[current_vertex] = 'black'
-                    black_vertices.append(current_vertex)
-
-                neighbors = []
-
-                for i in range(len(offsets)):
-                    dx, dy, dz = offsets[i]
-                    dist = dx**2 + dy**2 + dz**2
-                    nx, ny, nz = x + dx, y + dy, z + dz 
-                    if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
-                        neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
-
-                        if dist == 1:
-                            if DEBUG:
-                                first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
-                            edge_labels.append("f")
-                            edge_weights.append(1)
-
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
-                                if DEBUG2:
-                                    print(current_vertex, neighbor_vertex)
-                                store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
-                                store_green_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
-
-                        elif dist == 3:
-                            if DEBUG:
-                                third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
-                            edge_labels.append("t")
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
-                                edge_weights.append(float(math.sqrt(3) * 0.5))
-                            else:
-                                edge_weights.append(float(math.sqrt(3)))
-
-                        else:
-                            if DEBUG:
-                                second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
-                            edge_labels.append("s")
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
-                                edge_weights.append(float(math.sqrt(2) * 0.5))
-                            else:
-                                edge_weights.append(float(math.sqrt(2)))
-
-                        neighbors.append(neighbor_vertex)
-
-                adjacency_list[current_vertex] = neighbors
-
-                #  PERIODIC WRAP-AROUND edges
-                if PERIODICITY:
-                    # --- X axis wrap-around (row-wise) ---
-                    if x == 0:
-                        right = current_vertex + (dimX - 1)
-                        if DEBUG:
-                            first_order_pairs.append([min(current_vertex, right), max(current_vertex, right)])
-                        edge_labels.append("f")
-                        edge_weights.append(1)
-
-                        if reshaped_data[current_vertex] + reshaped_data[right] == 1:
-                            if DEBUG2:
-                                print("X-periodicity detected:", current_vertex, right)
-                            store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_green_edges(vertices_with_green_v, right, reshaped_data[right], 1, 1)
-
-                        neighbors.append(right)
-
-                    # --- Y axis wrap-around (col-wise) ---
-                    if not is_2d and y == 0:
-                        bottom = current_vertex + dimX * (dimY - 1)
-                        if DEBUG:
-                            first_order_pairs.append([min(current_vertex, bottom), max(current_vertex, bottom)])
-                        edge_labels.append("f")
-                        edge_weights.append(1)
-
-                        if reshaped_data[current_vertex] + reshaped_data[bottom] == 1:
-                            if DEBUG2:
-                                print("Y-periodicity detected:", current_vertex, bottom)
-                            store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_green_edges(vertices_with_green_v, bottom, reshaped_data[bottom], 1, 1)
-
-                        neighbors.append(bottom)
-
-    if not is_2d:   
-        # add edges to Blue Node for 3D
-        adjacency_list[dimZ * dimY * dimX] = []
-        blueVertex = dimZ * dimY * dimX
-        for y in range(dimY):
-            for x in range(dimX):
-                vertex_index = y * dimX + x
-                adjacency_list[dimZ * dimY * dimX].append(vertex_index)
-                edge_labels.append("s")
-                edge_weights.append(0)
-
-        #add edges to Red Node for 3D
-        adjacency_list[dimZ * dimY * dimX + 1] = []
-        redVertex = dimZ * dimY * dimX + 1
-        for y in range(dimY):
-            for x in range(dimX):
-                vertex_index = (dimZ - 1) * (dimY * dimX) + y * dimX + x
-                adjacency_list[dimZ * dimY * dimX + 1].append(vertex_index)
-                edge_labels.append("s")
-                edge_weights.append(0)
-
-    elif is_2d:
-        # add edges to Blue Node for 2D
-        adjacency_list[dimZ * dimY * dimX] = []
-        blueVertex = dimZ * dimY * dimX
-        for z in range(dimZ):
-            for x in range(dimX):
-                vertex_index = z * (dimY * dimX) + x
-                adjacency_list[dimZ * dimY * dimX].append(vertex_index)
-                edge_labels.append("s")
-                edge_weights.append(0)
-
-        #add edges to Red Node for 2D
-        adjacency_list[dimZ * dimY * dimX + 1] = []
-        redVertex = dimZ * dimY * dimX + 1
-        for z in range(dimZ):
-            for x in range(dimX):
-                vertex_index = z * (dimY * dimX) + (dimY - 1) * dimX + x
-                adjacency_list[dimZ * dimY * dimX + 1].append(vertex_index)
-                edge_labels.append("s")
-                edge_weights.append(0)
-
-
-    if DEBUG:
-        print("Adjacency List: ", adjacency_list)
-        print("Adjacency List LENGTH: ", len(adjacency_list))
-        print("First Order Pairs: ", first_order_pairs)
-        print("First Order Pairs LENGTH: ", len(first_order_pairs))
-        print("Second Order Pairs: ", second_order_pairs)
-        print("Second Order Pairs LENGTH: ", len(second_order_pairs))
-        print("Third Order Pairs: ", third_order_pairs)
-        print("Third Order Pairs LENGTH: ", len(third_order_pairs))
-        print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
-        print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
-        # exit()
-    if DEBUG2:
-        print("new method Green Edges len : ", len(vertices_with_green_v))
-
-    return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, vertices_with_green_v
-
-
-def graphe_adjList(filename):
-    """
-    Creates an adjacency list from a given file.
-
-    Args:
-        filename (str): The name of the file containing the graph data.
-
-    Returns:
-        list: The adjacency list representing the graph, lists for first, second, and third, ordered pairs
-                  as well as a bool to signal if the graph is a 2D or 3D graph.
-    """
-    adjacency_list = []
-    first_order_neighbors = []
-    second_order_neighbors = []
-    third_order_neighbors = []
-    # Opens File
-    with open(filename, "r") as file:
-        header = file.readline().split()
-        vertex_count = int(header[0])
-        # loops through all vertices except red and blue meta vertices at the end
-        for i in range(vertex_count):
-            header = file.readline().split()
-            neighbors = []
-            # adds all vertex neighbors to current "header" vertex being checked
-            # makes sure no edge duplicates exist with prior vertices already checked
-            for j in range(2, len(header), 3):
-                order_neighbor_type = header[j + 2]
-                if int(header[j]) < len(adjacency_list):
-                    if i not in adjacency_list[int(header[j])]:
-                        neighbors.append(int(header[j]))
-                else:
-                    neighbors.append(int(header[j]))
-                # adds order neighbor type depending on what input states, it is located 2 indices after the node number
-                if order_neighbor_type == 'f':
-                    first_order_neighbors.append([int(header[j]), i])
-                elif order_neighbor_type == 's':
-                    second_order_neighbors.append([int(header[j]), i])
-                elif order_neighbor_type == 't':
-                    third_order_neighbors.append([int(header[j]), i])
-            adjacency_list.append(neighbors)
-
-    #Adds empty lists for Red and Blue nodes since input should have already added any nodes that belong to them, this removes duplicate edges (no cycles)
-    adjacency_list.append([])
-    adjacency_list.append([])
-
-    #only input files that have third order neighbors are 3D input files, this checks for that
-    is_2D = False
-    if len(third_order_neighbors) <= 0:
-        is_2D = True
-    return adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2D
-
-
-'''------- Labeling the color of the vertices -------'''
-
-def adjvertexColors(fileName):
-    """
-    Labels the colors of verti gces based on a given file and on Graspi Documentation.
-
-    Args:
-        fileName (str): The name of the file containing the vertex color data.
-
-    Returns:
-        list: A list of vertex colors.
-    """
-    labels = []
-    with open(fileName, 'r') as file:
-        line = file.readline().split()
-        vertex_count = int(line[0])
-        for i in range(vertex_count + 2):
-            line = file.readline().split()
-            char = line[1]
-            if char == '1':
-                labels.append('white')
-            elif char == '0':
-                labels.append('black')
-            elif char == '10':
-                labels.append('blue')
-            elif char == '20':
-                labels.append('red')
-
-    return labels
-
-
-'''********* Constructing the Graph **********'''
-def filterGraph_metavertices(graph):
-    """
-    Filters the graph by keeping only edges between vertices of the same color and metavertices
-
-    Args:
-        graph (ig.Graph): The input graph.
-
-    Returns:
-        ig.Graph: The filtered graph.
-    """
-    edgeList = graph.get_edgelist()
-    keptEdges_blue = []
-    keptWeights_blue = []
-    keptEdges_red = []
-    keptWeights_red= []
-
-    #Checks edges and keeps only edges that connect to the same colored vertices
-    for edge in edgeList:
-        currentNode = edge[0]
-        toNode = edge[1]
-
-        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
-            keptEdges_blue.append(edge)
-            keptEdges_red.append(edge)
-            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-
-        if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
-            keptEdges_blue.append(edge)
-            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-        elif ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')) :
-            keptEdges_red.append(edge)
-            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-
-    fg_blue = graph.subgraph_edges(keptEdges_blue, delete_vertices=False)
-    fg_blue.es['weight'] = keptWeights_blue
-
-    fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
-    fg_red.es['weight'] = keptWeights_red
-
-    return fg_blue, fg_red
-
-def generateGraphGraphe(file):
-    """
-    Constructs a graph from an adjacency list and assigns vertex colors.
+    This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.
 
     Args:
         file (str): The name of the file containing graph data.
 
     Returns:
-        ig.Graph: The constructed graph with assigned vertex colors.
-        boolean: a boolean to signal if grpah is 2D or not
+         This function generates a graph based on the input so the return type depends on the format of graph data that was given.
+
+        See “generateGraphAdj” if in .txt, or “generateGraphGraphe” if in .graphe.
     """
-    # gets an adjacency list and first order pairs list from the file input
-    adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2d = graphe_adjList(file)
-    vertex_colors = adjvertexColors(file)
-
-    edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
-    # creates graph using Igraph API
-    g = ig.Graph(edges, directed=False)
-    # adds color label to each vertex
-    g.vs["color"] = vertex_colors
-
-    # adds green vertex and its color
-    g.add_vertices(1)
-    if DEBUG:
-        print(len(adjacency_list))
-        # exit()
-    g.vs[len(adjacency_list)]['color'] = 'green'
-    green_vertex = g.vs[g.vcount() - 1]
-
-    # exists = [0] * (g.vcount() - 3)
-
-
-    # Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added
-    for pair in first_order_neighbors:
-        source_vertex = pair[0]
-        target_vertex = pair[1]
-
-        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'
-                or g.vs[target_vertex]['color'] == 'black') and g.vs[source_vertex]['color'] == 'white':
-            # connect both source and target to green meta vertex
-            g.add_edge(green_vertex, source_vertex)
-            g.add_edge(green_vertex, target_vertex)
-
-    # print(test)
-    return g, is_2d
-
-
-def filterGraph_blue_red(graph):
-    """
-    Filters the graph by keeping only edges between vertices of the same color and metavertices
-
-    Args:
-        graph (ig.Graph): The input graph.
-
-    Returns:
-        ig.Graph: The filtered graph.
-    """
-    edgeList = graph.get_edgelist()
-    keptEdges_blue = []
-    keptWeights_blue = []
-    keptEdges_red = []
-    keptWeights_red= []
-
-    #Checks edges and keeps only edges that connect to the same colored vertices
-    #improvement point 4: graph.vs[toNode]['color'] caching? (make a blue_list)
-      
-    for edge in edgeList:
-        currentNode = edge[0]
-        toNode = edge[1]
-
-        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
-            keptEdges_blue.append(edge)
-            keptEdges_red.append(edge)
-            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-
-        if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
-            keptEdges_blue.append(edge)
-            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-        
-        if ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')):
-            keptEdges_red.append(edge)
-            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
-
-    fg_blue = graph.subgraph_edges(keptEdges_blue, delete_vertices=False)
-    fg_blue.es['weight'] = keptWeights_blue
-
-    fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
-    fg_red.es['weight'] = keptWeights_red
-
-    return fg_blue, fg_red, keptEdges_blue, keptEdges_red
+    if os.path.splitext(file)[1] == ".txt":
+        return generateGraphAdj(file)
+    else:
+        return generateGraphGraphe(file)
 
 def generateGraphAdj(file):
     """
-        Creates an adjacency list from a given file.
+        This function takes in graph data in the .txt format and constructs the graph with adjacency list representation.
 
-        Args:
-            filename (str): The name of the file containing the graph data.
+        It also generates additional graph data stored in the graph_data object.
+    Args:
+        file (str): The name of the file containing the graph data.
 
-        Returns:
-            graph: the graph that holds all the edges and vertices based on file input
-            boolean: returns  a boolean to signal if graph is 2D or not
-        """
+    Returns:
+        graph_data (graph_data_class): The graph data.
+    """
 
     import time
     const_adj_start = time.time()
@@ -508,6 +101,15 @@ def generateGraphAdj(file):
         dimZ = int(line[2])
     else:
         dimZ = 1
+
+
+    # g = graph_data.graph
+    # is_2D = graph_data.is_2D
+    # black_vertices = graph_data.black_vertices
+    # white_vertices = graph_data.white_vertices
+    # redVertex = graph_data.redVertex
+    # blueVertex = graph_data.blueVertex
+    # dim = graph_data.dim
 
     # print("xyz:", dimX, dimY, dimZ)
     g = ig.Graph.ListDict(edges=edges, directed=False)
@@ -731,32 +333,365 @@ def generateGraphAdj(file):
     #     dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
     return graph_data
 
-def generateGraph(file):
-    """
-    Generates graph based on file input.
 
+def generateGraphGraphe(file):
+    """
+    This function takes in graph data in the .graphe format and constructs the graph with adjacency list representation.
+    
     Args:
         file (str): The name of the file containing graph data.
 
     Returns:
-        Generated graph based on input
+        g (igraph.Graph): The graph representation of the given data
+        is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D
     """
-    if os.path.splitext(file)[1] == ".txt":
-        return generateGraphAdj(file)
-    else:
-        return generateGraphGraphe(file)
+    # gets an adjacency list and first order pairs list from the file input
+    adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2d = graphe_adjList(file)
+    vertex_colors = adjvertexColors(file)
+
+    edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
+    # creates graph using Igraph API
+    g = ig.Graph(edges, directed=False)
+    # adds color label to each vertex
+    g.vs["color"] = vertex_colors
+
+    # adds green vertex and its color
+    g.add_vertices(1)
+    if DEBUG:
+        print(len(adjacency_list))
+        # exit()
+    g.vs[len(adjacency_list)]['color'] = 'green'
+    green_vertex = g.vs[g.vcount() - 1]
+
+    # exists = [0] * (g.vcount() - 3)
+
+
+    # Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added
+    for pair in first_order_neighbors:
+        source_vertex = pair[0]
+        target_vertex = pair[1]
+
+        if (g.vs[source_vertex]['color'] == 'black' and g.vs[target_vertex]['color'] == 'white'
+                or g.vs[target_vertex]['color'] == 'black') and g.vs[source_vertex]['color'] == 'white':
+            # connect both source and target to green meta vertex
+            g.add_edge(green_vertex, source_vertex)
+            g.add_edge(green_vertex, target_vertex)
+
+    # print(test)
+    return g, is_2d
+
+
+
+'''---------Function to create edges for graph in specified format --------'''
+def adjList(fileName):
+    """
+        This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph. It also generates additional
+        graph data stored in the graph_data object.
+
+        Args:
+            filename (str): The name of the file containing the graph data.
+
+        Returns:
+            list: The adjacency list representing the graph, lists for first, second, and third, ordered pairs
+                  as well as a bool to signal if the graph is a 2D or 3D graph.
+        """
+    adjacency_list = {}
+    if DEBUG:
+        first_order_pairs = []
+        second_order_pairs = []
+        third_order_pairs = []
+
+    edge_labels = []
+    edge_weights = []
+    black_vertices = []
+    white_vertices = []
+
+
+    is_2d = True
+    with open(fileName, "r") as file:
+        header = file.readline().strip().split(' ')
+        dimX, dimY = int(header[0]), int(header[1])
+        dim = dimY
+        if len(header) < 3:
+            dimZ = 1
+        else:
+            if int(header[2]) == 0:
+                dimZ = 1
+            else:
+                dimZ = int(header[2])
+
+        if dimZ > 1:
+            # dimZ = dimX * dimY
+            is_2d = False
+            dim = dimZ
+        offsets = [(-1, -1, 0), (-1, 0, 0), (0, -1, 0), (0, 0, -1), (-1,-1,-1), (-1,0,-1), (0,-1,-1), (1,-1,-1),
+                   (1,0,-1), (1,-1,0)]
+
+        vertex_color = [""] * (dimX * dimY * dimZ)
+
+
+        import time
+        # loadtxt_start = time.time()
+        input_data = np.loadtxt(fileName, skiprows=1)
+        reshaped_data = input_data.flatten()
+        # loadtxt_end = time.time()
+        # print("loadtxt time : ", loadtxt_end - loadtxt_start)
+
+        #Loops through input and adds adjacency list of current vertex based on Offsets. Offsets, make it so edges aren't duplicated.
+        #Also adds edge labels based on Graspi Documentation
+
+        vertices_with_green_v = {}   # dictionary for storing vertices connected with green vertex
+
+
+    for z in range(dimZ):
+        for y in range(dimY):
+            for x in range(dimX):
+                current_vertex = z * dimY * dimX + y * dimX + x
+                if reshaped_data[current_vertex] == 1:
+                    vertex_color[current_vertex] = 'white'
+                    white_vertices.append(current_vertex)
+                elif reshaped_data[current_vertex] == 0:
+                    vertex_color[current_vertex] = 'black'
+                    black_vertices.append(current_vertex)
+
+                neighbors = []
+
+                for i in range(len(offsets)):
+                    dx, dy, dz = offsets[i]
+                    dist = dx**2 + dy**2 + dz**2
+                    nx, ny, nz = x + dx, y + dy, z + dz 
+                    if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
+                        neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
+
+                        if dist == 1:
+                            if DEBUG:
+                                first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
+                            edge_labels.append("f")
+                            edge_weights.append(1)
+
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
+                                if DEBUG2:
+                                    print(current_vertex, neighbor_vertex)
+                                store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
+                                store_green_edges(vertices_with_green_v, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
+
+                        elif dist == 3:
+                            if DEBUG:
+                                third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
+                            edge_labels.append("t")
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
+                                edge_weights.append(float(math.sqrt(3) * 0.5))
+                            else:
+                                edge_weights.append(float(math.sqrt(3)))
+
+                        else:
+                            if DEBUG:
+                                second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
+                            edge_labels.append("s")
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
+                                edge_weights.append(float(math.sqrt(2) * 0.5))
+                            else:
+                                edge_weights.append(float(math.sqrt(2)))
+
+                        neighbors.append(neighbor_vertex)
+
+                adjacency_list[current_vertex] = neighbors
+
+                #  PERIODIC WRAP-AROUND edges
+                if PERIODICITY:
+                    # --- X axis wrap-around (row-wise) ---
+                    if x == 0:
+                        right = current_vertex + (dimX - 1)
+                        if DEBUG:
+                            first_order_pairs.append([min(current_vertex, right), max(current_vertex, right)])
+                        edge_labels.append("f")
+                        edge_weights.append(1)
+
+                        if reshaped_data[current_vertex] + reshaped_data[right] == 1:
+                            if DEBUG2:
+                                print("X-periodicity detected:", current_vertex, right)
+                            store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_green_edges(vertices_with_green_v, right, reshaped_data[right], 1, 1)
+
+                        neighbors.append(right)
+
+                    # --- Y axis wrap-around (col-wise) ---
+                    if not is_2d and y == 0:
+                        bottom = current_vertex + dimX * (dimY - 1)
+                        if DEBUG:
+                            first_order_pairs.append([min(current_vertex, bottom), max(current_vertex, bottom)])
+                        edge_labels.append("f")
+                        edge_weights.append(1)
+
+                        if reshaped_data[current_vertex] + reshaped_data[bottom] == 1:
+                            if DEBUG2:
+                                print("Y-periodicity detected:", current_vertex, bottom)
+                            store_green_edges(vertices_with_green_v, current_vertex, reshaped_data[current_vertex], 1, 1)
+                            store_green_edges(vertices_with_green_v, bottom, reshaped_data[bottom], 1, 1)
+
+                        neighbors.append(bottom)
+
+    if not is_2d:   
+        # add edges to Blue Node for 3D
+        adjacency_list[dimZ * dimY * dimX] = []
+        blueVertex = dimZ * dimY * dimX
+        for y in range(dimY):
+            for x in range(dimX):
+                vertex_index = y * dimX + x
+                adjacency_list[dimZ * dimY * dimX].append(vertex_index)
+                edge_labels.append("s")
+                edge_weights.append(0)
+
+        #add edges to Red Node for 3D
+        adjacency_list[dimZ * dimY * dimX + 1] = []
+        redVertex = dimZ * dimY * dimX + 1
+        for y in range(dimY):
+            for x in range(dimX):
+                vertex_index = (dimZ - 1) * (dimY * dimX) + y * dimX + x
+                adjacency_list[dimZ * dimY * dimX + 1].append(vertex_index)
+                edge_labels.append("s")
+                edge_weights.append(0)
+
+    elif is_2d:
+        # add edges to Blue Node for 2D
+        adjacency_list[dimZ * dimY * dimX] = []
+        blueVertex = dimZ * dimY * dimX
+        for z in range(dimZ):
+            for x in range(dimX):
+                vertex_index = z * (dimY * dimX) + x
+                adjacency_list[dimZ * dimY * dimX].append(vertex_index)
+                edge_labels.append("s")
+                edge_weights.append(0)
+
+        #add edges to Red Node for 2D
+        adjacency_list[dimZ * dimY * dimX + 1] = []
+        redVertex = dimZ * dimY * dimX + 1
+        for z in range(dimZ):
+            for x in range(dimX):
+                vertex_index = z * (dimY * dimX) + (dimY - 1) * dimX + x
+                adjacency_list[dimZ * dimY * dimX + 1].append(vertex_index)
+                edge_labels.append("s")
+                edge_weights.append(0)
+
+
+    if DEBUG:
+        print("Adjacency List: ", adjacency_list)
+        print("Adjacency List LENGTH: ", len(adjacency_list))
+        print("First Order Pairs: ", first_order_pairs)
+        print("First Order Pairs LENGTH: ", len(first_order_pairs))
+        print("Second Order Pairs: ", second_order_pairs)
+        print("Second Order Pairs LENGTH: ", len(second_order_pairs))
+        print("Third Order Pairs: ", third_order_pairs)
+        print("Third Order Pairs LENGTH: ", len(third_order_pairs))
+        print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
+        print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
+        # exit()
+    if DEBUG2:
+        print("new method Green Edges len : ", len(vertices_with_green_v))
+
+    return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, vertices_with_green_v
+
+
+def graphe_adjList(filename):
+    """
+    This function creates the adjacency list for graph data given in .graphe format, it categorizes neighbors of vertices into first, second, and third order.
+    This function is called inside the “generateGraphGraphe” function to help create the necessary information to generate the final graph.
+    Args:
+        filename (str): The name of the file containing the graph data.
+
+    Returns:
+        adjacency_list (list): This is a list of vertices, where each index of this list corresponds to a vertex and contains a sublist to represent it’s neighboring vertices.
+        first_order_neighbors (list): This is a list of all the first-order pairs.
+        second_order_neighbors (list): This is a list of all the second-order pairs.
+        third_order_neighbors (list): This is a list of all the third-order pairs.
+        is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D structure.    
+    """
+
+    adjacency_list = []
+    first_order_neighbors = []
+    second_order_neighbors = []
+    third_order_neighbors = []
+    # Opens File
+    with open(filename, "r") as file:
+        header = file.readline().split()
+        vertex_count = int(header[0])
+        # loops through all vertices except red and blue meta vertices at the end
+        for i in range(vertex_count):
+            header = file.readline().split()
+            neighbors = []
+            # adds all vertex neighbors to current "header" vertex being checked
+            # makes sure no edge duplicates exist with prior vertices already checked
+            for j in range(2, len(header), 3):
+                order_neighbor_type = header[j + 2]
+                if int(header[j]) < len(adjacency_list):
+                    if i not in adjacency_list[int(header[j])]:
+                        neighbors.append(int(header[j]))
+                else:
+                    neighbors.append(int(header[j]))
+                # adds order neighbor type depending on what input states, it is located 2 indices after the node number
+                if order_neighbor_type == 'f':
+                    first_order_neighbors.append([int(header[j]), i])
+                elif order_neighbor_type == 's':
+                    second_order_neighbors.append([int(header[j]), i])
+                elif order_neighbor_type == 't':
+                    third_order_neighbors.append([int(header[j]), i])
+            adjacency_list.append(neighbors)
+
+    #Adds empty lists for Red and Blue nodes since input should have already added any nodes that belong to them, this removes duplicate edges (no cycles)
+    adjacency_list.append([])
+    adjacency_list.append([])
+
+    #only input files that have third order neighbors are 3D input files, this checks for that
+    is_2D = False
+    if len(third_order_neighbors) <= 0:
+        is_2D = True
+    return adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2D
+
+
+'''------- Labeling the color of the vertices -------'''
+
+def adjvertexColors(fileName):
+    """
+    This function assigns each vertex a color label based on the data in the specified file and returns a list where each index corresponds to a vertex's color.
+    Args:
+        fileName (str): The name of the file containing the vertex color data.
+
+    Returns:
+        labels (list): This list contains color labels (‘black’, ‘white’, ‘red’, or ‘blue’) for each vertex or metavertex in the graph.
+    """
+    labels = []
+    with open(fileName, 'r') as file:
+        line = file.readline().split()
+        vertex_count = int(line[0])
+        for i in range(vertex_count + 2):
+            line = file.readline().split()
+            char = line[1]
+            if char == '1':
+                labels.append('white')
+            elif char == '0':
+                labels.append('black')
+            elif char == '10':
+                labels.append('blue')
+            elif char == '20':
+                labels.append('red')
+
+    return labels
+
+
+
+
 
 
 def visualize(graph, is_2D):
     """
-       Creates a visualization from the given graph
+       This function shows a visualization of the given graph in either 2D or 3D depending on the is_2D boolean.
 
        Args:
-           graph (ig.Graph): The graph to visualize
-           is_2D (bool): A boolean to signal if the graph is 2D or not
-
+            graph (igraph.Graph): The given graph to visualize.
+            is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D
+       
        Returns:
-           NONE: but outputs visualization of graph.
+           This function does not return a value, it performs an action by outputting the visualization of the given graph using plt.
        """
     g = graph
     if is_2D:
@@ -822,45 +757,20 @@ def visualize(graph, is_2D):
         plt.show()
 
 
-'''********* Filtering the Graph **********'''
-
-def filterGraph(graph):
-    """
-    Filters the graph by keeping only edges between vertices of the same color.
-
-    Args:
-        graph (ig.Graph): The input graph.
-
-    Returns:
-        ig.Graph: The filtered graph.
-    """
-    edgeList = graph.get_edgelist()
-    keptEdges = []
-
-    #Checks edges and keeps only edges that connect to the same colored vertices
-    for edge in edgeList:
-        currentNode = edge[0]
-        toNode = edge[1]
-        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
-            keptEdges.append(edge)
-
-    filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=False)
-
-    return filteredGraph
-
 
 '''**************** Connected Components *******************'''
 
 
 def connectedComponents(graph):
     """
-    Identifies the connected components of the filtered graph.
+    This function identifies the connected components of a filtered graph and returns lists that contain the vertices that are part of the connected components.
+    It filters based on ‘black’ vertices that connect to the ‘red’ metavertex and ‘white’ vertices that connect to the ‘blue’ metavertex.
 
     Args:
         graph (ig.Graph): The input graph.
 
     Returns:
-        list: A list of connected components.
+        connected_comp (list): The list will contain a list or several lists, depending on how many connected components there are. Each list contains the vertices that are part of the connected component.
     """
     vertices = graph.vcount()
     edgeList = set(graph.get_edgelist())
@@ -918,87 +828,199 @@ def connectedComponents(graph):
     return connected_comp
 
 
+'''********* Filtering the Graph **********'''
+
+def filterGraph(graph):
+    """
+        This function returns a subgraph that is created by filtering the given graph to only contain edges that connect vertices of the same color.
+    Args:
+        graph (ig.Graph): The input graph.
+
+    Returns:
+        filteredGraph (igraph.Graph): The filtered graph with only edges between the same color vertices.
+    """
+    edgeList = graph.get_edgelist()
+    keptEdges = []
+
+    #Checks edges and keeps only edges that connect to the same colored vertices
+    for edge in edgeList:
+        currentNode = edge[0]
+        toNode = edge[1]
+        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
+            keptEdges.append(edge)
+
+    filteredGraph = graph.subgraph_edges(keptEdges, delete_vertices=False)
+
+    return filteredGraph
+
+
+'''********* Constructing the Graph **********'''
+def filterGraph_metavertices(graph):
+    """
+        This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’/cathode metavertex,
+        and one that contains all the edges that connect the vertices of the same color or involve the ‘red’/anode metavertex.
+    Args:
+        graph (ig.Graph): The input graph.
+
+    Returns:
+        fg_blue (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ vertex.
+        fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ vertex.    """
+    edgeList = graph.get_edgelist()
+    keptEdges_blue = []
+    keptWeights_blue = []
+    keptEdges_red = []
+    keptWeights_red= []
+
+    #Checks edges and keeps only edges that connect to the same colored vertices
+    for edge in edgeList:
+        currentNode = edge[0]
+        toNode = edge[1]
+
+        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
+            keptEdges_blue.append(edge)
+            keptEdges_red.append(edge)
+            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+
+        if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
+            keptEdges_blue.append(edge)
+            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+        elif ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')) :
+            keptEdges_red.append(edge)
+            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+
+    fg_blue = graph.subgraph_edges(keptEdges_blue, delete_vertices=False)
+    fg_blue.es['weight'] = keptWeights_blue
+
+    fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
+    fg_red.es['weight'] = keptWeights_red
+
+    return fg_blue, fg_red
+
+
+def filterGraph_blue_red(graph):
+    """
+        This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’ cathode metavertex,
+        and one that contains all the edges that connect the vertices of the same color or involve the ‘red’ anode metavertex.
+    Args:
+        graph (ig.Graph): The input graph.
+
+    Returns:
+        fg_blue (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ metavertex.
+        fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ metavertex.    
+    """
+    
+    edgeList = graph.get_edgelist()
+    keptEdges_blue = []
+    keptWeights_blue = []
+    keptEdges_red = []
+    keptWeights_red= []
+
+    #Checks edges and keeps only edges that connect to the same colored vertices
+    #improvement point 4: graph.vs[toNode]['color'] caching? (make a blue_list)
+      
+    for edge in edgeList:
+        currentNode = edge[0]
+        toNode = edge[1]
+
+        if (graph.vs[currentNode]['color'] == graph.vs[toNode]['color']):
+            keptEdges_blue.append(edge)
+            keptEdges_red.append(edge)
+            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+
+        if ((graph.vs[currentNode]['color'] == 'blue') or (graph.vs[toNode]['color'] == 'blue')):
+            keptEdges_blue.append(edge)
+            keptWeights_blue.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+        
+        if ((graph.vs[currentNode]['color'] == 'red') or (graph.vs[toNode]['color'] == 'red')):
+            keptEdges_red.append(edge)
+            keptWeights_red.append(graph.es[graph.get_eid(currentNode, toNode)]['weight'])
+
+    fg_blue = graph.subgraph_edges(keptEdges_blue, delete_vertices=False)
+    fg_blue.es['weight'] = keptWeights_blue
+
+    fg_red = graph.subgraph_edges(keptEdges_red, delete_vertices=False)
+    fg_red.es['weight'] = keptWeights_red
+
+    return fg_blue, fg_red, keptEdges_blue, keptEdges_red
+
+
+
 def main():
-    if sys.argv[1] == "-p":
-        # global PERIODICITY
-        # PERIODICITY = True
-        filename = sys.argv[2]
-        if sys.argv[2] == "-g":
-            filename = sys.argv[3]
-            g, is_2D = generateGraphGraphe(sys.argv[3])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+    global PERIODICITY
+    global n_flag
 
-            if DEBUG:
-                dic = d.descriptors(g, filename)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
+    # Validate and parse command-line arguments
+    if len(sys.argv) < 3:
+        print("Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) OR -g <INPUT_FILE.graphe>")
+        return
 
-        elif sys.argv[1] != "-g":
-            # (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-            #  dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-            #  CT_n_D_adj_An, CT_n_A_adj_Ca)= generateGraphAdj(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            graph_data = generateGraphAdj(sys.argv[2])
-            visualize(g.graph, is_2D)
-            filteredGraph = filterGraph(g.graph)
-            visualize(filteredGraph, is_2D)
-
-            if DEBUG:
-                dic = d.descriptors(g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-                dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-                CT_n_D_adj_An, CT_n_A_adj_Ca)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
-
+    # Check if -a (structured data with .txt file)
+    if sys.argv[1] == "-a":
+        # Check periodicity flag
+        if len(sys.argv) == 5: # There's either a -p or -n flag
+            if sys.argv[3] == "-p": # If -p flag
+                if sys.argv[4] == "1": #If periodicity flag 1
+                    PERIODICITY = True  #Set PERIODICITY to True
+                elif sys.argv[4] == "0": #If periodicity flag 0
+                    PERIODICITY = False  #Set PERIODICITY to False
+                else: #Error in formatting
+                    print("Invalid argument for -p. Use 0 or 1.")
+                    return
+                #The filename should be at sys.argv[2]
+                graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
+            if sys.argv[3] == "-n":
+                if sys.argv[4] == "2": #If phase flag 1
+                    n_flag = 2  #Set n_flag to 2
+                elif sys.argv[4] == "3": #If phase flag 0
+                    print("3 Phase not yet implemented.")
+                    return
+                else: #Error in formatting
+                    print("Invalid argument for -n. Use 2 or 3.")
+                    return
+                #The filename should be at sys.argv[2]
+                graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
+        if len(sys.argv) == 7:
+            if sys.argv[3] != "-p" or sys.argv[4] != "0" or sys.argv[4] != "1" or sys.argv[5] != "-n" or sys.argv[6] != "2" or sys.argv[6] != "3":
+                print("Incorrect format. Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) OR -g <INPUT_FILE.graphe>")
+            if sys.argv[4] == "1": #If periodicity flag 1
+                PERIODICITY = True #Set PERIODICITY to True
+            if sys.argv[6] == "3":
+                n_flag = 3
+                print("3 Phase not yet implemented.")
+                return
+            graph_data = generateGraphAdj(sys.argv[2])  # generate graph using sys.argv[2]
         else:
-            if sys.argv[1] == "-g":
-                g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-                visualize(g, is_2D)
-                filteredGraph = filterGraph(g)
-                visualize(filteredGraph, is_2D)
-                if DEBUG:
-                    print(connectedComponents(filteredGraph))
-                    dic = d.descriptors(g)
-                    print(connectedComponents(filteredGraph))
-                    for key, value in dic.items():
-                        print(key, value)
-    else:
-        if sys.argv[1] == "-g":
-            g, is_2D = generateGraphGraphe(sys.argv[2])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
-            if DEBUG:
-                print(connectedComponents(filteredGraph))
-                dic = d.descriptors(g)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
+            # No -p or -n flag. Default periodicity false. Default 2 phase.
+            graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
 
+    #Check if -g (unstructured data with .graphe file)
+    elif sys.argv[1] == "-g":
+        # -g should error if -p flag is given
+        if len(sys.argv) > 3 and (sys.argv[2] == "-p" or sys.argv[2] == "-n"):
+            print("Error: Periodicity option (-p) and phase option (-n) cannot be used with -g flag. Only -a supports periodicity and phase flags.")
+            return
+        if(len(sys.argv) != 3):
+            print("Formatting error. Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) OR -g <INPUT_FILE.graphe>")
+            return
+        graph_data = generateGraphGraphe(sys.argv[2])  # graph generation using sys.argv[2]
 
-        elif sys.argv[1] != "-g":
-            (g, is_2D, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue,
-             dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue,
-             CT_n_D_adj_An, CT_n_A_adj_Ca) = generateGraphAdj(sys.argv[1])  # utilizing the test file found in 2D-testFiles folder
-            visualize(g, is_2D)
-            filteredGraph = filterGraph(g)
-            visualize(filteredGraph, is_2D)
+    else: #Edge case handling
+        print("Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) OR -g <INPUT_FILE.graphe>")
+        return
 
-            if DEBUG:
-                dic = d.descriptors(g)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
-            if DEBUG:
-                dic = d.descriptors(g)
-                print(connectedComponents(filteredGraph))
-                for key, value in dic.items():
-                    print(key, value)
+    #Visualize the graph and filter it
+    visualize(graph_data.graph, graph_data.is_2D)
+    filteredGraph = filterGraph(graph_data.graph)
+    visualize(filteredGraph, graph_data.is_2D)
 
-
+    #Debugging: print descriptors and connected components if DEBUG is True
+    if DEBUG:
+        dic = d.descriptors(graph_data.graph)
+        print(connectedComponents(filteredGraph))
+        for key, value in dic.items():
+            print(key, value)
 
 if __name__ == '__main__':
     main()
