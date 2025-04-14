@@ -13,7 +13,7 @@ import src.graph_data_class as GraphData
 import math
 
 DEBUG = False
-PERIODICITY = True #reflects default status from c++ implementation
+PERIODICITY = False #reflects default status from c++ implementation
 n_flag = 2
 
 
@@ -262,8 +262,15 @@ def generateGraphGraphe(file):
 
     """
     # gets an adjacency list and first order pairs list from the file input
-    adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2d = graphe_adjList(file)
+    graph_data = graphe_adjList(file)
     vertex_colors = adjvertexColors(file)
+
+    # Extract adjacency list from graph object
+    adjacency_list = [[] for _ in range(graph_data.graph.vcount())]
+    for edge in graph_data.graph.get_edgelist():
+        source, target = edge
+        adjacency_list[source].append(target)
+        adjacency_list[target].append(source)
 
     edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
     # creates graph using Igraph API
@@ -283,7 +290,7 @@ def generateGraphGraphe(file):
 
 
     # Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added
-    for pair in first_order_neighbors:
+    for pair in graph_data.first_order_neighbors:
         source_vertex = pair[0]
         target_vertex = pair[1]
 
@@ -293,8 +300,7 @@ def generateGraphGraphe(file):
             g.add_edge(green_vertex, source_vertex)
             g.add_edge(green_vertex, target_vertex)
 
-
-    graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2d)
+    graph_data.graph = g
     return graph_data
 
 
