@@ -63,8 +63,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#jupyter-notebook-to-visualize-heatmap">Jupyter NoteBook to Visualize HeatMap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mycelium-filtered-vertices-visualization">Mycelium Filtered Vertices Visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mycelium-filtered-vertices-interactivity">Mycelium Filtered Vertices Interactivity</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#generate-and-run-files-for-py-graspi-api">Generate and Run Files for Py-Graspi API</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#update-py-pi-package">Update Py-pi Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generate-and-run-files-for-py-graspi-api-documentation">Generate and Run Files for Py-Graspi API Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#update-py-pi-package">Update Py-Pi Package</a></li>
 </ul>
 </li>
 </ul>
@@ -173,33 +173,265 @@ python<span class="w"> </span>descriptor_testing.py<span class="w"> </span>../da
 </section>
 <section id="translating-plt-files-to-txt-files">
 <h2>Translating .plt files to .txt files<a class="headerlink" href="#translating-plt-files-to-txt-files" title="Link to this heading"></a></h2>
+<p>These are the steps for translating .plt files to .txt files in order to be turned into graphs.
+1. Make sure you cd into the py_graspi directory.
+2. All necessary functions are in the plt_to_txt.py file.
+3. The command line input format for this file is as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>plt_to_txt.py<span class="w"> </span><span class="o">[</span>pathname<span class="o">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>The file in pathname should be in the plt directory and end with the .plt extension, if not this will not work.</p></li>
+<li><p>It’s translated .plt file should show up in the same directory but now with a .txt extension and in .txt formatting when executed with no errors.</p></li>
+<li><p>Some files have been placed in the .plt directory for testing.</p></li>
+<li><p>If you wish to run an example, first delete the translated version of a .plt file if it has been created, and run the following command line input:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>plt_to_txt.py<span class="w"> </span>plt/5x4x3.plt
+</pre></div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>Make sure the translated file with .txt extension has been made and placed in the plt directory to ensure the file has been executed correctly.</p></li>
+</ol>
 </section>
 <section id="translate-image-file-into-truncated-txt-file">
 <h2>Translate Image File Into Truncated .txt File<a class="headerlink" href="#translate-image-file-into-truncated-txt-file" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Make sure you have py-graspi installed: pip install py-graspi</p></li>
+<li><p>Make sure you cd into the py-graspi directory first. From there, cd into the tools then translations by running ‘cd tools/translations’.</p></li>
+<li><p>The command line format to translate an image file into its truncated .txt file is as follows:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>img_to_txt.py<span class="w"> </span><span class="o">{</span>pathname<span class="w"> </span>of<span class="w"> </span>image<span class="w"> </span>file<span class="o">}</span><span class="w"> </span><span class="o">{</span>Resize<span class="w"> </span>calculation<span class="w"> </span>amount<span class="o">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>The “resize calculation amount” is multiplied to the X and Y axis of the original image and this will alter the size of the image’s final resized .txt file.</p></li>
+<li><p>This should place both a truncated image file and truncated .txt file of the original image file into the “resized” directory.</p></li>
+<li><p>They will be named “<a href="#id2"><span class="problematic" id="id3">resized_</span></a>” followed by the image file name and correct extension.</p></li>
+<li><p>An example command line input that should work for this repo is as follows:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>img_to_txt.py<span class="w"> </span>../../data/images/data_0.5_2.2_001900.png<span class="w"> </span><span class="m">0</span>.15
+</pre></div>
+</div>
 </section>
 <section id="d-3d-morphologies-tests">
 <h2>2D &amp; 3D Morphologies Tests<a class="headerlink" href="#d-3d-morphologies-tests" title="Link to this heading"></a></h2>
+<p>To run the 2d and 3d morphologies you will need to setup notebook and pip install the graspi_igraph package.</p>
+<p>First you will need to git clone the current repo:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/owodolab/py-graspi.git
+</pre></div>
+</div>
+<p>Then, you will need to install the igraph package:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>py-graspi
+</pre></div>
+</div>
+<p>Install jupyter notebook in order to view the test file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>notebook
+</pre></div>
+</div>
+<p>Finally, you will be able to use the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter<span class="w"> </span>notebook
+</pre></div>
+</div>
+<p>This will bring you into the testing filing on jupyter.</p>
+<p>Navigate to the file <strong>graspi_igraph_notebook.ipynb</strong> under the <strong>notebook</strong> directory.</p>
+<p>On this file you will be able to run and view the 2d and 3d morphologies.</p>
 </section>
 <section id="running-all-33-morphologies-tests">
 <h2>Running All 33 Morphologies Tests<a class="headerlink" href="#running-all-33-morphologies-tests" title="Link to this heading"></a></h2>
+<p>To run the morphologies tests, first make sure you’re on the <strong>py-graspi</strong> directory.
+- Run the following command to start at the py-graspi directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>..
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Next, make sure you’re running using bash by running the following command:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>bash
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Next, run the following command:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>chmod<span class="w"> </span>+x<span class="w"> </span>run.sh
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Finally, run the following command for .txt or .pdf generation:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run.sh<span class="w"> </span>&lt;file_type&gt;
+</pre></div>
+</div>
+<p>Substitute <cite>&lt;file_type&gt;</cite> with either <cite>txt</cite> or <cite>pdf</cite> for the desired output type.</p>
+<p><strong>Example:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./run.sh<span class="w"> </span>txt
+</pre></div>
+</div>
+<p><strong>Note: You should run `txt` before `pdf` to update text files and for an accurate PDF output</strong></p>
 </section>
 <section id="morphologies-output">
 <h2>33 Morphologies Output<a class="headerlink" href="#morphologies-output" title="Link to this heading"></a></h2>
+<p>After running the command, the automatic report generation will begin.
+The following will print when the report generation begins:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Generating</span> <span class="n">PDF</span> <span class="p">(</span><span class="n">If</span> <span class="n">on</span> <span class="n">pdf</span> <span class="n">mode</span><span class="p">)</span>
+<span class="n">Generating</span> <span class="n">Text</span> <span class="n">Files</span>
+</pre></div>
+</div>
+<p>As the script is running, the following will print for which microstructure it is on</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+<p>Executing &lt;test_file&gt;</p>
+<p>After a few minutes, the following will print once the report has been created</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Text</span> <span class="n">Files</span> <span class="n">Generated</span>
+<span class="n">PDF</span> <span class="n">Generated</span> <span class="p">(</span><span class="n">If</span> <span class="n">on</span> <span class="n">pdf</span> <span class="n">mode</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Viewing 33 Morphologies Output</strong></p>
+<p><strong>For text files</strong>, navigate to the results directory by using the following command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>data/results
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Use the following command to view the list of text files generated:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ls
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>To view the result in each file, run the following command:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>&lt;result_file_name&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Replace <cite>&lt;result_file_name&gt;</cite> with any of the files outputted by running <cite>ls</cite></p></li>
+</ul>
+<p>Example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat<span class="w"> </span>descriptors-data_0.514_2.4_000220.txt
+</pre></div>
+</div>
+<p><strong>If using pdf mode</strong>, the PDF should automattically open upon completion.
+If the pdf does not automatically pop up, use the following commands, making sure you’re on the <cite>py-graspi</cite> directory:</p>
+<ul class="simple">
+<li><p>On Windows</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>start<span class="w"> </span>py_graspi/test_results.pdf
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>On MacOS</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>open<span class="w"> </span>py_graspi/test_results.pdf
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>On Linux</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>evince<span class="w"> </span>py_graspi/test_results.pdf
+</pre></div>
+</div>
+<p>If evince is not installed, run this first:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>evince
+</pre></div>
+</div>
 </section>
 <section id="tortuosity-heatmap-visualization">
 <h2>Tortuosity HeatMap Visualization<a class="headerlink" href="#tortuosity-heatmap-visualization" title="Link to this heading"></a></h2>
+<p>This are the steps for visualizing tortuosity via HeatMap.
+1. Make sure you cd into the py-graspi directory, then into tools then tortousity. Run cd tools/tortousity to get there.
+2. All necessary functions are in the tortuosity.py file.
+3. Code necessary to visualize the tortuosity HeatMap is as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tortuosity.py<span class="w"> </span><span class="o">{</span>pathname<span class="w"> </span>of<span class="w"> </span>file<span class="o">}</span>
+</pre></div>
+</div>
+<p>4. This code will only work if the IdTortuosityBlackToRed descriptors of this file
+have been found and outputted to it’s corresponding file in the distances directory.
+5. For now there are some file examples in this directory so an example code
+to visualize a heatmap is as follows:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>tortuosity.py<span class="w"> </span>../../data/data/data_0.5_2.2_001900.txt
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>First a tortuosity heatmap will output for Black To Red vertices.</p></li>
+<li><p>Exit out of this pop up window.</p></li>
+<li><p>Second a totuosity heatmap will output for White to Blue vertices.</p></li>
+<li><p>Exit out of this pop up Window.</p></li>
+</ol>
+<ul class="simple">
+<li><p>A HeatMap should show up with a HeatMap Bar to the right of the HeatMap.</p></li>
+<li><p>Based on current implementation, this HeatMap outputs tort values of each vertex and that value is used to color in the Heatmap based on the HeatMap Bar.</p></li>
+<li><p>Read the side bar to the right to understand the cyclic gradiant coloring.</p></li>
+<li><p>Following is the matplotlib api section for more information on this gradiant: <a class="reference external" href="https://matplotlib.org/stable/users/explain/colors/colormaps.html#cyclic">https://matplotlib.org/stable/users/explain/colors/colormaps.html#cyclic</a></p></li>
+</ul>
 </section>
 <section id="jupyter-notebook-to-visualize-heatmap">
 <h2>Jupyter NoteBook to Visualize HeatMap<a class="headerlink" href="#jupyter-notebook-to-visualize-heatmap" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Make sure Jupyter Notebook is installed:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>jupyter
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Run jupyter notebook with following command:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>jupyter<span class="w"> </span>notebook
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Open up <cite>tortuosity.ipynb</cite> under the <cite>py_graspi</cite> directory.</p></li>
+<li><p>Click the Run tab on the top.</p></li>
+<li><p>Click “Run All Cells”</p></li>
+<li><p>Wait a bit and the HeatMaps of some files will be created and visualized.</p></li>
+</ol>
 </section>
 <section id="mycelium-filtered-vertices-visualization">
 <h2>Mycelium Filtered Vertices Visualization<a class="headerlink" href="#mycelium-filtered-vertices-visualization" title="Link to this heading"></a></h2>
+<p>This section explains how to visualize a mycelium image by both it’s white and black vertices filtered versions.
+The mycelium image used is included in the “images” directory called “mycelium.png”.</p>
+<p>The following are steps on how to visualize the graph from this image.
+1. Make sure you have py-graspi installed: pip install py-graspi
+2. Make sure you cd into py-graspi directory first.
+3. The command line format input is as follows</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>myceliumTest.py<span class="w"> </span><span class="o">{</span>pathname<span class="w"> </span>of<span class="w"> </span>image<span class="w"> </span>file<span class="o">}</span><span class="w"> </span><span class="o">{</span>Resize<span class="w"> </span>calculation<span class="w"> </span>amount<span class="o">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>The input is the same as the translation input from image files to .txt files, it will create a new .img and .txt file for it in the “resized” directory.</p></li>
+<li><p>The image input pathname must be in the “images” directory.</p></li>
+<li><p>If you wish to not resize the original image just input a ‘1’ for the Resize calculation amount, this will keep the original size.</p></li>
+<li><p>Example command line input is as follows:</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>myceliumTest.py<span class="w"> </span>../../data/images/data_0.5_2.2_001900.png<span class="w"> </span><span class="m">0</span>.15
+</pre></div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>This creates a truncated version of the mycelium image (for runtime purposes) and outputs the largest subgraph of the following filtered graphs:
+1. The first one is a white only vertex graph
+2. The second one is a black only vertex graph.</p></li>
+</ol>
 </section>
 <section id="mycelium-filtered-vertices-interactivity">
 <h2>Mycelium Filtered Vertices Interactivity<a class="headerlink" href="#mycelium-filtered-vertices-interactivity" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Follow these steps to run through different interactive features after running the myceliumTest.py file</p></li>
+<li><p>On the bottom left of the window, there will be some built-in mathplotlib tools in the following order: “Reset Home Button,” “Undo,” “Redo,” “Drag and Pull Move Mode,” “Zoom in Mode,” “Configuration Settings,” and “Save File.”</p></li>
+<li><p>The Reset Home Button, when clicked, will take you to the center of the graph no matter where you are. You may need to zoom out a couple of times, but if you do, you will resort back to the original graph visualization (not accounting for rotations).</p></li>
+<li><p>We will not use these Redo/Undo buttons since they only work with the mathplotlib built-in functionalities and not my built-in ones so they may cause confusion.</p></li>
+<li><p>The Drag and Pull Mode Button, when clicked, allows the user to hold a click on the graph and move around as desired. Make sure you are able to move around easily.</p></li>
+<li><p>The Zoom In Mode will make it so you can crop out a rectangular area and it will automatically zoom into this area. This is helpful for easier massive zooms and can be used with the built-in zoom in/out buttons. Make sure you can zoom in with this functionality.</p></li>
+<li><p>The Configuration Settings will open up a window with sliders. These sliders will change the border of the graph and get rid of white space around the graph. Play with the sliders to make sure you are able to change the border fo the graph visualization. (The bottom two sliders do not affect our graph visualization in any way, recommend not to mess with these).</p></li>
+<li><p>If you wish to reset the configurations there is a “reset” button on the bottom right of this new pop up window, click this and confirm that all the settings are back to how they were originally.</p></li>
+<li><p>The Save File button works just as any other save file button. This allows to save the graph visualization into your computer files.</p></li>
+<li><p>There are also 4 buttons to the bottom right of the Graph in the following order: Zoom In, Zoom Out, Rotate CW, and Rotate CCW.</p></li>
+<li><p>Pressing the Zoom In button which will zoom into the graph.</p></li>
+<li><p>Pressing the Zoom Out button will zoom out the same amount as it zoomed in.</p></li>
+<li><p>Pressing Rotate CW will rotate the graph by 30 degrees clockwise.</p></li>
+<li><p>Pressing Rotate CCW will rotate the graph by 30 degrees counter-clockwise.</p></li>
+</ol>
 </section>
-<section id="generate-and-run-files-for-py-graspi-api">
-<h2>Generate and Run Files for Py-Graspi API<a class="headerlink" href="#generate-and-run-files-for-py-graspi-api" title="Link to this heading"></a></h2>
+<section id="generate-and-run-files-for-py-graspi-api-documentation">
+<h2>Generate and Run Files for Py-Graspi API Documentation<a class="headerlink" href="#generate-and-run-files-for-py-graspi-api-documentation" title="Link to this heading"></a></h2>
 <p>In order to generate an API using sphinx, you need to follow the installation of py-graspi:</p>
 <p>Install ghp-import in the project root directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>ghp-import
@@ -218,7 +450,7 @@ python<span class="w"> </span>descriptor_testing.py<span class="w"> </span>../da
 <p>Access and verify the documentation through the following URL: <a class="reference external" href="https://owodolab.github.io/py-graspi/">https://owodolab.github.io/py-graspi/</a>.</p>
 </section>
 <section id="update-py-pi-package">
-<h2>Update Py-pi Package<a class="headerlink" href="#update-py-pi-package" title="Link to this heading"></a></h2>
+<h2>Update Py-Pi Package<a class="headerlink" href="#update-py-pi-package" title="Link to this heading"></a></h2>
 <p>If there are changes made to the to the PyGraspi package locally, these instructions can help push to Py-Pi.</p>
 <ol class="arabic simple">
 <li><p>To install setuptools, wheel and twine, run this command in terminal:</p></li>
