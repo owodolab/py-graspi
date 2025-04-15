@@ -478,12 +478,7 @@ def graphe_adjList(filename):
         filename (str): The name of the file containing the graph data.
 
     Returns:
-        adjacency_list (list): This is a list of vertices, where each index of this list corresponds to a vertex and contains a sublist to represent it’s neighboring vertices.
-        first_order_neighbors (list): This is a list of all the first-order pairs.
-        second_order_neighbors (list): This is a list of all the second-order pairs.
-        third_order_neighbors (list): This is a list of all the third-order pairs.
-        is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D structure.
-
+        graph_data (graph_data_class): The graph data containing graph, is_2D, first_order_neighbors, second_order_neighbors, and third_order_neighbors attributes
     """
     adjacency_list = []
     first_order_neighbors = []
