@@ -32,7 +32,20 @@ Testing Algorithms
 
 To **generate graphs**, call the generateGraph(file) function which takes in an input-file name
 
-- Returns a graph
+- Returns a graph (graph_data_class object)
+    - g: graph object
+    - s_2D: bool of whether the graph is 2D
+    - black_vertices: list of all black vertices
+    - white_vertices: list of all white vertices
+    - black_green: number of edges from black to interface (green vertex)
+    - black_interface_red: number of black interface vertices that has a path to top (red)
+    - white_interface_blue: number of white interface vertices that has a path to bottom (blue)
+    - dim: value of vertices in y direction for 2D and z direction for 3D
+    - interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)
+    - shortest_path_to_red: shortest paths from all vertices to red
+    - shortest_path_to_blue: shortest paths from all vertices to blue
+    - CT_n_D_adj_An: number of black vertices in direct contact with top (red)
+    - CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)
 
 .. code-block:: bash
 
@@ -48,29 +61,56 @@ To **filter graphs**, call filterGraph(graph) function which takes in a graph ob
     g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")     # utilizing the test file found in 2D-testFiles folder as an example
     fg = ig.filterGraph(g)
 
-The number of connected components can be found by taking the length of the result produced by the connected_components function:
+- The connected components is the result produced by the connected_components function:
 
 .. code-block:: bash
 
-    print(fg.connected_components())
+    print(f"Number of Connected Components: {len(fg.connected_components())}")
+    print(f"Connected Components: {fg.connected_components()}")
 
-The number of connected components can be found by taking the length of the result produced by the connected_components function
+To get a **dictionary of descriptors**, call the descriptors(graph_data, filename) function
+It takes in the graph_data_class object returned from generateGraph() and an input filename as the parameters.
+
+.. code-block:: python
+
+    dict = ig.descriptors(graph_data,filename)
+    ig.descriptorsToTxt(dict,"descriptors_list.txt")
+
+To test if descriptors are computed correctly, you can run the following script in the terminal to check.
+- Make sure you are in the py-graspi directory after git cloning
+- Then run the command
 
 .. code-block:: bash
 
-    print(len(fg.connected_components()))
+    cd tests
+    python descriptor_testing.py ../data/data/data_0.5_2.2_001900.txt
 
-The shortest path between some meta-vertices to all specified vertices calling the function shortest_path(fiteredGraph, specifiedVertices, metaVertex, fileName)
+Translating .plt files to .txt files
+========================================
 
-- stores the distance of the paths to from the metaVertex to every single specified Vertices in a text file called fileName
+Translate Image File Into Truncated .txt File
+==========================================================
 
-Example:
+2D & 3D Morphologies Tests
+========================================
 
-the example below finds the shortest path between all black vertices to the blue meta-vertex and stores it in the text file, black_to_blue_paths.txt
+Running All 33 Morphologies Tests
+=========================================
 
-.. code-block:: bash
+33 Morphologies Output
+==========================
 
-    ig.shortest_path(fg,'black','blue',"black_to_blue_paths.txt")    #fg is a filtered graph object
+Tortuosity HeatMap Visualization
+=======================================
+
+Jupyter NoteBook to Visualize HeatMap
+=========================================
+
+Mycelium Filtered Vertices Visualization
+=========================================
+
+Mycelium Filtered Vertices Interactivity
+=========================================
 
 Generate and Run Files for Py-Graspi API
 ==================

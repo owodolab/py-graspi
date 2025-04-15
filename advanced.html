@@ -54,6 +54,15 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#running-memory-tests">Running Memory Tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing-algorithms">Testing Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#translating-plt-files-to-txt-files">Translating .plt files to .txt files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#translate-image-file-into-truncated-txt-file">Translate Image File Into Truncated .txt File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#d-3d-morphologies-tests">2D &amp; 3D Morphologies Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-all-33-morphologies-tests">Running All 33 Morphologies Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#morphologies-output">33 Morphologies Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#tortuosity-heatmap-visualization">Tortuosity HeatMap Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jupyter-notebook-to-visualize-heatmap">Jupyter NoteBook to Visualize HeatMap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mycelium-filtered-vertices-visualization">Mycelium Filtered Vertices Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mycelium-filtered-vertices-interactivity">Mycelium Filtered Vertices Interactivity</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#generate-and-run-files-for-py-graspi-api">Generate and Run Files for Py-Graspi API</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#update-py-pi-package">Update Py-pi Package</a></li>
 </ul>
@@ -109,7 +118,25 @@ technical skills.</p>
 <h2>Testing Algorithms<a class="headerlink" href="#testing-algorithms" title="Link to this heading"></a></h2>
 <p>To <strong>generate graphs</strong>, call the generateGraph(file) function which takes in an input-file name</p>
 <ul class="simple">
-<li><p>Returns a graph</p></li>
+<li><dl class="simple">
+<dt>Returns a graph (graph_data_class object)</dt><dd><ul>
+<li><p>g: graph object</p></li>
+<li><p>s_2D: bool of whether the graph is 2D</p></li>
+<li><p>black_vertices: list of all black vertices</p></li>
+<li><p>white_vertices: list of all white vertices</p></li>
+<li><p>black_green: number of edges from black to interface (green vertex)</p></li>
+<li><p>black_interface_red: number of black interface vertices that has a path to top (red)</p></li>
+<li><p>white_interface_blue: number of white interface vertices that has a path to bottom (blue)</p></li>
+<li><p>dim: value of vertices in y direction for 2D and z direction for 3D</p></li>
+<li><p>interface_edge_comp_paths: number of interface edges with complementary paths to top (red) and bottom (blue)</p></li>
+<li><p>shortest_path_to_red: shortest paths from all vertices to red</p></li>
+<li><p>shortest_path_to_blue: shortest paths from all vertices to blue</p></li>
+<li><p>CT_n_D_adj_An: number of black vertices in direct contact with top (red)</p></li>
+<li><p>CT_n_A_adj_Ca: number of white vertices in direct contact with bottom (blue)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ig.generateGraph<span class="o">(</span><span class="s2">&quot;2D-testFile/testFile-10-2D.txt&quot;</span><span class="o">)</span><span class="w">   </span><span class="c1"># utilizing the test file found in 2D-testFiles folder as an example</span>
 </pre></div>
@@ -123,23 +150,53 @@ technical skills.</p>
 <span class="nb">fg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>ig.filterGraph<span class="o">(</span>g<span class="o">)</span>
 </pre></div>
 </div>
-<p>The number of connected components can be found by taking the length of the result produced by the connected_components function:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>print<span class="o">(</span>fg.connected_components<span class="o">())</span>
-</pre></div>
-</div>
-<p>The number of connected components can be found by taking the length of the result produced by the connected_components function</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>print<span class="o">(</span>len<span class="o">(</span>fg.connected_components<span class="o">()))</span>
-</pre></div>
-</div>
-<p>The shortest path between some meta-vertices to all specified vertices calling the function shortest_path(fiteredGraph, specifiedVertices, metaVertex, fileName)</p>
 <ul class="simple">
-<li><p>stores the distance of the paths to from the metaVertex to every single specified Vertices in a text file called fileName</p></li>
+<li><p>The connected components is the result produced by the connected_components function:</p></li>
 </ul>
-<p>Example:</p>
-<p>the example below finds the shortest path between all black vertices to the blue meta-vertex and stores it in the text file, black_to_blue_paths.txt</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ig.shortest_path<span class="o">(</span>fg,<span class="s1">&#39;black&#39;</span>,<span class="s1">&#39;blue&#39;</span>,<span class="s2">&quot;black_to_blue_paths.txt&quot;</span><span class="o">)</span><span class="w">    </span><span class="c1">#fg is a filtered graph object</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>print<span class="o">(</span>f<span class="s2">&quot;Number of Connected Components: {len(fg.connected_components())}&quot;</span><span class="o">)</span>
+print<span class="o">(</span>f<span class="s2">&quot;Connected Components: {fg.connected_components()}&quot;</span><span class="o">)</span>
 </pre></div>
 </div>
+<p>To get a <strong>dictionary of descriptors</strong>, call the descriptors(graph_data, filename) function
+It takes in the graph_data_class object returned from generateGraph() and an input filename as the parameters.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">dict</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">descriptors</span><span class="p">(</span><span class="n">graph_data</span><span class="p">,</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">ig</span><span class="o">.</span><span class="n">descriptorsToTxt</span><span class="p">(</span><span class="nb">dict</span><span class="p">,</span><span class="s2">&quot;descriptors_list.txt&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To test if descriptors are computed correctly, you can run the following script in the terminal to check.
+- Make sure you are in the py-graspi directory after git cloning
+- Then run the command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>tests
+python<span class="w"> </span>descriptor_testing.py<span class="w"> </span>../data/data/data_0.5_2.2_001900.txt
+</pre></div>
+</div>
+</section>
+<section id="translating-plt-files-to-txt-files">
+<h2>Translating .plt files to .txt files<a class="headerlink" href="#translating-plt-files-to-txt-files" title="Link to this heading"></a></h2>
+</section>
+<section id="translate-image-file-into-truncated-txt-file">
+<h2>Translate Image File Into Truncated .txt File<a class="headerlink" href="#translate-image-file-into-truncated-txt-file" title="Link to this heading"></a></h2>
+</section>
+<section id="d-3d-morphologies-tests">
+<h2>2D &amp; 3D Morphologies Tests<a class="headerlink" href="#d-3d-morphologies-tests" title="Link to this heading"></a></h2>
+</section>
+<section id="running-all-33-morphologies-tests">
+<h2>Running All 33 Morphologies Tests<a class="headerlink" href="#running-all-33-morphologies-tests" title="Link to this heading"></a></h2>
+</section>
+<section id="morphologies-output">
+<h2>33 Morphologies Output<a class="headerlink" href="#morphologies-output" title="Link to this heading"></a></h2>
+</section>
+<section id="tortuosity-heatmap-visualization">
+<h2>Tortuosity HeatMap Visualization<a class="headerlink" href="#tortuosity-heatmap-visualization" title="Link to this heading"></a></h2>
+</section>
+<section id="jupyter-notebook-to-visualize-heatmap">
+<h2>Jupyter NoteBook to Visualize HeatMap<a class="headerlink" href="#jupyter-notebook-to-visualize-heatmap" title="Link to this heading"></a></h2>
+</section>
+<section id="mycelium-filtered-vertices-visualization">
+<h2>Mycelium Filtered Vertices Visualization<a class="headerlink" href="#mycelium-filtered-vertices-visualization" title="Link to this heading"></a></h2>
+</section>
+<section id="mycelium-filtered-vertices-interactivity">
+<h2>Mycelium Filtered Vertices Interactivity<a class="headerlink" href="#mycelium-filtered-vertices-interactivity" title="Link to this heading"></a></h2>
 </section>
 <section id="generate-and-run-files-for-py-graspi-api">
 <h2>Generate and Run Files for Py-Graspi API<a class="headerlink" href="#generate-and-run-files-for-py-graspi-api" title="Link to this heading"></a></h2>

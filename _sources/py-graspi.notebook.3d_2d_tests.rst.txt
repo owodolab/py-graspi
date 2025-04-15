@@ -1,0 +1,53 @@
+py\-graspi.notebook.3d\_2d\_tests package
+=========================================
+
+Submodules
+----------
+
+py\-graspi.notebook.3d\_2d\_tests.combined\_with module
+-------------------------------------------------------
+
+.. automodule:: py-graspi.notebook.3d_2d_tests.combined_with
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+py\-graspi.notebook.3d\_2d\_tests.combined\_without module
+----------------------------------------------------------
+
+.. automodule:: py-graspi.notebook.3d_2d_tests.combined_without
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+py\-graspi.notebook.3d\_2d\_tests.descriptors module
+----------------------------------------------------
+
+.. automodule:: py-graspi.notebook.3d_2d_tests.descriptors
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+py\-graspi.notebook.3d\_2d\_tests.new\_descriptors module
+---------------------------------------------------------
+
+.. automodule:: py-graspi.notebook.3d_2d_tests.new_descriptors
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+py\-graspi.notebook.3d\_2d\_tests.optimize module
+-------------------------------------------------
+
+.. automodule:: py-graspi.notebook.3d_2d_tests.optimize
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: py-graspi.notebook.3d_2d_tests
+   :members:
+   :show-inheritance:
+   :undoc-members:

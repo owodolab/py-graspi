@@ -1,0 +1,21 @@
+py\-graspi.src.docs.source package
+==================================
+
+Submodules
+----------
+
+py\-graspi.src.docs.source.conf module
+--------------------------------------
+
+.. automodule:: py-graspi.src.docs.source.conf
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: py-graspi.src.docs.source
+   :members:
+   :show-inheritance:
+   :undoc-members:

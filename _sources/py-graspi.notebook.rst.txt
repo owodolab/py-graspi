@@ -1,0 +1,18 @@
+py\-graspi.notebook package
+===========================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   py-graspi.notebook.3d_2d_tests
+
+Module contents
+---------------
+
+.. automodule:: py-graspi.notebook
+   :members:
+   :show-inheritance:
+   :undoc-members:

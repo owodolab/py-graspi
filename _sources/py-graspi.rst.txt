@@ -1,0 +1,41 @@
+py\-graspi package
+==================
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 4
+
+   py-graspi.debugging
+   py-graspi.notebook
+   py-graspi.src
+   py-graspi.tests
+   py-graspi.tools
+
+Submodules
+----------
+
+py\-graspi.setup module
+-----------------------
+
+.. automodule:: py-graspi.setup
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+py\-graspi.startup module
+-------------------------
+
+.. automodule:: py-graspi.startup
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: py-graspi
+   :members:
+   :show-inheritance:
+   :undoc-members:

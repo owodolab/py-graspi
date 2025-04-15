@@ -91,15 +91,13 @@
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 
-<span class="kn">from</span><span class="w"> </span><span class="nn">urllib3.util</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_ssl_version</span>
-
 <span class="n">DEBUG</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">PERIODICITY</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1">#reflects default status from c++ implementation</span>
 <span class="n">n_flag</span> <span class="o">=</span> <span class="mi">2</span>
 
 
 <div class="viewcode-block" id="generateGraph">
-<a class="viewcode-back" href="../../src.html#src.graph.generateGraph">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph.generateGraph">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">generateGraph</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.</span>
@@ -119,7 +117,7 @@
 
 
 <div class="viewcode-block" id="generateGraphAdj">
-<a class="viewcode-back" href="../../src.html#src.graph.generateGraphAdj">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph.generateGraphAdj">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">generateGraphAdj</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function takes in graph data in the .txt format and constructs the graph with adjacency list representation.</span>
@@ -337,7 +335,7 @@
 
 
 <div class="viewcode-block" id="generateGraphGraphe">
-<a class="viewcode-back" href="../../src.html#src.graph.generateGraphGraphe">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph.generateGraphGraphe">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">generateGraphGraphe</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function takes in graph data in the .graphe format and constructs the graph with adjacency list representation.</span>
@@ -389,7 +387,7 @@
 
 
 <div class="viewcode-block" id="adjList">
-<a class="viewcode-back" href="../../src.html#src.graph.adjList">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph.adjList">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">adjList</span><span class="p">(</span><span class="n">fileName</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph. It also generates additional</span>
@@ -557,7 +555,7 @@
 
 
 <div class="viewcode-block" id="graphe_adjList">
-<a class="viewcode-back" href="../../src.html#src.graph.graphe_adjList">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph.graphe_adjList">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">graphe_adjList</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function creates the adjacency list for graph data given in .graphe format, it categorizes neighbors of vertices into first, second, and third order.</span>
@@ -620,7 +618,7 @@
 <span class="sd">&#39;&#39;&#39;------- Labeling the color of the vertices -------&#39;&#39;&#39;</span>
 
 <div class="viewcode-block" id="adjvertexColors">
-<a class="viewcode-back" href="../../src.html#src.graph.adjvertexColors">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph.adjvertexColors">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">adjvertexColors</span><span class="p">(</span><span class="n">fileName</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function assigns each vertex a color label based on the data in the specified file and returns a list where each index corresponds to a vertex&#39;s color.</span>
@@ -655,7 +653,7 @@
 <span class="sd">&#39;&#39;&#39;********* Visualizing the Graph **********&#39;&#39;&#39;</span>
 
 <div class="viewcode-block" id="visualize">
-<a class="viewcode-back" href="../../src.html#src.graph.visualize">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph.visualize">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">visualize</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">is_2D</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">       This function shows a visualization of the given graph in either 2D or 3D depending on the is_2D boolean.</span>
@@ -736,7 +734,7 @@
 <span class="sd">&#39;&#39;&#39;**************** Connected Components *******************&#39;&#39;&#39;</span>
 
 <div class="viewcode-block" id="connectedComponents">
-<a class="viewcode-back" href="../../src.html#src.graph.connectedComponents">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph.connectedComponents">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">connectedComponents</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function identifies the connected components of a filtered graph and returns lists that contain the vertices that are part of the connected components.</span>
@@ -809,7 +807,7 @@
 <span class="sd">&#39;&#39;&#39;********* Filtering the Graph **********&#39;&#39;&#39;</span>
 
 <div class="viewcode-block" id="filterGraph">
-<a class="viewcode-back" href="../../src.html#src.graph.filterGraph">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph.filterGraph">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">filterGraph</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function returns a subgraph that is created by filtering the given graph to only contain edges that connect vertices of the same color.</span>
@@ -837,7 +835,7 @@
 
 
 <div class="viewcode-block" id="filterGraph_metavertices">
-<a class="viewcode-back" href="../../src.html#src.graph.filterGraph_metavertices">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph.filterGraph_metavertices">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">filterGraph_metavertices</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’/cathode metavertex,</span>
@@ -885,7 +883,7 @@
 
 
 <div class="viewcode-block" id="filterGraph_blue_red">
-<a class="viewcode-back" href="../../src.html#src.graph.filterGraph_blue_red">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph.filterGraph_blue_red">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">filterGraph_blue_red</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’ cathode metavertex,</span>
@@ -933,8 +931,6 @@
     <span class="k">return</span> <span class="n">fg_blue</span><span class="p">,</span> <span class="n">fg_red</span></div>
 
 
-<div class="viewcode-block" id="main">
-<a class="viewcode-back" href="../../src.html#src.graph.main">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="k">global</span> <span class="n">PERIODICITY</span>
     <span class="k">global</span> <span class="n">n_flag</span>
@@ -1008,8 +1004,7 @@
         <span class="n">dic</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">descriptors</span><span class="p">(</span><span class="n">graph_data</span><span class="o">.</span><span class="n">graph</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">connectedComponents</span><span class="p">(</span><span class="n">filteredGraph</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dic</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
-
+            <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>

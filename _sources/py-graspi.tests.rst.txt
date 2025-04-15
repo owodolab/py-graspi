@@ -1,0 +1,29 @@
+py\-graspi.tests package
+========================
+
+Submodules
+----------
+
+py\-graspi.tests.descriptor\_testing module
+-------------------------------------------
+
+.. automodule:: py-graspi.tests.descriptor_testing
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+py\-graspi.tests.tests module
+-----------------------------
+
+.. automodule:: py-graspi.tests.tests
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: py-graspi.tests
+   :members:
+   :show-inheritance:
+   :undoc-members:

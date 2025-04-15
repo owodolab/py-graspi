@@ -1,0 +1,37 @@
+py\-graspi.tools.translations package
+=====================================
+
+Submodules
+----------
+
+py\-graspi.tools.translations.img\_to\_txt module
+-------------------------------------------------
+
+.. automodule:: py-graspi.tools.translations.img_to_txt
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+py\-graspi.tools.translations.myceliumTest module
+-------------------------------------------------
+
+.. automodule:: py-graspi.tools.translations.myceliumTest
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+py\-graspi.tools.translations.plt\_to\_txt module
+-------------------------------------------------
+
+.. automodule:: py-graspi.tools.translations.plt_to_txt
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: py-graspi.tools.translations
+   :members:
+   :show-inheritance:
+   :undoc-members:
