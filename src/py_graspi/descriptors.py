@@ -1,6 +1,6 @@
 import math
 import numpy as np
-import src.graph as ig
+import graph as ig
 
 def descriptors(graph_data, filename):
     """
@@ -94,7 +94,7 @@ def CC_descriptors(graph,totalBlack, totalWhite):
         countWhite_Blue_conn (int): The total number of ‘white’ vertices in connected components that connect to the bottom.
 
     """
-    cc = ig.connectedComponents(graph);
+    cc = ig.connectedComponents(graph)
     countBlack = 0
     countWhite = 0
     countBlack_Red = 0
