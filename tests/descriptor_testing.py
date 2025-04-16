@@ -3,7 +3,7 @@ import sys
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../src")))
 import graph as ig
-import src.descriptors as d
+import descriptors as d
 
 
 graph_data = ig.generateGraphAdj(sys.argv[1])

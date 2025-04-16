@@ -1,6 +1,8 @@
 import math
 import numpy as np
 import src.graph as ig
+import graph_data_class as GraphData
+
 
 def descriptors(graph_data, filename):
     """
@@ -15,43 +17,41 @@ def descriptors(graph_data, filename):
          The keys of the descriptors are as follow: STAT_n, STAT_e, STAT_n_D, STAT_n_A, STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, ABS_wf_D, ABS_f_D, DISS_f10_D, DISS_wf10_D, CT_f_e_conn, CT_f_conn_D_An, CT_f_conn_A_Ca, CT_e_conn, CT_e_D_An, CT_e_A_Ca, CT_n_D_adj_An, CT_n_A_adj_Ca, CT_f_D_tort1, CT_f_A_tort1.
          For full definitions see the “Descriptors” tab on the Py-Graspi documentation website.
     """
-    # graph, filename, black_vertices, white_vertices, black_green, black_interface_red, white_interface_blue, \
-    #     dim, interface_edge_comp_paths, shortest_path_to_red, shortest_path_to_blue, CT_n_D_adj_An, CT_n_A_adj_Ca
 
     dict = {}
 
     STAT_n_D = len(graph_data.black_vertices)
     STAT_n_A = len(graph_data.white_vertices)
-    STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, \
-        countWhite_Blue_conn = CC_descriptors(graph_data.graph, STAT_n_D,STAT_n_A)
+    graph_data.STAT_n_D = STAT_n_D
+    graph_data.STAT_n_A = STAT_n_A
+    graph_data = CC_descriptors(graph_data)
 
     # shortest path descriptors
-    DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1, ABS_wf_D \
-        = shortest_path_descriptors(graph_data,filename, countBlack_Red_conn, countWhite_Blue_conn)
+    graph_data = shortest_path_descriptors(graph_data,filename)
 
 
-    dict["STAT_n"] =  STAT_n_A + STAT_n_D
+    dict["STAT_n"] =  graph_data.STAT_n_A + graph_data.STAT_n_D
     dict["STAT_e"] = graph_data.black_green
-    dict["STAT_n_D"] = STAT_n_D
-    dict["STAT_n_A"] = STAT_n_A
-    dict["STAT_CC_D"] = STAT_CC_D
-    dict["STAT_CC_A"] = STAT_CC_A
-    dict["STAT_CC_D_An"] = STAT_CC_D_An
-    dict["STAT_CC_A_Ca"] = STAT_CC_A_Ca
-    dict['ABS_wf_D'] = ABS_wf_D
-    dict["ABS_f_D"] = float(STAT_n_D / (STAT_n_D + STAT_n_A))
-    dict["DISS_f10_D"] = DISS_f10_D
-    dict["DISS_wf10_D"] = DISS_wf10_D
+    dict["STAT_n_D"] = graph_data.STAT_n_D
+    dict["STAT_n_A"] = graph_data.STAT_n_A
+    dict["STAT_CC_D"] = graph_data.STAT_CC_D
+    dict["STAT_CC_A"] = graph_data.STAT_CC_A
+    dict["STAT_CC_D_An"] = graph_data.STAT_CC_D_An
+    dict["STAT_CC_A_Ca"] = graph_data.STAT_CC_A_Ca
+    dict['ABS_wf_D'] = graph_data.ABS_wf_D
+    dict["ABS_f_D"] = float(graph_data.STAT_n_D / (graph_data.STAT_n_D + graph_data.STAT_n_A))
+    dict["DISS_f10_D"] = graph_data.DISS_f10_D
+    dict["DISS_wf10_D"] = graph_data.DISS_wf10_D
     dict["CT_f_e_conn"] = float(graph_data.interface_edge_comp_paths / graph_data.black_green)
-    dict["CT_f_conn_D_An"] = CT_f_conn_D_An
-    dict["CT_f_conn_A_Ca"] = CT_f_conn_A_Ca
+    dict["CT_f_conn_D_An"] = graph_data.CT_f_conn_D_An
+    dict["CT_f_conn_A_Ca"] = graph_data.CT_f_conn_A_Ca
     dict["CT_e_conn"] = graph_data.interface_edge_comp_paths
     dict["CT_e_D_An"] = graph_data.black_interface_red
     dict["CT_e_A_Ca"] = graph_data.white_interface_blue
     dict["CT_n_D_adj_An"] = graph_data.CT_n_D_adj_An
     dict["CT_n_A_adj_Ca"] = graph_data.CT_n_A_adj_Ca
-    dict["CT_f_D_tort1"] = CT_f_D_tort1
-    dict["CT_f_A_tort1"] = CT_f_A_tort1
+    dict["CT_f_D_tort1"] = graph_data.CT_f_D_tort1
+    dict["CT_f_A_tort1"] = graph_data.CT_f_A_tort1
 
     return dict
 
@@ -72,28 +72,22 @@ def descriptorsToTxt(dict, fileName):
         for d in dict:
             f.write(d + " " + str(float(dict[d])) + '\n')
 
-def CC_descriptors(graph,totalBlack, totalWhite):
+def CC_descriptors(graph_data):
     """
     This function computes the connected component descriptors that correspond to the following descriptors:
     STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, and countWhite_Blue_conn.
     Auxiliary quantities such as, ‘countBlack_Red_conn’ and ‘countWhite_Blue_conn’ are only used to compute CT_f_conn_D_An and CT_f_conn_A_Ca.
 
     Args:
-        graph (igraph.Graph): The input graph.
-        totalBlack (int): The number of black vertices (STAT_n_D)
-        totalWhite (int): The number of white vertices (STAT_n_A)
+        graph_data (graph_data_class): The input graph object.
 
     Returns:
-        STAT_CC_D (int): The number of connected components with at least one 'black' vertex.
-        STAT_CC_A (int): The number of connected components with at least one 'white' vertex.
-        STAT_CC_D_An (int): The number of connected components with 'black' vertices that are connected to the top ‘red’ metavertex/anode.
-        STAT_CC_A_Ca (int): The number of connected components with 'white' vertices that are connected to the bottom ‘blue’ metavertex/cathode.
-        CT_f_conn_D_An (float): The fraction of 'black' vertices that connect to the top.
-        CT_f_conn_A_Ca (float): The fraction of 'white' vertices that connect to the bottom.
-        countBlack_Red_conn (int): The total number of ‘black’ vertices in connected components that connect to the top.
-        countWhite_Blue_conn (int): The total number of ‘white’ vertices in connected components that connect to the bottom.
-
+        graph_data (graph_data_class): The updated graph object.
     """
+    graph = graph_data.graph
+    totalWhite = graph_data.STAT_n_A
+    totalBlack = graph_data.STAT_n_D
+
     cc = ig.connectedComponents(graph);
     countBlack = 0
     countWhite = 0
@@ -121,35 +115,37 @@ def CC_descriptors(graph,totalBlack, totalWhite):
                 colors = np.array(graph.vs['color'])
                 countWhite_Blue_conn += np.sum(colors[c] == 'white')
 
+    graph_data.STAT_CC_D = countBlack
+    graph_data.STAT_CC_A = countWhite
+    graph_data.STAT_CC_D_An = countBlack_Red
+    graph_data.STAT_CC_A_Ca = countWhite_Blue
+    graph_data.CT_f_conn_D_An = float(countBlack_Red_conn / totalBlack)
+    graph_data.CT_f_conn_A_Ca = float(countWhite_Blue_conn / totalWhite)
+    graph_data.countBlack_Red_conn = countBlack_Red_conn
+    graph_data.countWhite_Blue_conn = countWhite_Blue_conn
 
-    return countBlack, countWhite, countBlack_Red, countWhite_Blue, float(countBlack_Red_conn / totalBlack), \
-        float(countWhite_Blue_conn / totalWhite), countBlack_Red_conn, countWhite_Blue_conn
+    return graph_data
 
-def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWhite_Blue_conn):
+def shortest_path_descriptors(graph_data, filename):
   
     """
         This function computes descriptors related to shortest paths with vertex and metavertex colorations that correspond to the following descriptors:
         DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1 and ABS_wf_D.
-        The inputs countBlack_Red_conn and countWhite_Blue_conn can be generated by the ‘CC_descriptors’ function.
+        The inputs countBlack_Red_conn and countWhite_Blue_conn are stored in the graph_data_class object generated by the ‘CC_descriptors’ function.
 
         Args:
-            graph_data (graph_data_class): The graph data.
+            graph_data (graph_data_class): The graph data object.
             filename (str): Base filename for output text files storing the results.
-            countBlack_Red_conn (int): The total number of ‘black’ vertices in connected components that connect to the top.
-            countWhite_Blue_conn (int): The total number of ‘white’ vertices in connected components that connect to the bottom.
 
         Returns:
-            float: Fraction of’ black’ vertices where the distance to the interface or ‘green’ vertex is less than 10 pixels (DISS_f10_D).
-            float: Fraction of ‘black’ vertices where the distance to the interface or ‘green’ vertex is less than 10 pixels, distance to the green metavertex is weighted by exponential decay function. (DISS_wf10_D).
-            float: Fraction of ‘black’ vertices where the tortuosity to the red vertex is within the defined tolerance (CT_f_D_tort1).
-            float: Fraction of ‘white’ vertices where the tortuosity to the blue vertex is within the defined tolerance (CT_f_A_tort1).
-            float: Weighted fraction of ‘black’ vertices distance from ‘red’ metavertex, or the anode. (ABS_wf_D).
-
+            graph_data (graph_data_class): The updated graph data object with shortest path descriptors
         """
     graph = graph_data.graph
     black_vertices = graph_data.black_vertices
     white_vertices = graph_data.white_vertices
     dim = graph_data.dim
+    countBlack_Red_conn = graph_data.countBlack_Red_conn
+    countWhite_Blue_conn = graph_data.countWhite_Blue_conn
     shortest_path_to_red = graph_data.shortest_path_to_red
     shortest_path_to_blue = graph_data.shortest_path_to_blue
 
@@ -277,9 +273,12 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
     file = open(f"{filename}_IdTortuosityWhiteToBlue.txt", 'w')
     file.writelines(id_tort_white_to_blue)
     file.close()
-
-    return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), \
-        float(white_tor / countWhite_Blue_conn), float(total_weighted_black_red / (totalBlacks + totalWhite))
+    graph_data.DISS_f10_D = float(f10_count / totalBlacks)
+    graph_data.DISS_wf10_D = float(summation / totalBlacks)
+    graph_data.CT_f_D_tort1 = float(black_tor / countBlack_Red_conn)
+    graph_data.CT_f_A_tort1 = float(white_tor / countWhite_Blue_conn)
+    graph_data.ABS_wf_D = float(total_weighted_black_red / (totalBlacks + totalWhite))
+    return graph_data
 
 '''--------------- Shortest Path Descriptors ---------------'''
 def filterGraph_metavertices(graph):
