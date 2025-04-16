@@ -92,7 +92,8 @@ Note: You must have pip installed onto your system
    pip install -r src/requirements.txt
 
 4. Now you can create your project using the Py-Graspi API or run the high-throughput execution from the command line.
-    In the folder py-graspi/tests, you can find the Python file tests.py that shows how to run them.
+
+In the folder py-graspi/tests, you can find the Python file tests.py that shows how to run them.
 
 Note: You must have Python installed onto your system
 
