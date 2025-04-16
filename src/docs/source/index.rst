@@ -9,9 +9,7 @@ as graphs, enabling efficient computation of a wide range of descriptors with lo
 implementation of the original **GraSPI package**, which was developed in C/C++. In addition to descriptor computation,
 Py-GraSPI offers tools for data conversion across various formats and for post-processing the raw outputs of the graph analysis.
 
-.. contents::
-   :local:
-   :depth: 10
+
 
 In Brief
 ------------
@@ -25,129 +23,9 @@ The Py-Graspi project provides tools for creating, filtering, and analyzing grap
    pyGraspiFunctionality
    pyGraspiDescriptors
    pyGraspiInputs
+   installation
    pyGraspiExamples
    pyGraspiRepresentation
    pyGraspiDefinitions
    api_overview
    advanced
-
-Installation
-------------
-
-Simple Usage of Py-Graspi package
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-To install the py-graspi package, run this command in terminal
-
-.. code-block:: bash
-
-    pip install py-graspi
-
-To verify that the module has been installed
-
-.. code-block:: bash
-
-    pip show py-graspi
-
-To utilize the package, import the Py-Graspi package to your python project:
-
-.. code-block:: python
-
-    import py_graspi as ig
-
-Usage of Py-Graspi on a test Kaggle notebook
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Navigate to the following link to open the test Kaggle notebook on Binder:
-
-`Binder Notebook <https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/3d7bf5df17b015612ab1b8261c63d0bbb00a268f?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb>`_
-
-Follow the steps in the notebook to learn about basic py-graspi functionality such as generating a graph and listing it's descriptors.
-
-Manual Installation for Py-Graspi source code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Follow these steps to manually install the Py-Graspi package.
-
-1. Clone the project repository by running this command:
-
-Note: You must have Git installed on your system
-
-.. code-block:: bash
-
-   git clone https://github.com/owodolab/py-graspi.git
-
-
-2. Navigate to the Py-Graspi project directory by running this command:
-
-.. code-block:: bash
-
-   cd py-graspi/
-
-3. Install the modules required to utilize Py-Graspi algorithms
-
-Note: You must have pip installed onto your system
-
-.. code-block:: bash
-
-   pip install -r src/requirements.txt
-
-4. Now you can create your project using the Py-Graspi API or run the high-throughput execution from the command line.
-
-In the folder py-graspi/tests, you can find the Python file tests.py that shows how to run them.
-
-Note: You must have Python installed onto your system
-
-
-    a. To generate the txt files:
-
-    .. code-block:: bash
-
-        python tests.py txt
-
-    b. Or to generate pdf report:
-
-    .. code-block:: bash
-
-        python tests.py pdf
-
-
-Jupyter Notebook for Py-Graspi source code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. Clone the project repository by running this command:
-
-Note: You must have Git installed on your system
-
-.. code-block:: bash
-
-   git clone https://github.com/owodolab/py-graspi.git
-
-2. Navigate to the Py-Graspi project directory by running this command:
-
-Note: You must have pip installed on your system
-
-.. code-block:: bash
-
-   cd py-graspi/
-
-3. Install the modules required to utilize Py-Graspi algorithms:
-
-Note: You must have Python installed on your system
-
-.. code-block:: bash
-
-   pip install -r src/requirements.txt
-
-4. Install jupyter notebook by running this command:
-
-.. code-block:: bash
-
-   pip install notebook
-
-5. Now, open the package in Jupyter Notebook for testing by running this command:
-
-.. code-block:: bash
-
-   jupyter notebook
-
-A localhost jupyter notebook should open with the same directories and files as the py-graspi package.

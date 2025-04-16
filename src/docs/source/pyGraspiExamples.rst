@@ -47,6 +47,15 @@ Step 3: Save descriptors to the file
     outputFile = "example_descriptors.txt"
     d.descriptorsToTxt(descriptors_dict,outputFile)
 
+Usage of Py-Graspi on a test Kaggle notebook
+====================================
+
+Navigate to the following link to open the test Kaggle notebook on Binder:
+
+`Binder Notebook <https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/3d7bf5df17b015612ab1b8261c63d0bbb00a268f?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb>`_
+
+Follow the steps in the notebook to learn about basic py-graspi functionality such as generating a graph and listing it's descriptors.
+
 
 Command Line Usage
 ==================
