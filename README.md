@@ -74,12 +74,13 @@ Follow these steps to manually install the Py-Graspi package.
    ```
 
 3. Install the py-graspi module from PyPI by running this command:
+
    **Note: You must have Python and pip installed onto your system**
    ```bash
    pip install -r src/requirements.txt
    ```
    
-4. Now you can create your project using the [Py-Graspi API](https://owodolab.github.io/py-graspi/api_overview.html) or run the high-throughput execution from the command line.
+5. Now you can create your project using the [Py-Graspi API](https://owodolab.github.io/py-graspi/api_overview.html) or run the high-throughput execution from the command line.
    In the folder py-graspi/tests, you can find the Python file tests.py that shows how to run them.
    To generate the txt files:
    ```bash
