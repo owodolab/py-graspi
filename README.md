@@ -37,7 +37,7 @@ pip show py-graspi
 Step 1: import the py-graspi package: 
 
 ```python
-import py_graspi as ig # check with kevin
+import py_graspi as ig # check with kevin if possible to import only py_graspi
 import graph as ig
 import descriptors as d
 ```
