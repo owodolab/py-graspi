@@ -29,23 +29,9 @@ def descriptors(graph_data, filename):
     DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1, ABS_wf_D \
         = shortest_path_descriptors(graph_data,filename, countBlack_Red_conn, countWhite_Blue_conn)
 
-    graph = graph_data.graph
-    edgeList = graph.get_edgelist()
-
-    STAT_e = 0
-    for edge in edgeList:
-        currentNode = edge[0]
-        toNode = edge[1]
-
-        if (graph.vs[currentNode]['color'] == 'black' and graph.vs[toNode]['color'] == 'white') or (graph.vs[currentNode]['color'] == 'white' and graph.vs[toNode]['color'] == 'black'):
-            if graph.es[graph.get_eid(currentNode, toNode)]['label'] == 'f':
-                # print(currentNode, toNode)
-                STAT_e += 1
-
-
 
     dict["STAT_n"] =  STAT_n_A + STAT_n_D
-    dict["STAT_e"] = STAT_e
+    dict["STAT_e"] = graph_data.black_green
     dict["STAT_n_D"] = STAT_n_D
     dict["STAT_n_A"] = STAT_n_A
     dict["STAT_CC_D"] = STAT_CC_D
@@ -108,7 +94,7 @@ def CC_descriptors(graph,totalBlack, totalWhite):
         countWhite_Blue_conn (int): The total number of ‘white’ vertices in connected components that connect to the bottom.
 
     """
-    cc = ig.connectedComponents(graph)
+    cc = ig.connectedComponents(graph);
     countBlack = 0
     countWhite = 0
     countBlack_Red = 0
@@ -264,42 +250,33 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
             id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
 
 
-    file = open(f"./results/{filename}_TortuosityBlackToRed.txt", 'w')
+    file = open(f"{filename}_TortuosityBlackToRed.txt", 'w')
     file.writelines(tort_black_to_red)
     file.close()
 
-    file = open(f"./results/{filename}_IdTortuosityBlackToRed.txt", 'w')
+    file = open(f"{filename}_IdTortuosityBlackToRed.txt", 'w')
     file.writelines(id_tort_black_to_red)
     file.close()
 
-    file = open(f"./results/{filename}_DistancesBlackToGreen.txt", 'w')
+    file = open(f"{filename}_DistancesBlackToGreen.txt", 'w')
     file.writelines(dist_black_to_green)
     file.close()
 
-    file = open(f"./results/{filename}_DistancesBlackToRed.txt", 'w')
+    file = open(f"{filename}_DistancesBlackToRed.txt", 'w')
     file.writelines(dist_black_to_red)
     file.close()
 
-    file = open(f"./results/{filename}_DistancesWhiteToBlue.txt", 'w')
+    file = open(f"{filename}_DistancesWhiteToBlue.txt", 'w')
     file.writelines(dist_white_to_blue)
     file.close()
 
-    file = open(f"./results/{filename}_TortuosityWhiteToBlue.txt", 'w')
+    file = open(f"{filename}_TortuosityWhiteToBlue.txt", 'w')
     file.writelines(tort_white_to_blue)
     file.close()
 
-    file = open(f"./results/{filename}_IdTortuosityWhiteToBlue.txt", 'w')
+    file = open(f"{filename}_IdTortuosityWhiteToBlue.txt", 'w')
     file.writelines(id_tort_white_to_blue)
     file.close()
-
-    if totalBlacks == 0:
-        print("totalblack")
-    if countBlack_Red_conn == 0:
-        print("countblack_red")
-    if countWhite_Blue_conn == 0:
-        print("countwhite")
-    if totalWhite == 0:
-        print("totalwhites")    
 
     return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), \
         float(white_tor / countWhite_Blue_conn), float(total_weighted_black_red / (totalBlacks + totalWhite))
