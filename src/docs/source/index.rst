@@ -34,125 +34,117 @@ The Py-Graspi project provides tools for creating, filtering, and analyzing grap
 Installation
 ------------
 
-Manual Installation of Py-Graspi
+Simple Usage of Py-Graspi package
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To install the py-graspi package, run this command in terminal
+
+.. code-block:: bash
+
+    pip install py-graspi
+
+To verify that the module has been installed
+
+.. code-block:: bash
+
+    pip show py-graspi
+
+To utilize the package, import the Py-Graspi package to your python project:
+
+.. code-block:: python
+
+    import py_graspi as ig
+
+Usage of Py-Graspi on a test Kaggle notebook
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Navigate to the following link to open the test Kaggle notebook on Binder:
+
+`Binder Notebook <https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/3d7bf5df17b015612ab1b8261c63d0bbb00a268f?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb>`_
+
+Follow the steps in the notebook to learn about basic py-graspi functionality such as generating a graph and listing it's descriptors.
+
+Manual Installation for Py-Graspi source code
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Follow these steps to manually install the Py-Graspi package.
 
-1. After opening a new project environment, activate the virtual environment for your project by running this command:
+1. Clone the project repository by running this command:
 
-- On Windows (Command Prompt):
-
-.. code-block:: bash
-
-   .\.venv\Scripts\activate
-
-- On Mac/Linux:
-
-.. code-block:: bash
-
-   source ./.venv/bin/activate
-
-2. Clone the project repository by running this command:
+Note: You must have Git installed on your system
 
 .. code-block:: bash
 
    git clone https://github.com/owodolab/py-graspi.git
 
-If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
 
-3. Navigate to the Py-Graspi project directory by running this command:
+2. Navigate to the Py-Graspi project directory by running this command:
 
 .. code-block:: bash
 
    cd py-graspi/
 
-4. Install the py-graspi module from PyPI by running this command:
+3. Install the modules required to utilize Py-Graspi algorithms
+
+Note: You must have pip installed onto your system
 
 .. code-block:: bash
 
-   pip install py-graspi
+   pip install -r src/requirements.txt
 
-5. Verify that the module has been installed correctly by ensuring that the following command DOES NOT give you a "Package not found" error.
+4. Now you can create your project using the Py-Graspi API or run the high-throughput execution from the command line.
 
-.. code-block:: bash
+In the folder py-graspi/tests, you can find the Python file tests.py that shows how to run them.
 
-   pip show py-graspi
-
-If you do not have Python installed, please visit: https://www.python.org/downloads/
-
-If you do not have pip installed or are running into issues with pip, please visit: https://pip.pypa.io/en/stable/installation/
-
-If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/
+Note: You must have Python installed onto your system
 
 
-Script Installation of Py-Graspi
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    a. To generate the txt files:
 
-Note: You must have Git installed onto your system
+    .. code-block:: bash
+
+        python tests.py txt
+
+    b. Or to generate pdf report:
+
+    .. code-block:: bash
+
+        python tests.py pdf
+
+
+Jupyter Notebook for Py-Graspi source code
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. Clone the project repository by running this command:
 
-.. code-block:: bash
-
-   git clone https://github.com/owodolab/py-graspi.git
-
-If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
-
-2. Run the following script to set up and activate the virtual environment and install the py-graspi package:
-
-.. code-block:: bash
-
-   python py-graspi/startup.py
-
-Verify that the module has been installed correctly by ensuring that the last output line on the command line says "Setup complete!" with no errors.
-
-If you do not have Python installed, please visit: https://www.python.org/downloads/
-
-Installation and Set-Up of Jupyter Notebook for Py-Graspi
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-1. After opening a new project in your preferred environment, activate the virtual environment for your project by running this command:
-
-- On Windows (Command Prompt):
-
-.. code-block:: bash
-
-   .\.venv\Scripts\activate
-
-- On Mac/Linux:
-
-.. code-block:: bash
-
-   source ./.venv/bin/activate
-
-2. Clone the project repository by running this command:
+Note: You must have Git installed on your system
 
 .. code-block:: bash
 
    git clone https://github.com/owodolab/py-graspi.git
 
-If you do not have git installed or run into issues with git, please visit: https://github.com/git-guides/install-git
+2. Navigate to the Py-Graspi project directory by running this command:
 
-3. Navigate to the Py-Graspi project directory by running this command:
+Note: You must have pip installed on your system
 
 .. code-block:: bash
 
    cd py-graspi/
 
-4. Install the py-graspi module from PyPI by running this command:
+3. Install the modules required to utilize Py-Graspi algorithms:
+
+Note: You must have Python installed on your system
 
 .. code-block:: bash
 
-   pip install py-graspi
+   pip install -r src/requirements.txt
 
-5. Install jupyter notebook by running this command:
+4. Install jupyter notebook by running this command:
 
 .. code-block:: bash
 
    pip install notebook
 
-6. Now, open the package in Jupyter Notebook for testing by running this command:
+5. Now, open the package in Jupyter Notebook for testing by running this command:
 
 .. code-block:: bash
 
