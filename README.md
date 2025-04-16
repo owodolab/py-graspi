@@ -45,16 +45,16 @@ import descriptors as d
 Step 2: For a given morphology (in Graspi input format), generate graph and calculate descriptors
 
 ```python
-filename = "data_0.5_2.2_001900.txt"
-graph_data= ig.generateGraphAdj(filename)
-dict = d.descriptors(graph_data, filename)
+filename = "data/data_0.5_2.2_001900.txt"
+graph_data = ig.generateGraph(filename)
+descriptors_dict = d.descriptors(graph_data, filename)
 ```
 
 Step 3: Save descriptors to the file 
 
 ```python
 outputFile = "example_descriptors.txt"
-d.descriptorsToTxt(dict,outputFile)
+d.descriptorsToTxt(descriptors_dict,outputFile)
 ```
 
 ## Installation
@@ -70,13 +70,13 @@ Follow these steps to manually install the Py-Graspi package.
 
 2. Navigate to the Py-Graspi project directory by running this command:
    ```bash
-   cd py-graspi/
+   cd py-graspi
    ```
 
 3. Install the py-graspi module from PyPI by running this command:
    **Note: You must have Python and pip installed onto your system**
    ```bash
-   pip install -r requirements.txt
+   pip install -r src/requirements.txt
    ```
    
 4. Now you can create your project using the [Py-Graspi API](https://owodolab.github.io/py-graspi/api_overview.html) or run the high-throughput execution from the command line.
@@ -98,7 +98,7 @@ Two formats are accepted by the command line script (igraph_testing.py): txt (st
   
 ````
 python py_graspi.py -g {total pathname of test file} 
-python igraph_testing.py {total pathname of test file}
+python graph.py -a {total pathname of test file} -p {periodicity flag 0 or 1} -n {phase flag}
 ````
 For example:
 
