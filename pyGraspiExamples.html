@@ -52,8 +52,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#simple-example-usage">Simple Example Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#command-line-usage">Command Line Usage</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#if-input-file-is-a-graphe">If input file is a .graphe</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#if-input-file-is-a-txt">If input file is a .txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#if-input-file-is-a-graphe">If input file is a .graphe</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#flags-for-command-line-functionality">Flags for command line functionality</a></li>
 </ul>
 </li>
@@ -134,17 +134,6 @@
 </pre></div>
 </div>
 <p>The usage message will provide the list of parameters that can be used. Py-GraSPI accepts input data in two formats: graph and array.</p>
-<section id="if-input-file-is-a-graphe">
-<h3>If input file is a .graphe<a class="headerlink" href="#if-input-file-is-a-graphe" title="Link to this heading"></a></h3>
-<p>If graph is constructed externally data can be inputted in the graph format, for example:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-g<span class="w"> </span>&lt;INPUT_FILE.graphe&gt;<span class="w"> </span><span class="c1">#Cannot use flags</span>
-</pre></div>
-</div>
-<p>Example of usage:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-g<span class="w"> </span>../data/test_data.graphe
-</pre></div>
-</div>
-</section>
 <section id="if-input-file-is-a-txt">
 <h3>If input file is a .txt<a class="headerlink" href="#if-input-file-is-a-txt" title="Link to this heading"></a></h3>
 <p>If data is structured (e.g., image), the following options are available</p>
@@ -157,6 +146,17 @@
 python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1">#Only periodicity flag</span>
 python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span>-n<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="c1">#Only phase flag</span>
 python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span><span class="c1">#No flag</span>
+</pre></div>
+</div>
+</section>
+<section id="if-input-file-is-a-graphe">
+<h3>If input file is a .graphe<a class="headerlink" href="#if-input-file-is-a-graphe" title="Link to this heading"></a></h3>
+<p>If graph is constructed externally data can be inputted in the graph format, for example:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-g<span class="w"> </span>&lt;INPUT_FILE.graphe&gt;<span class="w"> </span><span class="c1">#Cannot use flags</span>
+</pre></div>
+</div>
+<p>Example of usage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-g<span class="w"> </span>../data/test_data.graphe
 </pre></div>
 </div>
 </section>
