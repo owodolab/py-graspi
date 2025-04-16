@@ -7,9 +7,9 @@ else
 fi
 
 if [ $FILETYPE = "txt" ]; then
-  python3 py_graspi/tests.py txt
+  python3 tests.py txt
 elif [ $FILETYPE = "pdf" ]; then
-  python3 py_graspi/tests.py pdf
+  python3 tests.py pdf
 else
   echo "Unsupported file type. Must be txt or pdf"
   exit 1
