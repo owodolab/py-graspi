@@ -21,9 +21,65 @@ Getting Started
 
 For more details, check out the :doc:`api documentation <api_overview>`.
 
-Installation
+Simple Example Usage
 =====================
 
+Step 1: import the py-graspi package:
+
+.. code-block:: python
+
+    import py_graspi as ig
+    import graph as ig
+    import descriptors as d
+
+Step 2: For a given morphology (in Graspi input format), generate graph and calculate descriptors
+
+.. code-block:: python
+
+    filename = "data/data_0.5_2.2_001900.txt"
+    graph_data = ig.generateGraph(filename)
+    descriptors_dict = d.descriptors(graph_data, filename)
+
+Step 3: Save descriptors to the file
+
+.. code-block:: python
+
+    outputFile = "example_descriptors.txt"
+    d.descriptorsToTxt(descriptors_dict,outputFile)
+
+
+User Functionality
+==================
+
+Visualize Graphs
+~~~~~~~~~~~~~~~~
+
+To visualize graphs, call the visualize(graph_data, is_2D) function.
+
+.. code-block:: python
+
+    # Visualize the graph (2D)
+    ig.visualize(graph_data, true)
+
+Filtering Graphs
+~~~~~~~~~~~~~~~~
+To filter a graph, call the filterGraph(graph_data) function
+
+.. code-block:: python
+
+    # Filter the graph
+    fg = ig.filterGraph(graph_data)
+
+Computing Connected Components
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To compute the connected components of a graph, call the connected_components() function
+
+.. code-block:: python
+
+    # Computing connected components from the filtered graph
+    cc_graph = fg.connected_components()
+    print(f"Connected Components: {cc_graph}")
+    print(f"Number of Connected Components: {len(cc_graph)}")
 
 
 Command Line Usage
@@ -83,35 +139,3 @@ The remaining parameters are optional, and have the default values set up, if th
 - -p <{0,1}> (default 0-false) this option specifies if periodicity on the side faces is to be applied (valid only morphology inputted as the array option -a).
 
 - -n <{2,3}> default 2 (black and white, electron-donor and electron accepting material) – this option specifies the number of phases. For three-phase morphology (option -n 3, black, white and grey vertices are read, that correspond to electron-donor, electron-accepting and mixed phase material, respectively).
-
-User Functionality
-==================
-
-Get the List of Descriptors
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A **descriptor stored in a dictionary** can be found by calling the function descriptors(graph)
-
-.. code-block:: bash
-
-    dict = ig.descriptors(g)      # g is a graph object
-
-A **list of descriptors** in a **text file** can be found by calling the function descriptorsToTxt(dictionary,filename)
-
-.. code-block:: bash
-
-    ig.descriptorsToTxt(dict,"descriptors_list.txt")
-
-Visualize Graphs
-~~~~~~~~~~~~~~~~
-
-For 2D graphs, call visualize(graph, is_2D)
-
-.. code-block:: bash
-
-    # Generate a graph from the test file
-    g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
-
-    # Visualize the graph (2D)
-    ig.visualize(g, true)
-

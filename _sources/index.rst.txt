@@ -2,6 +2,7 @@ Py-GraSPI Documentation
 ========================
 
 Welcome to the documentation for **Py-Graspi**.
+
 **Py-GraSPI** (Graph-based Structure Property Identifier) is a Python package designed to compute a comprehensive set of
 descriptors for segmented microstructures using a graph-based approach. It leverages the **igraph** library to represent microstructures
 as graphs, enabling efficient computation of a wide range of descriptors with low computational overhead. Py-GraSPI is the Python
@@ -12,9 +13,9 @@ Py-GraSPI offers tools for data conversion across various formats and for post-p
    :local:
    :depth: 10
 
-Introduction
+In Brief
 ------------
-This project provides tools for creating, filtering, and analyzing graphs, with benchmarks for runtime and memory performance.
+The Py-Graspi project provides tools for creating, filtering, and analyzing graphs, with benchmarks for runtime and memory performance.
 
 .. toctree::
    :maxdepth: 10
@@ -32,7 +33,9 @@ This project provides tools for creating, filtering, and analyzing graphs, with 
 
 Installation
 ------------
-**Manual Installation of Py-Graspi**
+
+Manual Installation of Py-Graspi
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Follow these steps to manually install the Py-Graspi package.
 
@@ -83,7 +86,8 @@ If you do not have pip installed or are running into issues with pip, please vis
 If there are any other issues with installation, please visit: https://python.igraph.org/en/stable/
 
 
-**Script Installation of Py-Graspi**
+Script Installation of Py-Graspi
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Note: You must have Git installed onto your system
 
@@ -105,7 +109,8 @@ Verify that the module has been installed correctly by ensuring that the last ou
 
 If you do not have Python installed, please visit: https://www.python.org/downloads/
 
-**Installation and Set-Up of Jupyter Notebook for Py-Graspi**
+Installation and Set-Up of Jupyter Notebook for Py-Graspi
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. After opening a new project in your preferred environment, activate the virtual environment for your project by running this command:
 
@@ -154,51 +159,3 @@ If you do not have git installed or run into issues with git, please visit: http
    jupyter notebook
 
 A localhost jupyter notebook should open with the same directories and files as the py-graspi package.
-
-
-
-Usage
------
-Below is are quick examples of how to use the package to construct a graph from an input file,
-visualize it in 2D, filter it to compute the connected components, and finally, extract the descriptors.
-
-This example usage will output the number of connected components and additional details as well as
-return a txt file containing a list of the descriptors. This package's functionality in returning the descriptors
-for a microstructure is thorough. A full list of descriptors and their definitions can be found on the descriptors tab.
-
-1. To use the package in your project files, import the py-graspi package.
-
-.. code-block:: python
-
-   import graspi_igraph as ig
-
-2. To generate graphs, call the generateGraph(file) function which takes in an input test file name.
-
-.. code-block:: python
-
-   # Generate a graph from the test file
-   g = ig.generateGraph("2D-testFile/testFile-10-2D.txt")   # utilizing the test file found in 2D-testFiles folder as an example
-
-3. To visualize graphs, call the visualize(graph, is_2D) function.
-
-.. code-block:: python
-
-   # Visualize the graph (2D)
-   ig.visualize(g, true)
-
-4. To filter a graph and compute the number of connected components, call filterGraph(graph)
-
-.. code-block:: python
-
-   # Compute connected components
-   fg = ig.filterGraph(g)
-   print(f"Number of Connected Components: {len(fg.connected_components())}")
-   print(f"Connected Components: {fg.connected_components()}")
-
-5. To get a dictionary of descriptors for a given graph, call descriptors(graph)
-
-.. code-block:: python
-
-   # Produce a list of descriptors
-   ig.descriptorsToTxt(ig.descriptors(g), "descriptors_list.txt")
-

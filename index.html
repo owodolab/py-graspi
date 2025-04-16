@@ -80,22 +80,27 @@
              
   <section id="py-graspi-documentation">
 <h1>Py-GraSPI Documentation<a class="headerlink" href="#py-graspi-documentation" title="Link to this heading"></a></h1>
-<p>Welcome to the documentation for <strong>Py-Graspi</strong>.
-<strong>Py-GraSPI</strong> (Graph-based Structure Property Identifier) is a Python package designed to compute a comprehensive set of
+<p>Welcome to the documentation for <strong>Py-Graspi</strong>.</p>
+<p><strong>Py-GraSPI</strong> (Graph-based Structure Property Identifier) is a Python package designed to compute a comprehensive set of
 descriptors for segmented microstructures using a graph-based approach. It leverages the <strong>igraph</strong> library to represent microstructures
 as graphs, enabling efficient computation of a wide range of descriptors with low computational overhead. Py-GraSPI is the Python
 implementation of the original <strong>GraSPI package</strong>, which was developed in C/C++. In addition to descriptor computation,
 Py-GraSPI offers tools for data conversion across various formats and for post-processing the raw outputs of the graph analysis.</p>
 <nav class="contents local" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#introduction" id="id1">Introduction</a></p></li>
-<li><p><a class="reference internal" href="#installation" id="id2">Installation</a></p></li>
-<li><p><a class="reference internal" href="#usage" id="id3">Usage</a></p></li>
+<li><p><a class="reference internal" href="#in-brief" id="id1">In Brief</a></p></li>
+<li><p><a class="reference internal" href="#installation" id="id2">Installation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#manual-installation-of-py-graspi" id="id3">Manual Installation of Py-Graspi</a></p></li>
+<li><p><a class="reference internal" href="#script-installation-of-py-graspi" id="id4">Script Installation of Py-Graspi</a></p></li>
+<li><p><a class="reference internal" href="#installation-and-set-up-of-jupyter-notebook-for-py-graspi" id="id5">Installation and Set-Up of Jupyter Notebook for Py-Graspi</a></p></li>
+</ul>
+</li>
 </ul>
 </nav>
-<section id="introduction">
-<h2><a class="toc-backref" href="#id1" role="doc-backlink">Introduction</a><a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
-<p>This project provides tools for creating, filtering, and analyzing graphs, with benchmarks for runtime and memory performance.</p>
+<section id="in-brief">
+<h2><a class="toc-backref" href="#id1" role="doc-backlink">In Brief</a><a class="headerlink" href="#in-brief" title="Link to this heading"></a></h2>
+<p>The Py-Graspi project provides tools for creating, filtering, and analyzing graphs, with benchmarks for runtime and memory performance.</p>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
@@ -104,13 +109,14 @@ Py-GraSPI offers tools for data conversion across various formats and for post-p
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiInputs.html">Inputs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiExamples.html">Example of Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="pyGraspiExamples.html#getting-started">Getting Started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyGraspiExamples.html#installation">Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pyGraspiExamples.html#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiExamples.html#simple-example-usage">Simple Example Usage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyGraspiExamples.html#user-functionality">User Functionality</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="pyGraspiExamples.html#get-the-list-of-descriptors">Get the List of Descriptors</a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyGraspiExamples.html#visualize-graphs">Visualize Graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyGraspiExamples.html#filtering-graphs">Filtering Graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyGraspiExamples.html#computing-connected-components">Computing Connected Components</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="pyGraspiExamples.html#command-line-usage">Command Line Usage</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
@@ -160,7 +166,8 @@ Py-GraSPI offers tools for data conversion across various formats and for post-p
 </section>
 <section id="installation">
 <h2><a class="toc-backref" href="#id2" role="doc-backlink">Installation</a><a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
-<p><strong>Manual Installation of Py-Graspi</strong></p>
+<section id="manual-installation-of-py-graspi">
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">Manual Installation of Py-Graspi</a><a class="headerlink" href="#manual-installation-of-py-graspi" title="Link to this heading"></a></h3>
 <p>Follow these steps to manually install the Py-Graspi package.</p>
 <ol class="arabic simple">
 <li><p>After opening a new project environment, activate the virtual environment for your project by running this command:</p></li>
@@ -205,7 +212,9 @@ Py-GraSPI offers tools for data conversion across various formats and for post-p
 <p>If you do not have Python installed, please visit: <a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></p>
 <p>If you do not have pip installed or are running into issues with pip, please visit: <a class="reference external" href="https://pip.pypa.io/en/stable/installation/">https://pip.pypa.io/en/stable/installation/</a></p>
 <p>If there are any other issues with installation, please visit: <a class="reference external" href="https://python.igraph.org/en/stable/">https://python.igraph.org/en/stable/</a></p>
-<p><strong>Script Installation of Py-Graspi</strong></p>
+</section>
+<section id="script-installation-of-py-graspi">
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Script Installation of Py-Graspi</a><a class="headerlink" href="#script-installation-of-py-graspi" title="Link to this heading"></a></h3>
 <p>Note: You must have Git installed onto your system</p>
 <ol class="arabic simple">
 <li><p>Clone the project repository by running this command:</p></li>
@@ -222,7 +231,9 @@ Py-GraSPI offers tools for data conversion across various formats and for post-p
 </div>
 <p>Verify that the module has been installed correctly by ensuring that the last output line on the command line says “Setup complete!” with no errors.</p>
 <p>If you do not have Python installed, please visit: <a class="reference external" href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></p>
-<p><strong>Installation and Set-Up of Jupyter Notebook for Py-Graspi</strong></p>
+</section>
+<section id="installation-and-set-up-of-jupyter-notebook-for-py-graspi">
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Installation and Set-Up of Jupyter Notebook for Py-Graspi</a><a class="headerlink" href="#installation-and-set-up-of-jupyter-notebook-for-py-graspi" title="Link to this heading"></a></h3>
 <ol class="arabic simple">
 <li><p>After opening a new project in your preferred environment, activate the virtual environment for your project by running this command:</p></li>
 </ol>
@@ -271,49 +282,6 @@ Py-GraSPI offers tools for data conversion across various formats and for post-p
 </div>
 <p>A localhost jupyter notebook should open with the same directories and files as the py-graspi package.</p>
 </section>
-<section id="usage">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Usage</a><a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
-<p>Below is are quick examples of how to use the package to construct a graph from an input file,
-visualize it in 2D, filter it to compute the connected components, and finally, extract the descriptors.</p>
-<p>This example usage will output the number of connected components and additional details as well as
-return a txt file containing a list of the descriptors. This package’s functionality in returning the descriptors
-for a microstructure is thorough. A full list of descriptors and their definitions can be found on the descriptors tab.</p>
-<ol class="arabic simple">
-<li><p>To use the package in your project files, import the py-graspi package.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">graspi_igraph</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ig</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="2">
-<li><p>To generate graphs, call the generateGraph(file) function which takes in an input test file name.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a graph from the test file</span>
-<span class="n">g</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">generateGraph</span><span class="p">(</span><span class="s2">&quot;2D-testFile/testFile-10-2D.txt&quot;</span><span class="p">)</span>   <span class="c1"># utilizing the test file found in 2D-testFiles folder as an example</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="3">
-<li><p>To visualize graphs, call the visualize(graph, is_2D) function.</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize the graph (2D)</span>
-<span class="n">ig</span><span class="o">.</span><span class="n">visualize</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">true</span><span class="p">)</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="4">
-<li><p>To filter a graph and compute the number of connected components, call filterGraph(graph)</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute connected components</span>
-<span class="n">fg</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">filterGraph</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of Connected Components: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">fg</span><span class="o">.</span><span class="n">connected_components</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Connected Components: </span><span class="si">{</span><span class="n">fg</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<ol class="arabic simple" start="5">
-<li><p>To get a dictionary of descriptors for a given graph, call descriptors(graph)</p></li>
-</ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Produce a list of descriptors</span>
-<span class="n">ig</span><span class="o">.</span><span class="n">descriptorsToTxt</span><span class="p">(</span><span class="n">ig</span><span class="o">.</span><span class="n">descriptors</span><span class="p">(</span><span class="n">g</span><span class="p">),</span> <span class="s2">&quot;descriptors_list.txt&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
 </section>
 </section>
 
