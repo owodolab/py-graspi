@@ -37,7 +37,7 @@ pip show py-graspi
 Step 1: import the py-graspi package: 
 
 ```python
-import py_graspi as ig
+import py_graspi as ig # check with kevin
 import graph as ig
 import descriptors as d
 ```
@@ -83,11 +83,11 @@ Follow these steps to manually install the Py-Graspi package.
    In the folder py-graspi/tests, you can find the Python file tests.py that shows how to run them.
    To generate the txt files:
    ```bash
-   python test.py txt
+   python tests.py txt
    ```
    Or to generate pdf report:
    ```bash
-   python test.py pdf
+   python tests.py pdf
    ```
 
 
@@ -103,8 +103,8 @@ python igraph_testing.py {total pathname of test file}
 For example:
 
 ```
-python igraph_testing.py -g ../data/data_4_3.graphe
-python igraph_testing.py ../data/2D-testFile/testFile-10-2D.txt 
+python graph.py -g ../data/test_data.graphe
+python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -p 0 -n 2
 ```
 Several other options are available - see the documentation for more details
 
