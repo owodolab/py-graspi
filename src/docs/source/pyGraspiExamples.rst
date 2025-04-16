@@ -21,6 +21,11 @@ Getting Started
 
 For more details, check out the :doc:`api documentation <api_overview>`.
 
+Installation
+=====================
+
+
+
 Command Line Usage
 ==================
 The user can use Py-GraSPI from the command line. To begin, ensure that the environment is in the src directory.
