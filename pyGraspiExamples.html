@@ -57,7 +57,12 @@
 <li class="toctree-l3"><a class="reference internal" href="#computing-connected-components">Computing Connected Components</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#command-line-usage">Command Line Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#command-line-usage">Command Line Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#if-input-file-is-a-graphe">If input file is a .graphe</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#if-input-file-is-a-txt">If input file is a .txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flags-for-command-line-functionality">Flags for command line functionality</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
@@ -164,6 +169,8 @@
 </pre></div>
 </div>
 <p>The usage message will provide the list of parameters that can be used. Py-GraSPI accepts input data in two formats: graph and array.</p>
+<section id="if-input-file-is-a-graphe">
+<h3>If input file is a .graphe<a class="headerlink" href="#if-input-file-is-a-graphe" title="Link to this heading"></a></h3>
 <p>If graph is constructed externally data can be inputted in the graph format, for example:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-g<span class="w"> </span>&lt;INPUT_FILE.graphe&gt;<span class="w"> </span><span class="c1">#Cannot use flags</span>
 </pre></div>
@@ -172,6 +179,9 @@
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-g<span class="w"> </span>../data/test_data.graphe
 </pre></div>
 </div>
+</section>
+<section id="if-input-file-is-a-txt">
+<h3>If input file is a .txt<a class="headerlink" href="#if-input-file-is-a-txt" title="Link to this heading"></a></h3>
 <p>If data is structured (e.g., image), the following options are available</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>&lt;INPUT_FILE.txt&gt;<span class="w"> </span>-p<span class="w"> </span>&lt;<span class="o">{</span><span class="m">0</span>,1<span class="o">}</span>&gt;<span class="w"> </span><span class="o">(</span>default<span class="w"> </span><span class="m">0</span>-false<span class="o">)</span><span class="w"> </span>-n<span class="w"> </span>&lt;<span class="o">{</span><span class="m">2</span>,3<span class="o">}</span>&gt;<span class="w"> </span><span class="o">(</span>default<span class="w"> </span><span class="m">2</span><span class="o">)</span><span class="w"> </span><span class="c1">#Can use flags</span>
 </pre></div>
@@ -184,7 +194,10 @@ python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w">
 python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span><span class="c1">#No flag</span>
 </pre></div>
 </div>
-<p>Py-GraSPI requires one one mandatory input parameter: the name of the input file &lt;INPUT_FILE&gt;. Ensure that filepath is correctly formatted.
+</section>
+<section id="flags-for-command-line-functionality">
+<h3>Flags for command line functionality<a class="headerlink" href="#flags-for-command-line-functionality" title="Link to this heading"></a></h3>
+<p>Py-GraSPI requires one mandatory input parameter: the name of the input file &lt;INPUT_FILE&gt;. Ensure that filepath is correctly formatted.
 Using “../” allows access to files that may not be in the src directory.</p>
 <p>The remaining parameters are optional, and have the default values set up, if the parameter is not explicitly provided.</p>
 <ul class="simple">
@@ -193,6 +206,7 @@ Using “../” allows access to files that may not be in the src directory.</p>
 <li><p>-p &lt;{0,1}&gt; (default 0-false) this option specifies if periodicity on the side faces is to be applied (valid only morphology inputted as the array option -a).</p></li>
 <li><p>-n &lt;{2,3}&gt; default 2 (black and white, electron-donor and electron accepting material) – this option specifies the number of phases. For three-phase morphology (option -n 3, black, white and grey vertices are read, that correspond to electron-donor, electron-accepting and mixed phase material, respectively).</p></li>
 </ul>
+</section>
 </section>
 </section>
 

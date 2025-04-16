@@ -98,6 +98,9 @@ To learn the formatting of the command line arguments, the user is encouraged to
 
 The usage message will provide the list of parameters that can be used. Py-GraSPI accepts input data in two formats: graph and array.
 
+If input file is a .graphe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 If graph is constructed externally data can be inputted in the graph format, for example:
 
 .. code-block:: bash
@@ -109,6 +112,9 @@ Example of usage:
 .. code-block:: bash
 
     python graph.py -g ../data/test_data.graphe
+
+If input file is a .txt
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If data is structured (e.g., image), the following options are available
 
@@ -127,7 +133,11 @@ Examples of usage:
     python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -n 3 #Only phase flag
     python graph.py -a ../data/2D-testFile/testFile-10-2D.txt #No flag
 
-Py-GraSPI requires one one mandatory input parameter: the name of the input file <INPUT_FILE>. Ensure that filepath is correctly formatted.
+
+Flags for command line functionality
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Py-GraSPI requires one mandatory input parameter: the name of the input file <INPUT_FILE>. Ensure that filepath is correctly formatted.
 Using "../" allows access to files that may not be in the src directory.
 
 The remaining parameters are optional, and have the default values set up, if the parameter is not explicitly provided.
