@@ -6,6 +6,40 @@ Advanced
 The Py-GraSPI package also offers advanced functionality for developers and users with advanced
 technical skills.
 
+User Functionality
+==================
+
+Visualize Graphs
+~~~~~~~~~~~~~~~~
+
+To visualize graphs, call the visualize(graph_data, is_2D) function.
+
+.. code-block:: python
+
+    # Visualize the graph (2D)
+    ig.visualize(graph_data, true)
+
+Filtering Graphs
+~~~~~~~~~~~~~~~~
+To filter a graph, call the filterGraph(graph_data) function
+
+.. code-block:: python
+
+    # Filter the graph
+    fg = ig.filterGraph(graph_data)
+
+Computing Connected Components
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To compute the connected components of a graph, call the connected_components() function
+
+.. code-block:: python
+
+    # Computing connected components from the filtered graph
+    cc_graph = fg.connected_components()
+    print(f"Connected Components: {cc_graph}")
+    print(f"Number of Connected Components: {len(cc_graph)}")
+
+
 Running Memory Tests
 ====================
 

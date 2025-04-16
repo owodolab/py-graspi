@@ -52,6 +52,12 @@
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiDefinitions.html">Basic Definitions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api_overview.html">API Overview</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#user-functionality">User Functionality</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#visualize-graphs">Visualize Graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#filtering-graphs">Filtering Graphs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#computing-connected-components">Computing Connected Components</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#running-memory-tests">Running Memory Tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#testing-algorithms">Testing Algorithms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#translating-plt-files-to-txt-files">Translating .plt files to .txt files</a></li>
@@ -97,6 +103,35 @@
 <span id="id1"></span><h1>Advanced<a class="headerlink" href="#advanced" title="Link to this heading"></a></h1>
 <p>The Py-GraSPI package also offers advanced functionality for developers and users with advanced
 technical skills.</p>
+<section id="user-functionality">
+<h2>User Functionality<a class="headerlink" href="#user-functionality" title="Link to this heading"></a></h2>
+<section id="visualize-graphs">
+<h3>Visualize Graphs<a class="headerlink" href="#visualize-graphs" title="Link to this heading"></a></h3>
+<p>To visualize graphs, call the visualize(graph_data, is_2D) function.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize the graph (2D)</span>
+<span class="n">ig</span><span class="o">.</span><span class="n">visualize</span><span class="p">(</span><span class="n">graph_data</span><span class="p">,</span> <span class="n">true</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="filtering-graphs">
+<h3>Filtering Graphs<a class="headerlink" href="#filtering-graphs" title="Link to this heading"></a></h3>
+<p>To filter a graph, call the filterGraph(graph_data) function</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter the graph</span>
+<span class="n">fg</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">filterGraph</span><span class="p">(</span><span class="n">graph_data</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="computing-connected-components">
+<h3>Computing Connected Components<a class="headerlink" href="#computing-connected-components" title="Link to this heading"></a></h3>
+<p>To compute the connected components of a graph, call the connected_components() function</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Computing connected components from the filtered graph</span>
+<span class="n">cc_graph</span> <span class="o">=</span> <span class="n">fg</span><span class="o">.</span><span class="n">connected_components</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Connected Components: </span><span class="si">{</span><span class="n">cc_graph</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of Connected Components: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">cc_graph</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
 <section id="running-memory-tests">
 <h2>Running Memory Tests<a class="headerlink" href="#running-memory-tests" title="Link to this heading"></a></h2>
 <p>To run memory tests, run the following command in the terminal:</p>

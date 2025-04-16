@@ -48,40 +48,6 @@ Step 3: Save descriptors to the file
     d.descriptorsToTxt(descriptors_dict,outputFile)
 
 
-User Functionality
-==================
-
-Visualize Graphs
-~~~~~~~~~~~~~~~~
-
-To visualize graphs, call the visualize(graph_data, is_2D) function.
-
-.. code-block:: python
-
-    # Visualize the graph (2D)
-    ig.visualize(graph_data, true)
-
-Filtering Graphs
-~~~~~~~~~~~~~~~~
-To filter a graph, call the filterGraph(graph_data) function
-
-.. code-block:: python
-
-    # Filter the graph
-    fg = ig.filterGraph(graph_data)
-
-Computing Connected Components
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-To compute the connected components of a graph, call the connected_components() function
-
-.. code-block:: python
-
-    # Computing connected components from the filtered graph
-    cc_graph = fg.connected_components()
-    print(f"Connected Components: {cc_graph}")
-    print(f"Number of Connected Components: {len(cc_graph)}")
-
-
 Command Line Usage
 ==================
 The user can use Py-GraSPI from the command line. To begin, ensure that the environment is in the src directory.
