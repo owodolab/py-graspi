@@ -7,8 +7,8 @@ import igraph as ig
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-from . import descriptors as d
-from . import graph_data_class as GraphData
+from py_graspi import descriptors as d
+from py_graspi import graph_data_class as GraphData
 
 import math
 
