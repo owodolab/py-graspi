@@ -2,10 +2,10 @@ from setuptools import setup, find_packages
 
 setup(
     name = "py_graspi",
-    author = "Wenqi Zheng",
-    author_email = "wenqizhe@buffalo.edu",
+    author = "Olga Wodo",
+    author_email = "olgawodo@buffalo.edu",
     version = "0.1.1.4-beta",
-    description = "Utilize Python-igraph to produce similar functionality as GraSPI",
+    description = "Graph-based descriptor for microstructures featurization",
     packages = find_packages(),
     classifiers = ["Programming Language :: Python"],
     install_requires=[
