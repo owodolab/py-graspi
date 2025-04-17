@@ -1,4 +1,4 @@
-#may need to import graph_data_class.py, not sure come back to this
+#Not sure if I need to import graph_data_class.py, come back to this
 from .descriptors import (descriptors, descriptorsToTxt, CC_descriptors,
                           shortest_path_descriptors, filterGraph_metavertices)
 from .graph import (generateGraph, generateGraphAdj, generateGraphGraphe, adjList,
