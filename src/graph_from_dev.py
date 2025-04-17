@@ -230,10 +230,10 @@ def generateGraphAdj(file):
 
     black_interface_red = len(black)
     white_interface_blue = len(white)
-    # print("black if red : ", black_interface_red)
-    # print(black)
-    # print("white if blue : ", white_interface_blue)
-    # print(white)
+    print("black if red : ", black_interface_red)
+    print(black)
+    print("white if blue : ", white_interface_blue)
+    print(white)
 
     # Updating final computed values into graph_data
     graph_data.black_green = black_green

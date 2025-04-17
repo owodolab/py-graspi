@@ -45,7 +45,7 @@ def descriptors(graph_data, filename):
 
 
     dict["STAT_n"] =  STAT_n_A + STAT_n_D
-    dict["STAT_e"] = STAT_e
+    dict["STAT_e"] = graph_data.black_green
     dict["STAT_n_D"] = STAT_n_D
     dict["STAT_n_A"] = STAT_n_A
     dict["STAT_CC_D"] = STAT_CC_D
