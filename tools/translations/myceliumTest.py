@@ -1,11 +1,9 @@
 import os
 import sys
 import igraph
-# sys.path.append(os.path.abspath('translations'))
 sys.path.append(os.path.abspath('../../src'))
 from py_graspi import graph as ig
 
-# import tools.translations.img_to_txt as translate
 import img_to_txt as translate
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Button
