@@ -1,6 +1,6 @@
 import math
 import numpy as np
-import graph as ig
+from . import graph as ig
 
 def descriptors(graph_data, filename):
     """

@@ -5,4 +5,4 @@ from .graph import (generateGraph, generateGraphAdj, generateGraphGraphe, adjLis
                     graphe_adjList, adjvertexColors, visualize, connectedComponents,
                     filterGraph, filterGraph_metavertices, filterGraph_blue_red )
 
-import graph_data_class
+from . import graph_data_class
