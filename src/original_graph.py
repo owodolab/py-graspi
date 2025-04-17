@@ -96,6 +96,9 @@ def generateGraphAdj(file):
     redComponent = set(fg_red.subcomponent(graph_data.redVertex, mode="ALL"))
     blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
 
+    print(redComponent)
+    print(blueComponent)
+
     # Add Green Interface and it's color
     g.add_vertices(1)
     g.vs[g.vcount() - 1]['color'] = 'green'

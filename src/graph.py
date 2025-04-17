@@ -119,6 +119,8 @@ def generateGraphAdj(file):
     redComponent = set(fg_red.subcomponent(graph_data.redVertex, mode="ALL"))
     blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
 
+    # print(redComponent)
+    # print(blueComponent)
     # Add Green Interface and it's color
     
     if DEBUG:
@@ -168,11 +170,9 @@ def generateGraphAdj(file):
         edge_count += 1
         source_vertex = edge.source
         target_vertex = edge.target
-
             
         source_vertex_color = g.vs[source_vertex]['color']
         target_vertex_color = g.vs[target_vertex]['color']
-            
 
         if(source_vertex_color == 'blue' or target_vertex_color == 'blue'):
             if(source_vertex_color == 'blue' and target_vertex_color == 'white') \
@@ -188,16 +188,16 @@ def generateGraphAdj(file):
         if (source_vertex_color == 'black' and target_vertex_color == 'white') \
             or (source_vertex_color == 'white' and target_vertex_color == 'black'):
 
-            if (source_vertex_color == 'black' and source_vertex in redComponent):
+            if (source_vertex_color == 'black' and source_vertex in redComponent and edge['label'] == 'f'):
                 black.add(source_vertex)
                 vertices.add(source_vertex)
-            if(target_vertex_color == 'black' and target_vertex in redComponent):
+            if(target_vertex_color == 'black' and target_vertex in redComponent and edge['label'] == 'f'):
                 black.add(target_vertex)
                 vertices.add(target_vertex)
             
-            if (source_vertex_color == 'white' and source_vertex in blueComponent):
+            if (source_vertex_color == 'white' and source_vertex in blueComponent and edge['label'] == 'f'):
                 white.add(source_vertex)
-            if (target_vertex_color == 'white' and target_vertex in blueComponent):
+            if (target_vertex_color == 'white' and target_vertex in blueComponent and edge['label'] == 'f'):
                 white.add(target_vertex)
             
             if edge['label'] == 'f':
