@@ -13,7 +13,7 @@ import src.graph_data_class as GraphData
 import math
 PERIODICITY = False
 DEBUG = False
-pixelSize = 2
+pixelSize = 1
 n_flag = 2
 
 def generateGraph(file):
@@ -221,7 +221,6 @@ def generateGraphAdj(file):
         g.es[starting_index:]["label"] = labels
         g.es[starting_index:]["weight"] = weights
 
-
     black_interface_red = len(black)
     white_interface_blue = len(white)
 
@@ -246,9 +245,6 @@ def generateGraphAdj(file):
         print("Length: ", len(g.neighbors(g.vcount() - 2)))
         # exit()
 
-    global pixelSize
-    for e in g.es:
-        e['weight'] *= pixelSize
     return graph_data
 
 
@@ -828,7 +824,7 @@ def main():
     global n_flag
     n_flag = 2
     global pixelSize
-    pixelSize = 2  # store default value for -s
+    pixelSize = 1  # store default value for -s
 
     # Validate and parse command-line arguments
     if len(sys.argv) < 3:
@@ -869,7 +865,7 @@ def main():
                     return
             elif sys.argv[i] == "-s":
                 if i + 1 < len(sys.argv):
-                    pixelSize = sys.argv[i + 1]
+                    pixelSize = float(sys.argv[i + 1])
                     i += 2
                 else:
                     print("Missing value for -s flag.")
