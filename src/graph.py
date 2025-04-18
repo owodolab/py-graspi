@@ -372,18 +372,18 @@ def adjList(fileName):
                                 if DEBUG:
                                     first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("f")
-                                edge_weights.append(1)
+                                edge_weights.append(1*pixelSize)
                             elif (dx, dy, dz) == offsets[4] or (dx, dy, dz) == offsets[5] or (dx, dy, dz) == offsets[
                                 6] or (dx, dy, dz) == offsets[7] or (dx, dy, dz) == offsets[8]:
                                 if DEBUG:
                                     third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("t")
-                                edge_weights.append(float(math.sqrt(3)))
+                                edge_weights.append(float(math.sqrt(3))*pixelSize)
                             else:
                                 if DEBUG:
                                     second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("s")
-                                edge_weights.append(float(math.sqrt(2)))
+                                edge_weights.append(float(math.sqrt(2))*pixelSize)
                             neighbors.append(neighbor_vertex)
                     adjacency_list[current_vertex] = neighbors
 
