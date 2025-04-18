@@ -192,7 +192,6 @@ def generateGraphAdj(file):
         #all edge traversal
         #Add black/white edges to green interface node.
     for edge in g.es:
-    for edge in g.es:
         edge_count += 1
         source_vertex = edge.source
         target_vertex = edge.target
