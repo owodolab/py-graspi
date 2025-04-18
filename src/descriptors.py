@@ -167,7 +167,6 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
     white_tor_distances = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
 
     black_red_unfiltered_distance = fg_red_unfiltered.shortest_paths(source=redVertex, weights=fg_red_unfiltered.es['weight'])[0]
-
     distances = [d * pixelSize for d in distances]
     black_tor_distances = [d * pixelSize for d in black_tor_distances]
     white_tor_distances = [d * pixelSize for d in white_tor_distances]
