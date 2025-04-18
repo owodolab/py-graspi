@@ -260,8 +260,6 @@ def generateGraphAdj(file):
 
     starting_index = g.ecount()
 
-
-
     green_edges_to_add = []
     green_edges_labels = []
     green_edges_weights = []
