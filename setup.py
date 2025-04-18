@@ -4,7 +4,7 @@ setup(
     name = "py_graspi",
     author = "Wenqi Zheng",
     author_email = "wenqizhe@buffalo.edu",
-    version = "0.2.0.2",
+    version = "0.2.0.3",
     description = "Utilize Python-igraph to produce similar functionality as GraSPI",
     packages = find_packages(where='src'),
     package_dir={'': 'src'},
