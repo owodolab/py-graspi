@@ -893,11 +893,11 @@ def main():
     filteredGraph = filterGraph(graph_data.graph)
     visualize(filteredGraph, graph_data.is_2D)
 
-    #if DEBUG:
-    dic = d.descriptors(graph_data.graph,sys.argv[2],pixelSize)
-    #print(connectedComponents(filteredGraph))
-    for key, value in dic.items():
-        print(key, value)
+    if DEBUG:
+        dic = d.descriptors(graph_data.graph,sys.argv[2],pixelSize)
+        print(connectedComponents(filteredGraph))
+        for key, value in dic.items():
+            print(key, value)
 
 
 if __name__ == '__main__':
