@@ -45,7 +45,7 @@ def descriptors(graph_data, filename):
 
 
     dict["STAT_n"] =  STAT_n_A + STAT_n_D
-    dict["STAT_e"] = STAT_e
+    dict["STAT_e"] = graph_data.black_green
     dict["STAT_n_D"] = STAT_n_D
     dict["STAT_n_A"] = STAT_n_A
     dict["STAT_CC_D"] = STAT_CC_D
@@ -299,8 +299,8 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
     if countWhite_Blue_conn == 0:
         print("countwhite")
     if totalWhite == 0:
-        print("totalwhites")
-        
+        print("totalwhites")    
+
     return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), \
         float(white_tor / countWhite_Blue_conn), float(total_weighted_black_red / (totalBlacks + totalWhite))
 

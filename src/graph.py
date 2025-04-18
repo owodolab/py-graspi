@@ -88,6 +88,13 @@ def generateGraphAdj(file):
 
     # labels, totalWhite, totalBlack = vertexColors(file)
 
+    f = open(file, 'r')
+    line = f.readline()
+    line = line.split()
+    dimX = int(line[0])
+    dimY = int(line[1])
+
+
     g = graph_data.graph
     is_2D = graph_data.is_2D
     black_vertices = graph_data.black_vertices
@@ -96,9 +103,32 @@ def generateGraphAdj(file):
     blueVertex = graph_data.blueVertex
     dim = graph_data.dim
 
+
     # add color to blue and red metavertices
     g.vs[g.vcount()-2]['color'] = 'blue'
     g.vs[g.vcount()-1]['color'] = 'red'
+
+    shortest_path_to_red = g.shortest_paths(source=graph_data.redVertex, weights=g.es['weight'])[0]
+    shortest_path_to_blue = g.shortest_paths(source=graph_data.blueVertex, weights=g.es['weight'])[0]
+
+    if PERIODICITY:
+        for i in range(0, g.vcount() - 2, dimX):
+            # first add first neighbor wrap around
+            g.add_edge(g.vs[i], g.vs[i + (dimX - 1)])
+            g.es[g.ecount() - 1]['label'] = 'f'
+            g.es[g.ecount() - 1]['weight'] = 1
+
+            # add diagnol wrap arounds
+            if i - 1 >= 0:
+                g.add_edge(g.vs[i], g.vs[i - 1])
+                g.es[g.ecount() - 1]['label'] = 's'
+                g.es[g.ecount() - 1]['weight'] = math.sqrt(2)
+
+            if i + (dimX * 2 - 1) <= dimX * dimY:
+                g.add_edge(g.vs[i], g.vs[i + (dimX * 2 - 1)])
+                g.es[g.ecount() - 1]['label'] = 's'
+                g.es[g.ecount() - 1]['weight'] = math.sqrt(2)
+
 
     # shortest_start = time.time()
 
@@ -162,12 +192,18 @@ def generateGraphAdj(file):
         #all edge traversal
         #Add black/white edges to green interface node.
     for edge in g.es:
+    for edge in g.es:
         edge_count += 1
         source_vertex = edge.source
         target_vertex = edge.target
-
+            
         source_vertex_color = g.vs[source_vertex]['color']
         target_vertex_color = g.vs[target_vertex]['color']
+
+        # if source_vertex == 30711 or target_vertex == 30711:
+        #     print("src color:", source_vertex_color)
+        #     print("target color:", target_vertex_color)
+
 
         if(source_vertex_color == 'blue' or target_vertex_color == 'blue'):
             if(source_vertex_color == 'blue' and target_vertex_color == 'white') \
@@ -182,17 +218,17 @@ def generateGraphAdj(file):
         #Add black/white edges to green interface node.
         if (source_vertex_color == 'black' and target_vertex_color == 'white') \
             or (source_vertex_color == 'white' and target_vertex_color == 'black'):
-
+ 
             if (source_vertex_color == 'black' and source_vertex in redComponent):
                 black.add(source_vertex)
                 vertices.add(source_vertex)
-            if(target_vertex_color == 'black' and target_vertex in redComponent):
+            if(target_vertex_color == 'black' and target_vertex in redComponent ):
                 black.add(target_vertex)
                 vertices.add(target_vertex)
             
-            if (source_vertex_color == 'white' and source_vertex in blueComponent):
+            if (source_vertex_color == 'white' and source_vertex in blueComponent ):
                 white.add(source_vertex)
-            if (target_vertex_color == 'white' and target_vertex in blueComponent):
+            if (target_vertex_color == 'white' and target_vertex in blueComponent ):
                 white.add(target_vertex)
             
             if edge['label'] == 'f':
@@ -257,11 +293,18 @@ def generateGraphAdj(file):
     g.es[edge_count:]["label"] = green_edges_labels
     g.es[edge_count:]["weight"] = green_edges_weights    
 
-    black_interface_red = len(black)
-    white_interface_blue = len(white)
+    black_interface_red = len(black)    #correct
+    white_interface_blue = len(white)   #correct
+
+    # print(green_edges_to_add.sort())
+
+    # print("black if red : ", len(black))
+    # print(black)
+    # print("white if blue : ", len(white))
+    # print(white)
 
     # Create graph_data_class object
-    graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2D)
+    # graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2D)
 
     # Store vertex attributes
     graph_data.graph = g
@@ -270,17 +313,10 @@ def generateGraphAdj(file):
     graph_data.black_green = black_green
     graph_data.black_interface_red = black_interface_red
     graph_data.white_interface_blue = white_interface_blue
-    graph_data.dim = dim
     graph_data.interface_edge_comp_paths = interface_edge_comp_paths
-    graph_data.redVertex = redVertex
-    graph_data.blueVertex = blueVertex
     graph_data.CT_n_D_adj_An = CT_n_D_adj_An
     graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
-
-
-    if redVertex is not None and blueVertex is not None:
-        graph_data.compute_shortest_paths(red_vertex=redVertex, blue_vertex=blueVertex)
-
+    
 
     loop_end = time.time()     
     loop_time = loop_end - loop_start
@@ -302,8 +338,6 @@ def generateGraphAdj(file):
         print("Length: ", len(g.neighbors(g.vcount() - 2)))
         # exit()
     if DEBUG2:
-        print("previous method Green vertex neighbors: ", g.neighbors(green_vertex))
-        print("previous method Green vertex neighbors LENGTH: ", len(g.neighbors(green_vertex)))
         print("new method Green vertex neighbors: ", green_edges_to_add)
         print("new method Green vertex LENGTH: ", len(green_edges_to_add))
         for i in range(len(green_edges_to_add)):
@@ -480,22 +514,14 @@ def adjList(fileName):
                             if DEBUG:
                                 third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("t")
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
-                                edge_weights.append(float(math.sqrt(3) * 0.5))
-                            else:
-                                edge_weights.append(float(math.sqrt(3)))
+                            edge_weights.append(float(math.sqrt(3)))
 
                         else:
                             if DEBUG:
                                 second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("s")
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:
-                                edge_weights.append(float(math.sqrt(2) * 0.5))
-                            else:
-                                edge_weights.append(float(math.sqrt(2)))
-
+                            edge_weights.append(float(math.sqrt(2)))
                         neighbors.append(neighbor_vertex)
-
                 adjacency_list[current_vertex] = neighbors
 
                 #  PERIODIC WRAP-AROUND edges
