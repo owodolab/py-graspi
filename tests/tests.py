@@ -1,8 +1,11 @@
 import os
-import tools.tortuosity.tortuosity_histogram as t
+import sys
 
-import src.graph as ig
-import src.descriptors as ds
+sys.path.append(os.path.abspath('../tools/tortuosity'))
+
+import tortuosity_histogram as t
+sys.path.append(os.path.abspath('../src'))
+import py_graspi
 import fpdf
 import numpy as np
 from PIL import Image, ImageOps
@@ -116,7 +119,7 @@ def main():
         """
         Generates the graph for each of the morphology descriptors
         """
-        graphData = ig.generateGraph(
+        graphData = py_graspi.generateGraph(
 
             data_path + test_file + ".txt")
         print(f"{test_file} Graph Generated")
@@ -132,7 +135,7 @@ def main():
                 for line in txt.readlines():
                     pdf.cell(40, 8, txt=line, ln=True, align="L")
         else:
-            stats = ds.descriptors(graphData, test_file)
+            stats = py_graspi.descriptors(graphData, test_file)
 
             print(f"{test_file} Descriptors Generated")
             with open(results_path + "descriptors-" + test_file + ".txt", "w") as txt:

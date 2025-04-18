@@ -72,6 +72,33 @@ def descriptorsToTxt(dict, fileName):
         for d in dict:
             f.write(d + " " + str(float(dict[d])) + '\n')
 
+def readDescriptorsFromTxt(fileName):
+    """
+        This function reads a text file and returns a dictionary of descriptors to standard output.
+
+        Args:
+            fileName (str): The name of the file to read from.
+
+        Returns:
+            None
+        """
+    with open(fileName, 'r') as file:
+        content = file.read()
+        print(content)
+
+def printDescriptors(dict):
+    """
+    This function prints descriptors to standard output.
+
+    Args:
+        dict (dict): The dictionary of descriptors.
+
+    Returns:
+        None, but standard outputs descriptors.
+    """
+    for key, value in dict.items():
+        print(key, value)
+
 def CC_descriptors(graph,totalBlack, totalWhite):
     """
     This function computes the connected component descriptors that correspond to the following descriptors:
