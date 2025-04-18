@@ -96,8 +96,8 @@ def generateGraphAdj(file):
     redComponent = set(fg_red.subcomponent(graph_data.redVertex, mode="ALL"))
     blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
 
-    print(redComponent)
-    print(blueComponent)
+    # print(redComponent)
+    # print(blueComponent)
 
     # Add Green Interface and it's color
     g.add_vertices(1)
@@ -125,6 +125,7 @@ def generateGraphAdj(file):
 
     vertices = set()
 
+    edgedebug = []
     while True:
         edges_to_add = []
         labels = []
@@ -141,6 +142,10 @@ def generateGraphAdj(file):
 
             source_vertex_color = g.vs[source_vertex]['color']
             target_vertex_color = g.vs[target_vertex]['color']
+
+            if source_vertex == 30711 or target_vertex == 30711:
+                print("src color:", source_vertex_color)
+                print("target color:", target_vertex_color)
 
             if (source_vertex_color == 'blue' or target_vertex_color == 'blue'):
                 if (source_vertex_color == 'blue' and target_vertex_color == 'white') \
@@ -224,16 +229,18 @@ def generateGraphAdj(file):
         # bulk adding green interface edges and their respective weights and labels
         edges_index_start = starting_index
         g.add_edges(edges_to_add)
+        edgedebug.append(edges_to_add)
         g.es[starting_index:]["label"] = labels
         g.es[starting_index:]["weight"] = weights
 
 
+    print(edgedebug.sort())
     black_interface_red = len(black)
     white_interface_blue = len(white)
-    print("black if red : ", black_interface_red)
-    print(black)
-    print("white if blue : ", white_interface_blue)
-    print(white)
+    # print("black if red : ", black_interface_red)
+    # print(black)
+    # print("white if blue : ", white_interface_blue)
+    # print(white)
 
     # Updating final computed values into graph_data
     graph_data.black_green = black_green
