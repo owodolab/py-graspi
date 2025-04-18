@@ -11,9 +11,10 @@ import src.descriptors as d
 import src.graph_data_class as GraphData
 
 import math
-
+PERIODICITY = False
 DEBUG = False
-
+pixelSize = 1
+n_flag = 2
 
 def generateGraph(file):
     """
@@ -244,6 +245,10 @@ def generateGraphAdj(file):
         print("Nodes connected to red: ", g.vs[g.vcount() - 2]['color'], g.neighbors(g.vcount() - 2))
         print("Length: ", len(g.neighbors(g.vcount() - 2)))
         # exit()
+
+    global pixelSize
+    for e in g.es:
+        e['weight'] *= pixelSize
     return graph_data
 
 
