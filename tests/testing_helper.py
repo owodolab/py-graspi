@@ -30,7 +30,7 @@ def extract_numbers(filename):
 
 
 
-def plot_total_execution_and_memory_compare(csv_file1, csv_file2=None):
+def plot_total_execution_and_memory(csv_file1, csv_file2=None):
     """
     Compare (or show) total execution time and peak memory usage from one or two CSV files.
     """
@@ -90,7 +90,7 @@ def plot_total_execution_and_memory_compare(csv_file1, csv_file2=None):
         plt.show()
 
 
-def plot_stepwise_execution_and_memory_compare(csv_file1, csv_file2=None):
+def plot_stepwise_execution_and_memory(csv_file1, csv_file2=None):
     """
     Compare (or show) stepwise execution time and memory usage for Graph and Descriptor
     from one or two CSV files.
