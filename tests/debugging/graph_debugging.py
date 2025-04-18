@@ -1,3 +1,12 @@
+'''
+This graph.py is almost same as src.graph.py
+the only difference is, 
+execution time measurement 
+(included in this file)
+'''
+
+
+
 import sys
 from fileinput import filename
 
@@ -15,6 +24,9 @@ DEBUG2 = False   # for green edges
 PERIODICITY = False #reflects default status from c++ implementation
 
 n_flag = 2
+
+
+
 
 # import tortuosity as t
 
@@ -74,10 +86,18 @@ def generateGraphAdj(file):
         graph_data (graph_data_class): The graph data.
     """
 
+    import time
+    const_adj_start = time.time()
 
     #get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
     graph_data, green_edges_dic, DarkGreen_dic, LightGreen_dic = adjList(file)
     
+    const_adj_end = time.time()     
+    const_adj_time = const_adj_end - const_adj_start
+
+    if DEBUG:
+        print("PART #1 time : ",const_adj_time)    
+
     # labels, totalWhite, totalBlack = vertexColors(file)
 
     f = open(file, 'r')
@@ -124,7 +144,17 @@ def generateGraphAdj(file):
                 g.es[g.ecount() - 1]['weight'] = math.sqrt(2)
 
 
- 
+    # shortest_start = time.time()
+
+    # shortest_end = time.time()     
+    # shortest_time = shortest_end - shortest_start
+
+
+    # print("shortest time : ", shortest_time)    
+
+    others_start = time.time()    
+
+
     fg_blue, fg_red = filterGraph_blue_red(g)
     redComponent = set(fg_red.subcomponent(graph_data.redVertex, mode="ALL"))
     blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
@@ -156,8 +186,24 @@ def generateGraphAdj(file):
     black = set()
 
     vertices = set()
- 
- 
+    others_end = time.time()     
+    others_time = others_end - others_start
+
+    if DEBUG:
+        print("PART #2 time : ",others_time)    
+
+    loop_start = time.time()
+
+    # for edge in keptEdges_red:
+    #     source_vertex = edge.source
+    #     target_vertex = edge.target
+
+    #     source_vertex_color = g.vs[source_vertex]['color']
+    #     target_vertex_color = g.vs[target_vertex]['color']
+
+
+        #all edge traversal
+        #Add black/white edges to green interface node.
     for edge in g.es:
         edge_count += 1
         source_vertex = edge.source
@@ -261,8 +307,15 @@ def generateGraphAdj(file):
     black_interface_red = len(black)    #correct
     white_interface_blue = len(white)   #correct
 
+    # print(green_edges_to_add.sort())
+
+    # print("black if red : ", len(black))
+    # print(black)
+    # print("white if blue : ", len(white))
+    # print(white)
 
     # Create graph_data_class object
+    # graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2D)
 
     # Store vertex attributes
     graph_data.graph = g
@@ -275,6 +328,13 @@ def generateGraphAdj(file):
     graph_data.CT_n_D_adj_An = CT_n_D_adj_An
     graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
     
+
+    loop_end = time.time()     
+    loop_time = loop_end - loop_start
+
+    if DEBUG:
+        print("PART #3 time : ",loop_time)    
+
 
     if DEBUG:
         print(g.vs['color'])
@@ -403,8 +463,12 @@ def adjList(fileName):
         vertex_color = [""] * (dimX * dimY * dimZ)
 
 
+        import time
+        # loadtxt_start = time.time()
         input_data = np.loadtxt(fileName, skiprows=1)
         reshaped_data = input_data.flatten()
+        # loadtxt_end = time.time()
+        # print("loadtxt time : ", loadtxt_end - loadtxt_start)
 
         #Loops through input and adds adjacency list of current vertex based on Offsets. Offsets, make it so edges aren't duplicated.
         #Also adds edge labels based on Graspi Documentation
