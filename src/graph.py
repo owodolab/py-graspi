@@ -13,7 +13,7 @@ import src.graph_data_class as GraphData
 import math
 PERIODICITY = False
 DEBUG = False
-pixelSize = 1
+pixelSize = 2
 n_flag = 2
 
 def generateGraph(file):
@@ -828,7 +828,7 @@ def main():
     global n_flag
     n_flag = 2
     global pixelSize
-    pixelSize = 1  # store default value for -s
+    pixelSize = 2  # store default value for -s
 
     # Validate and parse command-line arguments
     if len(sys.argv) < 3:
