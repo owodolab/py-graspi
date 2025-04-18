@@ -2,13 +2,14 @@ import math
 import numpy as np
 import src.graph as ig
 
-def descriptors(graph_data, filename):
+def descriptors(graph_data, filename,pixelsize):
     """
     This function computes all the descriptors for the graph given and saves them  in a dictionary.
 
     Args:
         graph_data (GraphData): The graph data.
         filename (str): The file used to generate graphs to compute on.
+        pixelsize (float): The pixel size of the graph.
 
     Returns:
         dict: A dictionary containing all the descriptors. The dictionary stores the outputted data in key:value pairs, the unique keys are linked to the associated value.
@@ -27,7 +28,7 @@ def descriptors(graph_data, filename):
 
     # shortest path descriptors
     DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1, ABS_wf_D \
-        = shortest_path_descriptors(graph_data,filename, countBlack_Red_conn, countWhite_Blue_conn)
+        = shortest_path_descriptors(graph_data,filename, countBlack_Red_conn, countWhite_Blue_conn,pixelsize)
 
 
     dict["STAT_n"] =  STAT_n_A + STAT_n_D
@@ -125,7 +126,7 @@ def CC_descriptors(graph,totalBlack, totalWhite):
     return countBlack, countWhite, countBlack_Red, countWhite_Blue, float(countBlack_Red_conn / totalBlack), \
         float(countWhite_Blue_conn / totalWhite), countBlack_Red_conn, countWhite_Blue_conn
 
-def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWhite_Blue_conn):
+def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWhite_Blue_conn, pixelSize):
   
     """
         This function computes descriptors related to shortest paths with vertex and metavertex colorations that correspond to the following descriptors:
@@ -137,6 +138,7 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
             filename (str): Base filename for output text files storing the results.
             countBlack_Red_conn (int): The total number of ‘black’ vertices in connected components that connect to the top.
             countWhite_Blue_conn (int): The total number of ‘white’ vertices in connected components that connect to the bottom.
+            pixelSize(float): The pixel size of the graph in pixels.
 
         Returns:
             float: Fraction of’ black’ vertices where the distance to the interface or ‘green’ vertex is less than 10 pixels (DISS_f10_D).
@@ -165,6 +167,11 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
     white_tor_distances = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
 
     black_red_unfiltered_distance = fg_red_unfiltered.shortest_paths(source=redVertex, weights=fg_red_unfiltered.es['weight'])[0]
+
+    distances = [d * pixelSize for d in distances]
+    black_tor_distances = [d * pixelSize for d in black_tor_distances]
+    white_tor_distances = [d * pixelSize for d in white_tor_distances]
+    black_red_unfiltered_distance = [d * pixelSize for d in black_red_unfiltered_distance]
 
     f10_count = 0
     summation = 0

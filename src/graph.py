@@ -824,7 +824,7 @@ def main():
     global n_flag
     n_flag = 2
     global pixelSize
-    pixelSize = 1  # store default value for -s
+    pixelSize = 1 # store default value for -s
 
     # Validate and parse command-line arguments
     if len(sys.argv) < 3:
@@ -893,11 +893,11 @@ def main():
     filteredGraph = filterGraph(graph_data.graph)
     visualize(filteredGraph, graph_data.is_2D)
 
-    if DEBUG:
-        dic = d.descriptors(graph_data.graph)
-        print(connectedComponents(filteredGraph))
-        for key, value in dic.items():
-            print(key, value)
+    #if DEBUG:
+    dic = d.descriptors(graph_data.graph,sys.argv[2],pixelSize)
+    #print(connectedComponents(filteredGraph))
+    for key, value in dic.items():
+        print(key, value)
 
 
 if __name__ == '__main__':
