@@ -7,7 +7,7 @@ import igraph as ig
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-from py_graspi import descriptors as d
+# from descriptors import descriptors as d
 from py_graspi import graph_data_class as GraphData
 
 import math
@@ -888,11 +888,11 @@ def main():
     visualize(filteredGraph, graph_data.is_2D)
 
     #Debugging: print descriptors and connected components if DEBUG is True
-    if DEBUG:
-        dic = d.descriptors(graph_data.graph)
-        print(connectedComponents(filteredGraph))
-        for key, value in dic.items():
-            print(key, value)
+    # if DEBUG:
+        # dic = d.descriptors(graph_data.graph)
+        # print(connectedComponents(filteredGraph))
+        # for key, value in dic.items():
+        #     print(key, value)
 
 
 if __name__ == '__main__':
