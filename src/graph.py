@@ -12,7 +12,7 @@ import math
 
 DEBUG = False # debugging mode
 DEBUG2 = False   # for green edges
-PERIODICITY = True #reflects default status from c++ implementation
+PERIODICITY = False #reflects default status from c++ implementation
 
 n_flag = 2
 
@@ -245,7 +245,6 @@ def generateGraphAdj(file):
             if DEBUG:
                 if source_vertex_color == 'black':
                     black_green_neighbors.append(source_vertex)
-            if DEBUG:
                 if target_vertex_color == 'black':
                     black_green_neighbors.append(target_vertex)
 
@@ -523,64 +522,6 @@ def adjList(fileName):
                         neighbors.append(neighbor_vertex)
                 adjacency_list[current_vertex] = neighbors
 
-                #  PERIODIC WRAP-AROUND edges
-                if PERIODICITY:
-                    # --- X axis wrap-around (row-wise) ---
-                    if x == 0:
-                        right = current_vertex + (dimX - 1)
-                        if DEBUG:
-                            first_order_pairs.append([min(current_vertex, right), max(current_vertex, right)])
-                        edge_labels.append("f")
-                        edge_weights.append(1)
-
-                        if reshaped_data[current_vertex] + reshaped_data[right] == 1:
-                            if DEBUG2:
-                                print("X-periodicity detected:", current_vertex, right)
-                            store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_interface_edges(edges_with_green, right, reshaped_data[right], 1, 1)
-
-                        if reshaped_data[current_vertex] + reshaped_data[right] == 3:
-                            if DEBUG2:
-                                print(current_vertex, right)
-                            store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_interface_edges(edges_with_LightGreen, right, reshaped_data[right], 1, 1)
-
-                        if reshaped_data[current_vertex] + reshaped_data[right] == 4:
-                            if DEBUG2:
-                                print(current_vertex, right)
-                            store_interface_edges(edges_with_DarkGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_interface_edges(edges_with_DarkGreen, right, reshaped_data[right], 1, 1)
-
-                        neighbors.append(right)
-
-                    # --- Y axis wrap-around (col-wise) ---
-                    if not is_2d and y == 0:
-                        bottom = current_vertex + dimX * (dimY - 1)
-                        if DEBUG:
-                            first_order_pairs.append([min(current_vertex, bottom), max(current_vertex, bottom)])
-                        edge_labels.append("f")
-                        edge_weights.append(1)
-
-                        if reshaped_data[current_vertex] + reshaped_data[bottom] == 1:
-                            if DEBUG2:
-                                print("Y-periodicity detected:", current_vertex, bottom)
-                            store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_interface_edges(edges_with_green, bottom, reshaped_data[bottom], 1, 1)
-
-                        if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3:
-                            if DEBUG2:
-                                print(current_vertex, neighbor_vertex)
-                            store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_interface_edges(edges_with_LightGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
-
-                        if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4:
-                            if DEBUG2:
-                                print(current_vertex, neighbor_vertex)
-                            store_interface_edges(edges_with_DarkGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
-                            store_interface_edges(edges_with_DarkGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
-
-
-                        neighbors.append(bottom)
 
     if not is_2d:   
         # add edges to Blue Node for 3D
