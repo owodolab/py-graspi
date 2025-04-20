@@ -1,6 +1,7 @@
 import os
 import tools.tortuosity.tortuosity_histogram as t
-
+import sys
+sys.path.append(os.path.abspath('..'))
 import src.graph as ig
 import src.descriptors as ds
 import fpdf
