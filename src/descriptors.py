@@ -37,7 +37,8 @@ def descriptors(graph_data, filename):
         currentNode = edge[0]
         toNode = edge[1]
 
-        if (graph.vs[currentNode]['color'] == 'black' and graph.vs[toNode]['color'] == 'white') or (graph.vs[currentNode]['color'] == 'white' and graph.vs[toNode]['color'] == 'black'):
+        if (graph.vs[currentNode]['color'] == 'black' and graph.vs[toNode]['color'] == 'white') or \
+        (graph.vs[currentNode]['color'] == 'white' and graph.vs[toNode]['color'] == 'black'):
             if graph.es[graph.get_eid(currentNode, toNode)]['label'] == 'f':
                 # print(currentNode, toNode)
                 STAT_e += 1
