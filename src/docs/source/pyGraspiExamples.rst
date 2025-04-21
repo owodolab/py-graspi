@@ -29,8 +29,6 @@ Step 1: import the py-graspi package:
 .. code-block:: python
 
     import py_graspi as ig
-    import graph as ig
-    import descriptors as d
 
 Step 2: For a given morphology (in Graspi input format), generate graph and calculate descriptors
 
@@ -38,14 +36,14 @@ Step 2: For a given morphology (in Graspi input format), generate graph and calc
 
     filename = "data/data_0.5_2.2_001900.txt"
     graph_data = ig.generateGraph(filename)
-    descriptors_dict = d.descriptors(graph_data, filename)
+    descriptors_dict = ig.descriptors(graph_data, filename)
 
 Step 3: Save descriptors to the file
 
 .. code-block:: python
 
     outputFile = "example_descriptors.txt"
-    d.descriptorsToTxt(descriptors_dict,outputFile)
+    ig.descriptorsToTxt(descriptors_dict,outputFile)
 
 
 Command Line Usage
@@ -84,6 +82,11 @@ Examples of usage:
     python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -n 3 #Only phase flag
     python graph.py -a ../data/2D-testFile/testFile-10-2D.txt #No flag
 
+    .. figure:: imgs/periodicity.png
+        :scale: 50%
+        :align: center
+        Example output when testing .txt with periodicity flag = 1
+
 If input file is a .graphe
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -98,6 +101,11 @@ Example of usage:
 .. code-block:: bash
 
     python graph.py -g ../data/test_data.graphe
+
+    .. figure:: imgs/graphe.png
+        :scale: 50%
+        :align: center
+        Example output when testing .graphe file
 
 Flags for command line functionality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
