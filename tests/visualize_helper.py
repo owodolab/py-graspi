@@ -15,6 +15,7 @@ def format_number(value):
     return f'{value:.0f}'
 
 
+
 def group_files_by_pattern(files):
     """Group file names by replacing numeric values with a placeholder (#)."""
     pattern_groups = defaultdict(list)
