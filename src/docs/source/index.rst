@@ -34,27 +34,36 @@ The Py-Graspi project provides tools for creating, filtering, and analyzing grap
    api_overview
    advanced
 
-Olga Wodo, University at Buffalo
-Baskar Ganapathysubramian, Iowa State Univiersity
-Jaroslaw Zola, Univeristy at Buffalo
+
+Authors
+=======
 
 
+- **Olga Wodo** – University at Buffalo
+- **Baskar Ganapathysubramanian** – Iowa State University
+- **Jaroslaw Zola** – University at Buffalo
 
-8:42
-Please add the extended list for the bottom of readme
-##Contributor Information
-Py-GraSPI has been developing at two institutions:
-Olga Wodo, University at Buffalo
-Baskar Ganapathysubramian, Iowa State Univiersity
-Jaroslaw Zola, Univeristy at Buffalo
-Devyani Jivani, University at Buffalo
-Wenqi Zheng, University at Buffalo
-Michael Leung, University at Buffalo
-Kevin Martinez, University at Buffalo
-Jerry Zhou, University at Buffalo,
-Qi Pan, University at Buffalo
-Julia Joseph, University at Buffalo
-Laibah Ahmed, University at Buffalo
-Donghwi Seo, University at Buffalo
-##Contact info
-Any questions and queries can be directed to Olga: olgawodo at buffalo dot edu.
+
+Contributors
+~~~~~~~~~~~~
+
+Py-GraSPI has been developed collaboratively at the University at Buffalo and Iowa State University:
+
+- **Olga Wodo** – University at Buffalo
+- **Baskar Ganapathysubramanian** – Iowa State University
+- **Jaroslaw Zola** – University at Buffalo
+- **Devyani Jivani** – University at Buffalo
+- **Wenqi Zheng** – University at Buffalo
+- **Michael Leung** – University at Buffalo
+- **Kevin Martinez** – University at Buffalo
+- **Jerry Zhou** – University at Buffalo
+- **Qi Pan** – University at Buffalo
+- **Julia Joseph** – University at Buffalo
+- **Laibah Ahmed** – University at Buffalo
+- **Donghwi Seo** – University at Buffalo
+
+Contact
+~~~~~~~
+
+For questions or inquiries, please contact:
+**Olga Wodo** – ``olgawodo@buffalo.edu``
