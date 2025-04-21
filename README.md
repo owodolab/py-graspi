@@ -37,9 +37,7 @@ pip show py-graspi
 Step 1: import the py-graspi package: 
 
 ```python
-import py_graspi as ig # check with kevin if possible to import only py_graspi
-import graph as ig
-import descriptors as d
+import py_graspi as ig
 ```
 
 Step 2: For a given morphology (in Graspi input format), generate graph and calculate descriptors
@@ -47,14 +45,14 @@ Step 2: For a given morphology (in Graspi input format), generate graph and calc
 ```python
 filename = "data/data_0.5_2.2_001900.txt"
 graph_data = ig.generateGraph(filename)
-descriptors_dict = d.descriptors(graph_data, filename)
+descriptors_dict = ig.descriptors(graph_data, filename)
 ```
 
 Step 3: Save descriptors to the file 
 
 ```python
 outputFile = "example_descriptors.txt"
-d.descriptorsToTxt(descriptors_dict,outputFile)
+ig.descriptorsToTxt(descriptors_dict,outputFile)
 ```
 
 ## Installation
@@ -122,3 +120,29 @@ Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQu
 Py-GraSPI (Graph-based Structure Property Identifier) is a Python package designed to compute a comprehensive set of descriptors for segmented microstructures using a graph-based approach. It leverages the igraph library to represent microstructures as graphs, enabling efficient computation of a wide range of descriptors with low computational overhead.
 Py-GraSPI is the Python implementation of the original GraSPI package, which was developed in C/C++.
 In addition to descriptor computation, Py-GraSPI offers tools for data conversion across various formats and for post-processing the raw outputs of the graph analysis.
+
+# Authors
+- **Olga Wodo** – University at Buffalo  
+- **Baskar Ganapathysubramanian** – Iowa State University  
+- **Jaroslaw Zola** – University at Buffalo  
+
+
+## Contributors
+Py-GraSPI has been developed collaboratively at the University at Buffalo and Iowa State University.
+
+- **Olga Wodo** – University at Buffalo  
+- **Baskar Ganapathysubramanian** – Iowa State University  
+- **Jaroslaw Zola** – University at Buffalo  
+- **Devyani Jivani** – University at Buffalo  
+- **Wenqi Zheng** – University at Buffalo  
+- **Michael Leung** – University at Buffalo  
+- **Kevin Martinez** – University at Buffalo  
+- **Jerry Zhou** – University at Buffalo  
+- **Qi Pan** – University at Buffalo  
+- **Julia Joseph** – University at Buffalo  
+- **Laibah Ahmed** – University at Buffalo  
+- **Donghwi Seo** – University at Buffalo  
+
+### Contact
+For questions or inquiries, please contact:  
+**Olga Wodo** – `olgawodo [at] buffalo [dot] edu`
