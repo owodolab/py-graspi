@@ -145,4 +145,4 @@ Py-GraSPI has been developed collaboratively at the University at Buffalo and Io
 
 ### Contact
 For questions or inquiries, please contact:  
-**Olga Wodo** – `olgawodo [at] buffalo [dot] edu`
+**Olga Wodo** – `olgawodo@buffalo.edu`
