@@ -42,7 +42,6 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../pyGraspiFunctionality.html">Functionality</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDescriptors.html">Descriptors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../pyGraspiInputs.html">Inputs</a></li>
@@ -81,7 +80,7 @@
 <span></span><span class="kn">import</span><span class="w"> </span><span class="nn">igraph</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ig</span>
 
 <div class="viewcode-block" id="graph_data_class">
-<a class="viewcode-back" href="../../src.html#src.graph_data_class.graph_data_class">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph_data_class.graph_data_class">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">graph_data_class</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class to store all graph parameters in a single object, reducing redundant function returns.</span>
@@ -109,7 +108,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="graph_data_class.__init__">
-<a class="viewcode-back" href="../../src.html#src.graph_data_class.graph_data_class.__init__">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph_data_class.graph_data_class.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">is_2D</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Initialize the graph_data_class object with a graph and its properties. &quot;&quot;&quot;</span>
 
@@ -135,7 +134,7 @@
 
 
 <div class="viewcode-block" id="graph_data_class.compute_shortest_paths">
-<a class="viewcode-back" href="../../src.html#src.graph_data_class.graph_data_class.compute_shortest_paths">[docs]</a>
+<a class="viewcode-back" href="../../api_overview.html#src.graph_data_class.graph_data_class.compute_shortest_paths">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">compute_shortest_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">red_vertex</span><span class="p">,</span> <span class="n">blue_vertex</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Compute and store shortest paths from red and blue vertices. &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shortest_path_to_red</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">shortest_paths</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">red_vertex</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">es</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>

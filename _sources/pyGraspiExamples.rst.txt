@@ -29,8 +29,6 @@ Step 1: import the py-graspi package:
 .. code-block:: python
 
     import py_graspi as ig
-    import graph as ig
-    import descriptors as d
 
 Step 2: For a given morphology (in Graspi input format), generate graph and calculate descriptors
 
@@ -38,23 +36,14 @@ Step 2: For a given morphology (in Graspi input format), generate graph and calc
 
     filename = "data/data_0.5_2.2_001900.txt"
     graph_data = ig.generateGraph(filename)
-    descriptors_dict = d.descriptors(graph_data, filename)
+    descriptors_dict = ig.descriptors(graph_data, filename)
 
 Step 3: Save descriptors to the file
 
 .. code-block:: python
 
     outputFile = "example_descriptors.txt"
-    d.descriptorsToTxt(descriptors_dict,outputFile)
-
-Usage of Py-Graspi on a test Kaggle notebook
-====================================
-
-Navigate to the following link to open the test Kaggle notebook on Binder:
-
-`Binder Notebook <https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/3d7bf5df17b015612ab1b8261c63d0bbb00a268f?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb>`_
-
-Follow the steps in the notebook to learn about basic py-graspi functionality such as generating a graph and listing it's descriptors.
+    ig.descriptorsToTxt(descriptors_dict,outputFile)
 
 
 Command Line Usage
@@ -93,6 +82,12 @@ Examples of usage:
     python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -n 3 #Only phase flag
     python graph.py -a ../data/2D-testFile/testFile-10-2D.txt #No flag
 
+Example output when testing .txt with periodicity flag = 1
+    .. image:: imgs/periodicity.png
+        :scale: 50%
+        :align: center
+
+
 If input file is a .graphe
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -107,6 +102,12 @@ Example of usage:
 .. code-block:: bash
 
     python graph.py -g ../data/test_data.graphe
+
+Example output when testing .graphe file
+    .. image:: imgs/graphe.png
+        :scale: 50%
+        :align: center
+
 
 Flags for command line functionality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
