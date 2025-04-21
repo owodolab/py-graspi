@@ -48,6 +48,8 @@ Numerical simulations can be saved using .plt file. Py-GraSPI provides tool to c
 
     python plt_to_txt.py [pathname]
 
+**Example:**
+
 .. code-block:: bash
 
     python plt_to_txt.py plt/5x4x3.plt
@@ -60,6 +62,8 @@ Py-GraSPI provide also tool to convert black and white image into txt file and r
 .. code-block:: bash
 
     python img_to_txt.py {pathname of image file} {Resize calculation amount}
+
+**Example:**
 
 .. code-block:: bash
 
@@ -157,6 +161,8 @@ Here, the image "mycelium.png" is from the folder py-graspi/data/images.
 .. code-block:: bash
 
     python myceliumTest.py {pathname of image file} {Resize calculation amount}
+
+**Example:**
 
 .. code-block:: bash
 

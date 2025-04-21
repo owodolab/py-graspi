@@ -82,10 +82,11 @@ Examples of usage:
     python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -n 3 #Only phase flag
     python graph.py -a ../data/2D-testFile/testFile-10-2D.txt #No flag
 
-    .. figure:: imgs/periodicity.png
+Example output when testing .txt with periodicity flag = 1
+    .. image:: imgs/periodicity.png
         :scale: 50%
         :align: center
-        Example output when testing .txt with periodicity flag = 1
+
 
 If input file is a .graphe
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -102,10 +103,11 @@ Example of usage:
 
     python graph.py -g ../data/test_data.graphe
 
-    .. figure:: imgs/graphe.png
+Example output when testing .graphe file
+    .. image:: imgs/graphe.png
         :scale: 50%
         :align: center
-        Example output when testing .graphe file
+
 
 Flags for command line functionality
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
