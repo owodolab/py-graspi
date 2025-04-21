@@ -13,12 +13,12 @@ def descriptors(graph_data, filename):
         filename (str): The file used to generate graphs to compute on.
 
     Returns:
-        dict: A dictionary containing all the descriptors. The dictionary stores the outputted data in key:value pairs, the unique keys are linked to the associated value.
+        descriptors_dict: A dictionary containing all the descriptors. The dictionary stores the outputted data in key:value pairs, the unique keys are linked to the associated value.
          The keys of the descriptors are as follow: STAT_n, STAT_e, STAT_n_D, STAT_n_A, STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, ABS_wf_D, ABS_f_D, DISS_f10_D, DISS_wf10_D, CT_f_e_conn, CT_f_conn_D_An, CT_f_conn_A_Ca, CT_e_conn, CT_e_D_An, CT_e_A_Ca, CT_n_D_adj_An, CT_n_A_adj_Ca, CT_f_D_tort1, CT_f_A_tort1.
          For full definitions see the “Descriptors” tab on the Py-Graspi documentation website.
     """
 
-    dict = {}
+    descriptors_dict = {}
 
     STAT_n_D = len(graph_data.black_vertices)
     STAT_n_A = len(graph_data.white_vertices)
@@ -30,38 +30,38 @@ def descriptors(graph_data, filename):
     graph_data = shortest_path_descriptors(graph_data,filename)
 
 
-    dict["STAT_n"] =  graph_data.STAT_n_A + graph_data.STAT_n_D
-    dict["STAT_e"] = graph_data.black_green
-    dict["STAT_n_D"] = graph_data.STAT_n_D
-    dict["STAT_n_A"] = graph_data.STAT_n_A
-    dict["STAT_CC_D"] = graph_data.STAT_CC_D
-    dict["STAT_CC_A"] = graph_data.STAT_CC_A
-    dict["STAT_CC_D_An"] = graph_data.STAT_CC_D_An
-    dict["STAT_CC_A_Ca"] = graph_data.STAT_CC_A_Ca
-    dict['ABS_wf_D'] = graph_data.ABS_wf_D
-    dict["ABS_f_D"] = float(graph_data.STAT_n_D / (graph_data.STAT_n_D + graph_data.STAT_n_A))
-    dict["DISS_f10_D"] = graph_data.DISS_f10_D
-    dict["DISS_wf10_D"] = graph_data.DISS_wf10_D
-    dict["CT_f_e_conn"] = float(graph_data.interface_edge_comp_paths / graph_data.black_green)
-    dict["CT_f_conn_D_An"] = graph_data.CT_f_conn_D_An
-    dict["CT_f_conn_A_Ca"] = graph_data.CT_f_conn_A_Ca
-    dict["CT_e_conn"] = graph_data.interface_edge_comp_paths
-    dict["CT_e_D_An"] = graph_data.black_interface_red
-    dict["CT_e_A_Ca"] = graph_data.white_interface_blue
-    dict["CT_n_D_adj_An"] = graph_data.CT_n_D_adj_An
-    dict["CT_n_A_adj_Ca"] = graph_data.CT_n_A_adj_Ca
-    dict["CT_f_D_tort1"] = graph_data.CT_f_D_tort1
-    dict["CT_f_A_tort1"] = graph_data.CT_f_A_tort1
+    descriptors_dict["STAT_n"] =  graph_data.STAT_n_A + graph_data.STAT_n_D
+    descriptors_dict["STAT_e"] = graph_data.black_green
+    descriptors_dict["STAT_n_D"] = graph_data.STAT_n_D
+    descriptors_dict["STAT_n_A"] = graph_data.STAT_n_A
+    descriptors_dict["STAT_CC_D"] = graph_data.STAT_CC_D
+    descriptors_dict["STAT_CC_A"] = graph_data.STAT_CC_A
+    descriptors_dict["STAT_CC_D_An"] = graph_data.STAT_CC_D_An
+    descriptors_dict["STAT_CC_A_Ca"] = graph_data.STAT_CC_A_Ca
+    descriptors_dict['ABS_wf_D'] = graph_data.ABS_wf_D
+    descriptors_dict["ABS_f_D"] = float(graph_data.STAT_n_D / (graph_data.STAT_n_D + graph_data.STAT_n_A))
+    descriptors_dict["DISS_f10_D"] = graph_data.DISS_f10_D
+    descriptors_dict["DISS_wf10_D"] = graph_data.DISS_wf10_D
+    descriptors_dict["CT_f_e_conn"] = float(graph_data.interface_edge_comp_paths / graph_data.black_green)
+    descriptors_dict["CT_f_conn_D_An"] = graph_data.CT_f_conn_D_An
+    descriptors_dict["CT_f_conn_A_Ca"] = graph_data.CT_f_conn_A_Ca
+    descriptors_dict["CT_e_conn"] = graph_data.interface_edge_comp_paths
+    descriptors_dict["CT_e_D_An"] = graph_data.black_interface_red
+    descriptors_dict["CT_e_A_Ca"] = graph_data.white_interface_blue
+    descriptors_dict["CT_n_D_adj_An"] = graph_data.CT_n_D_adj_An
+    descriptors_dict["CT_n_A_adj_Ca"] = graph_data.CT_n_A_adj_Ca
+    descriptors_dict["CT_f_D_tort1"] = graph_data.CT_f_D_tort1
+    descriptors_dict["CT_f_A_tort1"] = graph_data.CT_f_A_tort1
 
-    return dict
+    return descriptors_dict
 
 #Marked for improvement. This function should return bool - the status of the writing process.
-def descriptorsToTxt(dict, fileName):
+def descriptorsToTxt(descriptors_dict, fileName):
     """
     This function writes a dictionary of descriptors to the specified text file.
 
     Args:
-        dict (dict): The dictionary of descriptors.
+        descriptors_dict (dict): The dictionary of descriptors.
         fileName (str): The name of the file to write to.
 
     Returns:
@@ -69,8 +69,8 @@ def descriptorsToTxt(dict, fileName):
     """
 
     with open(fileName,'w') as f:
-        for d in dict:
-            f.write(d + " " + str(float(dict[d])) + '\n')
+        for d in descriptors_dict:
+            f.write(d + " " + str(float(descriptors_dict[d])) + '\n')
 
 def CC_descriptors(graph_data):
     """
