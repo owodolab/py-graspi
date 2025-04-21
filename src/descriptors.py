@@ -109,7 +109,6 @@ def CC_descriptors(graph_data):
                 colors = np.array(graph.vs['color'])
                 countBlack_Red_conn += np.sum(colors[c] == 'black')
 
-
             if graph.vs[c][0]['color'] == 'white' and 'blue' in graph.vs[c]['color']:
                 countWhite_Blue += 1
                 colors = np.array(graph.vs['color'])
@@ -275,8 +274,10 @@ def shortest_path_descriptors(graph_data, filename):
     file.close()
     graph_data.DISS_f10_D = float(f10_count / totalBlacks)
     graph_data.DISS_wf10_D = float(summation / totalBlacks)
-    graph_data.CT_f_D_tort1 = float(black_tor / countBlack_Red_conn)
-    graph_data.CT_f_A_tort1 = float(white_tor / countWhite_Blue_conn)
+    if countBlack_Red_conn != 0:
+        graph_data.CT_f_D_tort1 = float(black_tor / countBlack_Red_conn)
+    if countWhite_Blue_conn != 0:
+       graph_data.CT_f_A_tort1 = float(white_tor / countWhite_Blue_conn)
     graph_data.ABS_wf_D = float(total_weighted_black_red / (totalBlacks + totalWhite))
     return graph_data
 

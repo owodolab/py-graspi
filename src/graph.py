@@ -12,29 +12,28 @@ import src.graph_data_class as GraphData
 
 import math
 
-DEBUG = False
-PERIODICITY = False #reflects default status from c++ implementation
 n_flag = 2
 
 
-def generateGraph(file):
+def generateGraph(file, PERIODICITY = False):
     """
     This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.
 
     Args:
         file (str): The name of the file containing graph data.
+        periodicity (bool): Boolean representing if graph has periodic boundary conditions
 
     Returns:
         This function generates a graph based on the input so the return type depends on the format of graph data that was given.
         See “generateGraphAdj” if in .txt, or “generateGraphGraphe” if in .graphe.
     """
     if os.path.splitext(file)[1] == ".txt":
-        return generateGraphAdj(file)
+        return generateGraphAdj(file, PERIODICITY)
     else:
         return generateGraphGraphe(file)
 
 
-def generateGraphAdj(file):
+def generateGraphAdj(file, PERIODICITY = False):
     """
         This function takes in graph data in the .txt format and constructs the graph with adjacency list representation.
         It also generates additional graph data stored in the graph_data object.
@@ -101,7 +100,7 @@ def generateGraphAdj(file):
     g.vs[g.vcount() - 1]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1].index
 
-    if DEBUG:
+    if __debug__:
         black_green_neighbors = []
 
     # Initialize counters
@@ -209,10 +208,10 @@ def generateGraphAdj(file):
                         weights.append(edge['weight'] / 2)
                         edges_to_add_set.add((target_vertex, green_vertex))
 
-                if DEBUG:
+                if __debug__:
                     if source_vertex_color == 'black':
                         black_green_neighbors.append(source_vertex)
-                if DEBUG:
+                if __debug__:
                     if target_vertex_color == 'black':
                         black_green_neighbors.append(target_vertex)
 
@@ -234,7 +233,7 @@ def generateGraphAdj(file):
     graph_data.CT_n_D_adj_An = CT_n_D_adj_An
     graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
 
-    if DEBUG:
+    if __debug__:
         print(g.vs['color'])
         print("Number of nodes: ", g.vcount())
         print("Green vertex neighbors: ", g.neighbors(green_vertex))
@@ -280,7 +279,7 @@ def generateGraphGraphe(file):
 
     # adds green vertex and its color
     g.add_vertices(1)
-    if DEBUG:
+    if __debug__:
         print(len(adjacency_list))
         # exit()
     g.vs[len(adjacency_list)]['color'] = 'green'
@@ -317,7 +316,7 @@ def adjList(fileName):
 
         """
     adjacency_list = {}
-    if DEBUG:
+    if __debug__:
         first_order_pairs = []
         second_order_pairs = []
         third_order_pairs = []
@@ -376,18 +375,18 @@ def adjList(fileName):
                         if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
                             neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
                             if (dx, dy, dz) == offsets[1] or (dx, dy, dz) == offsets[2] or (dx, dy, dz) == offsets[3]:
-                                if DEBUG:
+                                if __debug__:
                                     first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("f")
                                 edge_weights.append(1)
                             elif (dx, dy, dz) == offsets[4] or (dx, dy, dz) == offsets[5] or (dx, dy, dz) == offsets[
                                 6] or (dx, dy, dz) == offsets[7] or (dx, dy, dz) == offsets[8]:
-                                if DEBUG:
+                                if __debug__:
                                     third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("t")
                                 edge_weights.append(float(math.sqrt(3)))
                             else:
-                                if DEBUG:
+                                if __debug__:
                                     second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("s")
                                 edge_weights.append(float(math.sqrt(2)))
@@ -454,7 +453,7 @@ def adjList(fileName):
     if redVertex is not None and blueVertex is not None:
         graph_data.compute_shortest_paths(red_vertex=redVertex, blue_vertex=blueVertex)
 
-    if DEBUG:
+    if __debug__:
         print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
         print("First Order Pairs: ", first_order_pairs)
@@ -832,7 +831,7 @@ def filterGraph_blue_red(graph):
     return fg_blue, fg_red
 
 def main():
-    global PERIODICITY
+    PERIODICITY = False
     global n_flag
 
     # Validate and parse command-line arguments
@@ -853,7 +852,7 @@ def main():
                     print("Invalid argument for -p. Use 0 or 1.")
                     return
                 #The filename should be at sys.argv[2]
-                graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
+                graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  #generate graph using sys.argv[2]
             if sys.argv[3] == "-n":
                 if sys.argv[4] == "2": #If phase flag 1
                     n_flag = 2  #Set n_flag to 2
@@ -864,20 +863,21 @@ def main():
                     print("Invalid argument for -n. Use 2 or 3.")
                     return
                 #The filename should be at sys.argv[2]
-                graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
+                graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  #generate graph using sys.argv[2]
         if len(sys.argv) == 7:
-            if sys.argv[3] != "-p" or sys.argv[4] != "0" or sys.argv[4] != "1" or sys.argv[5] != "-n" or sys.argv[6] != "2" or sys.argv[6] != "3":
+            if sys.argv[3] != "-p" or (sys.argv[4] != "0" and sys.argv[4] != "1") or sys.argv[5] != "-n" or (sys.argv[6] != "2" and sys.argv[6] != "3"):
                 print("Incorrect format. Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) OR -g <INPUT_FILE.graphe>")
+                return
             if sys.argv[4] == "1": #If periodicity flag 1
                 PERIODICITY = True #Set PERIODICITY to True
             if sys.argv[6] == "3":
                 n_flag = 3
                 print("3 Phase not yet implemented.")
                 return
-            graph_data = generateGraphAdj(sys.argv[2])  # generate graph using sys.argv[2]
+            graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  # generate graph using sys.argv[2]
         else:
             # No -p or -n flag. Default periodicity false. Default 2 phase.
-            graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
+            graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  #generate graph using sys.argv[2]
 
     #Check if -g (unstructured data with .graphe file)
     elif sys.argv[1] == "-g":
@@ -900,8 +900,8 @@ def main():
     visualize(filteredGraph, graph_data.is_2D)
 
     #Debugging: print descriptors and connected components if DEBUG is True
-    if DEBUG:
-        dic = d.descriptors(graph_data.graph)
+    if __debug__:
+        dic = d.descriptors(graph_data, sys.argv[2])
         print(connectedComponents(filteredGraph))
         for key, value in dic.items():
             print(key, value)
