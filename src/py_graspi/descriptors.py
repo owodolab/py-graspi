@@ -2,7 +2,7 @@ import math
 import numpy as np
 from py_graspi import graph as ig
 
-def descriptors(graph_data, filename):
+def compute_descriptors(graph_data, filename):
     """
     This function computes all the descriptors for the graph given and saves them  in a dictionary.
 
