@@ -15,22 +15,12 @@ import matplotlib.pyplot as plt
 import math
 
 current_dir = os.getcwd()
-# data_path = f"{current_dir}/py_graspi/data/"
-# descriptors_path = f"{current_dir}/py_graspi/descriptors/"
-# image_path = f"{current_dir}/py_graspi/images/"
-# hist_path = f"{current_dir}/py_graspi/histograms/"
-# results_path = f"{current_dir}/py_graspi/results/"
 parent_dir = os.path.dirname(current_dir)
 data_path = f"{parent_dir}/data/data/"
-descriptors_path = f"{parent_dir}/data/descriptors/"
 image_path = f"{parent_dir}/data/images/"
 hist_path = f"{parent_dir}/data/histograms/"
 results_path = f"{parent_dir}/data/results/"
 
-# data_path = f"{parent_dir}/data/data/"
-# descriptors_path = f"{parent_dir}/data/descriptors/"
-# expected_distances_path = f"{parent_dir}/data/distances/"
-# results_path = f"{parent_dir}/data/comparisons/"
 
 test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path) if os.path.splitext(file)[0].count("_") == 3]
 epsilon = 1e-5
