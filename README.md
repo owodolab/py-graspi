@@ -1,5 +1,5 @@
 # py-graspi
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/3d7bf5df17b015612ab1b8261c63d0bbb00a268f?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb) [![PyPi Package](https://img.shields.io/badge/PyPi-package-blue)](https://pypi.org/project/py-graspi/) [![Go to About](https://img.shields.io/badge/go_to-about-green)](#about) [![go to documentation](https://img.shields.io/badge/go_to-documentation-purple)](https://owodolab.github.io/py-graspi/)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/3d7bf5df17b015612ab1b8261c63d0bbb00a268f?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb) [![PyPi Package](https://img.shields.io/badge/PyPi-package-blue)](https://pypi.org/project/py-graspi/) [![go to documentation](https://img.shields.io/badge/go_to-documentation-purple)](https://owodolab.github.io/py-graspi/)
 
 
 
@@ -114,12 +114,6 @@ Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQu
 * **py_graspi_installation**: How to install Py-Graspi and run basic commands.
 * **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
 * **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of the graph, etc, of provided input files via command line.
-
-
-# ABOUT
-Py-GraSPI (Graph-based Structure Property Identifier) is a Python package designed to compute a comprehensive set of descriptors for segmented microstructures using a graph-based approach. It leverages the igraph library to represent microstructures as graphs, enabling efficient computation of a wide range of descriptors with low computational overhead.
-Py-GraSPI is the Python implementation of the original GraSPI package, which was developed in C/C++.
-In addition to descriptor computation, Py-GraSPI offers tools for data conversion across various formats and for post-processing the raw outputs of the graph analysis.
 
 # Authors
 - **Olga Wodo** – University at Buffalo  
