@@ -147,10 +147,7 @@ def generateGraphAdj(file):
     # counter for interface edges for complementary paths
     interface_edge_comp_paths = 0
 
-    edges_index_start = 0
-    extra_edges = 0
     edge_count = 0
-    edges_to_add_set = set()
 
     white = set()
     black = set()
@@ -439,19 +436,19 @@ def adjList(fileName):
                             edge_labels.append("f")
                             edge_weights.append(1)
 
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1: #interface edges
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1: # interface edges
                                 if DEBUG2:
                                     print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_green, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3:
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3: # gray-white interface 
                                 if DEBUG2:
                                     print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_LightGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4:
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4: # gray-black interface
                                 if DEBUG2:
                                     print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_DarkGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
