@@ -13,7 +13,7 @@ import math
 DEBUG = False # debugging mode
 DEBUG2 = False   # for green edges
 PERIODICITY = False #reflects default status from c++ implementation
-
+pixelSize = 1
 n_flag = 2
 
 # import tortuosity as t
@@ -43,8 +43,6 @@ def store_interface_edges(edges_with_green, index, color, order, weight):
         newEdge.weight = weight * 0.5
         
         edges_with_green[index] = newEdge
-
-
 
 def generateGraph(file):
     """
@@ -246,7 +244,7 @@ def generateGraphAdj(file):
         green_edges_to_add.append([i, light_green])
         green_edges_labels.append("f")  #every edges with green vertex are first order 
         green_edges_weights.append(LightGreen_dic[i].weight)
-
+        
 
     # add green vertex edges at once (without loop) 
     g.add_edges(green_edges_to_add)
@@ -285,6 +283,7 @@ def generateGraphAdj(file):
         print("Nodes connected to red: ", g.vs[g.vcount() - 2]['color'], g.neighbors(g.vcount() - 2))
         print("Length: ", len(g.neighbors(g.vcount() - 2)))
         # exit()
+
     if DEBUG2:
         print("new method Green vertex neighbors: ", green_edges_to_add)
         print("new method Green vertex LENGTH: ", len(green_edges_to_add))
@@ -295,7 +294,6 @@ def generateGraphAdj(file):
                 
         if cnt == len(g.neighbors(green_vertex)):
             print("all vertices stored well!")
-
 
     return graph_data
 
@@ -434,7 +432,7 @@ def adjList(fileName):
                             if DEBUG:
                                 first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("f")
-                            edge_weights.append(1)
+                            edge_weights.append(1*pixelSize)
 
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1: # interface edges
                                 if DEBUG2:
@@ -458,18 +456,18 @@ def adjList(fileName):
                             if DEBUG:
                                 third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("t")
-                            edge_weights.append(float(math.sqrt(3)))
+                            edge_weights.append(float(math.sqrt(3))*pixelSize)
 
                         else:
                             if DEBUG:
                                 second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("s")
-                            edge_weights.append(float(math.sqrt(2)))
+                            edge_weights.append(float(math.sqrt(2))*pixelSize)
                         neighbors.append(neighbor_vertex)
                 adjacency_list[current_vertex] = neighbors
 
-
-    if not is_2d:   
+                
+    if not is_2d:
         # add edges to Blue Node for 3D
         adjacency_list[dimZ * dimY * dimX] = []
         blueVertex = dimZ * dimY * dimX
@@ -907,75 +905,81 @@ def filterGraph_blue_red(graph):
 
 def main():
     global PERIODICITY
+    PERIODICITY = False
     global n_flag
+    n_flag = 2
+    global pixelSize
+    pixelSize = 1 # store default value for -s
 
     # Validate and parse command-line arguments
     if len(sys.argv) < 3:
-        print("Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) OR -g <INPUT_FILE.graphe>")
+        print("Usage: python graph.py -a <INPUT_FILE.txt> [-s <pixelSize>] [-p <{0,1}>] [-n <{2,3}>] OR -g <INPUT_FILE.graphe>")
         return
 
     # Check if -a (structured data with .txt file)
     if sys.argv[1] == "-a":
-        # Check periodicity flag
-        if len(sys.argv) == 5: # There's either a -p or -n flag
-            if sys.argv[3] == "-p": # If -p flag
-                if sys.argv[4] == "1": #If periodicity flag 1
-                    PERIODICITY = True  #Set PERIODICITY to True
-                elif sys.argv[4] == "0": #If periodicity flag 0
-                    PERIODICITY = False  #Set PERIODICITY to False
-                else: #Error in formatting
-                    print("Invalid argument for -p. Use 0 or 1.")
+        filename = sys.argv[2]
+        i = 3
+        while i < len(sys.argv):
+            if sys.argv[i] == "-p":
+                if i + 1 < len(sys.argv):
+                    if sys.argv[i + 1] == "1":
+                        PERIODICITY = True
+                    elif sys.argv[i + 1] == "0":
+                        PERIODICITY = False
+                    else:
+                        print("Invalid argument for -p. Use 0 or 1.")
+                        return
+                    i += 2
+                else:
+                    print("Missing value for -p flag.")
                     return
-                #The filename should be at sys.argv[2]
-                graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
-            if sys.argv[3] == "-n":
-                if sys.argv[4] == "2": #If phase flag 1
-                    n_flag = 2  #Set n_flag to 2
-                elif sys.argv[4] == "3": #If phase flag 0
-                    print("3 Phase not yet implemented.")
+            elif sys.argv[i] == "-n":
+                if i + 1 < len(sys.argv):
+                    if sys.argv[i + 1] == "2":
+                        n_flag = 2
+                    elif sys.argv[i + 1] == "3":
+                        print("3 Phase not yet implemented.")
+                        return
+                    else:
+                        print("Invalid argument for -n. Use 2 or 3.")
+                        return
+                    i += 2
+                else:
+                    print("Missing value for -n flag.")
                     return
-                else: #Error in formatting
-                    print("Invalid argument for -n. Use 2 or 3.")
+            elif sys.argv[i] == "-s":
+                if i + 1 < len(sys.argv):
+                    pixelSize = float(sys.argv[i + 1])
+                    i += 2
+                else:
+                    print("Missing value for -s flag.")
                     return
-                #The filename should be at sys.argv[2]
-                graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
-        if len(sys.argv) == 7:
-            if sys.argv[3] != "-p" or sys.argv[4] != "0" or sys.argv[4] != "1" or sys.argv[5] != "-n" or sys.argv[6] != "2" or sys.argv[6] != "3":
-                print("Incorrect format. Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) OR -g <INPUT_FILE.graphe>")
-            if sys.argv[4] == "1": #If periodicity flag 1
-                PERIODICITY = True #Set PERIODICITY to True
-            if sys.argv[6] == "3":
-                n_flag = 3
-                print("3 Phase not yet implemented.")
-                return
-            graph_data = generateGraphAdj(sys.argv[2])  # generate graph using sys.argv[2]
-        else:
-            # No -p or -n flag. Default periodicity false. Default 2 phase.
-            graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
 
-    #Check if -g (unstructured data with .graphe file)
+
+        graph_data = generateGraphAdj(filename)
+
+    # Check if -g (unstructured data with .graphe file)
     elif sys.argv[1] == "-g":
-        # -g should error if -p flag is given
-        if len(sys.argv) > 3 and (sys.argv[2] == "-p" or sys.argv[2] == "-n"):
-            print("Error: Periodicity option (-p) and phase option (-n) cannot be used with -g flag. Only -a supports periodicity and phase flags.")
+        if len(sys.argv) > 3 and (sys.argv[2] == "-p" or sys.argv[2] == "-n" or sys.argv[2] == "-s"):
+            print("Error: Periodicity option (-p), phase option (-n), and -s cannot be used with -g flag. Only -a supports them.")
             return
-        if(len(sys.argv) != 3):
-            print("Formatting error. Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) OR -g <INPUT_FILE.graphe>")
+        if len(sys.argv) != 3:
+            print("Formatting error. Usage: python graph.py -g <INPUT_FILE.graphe>")
             return
-        graph_data = generateGraphGraphe(sys.argv[2])  # graph generation using sys.argv[2]
+        graph_data = generateGraphGraphe(sys.argv[2])
 
-    else: #Edge case handling
-        print("Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) OR -g <INPUT_FILE.graphe>")
+    else:
+        print("Usage: python graph.py -a <INPUT_FILE.txt> [-s <pixelSize>] [-p <{0,1}>] [-n <{2,3}>] OR -g <INPUT_FILE.graphe>")
         return
 
-    #Visualize the graph and filter it
+    # Visualize the graph and filter it
     visualize(graph_data.graph, graph_data.is_2D)
     filteredGraph = filterGraph(graph_data.graph)
     visualize(filteredGraph, graph_data.is_2D)
 
-    #Debugging: print descriptors and connected components if DEBUG is True
     if DEBUG:
-        dic = d.descriptors(graph_data.graph)
+        dic = d.descriptors(graph_data.graph,sys.argv[2],pixelSize)
         print(connectedComponents(filteredGraph))
         for key, value in dic.items():
             print(key, value)
