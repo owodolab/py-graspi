@@ -21,7 +21,7 @@ Getting Started
 
 Ensure you see this output on the terminal when running pip show
     .. image:: imgs/pip_show.png
-        :scale: 80%
+        :scale: 70%
         :align: center
 
 **For more details, check out the** :doc:`api documentation <api_overview>`.
