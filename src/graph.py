@@ -58,12 +58,6 @@ def generateGraphAdj(file, PERIODICITY = False):
     dimY = int(line[1])
 
     g = graph_data.graph
-    is_2D = graph_data.is_2D
-    black_vertices = graph_data.black_vertices
-    white_vertices = graph_data.white_vertices
-    redVertex = graph_data.redVertex
-    blueVertex = graph_data.blueVertex
-    dim = graph_data.dim
 
     # add color to blue and red metavertices
     g.vs[g.vcount() - 2]['color'] = 'blue'
@@ -230,6 +224,8 @@ def generateGraphAdj(file, PERIODICITY = False):
     graph_data.black_interface_red = black_interface_red
     graph_data.white_interface_blue = white_interface_blue
     graph_data.interface_edge_comp_paths = interface_edge_comp_paths
+    graph_data.shortest_path_to_red = shortest_path_to_red
+    graph_data.shortest_path_to_blue = shortest_path_to_blue
     graph_data.CT_n_D_adj_An = CT_n_D_adj_An
     graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
 
