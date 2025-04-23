@@ -4,22 +4,20 @@ setup(
     name="py_graspi",
     author="Olga Wodo",
     author_email="olgawodo@buffalo.edu",
-    version="0.2.0.5-beta",
+    version="0.2.0.5",
     description="Graph-based descriptor for microstructure featurization",
     long_description="""
-# Py-GraSPI (Graph-based Structure Property Identifier)
+    # Py-GraSPI (Graph-based Structure Property Identifier)
 
-**Py-GraSPI** is a Python package designed to compute a comprehensive set of descriptors for segmented microstructures using a graph-based approach.
+    **Py-GraSPI** is a Python package designed to compute a comprehensive set of descriptors for segmented microstructures using a graph-based approach.
 
-Py-GraSPI is the Python implementation of the original GraSPI package, which was developed in C/C++.
+    ---
 
----
+    ### Resources
 
-### Resources
-
-- **Source Code**: [GitHub Repository](https://github.com/owodolab/py-graspi)
-- **Documentation**: [Project Documentation](https://owodolab.github.io/py-graspi/)
-""",
+    - **Source Code**: [GitHub Repository](https://github.com/owodolab/py-graspi)
+    - **Documentation**: [Project Documentation](https://owodolab.github.io/py-graspi/)
+    """,
     long_description_content_type="text/markdown",
     license="BSD 3-Clause License",
     packages=find_packages(where='src'),
@@ -32,7 +30,6 @@ Py-GraSPI is the Python implementation of the original GraSPI package, which was
     url="https://github.com/owodolab/py-graspi",
     download_url='https://github.com/owodolab/py-graspi/archive/refs/tags/v_2.0.4.tar.gz',
     # need to get this link from the GitHub repo "Releases" section
-
     install_requires=[
         "igraph",
         "matplotlib",
@@ -48,7 +45,7 @@ Py-GraSPI is the Python implementation of the original GraSPI package, which was
         "python-dateutil",
         "six",
         "texttable",
-        "fpdf"
+        "fpdf",
     ],
     python_requires=">=3.7"
 
