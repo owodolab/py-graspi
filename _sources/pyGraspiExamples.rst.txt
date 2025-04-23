@@ -24,7 +24,7 @@ Ensure you see this output on the terminal when running pip show
         :scale: 50%
         :align: center
 
-**For more details, check out the :doc:`api documentation <api_overview>`.**
+**For more details, check out the** :doc:`api documentation <api_overview>`.
 
 Simple Example Usage
 =====================
