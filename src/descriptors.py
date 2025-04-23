@@ -118,8 +118,10 @@ def CC_descriptors(graph_data):
     graph_data.STAT_CC_A = countWhite
     graph_data.STAT_CC_D_An = countBlack_Red
     graph_data.STAT_CC_A_Ca = countWhite_Blue
-    graph_data.CT_f_conn_D_An = float(countBlack_Red_conn / totalBlack)
-    graph_data.CT_f_conn_A_Ca = float(countWhite_Blue_conn / totalWhite)
+    if totalBlack != 0:
+        graph_data.CT_f_conn_D_An = float(countBlack_Red_conn / totalBlack)
+    if totalWhite != 0:
+        graph_data.CT_f_conn_A_Ca = float(countWhite_Blue_conn / totalWhite)
     graph_data.countBlack_Red_conn = countBlack_Red_conn
     graph_data.countWhite_Blue_conn = countWhite_Blue_conn
 
@@ -272,13 +274,15 @@ def shortest_path_descriptors(graph_data, filename):
     file = open(f"{filename}_IdTortuosityWhiteToBlue.txt", 'w')
     file.writelines(id_tort_white_to_blue)
     file.close()
-    graph_data.DISS_f10_D = float(f10_count / totalBlacks)
-    graph_data.DISS_wf10_D = float(summation / totalBlacks)
+    if totalBlacks != 0:
+        graph_data.DISS_f10_D = float(f10_count / totalBlacks)
+        graph_data.DISS_wf10_D = float(summation / totalBlacks)
     if countBlack_Red_conn != 0:
         graph_data.CT_f_D_tort1 = float(black_tor / countBlack_Red_conn)
     if countWhite_Blue_conn != 0:
        graph_data.CT_f_A_tort1 = float(white_tor / countWhite_Blue_conn)
-    graph_data.ABS_wf_D = float(total_weighted_black_red / (totalBlacks + totalWhite))
+    if totalBlacks + totalWhite != 0:
+        graph_data.ABS_wf_D = float(total_weighted_black_red / (totalBlacks + totalWhite))
     return graph_data
 
 '''--------------- Shortest Path Descriptors ---------------'''
