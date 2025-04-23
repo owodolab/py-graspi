@@ -5,6 +5,7 @@ import igraph as ig
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import src.graph_data_class as GraphData
 
 import src.descriptors as d
