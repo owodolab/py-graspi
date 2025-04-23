@@ -4,14 +4,23 @@ setup(
     name="py_graspi",
     author="Olga Wodo",
     author_email="olgawodo@buffalo.edu",
-    version="0.1.1.9",
+    version="0.2.0.5-beta",
     description="Graph-based descriptor for microstructure featurization",
     long_description="""
-    Py-GraSPI (Graph-based Structure Property Identifier) is a Python package designed to compute a comprehensive set of descriptors for segmented microstructures using a graph-based approach.
+# Py-GraSPI (Graph-based Structure Property Identifier)
 
-    See https://github.com/owodolab/py-graspi for the source code and https://owodolab.github.io/py-graspi/ for documentation.
-    """,
-    long_description_content_type="text/plain",
+**Py-GraSPI** is a Python package designed to compute a comprehensive set of descriptors for segmented microstructures using a graph-based approach.
+
+Py-GraSPI is the Python implementation of the original GraSPI package, which was developed in C/C++.
+
+---
+
+### Resources
+
+- **Source Code**: [GitHub Repository](https://github.com/owodolab/py-graspi)
+- **Documentation**: [Project Documentation](https://owodolab.github.io/py-graspi/)
+""",
+    long_description_content_type="text/markdown",
     license="BSD 3-Clause License",
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
