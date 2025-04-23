@@ -12,26 +12,18 @@ src.descriptors module
    :undoc-members:
    :show-inheritance:
 
-src.igraph\_testing module
+src.graph module
 ---------------------------------
 
-.. automodule:: src.igraph_testing
+.. automodule:: src.graph
    :members:
    :undoc-members:
    :show-inheritance:
 
-src.GraphData module
+src.graph_data_class module
 ---------------------------------
 
-.. automodule:: src.GraphData
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-tests.tests module
------------------------
-
-.. automodule:: tests.tests
+.. automodule:: src.graph_data_class
    :members:
    :undoc-members:
    :show-inheritance:

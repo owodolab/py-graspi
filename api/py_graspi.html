@@ -205,34 +205,260 @@ ig.Graph: The filtered graph of vertices of the same color and red metavertex.</
 </dd></dl>
 
 </section>
-<section id="src-igraph-testing-module">
-<h2>src.igraph_testing module<a class="headerlink" href="#src-igraph-testing-module" title="Link to this heading"></a></h2>
-</section>
-<section id="src-graphdata-module">
-<h2>src.GraphData module<a class="headerlink" href="#src-graphdata-module" title="Link to this heading"></a></h2>
-</section>
-<section id="module-tests.tests">
-<span id="tests-tests-module"></span><h2>tests.tests module<a class="headerlink" href="#module-tests.tests" title="Link to this heading"></a></h2>
-<dl class="py data">
-<dt class="sig sig-object py" id="tests.tests.epsilon">
-<span class="sig-prename descclassname"><span class="pre">tests.tests.</span></span><span class="sig-name descname"><span class="pre">epsilon</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1e-05</span></em><a class="headerlink" href="#tests.tests.epsilon" title="Link to this definition"></a></dt>
-<dd><p>Generates the black and white images of each morphology.</p>
+<section id="module-src.graph">
+<span id="src-graph-module"></span><h2>src.graph module<a class="headerlink" href="#module-src.graph" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.graph.generateGraph">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">generateGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#generateGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.generateGraph" title="Link to this definition"></a></dt>
+<dd><p>This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – The name of the file containing graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function generates a graph based on the input so the return type depends on the format of graph data that was given.
+See “generateGraphAdj” if in .txt, or “generateGraphGraphe” if in .graphe.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.tests.generate_image">
-<span class="sig-prename descclassname"><span class="pre">tests.tests.</span></span><span class="sig-name descname"><span class="pre">generate_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/tests.html#generate_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.tests.generate_image" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="src.graph.generateGraphAdj">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">generateGraphAdj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#generateGraphAdj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.generateGraphAdj" title="Link to this definition"></a></dt>
+<dd><p>This function takes in graph data in the .txt format and constructs the graph with adjacency list representation.
+It also generates additional graph data stored in the graph_data object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – The name of the file containing the graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The graph data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>graph_data (<a class="reference internal" href="../api_overview.html#src.graph_data_class.graph_data_class" title="src.graph_data_class.graph_data_class">graph_data_class</a>)</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.tests.generate_histogram">
-<span class="sig-prename descclassname"><span class="pre">tests.tests.</span></span><span class="sig-name descname"><span class="pre">generate_histogram</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labelX</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labelY</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/tests.html#generate_histogram"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.tests.generate_histogram" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dt class="sig sig-object py" id="src.graph.generateGraphGraphe">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">generateGraphGraphe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#generateGraphGraphe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.generateGraphGraphe" title="Link to this definition"></a></dt>
+<dd><p>This function takes in graph data in the .graphe format and constructs the graph with adjacency list representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – The name of the file containing graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The graph representation of the given data
+is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>g (igraph.Graph)</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="tests.tests.main">
-<span class="sig-prename descclassname"><span class="pre">tests.tests.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/tests/tests.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#tests.tests.main" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="src.graph.adjList">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">adjList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#adjList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.adjList" title="Link to this definition"></a></dt>
+<dd><p>This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph. It also generates additional
+graph data stored in the graph_data object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The name of the file containing the graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The graph data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>graph_data (<a class="reference internal" href="../api_overview.html#src.graph_data_class.graph_data_class" title="src.graph_data_class.graph_data_class">graph_data_class</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.graph.graphe_adjList">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">graphe_adjList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#graphe_adjList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.graphe_adjList" title="Link to this definition"></a></dt>
+<dd><p>This function creates the adjacency list for graph data given in .graphe format, it categorizes neighbors of vertices into first, second, and third order.
+This function is called inside the “generateGraphGraphe” function to help create the necessary information to generate the final graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The name of the file containing the graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a list of vertices, where each index of this list corresponds to a vertex and contains a sublist to represent it’s neighboring vertices.
+first_order_neighbors (list): This is a list of all the first-order pairs.
+second_order_neighbors (list): This is a list of all the second-order pairs.
+third_order_neighbors (list): This is a list of all the third-order pairs.
+is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D structure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>adjacency_list (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.graph.adjvertexColors">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">adjvertexColors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#adjvertexColors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.adjvertexColors" title="Link to this definition"></a></dt>
+<dd><p>This function assigns each vertex a color label based on the data in the specified file and returns a list where each index corresponds to a vertex’s color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fileName</strong> (<em>str</em>) – The name of the file containing the vertex color data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This list contains color labels (‘black’, ‘white’, ‘red’, or ‘blue’) for each vertex or metavertex in the graph.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>labels (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.graph.visualize">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_2D</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#visualize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.visualize" title="Link to this definition"></a></dt>
+<dd><p>This function shows a visualization of the given graph in either 2D or 3D depending on the is_2D boolean.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> (<em>igraph.Graph</em>) – The given graph to visualize.</p></li>
+<li><p><strong>is_2D</strong> (<em>bool</em>) – This is true if the graph represents a 2D structure, and false if it represents a 3D</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function does not return a value, it performs an action by outputting the visualization of the given graph using plt.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.graph.connectedComponents">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">connectedComponents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#connectedComponents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.connectedComponents" title="Link to this definition"></a></dt>
+<dd><p>This function identifies the connected components of a filtered graph and returns lists that contain the vertices that are part of the connected components.
+It filters based on ‘black’ vertices that connect to the ‘red’ metavertex and ‘white’ vertices that connect to the ‘blue’ metavertex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list will contain a list or several lists, depending on how many connected components there are. Each list contains the vertices that are part of the connected component.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>connected_comp (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.graph.filterGraph">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">filterGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#filterGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.filterGraph" title="Link to this definition"></a></dt>
+<dd><p>This function returns a subgraph that is created by filtering the given graph to only contain edges that connect vertices of the same color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filtered graph with only edges between the same color vertices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>filteredGraph (igraph.Graph)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.graph.filterGraph_metavertices">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">filterGraph_metavertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#filterGraph_metavertices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.filterGraph_metavertices" title="Link to this definition"></a></dt>
+<dd><p>This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’/cathode metavertex,
+and one that contains all the edges that connect the vertices of the same color or involve the ‘red’/anode metavertex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ vertex.
+fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ vertex.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>fg_blue (igraph.Graph)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.graph.filterGraph_blue_red">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">filterGraph_blue_red</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#filterGraph_blue_red"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.filterGraph_blue_red" title="Link to this definition"></a></dt>
+<dd><p>This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’ cathode metavertex,
+and one that contains all the edges that connect the vertices of the same color or involve the ‘red’ anode metavertex.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ metavertex.
+fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ metavertex.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>fg_blue (igraph.Graph)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.graph.main">
+<span class="sig-prename descclassname"><span class="pre">src.graph.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph.main" title="Link to this definition"></a></dt>
 <dd></dd></dl>
+
+</section>
+<section id="module-src.graph_data_class">
+<span id="src-graph-data-class-module"></span><h2>src.graph_data_class module<a class="headerlink" href="#module-src.graph_data_class" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.graph_data_class.graph_data_class">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.graph_data_class.</span></span><span class="sig-name descname"><span class="pre">graph_data_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_2D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph_data_class.html#graph_data_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph_data_class.graph_data_class" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to store all graph parameters in a single object, reducing redundant function returns.</p>
+<dl class="simple">
+<dt><strong>Attributes:</strong></dt><dd><ul class="simple">
+<li><p><strong>graph</strong> (<em>ig.Graph</em>): Stores the igraph graph object.</p></li>
+<li><p><strong>is_2D</strong> (<em>bool</em>): Indicates whether the graph is 2D.</p></li>
+<li><p><strong>black_vertices</strong> (<em>list</em>): A list to store black vertices in the graph.</p></li>
+<li><p><strong>white_vertices</strong> (<em>list</em>): A list to store white vertices in the graph.</p></li>
+<li><p><strong>shortest_path_to_red</strong> (<em>Optional[list]</em>): Stores the shortest path to the red vertex.</p></li>
+<li><p><strong>shortest_path_to_blue</strong> (<em>Optional[list]</em>): Stores the shortest path to the blue vertex.</p></li>
+<li><p><strong>black_green</strong> (<em>int</em>): Computed descriptor for black-green interaction.</p></li>
+<li><p><strong>black_interface_red</strong> (<em>int</em>): Computed descriptor for the black-red interface.</p></li>
+<li><p><strong>white_interface_blue</strong> (<em>int</em>): Computed descriptor for the white-blue interface.</p></li>
+<li><p><strong>dim</strong> (<em>int</em>): Dimension descriptor for the graph.</p></li>
+<li><p><strong>interface_edge_comp_paths</strong> (<em>int</em>): Number of interface edges in computed paths.</p></li>
+<li><p><strong>CT_n_D_adj_An</strong> (<em>int</em>): Some computed descriptor.</p></li>
+<li><p><strong>CT_n_A_adj_Ca</strong> (<em>int</em>): Another computed descriptor.</p></li>
+<li><p><strong>redVertex</strong> (<em>Optional[Any]</em>): Reference to the red vertex.</p></li>
+<li><p><strong>blueVertex</strong> (<em>Optional[Any]</em>): Reference to the blue vertex.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> (<em>ig.Graph</em>) – The igraph graph object representing the structure.</p></li>
+<li><p><strong>is_2D</strong> (<em>str</em>) – Boolean indicating whether the graph is 2D</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="src.graph_data_class.graph_data_class.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_2D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph_data_class.html#graph_data_class.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph_data_class.graph_data_class.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the graph_data_class object with a graph and its properties.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.graph_data_class.graph_data_class.compute_shortest_paths">
+<span class="sig-name descname"><span class="pre">compute_shortest_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">red_vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blue_vertex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/src/graph_data_class.html#graph_data_class.compute_shortest_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#src.graph_data_class.graph_data_class.compute_shortest_paths" title="Link to this definition"></a></dt>
+<dd><p>Compute and store shortest paths from red and blue vertices.</p>
+</dd></dl>
+
+</dd></dl>
 
 </section>
 <section id="module-src">

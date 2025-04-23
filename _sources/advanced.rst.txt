@@ -93,7 +93,7 @@ This will bring you to the testing files on jupyter.
 Navigate to the file **graspi_igraph_notebook.ipynb** under the **notebook** directory.
 
 Running Py-GraSPI on the Library of Morphologies
-=========================================
+=====================================================
 
 Change folder to py-graspi/tests, generate the executable for the script, and run the code
 
@@ -171,10 +171,11 @@ Here, the image "mycelium.png" is from the folder py-graspi/data/images.
 This creates a truncated version of the mycelium image (for runtime purposes) and outputs the largest subgraph of the following filtered graphs:
    1. The first one is a white only vertex graph
    2. The second one is a black only vertex graph.
+
 You can interact with the plots to find the appropriate visualization.
 
 Generate API Documentation
-==================
+==============================
 
 In order to generate an API using sphinx, you need to follow the installation of py-graspi:
 

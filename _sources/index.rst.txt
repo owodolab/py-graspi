@@ -55,7 +55,7 @@ To utilize the package, import the Py-Graspi package to your python project:
     import py_graspi as ig
 
 Usage of Py-Graspi on a test Kaggle notebook
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Navigate to the following link to open the test Kaggle notebook on Binder:
 
@@ -64,7 +64,7 @@ Navigate to the following link to open the test Kaggle notebook on Binder:
 Follow the steps in the notebook to learn about basic py-graspi functionality such as generating a graph and listing it's descriptors.
 
 Manual Installation for Py-Graspi source code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Follow these steps to manually install the Py-Graspi package.
 
