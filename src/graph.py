@@ -63,8 +63,8 @@ def generateGraphAdj(file, PERIODICITY = False):
     g.vs[g.vcount() - 2]['color'] = 'blue'
     g.vs[g.vcount() - 1]['color'] = 'red'
 
-    shortest_path_to_red = g.shortest_paths(source=graph_data.redVertex, weights=g.es['weight'])[0]
-    shortest_path_to_blue = g.shortest_paths(source=graph_data.blueVertex, weights=g.es['weight'])[0]
+    shortest_path_to_red = g.distances(source=graph_data.redVertex, weights=g.es['weight'])[0]
+    shortest_path_to_blue = g.distances(source=graph_data.blueVertex, weights=g.es['weight'])[0]
 
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY:
