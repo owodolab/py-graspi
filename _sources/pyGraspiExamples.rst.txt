@@ -52,7 +52,7 @@ Step 3: Save descriptors to the file
 
 Below is the output file generated when calculating the descriptors for the above test data (data_0.5_2.2_001900.txt)
     .. image:: imgs/descriptors.png
-        :scale: 80%
+        :scale: 70%
         :align: center
 
 Command Line Usage
@@ -93,7 +93,7 @@ Examples of usage:
 
 Example output when testing .txt with periodicity flag = 1
     .. image:: imgs/periodicity.png
-        :scale: 50%
+        :scale: 70%
         :align: center
 
 
