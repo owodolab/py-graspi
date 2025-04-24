@@ -3,9 +3,8 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 sys.path.append(os.path.abspath('../../src'))
-#sys.path.append(os.path.abspath('../../data'))
+from py_graspi import graph as ig
 
-import src.graph as ig
 
 def find_coords(filename):
     """
