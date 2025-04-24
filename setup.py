@@ -4,10 +4,13 @@ setup(
     name = "py_graspi",
     author = "Wenqi Zheng",
     author_email = "wenqizhe@buffalo.edu",
-    version = "0.1.1.4-beta",
+    version = "0.2.0.4",
     description = "Utilize Python-igraph to produce similar functionality as GraSPI",
-    packages = find_packages(),
+    packages = find_packages(where='src'),
+    package_dir={'': 'src'},
     classifiers = ["Programming Language :: Python"],
+    url="https://github.com/owodolab/py-graspi",
+    download_url='https://github.com/owodolab/py-graspi/archive/refs/tags/v_2.0.4.tar.gz', #need to get this link from the GitHub repo "Releases" section
     install_requires=[
         "igraph",
         "matplotlib",
