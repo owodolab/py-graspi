@@ -142,7 +142,6 @@ def CC_descriptors(graph,totalBlack, totalWhite):
         float(countWhite_Blue_conn / totalWhite), countBlack_Red_conn, countWhite_Blue_conn
 
 def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWhite_Blue_conn, pixelSize):
-  
     """
         This function computes descriptors related to shortest paths with vertex and metavertex colorations that correspond to the following descriptors:
         DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1 and ABS_wf_D.
@@ -171,21 +170,21 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
     shortest_path_to_blue = graph_data.shortest_path_to_blue
 
     fg_green, fg_blue, fg_red, fg_red_unfiltered = filterGraph_metavertices(graph)
-    greenVertex = (graph.vs.select(color = 'green')[0]).index
-    redVertex = (graph.vs.select(color = 'red')[0]).index
-    blueVertex = (graph.vs.select(color = 'blue')[0]).index
-
+    greenVertex = (graph.vs.select(color='green')[0]).index
+    redVertex = (graph.vs.select(color='red')[0]).index
+    blueVertex = (graph.vs.select(color='blue')[0]).index
 
     distances = fg_green.shortest_paths(source=greenVertex, weights=fg_green.es["weight"])[0]
 
     black_tor_distances = fg_red.shortest_paths(source=redVertex, weights=fg_red.es["weight"])[0]
     white_tor_distances = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
 
-    black_red_unfiltered_distance = fg_red_unfiltered.shortest_paths(source=redVertex, weights=fg_red_unfiltered.es['weight'])[0]
-    distances = [d * pixelSize for d in distances]
-    black_tor_distances = [d * pixelSize for d in black_tor_distances]
-    white_tor_distances = [d * pixelSize for d in white_tor_distances]
-    black_red_unfiltered_distance = [d * pixelSize for d in black_red_unfiltered_distance]
+    black_red_unfiltered_distance = \
+    fg_red_unfiltered.shortest_paths(source=redVertex, weights=fg_red_unfiltered.es['weight'])[0]
+
+    # Apply pixelSize only where needed
+    distances = [d * pixelSize for d in distances]  # For DISS_f10_D and DISS_wf10_D
+    black_red_unfiltered_distance = [d * pixelSize for d in black_red_unfiltered_distance]  # For ABS_wf_D
 
     f10_count = 0
     summation = 0
@@ -220,7 +219,7 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
                 tor = 1
             else:
                 tor = black_tor_distance / straight_path
-            tolerance = 1 + (1/dim)
+            tolerance = 1 + (1 / dim)
 
             if tor < tolerance:
                 tor = 1
@@ -229,26 +228,24 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
             tort_black_to_red.append(f'{float(tor)}\n')
             id_tort_black_to_red.append(f'{vertex} {float(tor)} {float(black_tor_distance)} {float(straight_path)}\n')
 
-
         if distance != float('inf'):
             dist_black_to_green.append(f'{float(distance)}\n')
 
             # summation of weight * distance for DISS_wf10_D
-            A1=6.265
-            B1=-23.0
-            C1=17.17
+            A1 = 6.265
+            B1 = -23.0
+            C1 = 17.17
 
             # check if distance is < 10, if yes, increment counter for DISS_f10_D
             if distance > 0 and distance < 10:
-                summation += A1*math.exp(-((distance-B1)/C1)*((distance-B1)/C1))
+                summation += A1 * math.exp(-((distance - B1) / C1) * ((distance - B1) / C1))
                 f10_count += 1
 
         if black_tor_distance != float('inf'):
             dist_black_to_red.append(f'{float(black_tor_distance)}\n')
 
         # computation for ABS_wf_D
-        total_weighted_black_red += math.exp(-1.0*(black_red)/100)
-
+        total_weighted_black_red += math.exp(-1.0 * (black_red) / 100)
 
     for vertex in white_vertices:
         white_tor_distance = white_tor_distances[vertex]
@@ -261,7 +258,7 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
                 tor = 1
             else:
                 tor = white_tor_distance / straight_path
-            tolerance = 1 + (1/dim)
+            tolerance = 1 + (1 / dim)
 
             if tor < tolerance:
                 tor = 1
@@ -269,7 +266,6 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
 
             tort_white_to_blue.append(f'{float(tor)}\n')
             id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
-
 
     file = open(f"./results/{filename}_TortuosityBlackToRed.txt", 'w')
     file.writelines(tort_black_to_red)
@@ -306,7 +302,7 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
     if countWhite_Blue_conn == 0:
         print("countwhite")
     if totalWhite == 0:
-        print("totalwhites")    
+        print("totalwhites")
 
     return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), \
         float(white_tor / countWhite_Blue_conn), float(total_weighted_black_red / (totalBlacks + totalWhite))
