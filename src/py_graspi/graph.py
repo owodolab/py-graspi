@@ -12,29 +12,28 @@ from py_graspi import graph_data_class as GraphData
 
 import math
 
-DEBUG = False
-PERIODICITY = True #reflects default status from c++ implementation
 n_flag = 2
 
 
-def generateGraph(file):
+def generateGraph(file, PERIODICITY = False):
     """
     This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.
 
     Args:
         file (str): The name of the file containing graph data.
+        periodicity (bool): Boolean representing if graph has periodic boundary conditions
 
     Returns:
         This function generates a graph based on the input so the return type depends on the format of graph data that was given.
         See “generateGraphAdj” if in .txt, or “generateGraphGraphe” if in .graphe.
     """
     if os.path.splitext(file)[1] == ".txt":
-        return generateGraphAdj(file)
+        return generateGraphAdj(file, PERIODICITY)
     else:
         return generateGraphGraphe(file)
 
 
-def generateGraphAdj(file):
+def generateGraphAdj(file, PERIODICITY = False):
     """
         This function takes in graph data in the .txt format and constructs the graph with adjacency list representation.
         It also generates additional graph data stored in the graph_data object.
@@ -59,19 +58,13 @@ def generateGraphAdj(file):
     dimY = int(line[1])
 
     g = graph_data.graph
-    is_2D = graph_data.is_2D
-    black_vertices = graph_data.black_vertices
-    white_vertices = graph_data.white_vertices
-    redVertex = graph_data.redVertex
-    blueVertex = graph_data.blueVertex
-    dim = graph_data.dim
 
     # add color to blue and red metavertices
     g.vs[g.vcount() - 2]['color'] = 'blue'
     g.vs[g.vcount() - 1]['color'] = 'red'
 
-    shortest_path_to_red = g.shortest_paths(source=graph_data.redVertex, weights=g.es['weight'])[0]
-    shortest_path_to_blue = g.shortest_paths(source=graph_data.blueVertex, weights=g.es['weight'])[0]
+    shortest_path_to_red = g.distances(source=graph_data.redVertex, weights=g.es['weight'])[0]
+    shortest_path_to_blue = g.distances(source=graph_data.blueVertex, weights=g.es['weight'])[0]
 
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY:
@@ -101,7 +94,7 @@ def generateGraphAdj(file):
     g.vs[g.vcount() - 1]['color'] = 'green'
     green_vertex = g.vs[g.vcount() - 1].index
 
-    if DEBUG:
+    if __debug__:
         black_green_neighbors = []
 
     # Initialize counters
@@ -209,10 +202,10 @@ def generateGraphAdj(file):
                         weights.append(edge['weight'] / 2)
                         edges_to_add_set.add((target_vertex, green_vertex))
 
-                if DEBUG:
+                if __debug__:
                     if source_vertex_color == 'black':
                         black_green_neighbors.append(source_vertex)
-                if DEBUG:
+                if __debug__:
                     if target_vertex_color == 'black':
                         black_green_neighbors.append(target_vertex)
 
@@ -231,10 +224,12 @@ def generateGraphAdj(file):
     graph_data.black_interface_red = black_interface_red
     graph_data.white_interface_blue = white_interface_blue
     graph_data.interface_edge_comp_paths = interface_edge_comp_paths
+    graph_data.shortest_path_to_red = shortest_path_to_red
+    graph_data.shortest_path_to_blue = shortest_path_to_blue
     graph_data.CT_n_D_adj_An = CT_n_D_adj_An
     graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
 
-    if DEBUG:
+    if __debug__:
         print(g.vs['color'])
         print("Number of nodes: ", g.vcount())
         print("Green vertex neighbors: ", g.neighbors(green_vertex))
@@ -262,8 +257,15 @@ def generateGraphGraphe(file):
 
     """
     # gets an adjacency list and first order pairs list from the file input
-    adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2d = graphe_adjList(file)
+    graph_data = graphe_adjList(file)
     vertex_colors = adjvertexColors(file)
+
+    # Extract adjacency list from graph object
+    adjacency_list = [[] for _ in range(graph_data.graph.vcount())]
+    for edge in graph_data.graph.get_edgelist():
+        source, target = edge
+        adjacency_list[source].append(target)
+        adjacency_list[target].append(source)
 
     edges = [(i, neighbor) for i, neighbors in enumerate(adjacency_list) for neighbor in neighbors]
     # creates graph using Igraph API
@@ -273,7 +275,7 @@ def generateGraphGraphe(file):
 
     # adds green vertex and its color
     g.add_vertices(1)
-    if DEBUG:
+    if __debug__:
         print(len(adjacency_list))
         # exit()
     g.vs[len(adjacency_list)]['color'] = 'green'
@@ -283,7 +285,7 @@ def generateGraphGraphe(file):
 
 
     # Loops through all pairings, adds edge between black and white pairings {black-green/white-green}, no multiple edges to same vertex if edge has already been added
-    for pair in first_order_neighbors:
+    for pair in graph_data.first_order_neighbors:
         source_vertex = pair[0]
         target_vertex = pair[1]
 
@@ -293,8 +295,7 @@ def generateGraphGraphe(file):
             g.add_edge(green_vertex, source_vertex)
             g.add_edge(green_vertex, target_vertex)
 
-
-    graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2d)
+    graph_data.graph = g
     return graph_data
 
 
@@ -311,7 +312,7 @@ def adjList(fileName):
 
         """
     adjacency_list = {}
-    if DEBUG:
+    if __debug__:
         first_order_pairs = []
         second_order_pairs = []
         third_order_pairs = []
@@ -370,18 +371,18 @@ def adjList(fileName):
                         if 0 <= nx < dimX and 0 <= ny < dimY and 0 <= nz < dimZ:
                             neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
                             if (dx, dy, dz) == offsets[1] or (dx, dy, dz) == offsets[2] or (dx, dy, dz) == offsets[3]:
-                                if DEBUG:
+                                if __debug__:
                                     first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("f")
                                 edge_weights.append(1)
                             elif (dx, dy, dz) == offsets[4] or (dx, dy, dz) == offsets[5] or (dx, dy, dz) == offsets[
                                 6] or (dx, dy, dz) == offsets[7] or (dx, dy, dz) == offsets[8]:
-                                if DEBUG:
+                                if __debug__:
                                     third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("t")
                                 edge_weights.append(float(math.sqrt(3)))
                             else:
-                                if DEBUG:
+                                if __debug__:
                                     second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                                 edge_labels.append("s")
                                 edge_weights.append(float(math.sqrt(2)))
@@ -448,7 +449,7 @@ def adjList(fileName):
     if redVertex is not None and blueVertex is not None:
         graph_data.compute_shortest_paths(red_vertex=redVertex, blue_vertex=blueVertex)
 
-    if DEBUG:
+    if __debug__:
         print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
         print("First Order Pairs: ", first_order_pairs)
@@ -472,12 +473,7 @@ def graphe_adjList(filename):
         filename (str): The name of the file containing the graph data.
 
     Returns:
-        adjacency_list (list): This is a list of vertices, where each index of this list corresponds to a vertex and contains a sublist to represent it’s neighboring vertices.
-        first_order_neighbors (list): This is a list of all the first-order pairs.
-        second_order_neighbors (list): This is a list of all the second-order pairs.
-        third_order_neighbors (list): This is a list of all the third-order pairs.
-        is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D structure.
-
+        graph_data (graph_data_class): The graph data containing graph, is_2D, first_order_neighbors, second_order_neighbors, and third_order_neighbors attributes
     """
     adjacency_list = []
     first_order_neighbors = []
@@ -513,11 +509,22 @@ def graphe_adjList(filename):
     adjacency_list.append([])
     adjacency_list.append([])
 
-    #only input files that have third order neighbors are 3D input files, this checks for that
+    # the only input files that have third order neighbors are 3D input files, this checks for that
     is_2D = False
     if len(third_order_neighbors) <= 0:
         is_2D = True
-    return adjacency_list, first_order_neighbors, second_order_neighbors, third_order_neighbors, is_2D
+
+    edges_dict = {v: neighbors for v, neighbors in enumerate(adjacency_list)}
+    g = ig.Graph.ListDict(edges=edges_dict, directed=False)
+
+    # Create graph_data_class object
+    graph_data = GraphData.graph_data_class(graph=g, is_2D=is_2D)
+    graph_data.is_2D = is_2D
+    graph_data.first_order_neighbors = first_order_neighbors
+    graph_data.second_order_neighbors = second_order_neighbors
+    graph_data.third_order_neighbors = third_order_neighbors
+
+    return graph_data
 
 
 
@@ -820,7 +827,7 @@ def filterGraph_blue_red(graph):
     return fg_blue, fg_red
 
 def main():
-    global PERIODICITY
+    PERIODICITY = False
     global n_flag
 
     # Validate and parse command-line arguments
@@ -841,7 +848,7 @@ def main():
                     print("Invalid argument for -p. Use 0 or 1.")
                     return
                 #The filename should be at sys.argv[2]
-                graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
+                graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  #generate graph using sys.argv[2]
             if sys.argv[3] == "-n":
                 if sys.argv[4] == "2": #If phase flag 1
                     n_flag = 2  #Set n_flag to 2
@@ -852,20 +859,21 @@ def main():
                     print("Invalid argument for -n. Use 2 or 3.")
                     return
                 #The filename should be at sys.argv[2]
-                graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
+                graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  #generate graph using sys.argv[2]
         if len(sys.argv) == 7:
-            if sys.argv[3] != "-p" or sys.argv[4] != "0" or sys.argv[4] != "1" or sys.argv[5] != "-n" or sys.argv[6] != "2" or sys.argv[6] != "3":
+            if sys.argv[3] != "-p" or (sys.argv[4] != "0" and sys.argv[4] != "1") or sys.argv[5] != "-n" or (sys.argv[6] != "2" and sys.argv[6] != "3"):
                 print("Incorrect format. Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) OR -g <INPUT_FILE.graphe>")
+                return
             if sys.argv[4] == "1": #If periodicity flag 1
                 PERIODICITY = True #Set PERIODICITY to True
             if sys.argv[6] == "3":
                 n_flag = 3
                 print("3 Phase not yet implemented.")
                 return
-            graph_data = generateGraphAdj(sys.argv[2])  # generate graph using sys.argv[2]
+            graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  # generate graph using sys.argv[2]
         else:
             # No -p or -n flag. Default periodicity false. Default 2 phase.
-            graph_data = generateGraphAdj(sys.argv[2])  #generate graph using sys.argv[2]
+            graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  #generate graph using sys.argv[2]
 
     #Check if -g (unstructured data with .graphe file)
     elif sys.argv[1] == "-g":
@@ -888,7 +896,7 @@ def main():
     visualize(filteredGraph, graph_data.is_2D)
 
     #Debugging: print descriptors and connected components if DEBUG is True
-    if DEBUG:
+    if __debug__:
         dic = d.compute_descriptors(graph_data.graph)
         print(connectedComponents(filteredGraph))
         for key, value in dic.items():
