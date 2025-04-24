@@ -301,12 +301,12 @@ def shortest_path_descriptors(graph_data, filename, countBlack_Red_conn, countWh
 
     if totalBlacks == 0:
         print("totalblack")
+    if totalWhite == 0:
+        print("totalwhites")    
     if countBlack_Red_conn == 0:
         print("countblack_red")
     if countWhite_Blue_conn == 0:
-        print("countwhite")
-    if totalWhite == 0:
-        print("totalwhites")    
+        print("countwhite_blue")
 
     return float(f10_count / totalBlacks), float(summation / totalBlacks), float(black_tor / countBlack_Red_conn), \
         float(white_tor / countWhite_Blue_conn), float(total_weighted_black_red / (totalBlacks + totalWhite))
