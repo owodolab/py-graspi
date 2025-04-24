@@ -125,7 +125,7 @@ def main():
                 for line in txt.readlines():
                     pdf.cell(40, 8, txt=line, ln=True, align="L")
         else:
-            stats = py_graspi.descriptors(graphData, test_file)
+            stats = py_graspi.compute_descriptors(graphData, test_file)
 
             print(f"{test_file} Descriptors Generated")
             with open(results_path + "descriptors-" + test_file + ".txt", "w") as txt:
