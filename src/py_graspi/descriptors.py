@@ -29,7 +29,6 @@ def compute_descriptors(graph_data, filename):
     # shortest path descriptors
     graph_data = shortest_path_descriptors(graph_data,filename)
 
-
     descriptors_dict["STAT_n"] =  graph_data.STAT_n_A + graph_data.STAT_n_D
     descriptors_dict["STAT_e"] = graph_data.black_green
     descriptors_dict["STAT_n_D"] = graph_data.STAT_n_D
