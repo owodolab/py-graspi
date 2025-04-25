@@ -905,17 +905,18 @@ def filterGraph_blue_red(graph):
 
 
 def main():
-    global PERIODICITY, n_flag, pixelSize
+    global n_flag, pixelSize
     PERIODICITY = False
     n_flag = 2
-    pixelSize = 1  # Default pixel size
+    pixelSize = 1 # store default value for -s
 
     # Validate and parse command-line arguments
     if len(sys.argv) < 3:
-        print("Usage: python graph.py -a <INPUT_FILE.txt> [-s <pixelSize>] [-p <{0,1}>] [-n <{2,3}>] OR -g <INPUT_FILE.graphe>")
+        print(
+            "Usage: python graph.py -a <INPUT_FILE.txt> [-s <pixelSize>] [-p <{0,1}>] [-n <{2,3}>] OR -g <INPUT_FILE.graphe>")
         return
 
-    # Handle structured data
+    # Check if -a (structured data with .txt file)
     if sys.argv[1] == "-a":
         filename = sys.argv[2]
         i = 3
@@ -949,46 +950,41 @@ def main():
                     return
             elif sys.argv[i] == "-s":
                 if i + 1 < len(sys.argv):
-                    try:
-                        pixelSize = float(sys.argv[i + 1])
-                    except ValueError:
-                        print("Invalid pixel size. Must be a number.")
-                        return
+                    pixelSize = float(sys.argv[i + 1])
                     i += 2
                 else:
                     print("Missing value for -s flag.")
                     return
-            else:
-                print(f"Unknown argument: {sys.argv[i]}")
-                return
 
-        graph_data = generateGraphAdj(filename, PERIODICITY)
+        graph_data = generateGraphAdj(filename,PERIODICITY)
 
-    # Handle unstructured data
+    # Check if -g (unstructured data with .graphe file)
     elif sys.argv[1] == "-g":
-        if len(sys.argv) > 3 and any(flag in sys.argv for flag in ["-p", "-n", "-s"]):
-            print("Error: -p, -n, and -s flags cannot be used with -g. Only -a supports them.")
+        if len(sys.argv) > 3 and (sys.argv[2] == "-p" or sys.argv[2] == "-n" or sys.argv[2] == "-s"):
+            print(
+                "Error: Periodicity option (-p), phase option (-n), and -s cannot be used with -g flag. Only -a supports them.")
             return
         if len(sys.argv) != 3:
-            print("Usage: python graph.py -g <INPUT_FILE.graphe>")
+            print("Formatting error. Usage: python graph.py -g <INPUT_FILE.graphe>")
             return
         graph_data = generateGraphGraphe(sys.argv[2])
 
     else:
-        print("Usage: python graph.py -a <INPUT_FILE.txt> [-s <pixelSize>] [-p <{0,1}>] [-n <{2,3}>] OR -g <INPUT_FILE.graphe>")
+        print(
+            "Usage: python graph.py -a <INPUT_FILE.txt> [-s <pixelSize>] [-p <{0,1}>] [-n <{2,3}>] OR -g <INPUT_FILE.graphe>")
         return
 
-    # Visualize and filter the graph
+    # Visualize the graph and filter it
     visualize(graph_data.graph, graph_data.is_2D)
     filteredGraph = filterGraph(graph_data.graph)
     visualize(filteredGraph, graph_data.is_2D)
 
-    # Debug info
     if DEBUG:
         dic = d.descriptors(graph_data.graph, sys.argv[2], pixelSize)
         print(connectedComponents(filteredGraph))
         for key, value in dic.items():
             print(key, value)
+
 
 if __name__ == '__main__':
     main()
