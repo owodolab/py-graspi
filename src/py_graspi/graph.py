@@ -143,7 +143,6 @@ def generateGraphAdj(file, PERIODICITY=False):
 
     white = set()
     black = set()
-
     vertices = set()
 
     for edge in g.es:
