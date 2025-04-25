@@ -118,7 +118,6 @@ def generateGraphAdj(file, PERIODICITY = False):
     blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
 
     # Add Green Interface and it's color
-    
     if DEBUG:
         black_green_neighbors = []
 
@@ -905,6 +904,7 @@ def filterGraph_blue_red(graph):
 
 
 def main():
+    global n_flag, pixelSize
     PERIODICITY = False
     global n_flag
     n_flag = 2
@@ -955,21 +955,10 @@ def main():
             if sys.argv[3] != "-p" or (sys.argv[4] != "0" and sys.argv[4] != "1") or sys.argv[5] != "-n" or (sys.argv[6] != "2" and sys.argv[6] != "3"):
                 print("Incorrect format. Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) OR -g <INPUT_FILE.graphe>")
                 return
-            if sys.argv[4] == "1": #If periodicity flag 1
-                PERIODICITY = True #Set PERIODICITY to True
-            if sys.argv[6] == "3":
-                n_flag = 3
-                print("3 Phase not yet implemented.")
-                return
-            graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  # generate graph using sys.argv[2]
-        else:
-            # No -p or -n flag. Default periodicity false. Default 2 phase.
-            graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  #generate graph using sys.argv[2]
 
+        graph_data = generateGraphAdj(filename, PERIODICITY)
 
-        graph_data = generateGraphAdj(filename)
-
-    # Check if -g (unstructured data with .graphe file)
+    # Handle unstructured data
     elif sys.argv[1] == "-g":
         if len(sys.argv) > 3 and (sys.argv[2] == "-p" or sys.argv[2] == "-n" or sys.argv[2] == "-s"):
             print("Error: Periodicity option (-p), phase option (-n), and -s cannot be used with -g flag. Only -a supports them.")
