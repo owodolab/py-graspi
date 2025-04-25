@@ -41,7 +41,7 @@ Step 2: For a given morphology (in Graspi input format), generate graph and calc
 
     filename = "data/data_0.5_2.2_001900.txt"
     graph_data = ig.generateGraph(filename)
-    descriptors_dict = ig.descriptors(graph_data, filename)
+    descriptors_dict = ig.compute_descriptors(graph_data, filename)
 
 Step 3: Save descriptors to the file
 
@@ -78,7 +78,7 @@ If data is structured (e.g., image), the following options are available
 
 .. code-block:: bash
 
-    python -O graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) #Can use flags
+    python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) #Can use flags
 
 This can be used with both the -p and -n flag, just one of the flags, or none of the flags.
 
@@ -86,10 +86,10 @@ Examples of usage:
 
 .. code-block:: bash
 
-    python graph.py -O -a ../data/2D-testFile/testFile-10-2D.txt -p 0 -n 2 #Both flags
-    python graph.py -O -a ../data/2D-testFile/testFile-10-2D.txt -p 1 #Only periodicity flag
-    python graph.py -O -a ../data/2D-testFile/testFile-10-2D.txt -n 3 #Only phase flag
-    python graph.py -O -a ../data/2D-testFile/testFile-10-2D.txt #No flag
+    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -p 0 -n 2 #Both flags
+    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -p 1 #Only periodicity flag
+    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -n 3 #Only phase flag
+    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt #No flag
 
 Example output when testing .txt with periodicity flag = 1
     .. image:: imgs/periodicity.png
@@ -104,13 +104,13 @@ If graph is constructed externally data can be inputted in the graph format, for
 
 .. code-block:: bash
 
-    python -O graph.py -g <INPUT_FILE.graphe> #Cannot use flags
+    python graph.py -g <INPUT_FILE.graphe> #Cannot use flags
 
 Example of usage:
 
 .. code-block:: bash
 
-    python -O graph.py -g ../data/test_data.graphe
+    python graph.py -g ../data/test_data.graphe
 
 Example output when testing .graphe file
     .. image:: imgs/graphe.png
@@ -134,5 +134,3 @@ The remaining parameters are optional, and have the default values set up, if th
 - **-p <{0,1}> (default 0-false):** This option specifies if periodicity on the side faces is to be applied (valid only morphology inputted as the array option -a).
 
 - **-n <{2,3}> default 2 (black and white, electron-donor and electron accepting material):** This option specifies the number of phases. For three-phase morphology (option -n 3, black, white and grey vertices are read, that correspond to electron-donor, electron-accepting and mixed phase material, respectively).
-
-- **-O (debug mode off):** This flag is required to run the command line functionality in regular mode. If this flag is omitted, you will see debug statements printed out on the terminal.

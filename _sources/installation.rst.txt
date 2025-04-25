@@ -19,6 +19,11 @@ To verify that the module has been installed
 
     pip show py-graspi
 
+Ensure you see this output on the terminal when running pip show
+    .. image:: imgs/pip_show.png
+        :scale: 55%
+        :align: center
+
 To utilize the package, import the Py-Graspi package to your python project:
 
 .. code-block:: python
