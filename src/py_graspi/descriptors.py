@@ -6,7 +6,7 @@ from py_graspi import graph as ig
 from py_graspi import graph_data_class as GraphData
 
 
-def compute_descriptors(graph_data, filename,pixelSize):
+def compute_descriptors(graph_data, filename,pixelSize=1):
     """
     This function computes all the descriptors for the graph given and saves them  in a dictionary.
 
@@ -157,7 +157,7 @@ def CC_descriptors(graph_data):
     return graph_data
 
 
-def shortest_path_descriptors(graph_data, filename,pixelSize):
+def shortest_path_descriptors(graph_data, filename,pixelSize=1):
     """
         This function computes descriptors related to shortest paths with vertex and metavertex colorations that correspond to the following descriptors:
         DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1 and ABS_wf_D.
