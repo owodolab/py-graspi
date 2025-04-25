@@ -41,7 +41,7 @@ Step 2: For a given morphology (in Graspi input format), generate graph and calc
 
     filename = "data/data_0.5_2.2_001900.txt"
     graph_data = ig.generateGraph(filename)
-    descriptors_dict = ig.descriptors(graph_data, filename)
+    descriptors_dict = ig.compute_descriptors(graph_data, filename)
 
 Step 3: Save descriptors to the file
 
