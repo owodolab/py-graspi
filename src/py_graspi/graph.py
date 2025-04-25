@@ -905,10 +905,11 @@ def main():
 
     # Validate and parse command-line arguments
     if len(sys.argv) < 3:
-        print("Usage: python graph.py -a <INPUT_FILE.txt> [-s <pixelSize>] [-p <{0,1}>] [-n <{2,3}>] OR -g <INPUT_FILE.graphe>")
+        print(
+            "Usage: python graph.py -a <INPUT_FILE.txt> [-s <pixelSize>] [-p <{0,1}>] [-n <{2,3}>] OR -g <INPUT_FILE.graphe>")
         return
 
-    # Handle structured data
+    # Check if -a (structured data with .txt file)
     if sys.argv[1] == "-a":
         filename = sys.argv[2]
         i = 3
@@ -926,59 +927,57 @@ def main():
                 else:
                     print("Missing value for -p flag.")
                     return
-                #The filename should be at sys.argv[2]
-                graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  #generate graph using sys.argv[2]
-            if sys.argv[3] == "-n":
-                if sys.argv[4] == "2": #If phase flag 1
-                    n_flag = 2  #Set n_flag to 2
-                elif sys.argv[4] == "3": #If phase flag 0
-                    print("3 Phase not yet implemented.")
+            elif sys.argv[i] == "-n":
+                if i + 1 < len(sys.argv):
+                    if sys.argv[i + 1] == "2":
+                        n_flag = 2
+                    elif sys.argv[i + 1] == "3":
+                        print("3 Phase not yet implemented.")
+                        return
+                    else:
+                        print("Invalid argument for -n. Use 2 or 3.")
+                        return
+                    i += 2
+                else:
+                    print("Missing value for -n flag.")
                     return
             elif sys.argv[i] == "-s":
                 if i + 1 < len(sys.argv):
-                    try:
-                        pixelSize = float(sys.argv[i + 1])
-                    except ValueError:
-                        print("Invalid pixel size. Must be a number.")
-                        return
+                    pixelSize = float(sys.argv[i + 1])
                     i += 2
                 else:
                     print("Missing value for -s flag.")
                     return
-                #The filename should be at sys.argv[2]
-                graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  #generate graph using sys.argv[2]
-        if len(sys.argv) == 7:
-            if sys.argv[3] != "-p" or (sys.argv[4] != "0" and sys.argv[4] != "1") or sys.argv[5] != "-n" or (sys.argv[6] != "2" and sys.argv[6] != "3"):
-                print("Incorrect format. Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) OR -g <INPUT_FILE.graphe>")
-                return
 
-        graph_data = generateGraphAdj(filename, PERIODICITY)
+        graph_data = generateGraphAdj(filename,PERIODICITY)
 
-    # Handle unstructured data
+    # Check if -g (unstructured data with .graphe file)
     elif sys.argv[1] == "-g":
-        if len(sys.argv) > 3 and any(flag in sys.argv for flag in ["-p", "-n", "-s"]):
-            print("Error: -p, -n, and -s flags cannot be used with -g. Only -a supports them.")
+        if len(sys.argv) > 3 and (sys.argv[2] == "-p" or sys.argv[2] == "-n" or sys.argv[2] == "-s"):
+            print(
+                "Error: Periodicity option (-p), phase option (-n), and -s cannot be used with -g flag. Only -a supports them.")
             return
         if len(sys.argv) != 3:
-            print("Usage: python graph.py -g <INPUT_FILE.graphe>")
+            print("Formatting error. Usage: python graph.py -g <INPUT_FILE.graphe>")
             return
         graph_data = generateGraphGraphe(sys.argv[2])
 
     else:
-        print("Usage: python graph.py -a <INPUT_FILE.txt> [-s <pixelSize>] [-p <{0,1}>] [-n <{2,3}>] OR -g <INPUT_FILE.graphe>")
+        print(
+            "Usage: python graph.py -a <INPUT_FILE.txt> [-s <pixelSize>] [-p <{0,1}>] [-n <{2,3}>] OR -g <INPUT_FILE.graphe>")
         return
 
-    # Visualize and filter the graph
+    # Visualize the graph and filter it
     visualize(graph_data.graph, graph_data.is_2D)
     filteredGraph = filterGraph(graph_data.graph)
     visualize(filteredGraph, graph_data.is_2D)
 
-    #Debugging: print descriptors and connected components if DEBUG is True
     if DEBUG:
-        dic = d.compute_descriptors(graph_data.graph)
+        dic = d.descriptors(graph_data.graph, sys.argv[2], pixelSize)
         print(connectedComponents(filteredGraph))
         for key, value in dic.items():
             print(key, value)
+
 
 if __name__ == '__main__':
     main()
