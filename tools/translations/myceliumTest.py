@@ -1,10 +1,12 @@
 import os
 import sys
 import igraph
-sys.path.append(os.path.abspath('../../src'))
-from py_graspi import graph as ig
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../src")))
+sys.path.append(os.path.abspath('translations'))
 
-import img_to_txt as translate
+import graph as ig
+import os
+import tools.translations.img_to_txt as translate
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Button
 import numpy as np
@@ -228,7 +230,7 @@ def main():
     resize_factor = sys.argv[2]
     resize_factor = float(resize_factor)
     translate.img_to_txt(input_file,resize_factor)
-    txt_filename = "resized/resized_" +input_file[18:-4]+ "_" + str(resize_factor) +"x.txt"
+    txt_filename = os.path.splitext(os.path.basename(input_file))[0] + ".txt"
     print("creating graph")
     graph_data = ig.generateGraphAdj(txt_filename)
 
