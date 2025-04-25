@@ -1,4 +1,6 @@
 import math
+import os
+
 import numpy as np
 from py_graspi import graph as ig
 import graph_data_class as GraphData
@@ -272,7 +274,7 @@ def shortest_path_descriptors(graph_data, filename):
             tort_white_to_blue.append(f'{float(tor)}\n')
             id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
 
-
+    filename = os.path.basename(filename)
     file = open(f"{filename}_TortuosityBlackToRed.txt", 'w')
     file.writelines(tort_black_to_red)
     file.close()
