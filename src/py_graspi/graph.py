@@ -906,9 +906,7 @@ def filterGraph_blue_red(graph):
 def main():
     global n_flag, pixelSize
     PERIODICITY = False
-    global n_flag
     n_flag = 2
-    global pixelSize
     pixelSize = 1 # store default value for -s
 
     # Validate and parse command-line arguments
