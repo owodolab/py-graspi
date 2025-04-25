@@ -9,7 +9,7 @@ Below is the list of all functions available in **py-graspi**:
 .. details:: Descriptor Functions
    :open:
 
-   .. automodule:: src.descriptors
+   .. automodule:: descriptors
       :members:
       :undoc-members:
       :show-inheritance:
@@ -17,7 +17,7 @@ Below is the list of all functions available in **py-graspi**:
 .. details:: py-graspi Functions
    :open:
 
-   .. automodule:: src.graph
+   .. automodule:: graph
       :members:
       :undoc-members:
       :show-inheritance:
@@ -26,7 +26,7 @@ Below is the list of all functions available in **py-graspi**:
 .. details:: Graph Class
    :open:
 
-   .. automodule:: src.graph_data_class
+   .. automodule:: graph_data_class
       :members:
       :undoc-members:
       :show-inheritance:

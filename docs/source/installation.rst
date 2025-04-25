@@ -26,7 +26,7 @@ To utilize the package, import the Py-Graspi package to your python project:
     import py_graspi as ig
 
 Manual Installation for Py-Graspi source code
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Follow these steps to manually install the Py-Graspi package.
 
