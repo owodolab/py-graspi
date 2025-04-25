@@ -21,7 +21,7 @@ Getting Started
 
 Ensure you see this output on the terminal when running pip show
     .. image:: imgs/pip_show.png
-        :scale: 65%
+        :scale: 55%
         :align: center
 
 **For more details, check out the** :doc:`api documentation <api_overview>`.
@@ -52,7 +52,7 @@ Step 3: Save descriptors to the file
 
 Below is the output file generated when calculating the descriptors for the above test data (data_0.5_2.2_001900.txt)
     .. image:: imgs/descriptors.png
-        :scale: 70%
+        :scale: 60%
         :align: center
 
 Command Line Usage
