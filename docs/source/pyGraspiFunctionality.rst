@@ -62,3 +62,8 @@ The name of each descriptor starts with the abbreviation of the step in the phot
 in organic solar cells (OSC): light absorption (ABS), exciton dissociation (DISS), and charge transport (CT).
 We additionally compute few statistical descriptors (STATS). The extra information is intended to facilitate
 the modeling of structure-property maps in OSC.
+
+Py-GraSPI requires low memory and is computationally light for medium size morphologies. See the performance results for 2D morphologies of increasing size.
+    .. image:: imgs/plots.png
+        :scale: 50%
+        :align: center
