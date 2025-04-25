@@ -14,6 +14,7 @@ import math
 pixelSize = 1
 n_flag = 2
 # import tortuosity as t
+DEBUG_MODE = os.environ.get('DEBUG', '0') == '1'
 
 
 ''' data structure for storing info about newly added edges regarding green_vertex'''
@@ -120,7 +121,7 @@ def generateGraphAdj(file, PERIODICITY=False):
     blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
 
     # Add Green Interface and it's color
-    if __debug__:
+    if DEBUG_MODE:
         black_green_neighbors = []
 
     # counter for CT_n_D_adj_An
@@ -192,7 +193,7 @@ def generateGraphAdj(file, PERIODICITY=False):
                 # increment black_green when black to green edge is added
                 black_green += 1
 
-            if __debug__:
+            if DEBUG_MODE:
                 if source_vertex_color == 'black':
                     black_green_neighbors.append(source_vertex)
                 if target_vertex_color == 'black':
@@ -253,7 +254,7 @@ def generateGraphAdj(file, PERIODICITY=False):
     graph_data.CT_n_D_adj_An = CT_n_D_adj_An
     graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
 
-    if __debug__:
+    if DEBUG_MODE:
         print(g.vs['color'])
         print("Number of nodes: ", g.vcount())
         print("Green vertex neighbors: ", g.neighbors(green_vertex))
@@ -308,7 +309,7 @@ def generateGraphGraphe(file):
 
     # adds green vertex and its color
     g.add_vertices(1)
-    if __debug__:
+    if DEBUG_MODE:
         print(len(adjacency_list))
         # exit()
     g.vs[len(adjacency_list)]['color'] = 'green'
@@ -349,7 +350,7 @@ def adjList(fileName):
 )
     """
     adjacency_list = {}
-    if __debug__:
+    if DEBUG_MODE:
         first_order_pairs = []
         second_order_pairs = []
         third_order_pairs = []
@@ -416,37 +417,37 @@ def adjList(fileName):
                         neighbor_vertex = nz * dimY * dimX + ny * dimX + nx
 
                         if dist == 1:
-                            if __debug__:
+                            if DEBUG_MODE:
                                 first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("f")
                             edge_weights.append(1)
 
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1: # interface edges
-                                if __debug__:
+                                if DEBUG_MODE:
                                     print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_green, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3: # gray-white interface
-                                if __debug__:
+                                if DEBUG_MODE:
                                     print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_LightGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4: # gray-black interface
-                                if __debug__:
+                                if DEBUG_MODE:
                                     print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_DarkGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_DarkGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
                         elif dist == 3:
-                            if __debug__:
+                            if DEBUG_MODE:
                                 third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("t")
                             edge_weights.append(float(math.sqrt(3)))
 
                         else:
-                            if __debug__:
+                            if DEBUG_MODE:
                                 second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("s")
                             edge_weights.append(float(math.sqrt(2)))
@@ -516,7 +517,7 @@ def adjList(fileName):
     if redVertex is not None and blueVertex is not None:
         graph_data.compute_shortest_paths(red_vertex=redVertex, blue_vertex=blueVertex)
 
-    if __debug__:
+    if DEBUG_MODE:
         print("Adjacency List: ", adjacency_list)
         print("Adjacency List LENGTH: ", len(adjacency_list))
         print("First Order Pairs: ", first_order_pairs)
@@ -971,7 +972,7 @@ def main():
     filteredGraph = filterGraph(graph_data.graph)
     visualize(filteredGraph, graph_data.is_2D)
 
-    if __debug__:
+    if DEBUG_MODE:
         dic = d.compute_descriptors(graph_data, sys.argv[2], pixelSize)
         print(connectedComponents(filteredGraph))
         for key, value in dic.items():

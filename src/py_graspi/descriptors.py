@@ -279,32 +279,31 @@ def shortest_path_descriptors(graph_data, filename,pixelSize):
             id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
 
     filename = os.path.basename(filename)
-    file = open(f"{filename}_TortuosityBlackToRed.txt", 'w')
-    # file = open(f"./test_results/{filename}_TortuosityBlackToRed.txt", 'w')
+    file = open(f"./test_results/{filename}_TortuosityBlackToRed.txt", 'w')
     file.writelines(tort_black_to_red)
     file.close()
 
-    file = open(f"{filename}_IdTortuosityBlackToRed.txt", 'w')
+    file = open(f"./test_results/{filename}_IdTortuosityBlackToRed.txt", 'w')
     file.writelines(id_tort_black_to_red)
     file.close()
 
-    file = open(f"{filename}_DistancesBlackToGreen.txt", 'w')
+    file = open(f"./test_results/{filename}_DistancesBlackToGreen.txt", 'w')
     file.writelines(dist_black_to_green)
     file.close()
 
-    file = open(f"{filename}_DistancesBlackToRed.txt", 'w')
+    file = open(f"./test_results/{filename}_DistancesBlackToRed.txt", 'w')
     file.writelines(dist_black_to_red)
     file.close()
 
-    file = open(f"{filename}_DistancesWhiteToBlue.txt", 'w')
+    file = open(f"./test_results/{filename}_DistancesWhiteToBlue.txt", 'w')
     file.writelines(dist_white_to_blue)
     file.close()
 
-    file = open(f"{filename}_TortuosityWhiteToBlue.txt", 'w')
+    file = open(f"./test_results/{filename}_TortuosityWhiteToBlue.txt", 'w')
     file.writelines(tort_white_to_blue)
     file.close()
 
-    file = open(f"{filename}_IdTortuosityWhiteToBlue.txt", 'w')
+    file = open(f"./test_results/{filename}_IdTortuosityWhiteToBlue.txt", 'w')
     file.writelines(id_tort_white_to_blue)
     file.close()
     if totalBlacks != 0:
