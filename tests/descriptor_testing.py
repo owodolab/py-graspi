@@ -7,7 +7,7 @@ import descriptors as d
 
 graph_data = ig.generateGraphAdj(sys.argv[1])
 
-dic = d.descriptors(graph_data, sys.argv[1],float(sys.argv[2]))
+dic = d.compute_descriptors(graph_data, sys.argv[1],float(sys.argv[2]))
 
 for key, value in dic.items():
     print(key, value)
