@@ -4,11 +4,7 @@ from py_graspi import graph as ig
 from py_graspi import graph_data_class as GraphData
 
 
-<<<<<<< HEAD
-def compute_descriptors(graph_data, filename):
-=======
 def compute_descriptors(graph_data, filename,pixelSize):
->>>>>>> dev
     """
     This function computes all the descriptors for the graph given and saves them  in a dictionary.
 
@@ -32,11 +28,7 @@ def compute_descriptors(graph_data, filename,pixelSize):
     graph_data = CC_descriptors(graph_data)
 
     # shortest path descriptors
-<<<<<<< HEAD
-    graph_data = shortest_path_descriptors(graph_data,filename)
-=======
     graph_data = shortest_path_descriptors(graph_data,filename,pixelSize)
->>>>>>> dev
 
     descriptors_dict["STAT_n"] =  graph_data.STAT_n_A + graph_data.STAT_n_D
     descriptors_dict["STAT_e"] = graph_data.black_green
@@ -162,13 +154,8 @@ def CC_descriptors(graph_data):
 
     return graph_data
 
-<<<<<<< HEAD
-def shortest_path_descriptors(graph_data, filename):
-  
-=======
 
 def shortest_path_descriptors(graph_data, filename,pixelSize):
->>>>>>> dev
     """
         This function computes descriptors related to shortest paths with vertex and metavertex colorations that correspond to the following descriptors:
         DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1 and ABS_wf_D.
@@ -177,10 +164,7 @@ def shortest_path_descriptors(graph_data, filename,pixelSize):
         Args:
             graph_data (graph_data_class): The graph data object.
             filename (str): Base filename for output text files storing the results.
-<<<<<<< HEAD
-=======
             pixelSize(float): The pixel size of the graph in pixels.
->>>>>>> dev
 
         Returns:
             graph_data (graph_data_class): The updated graph data object with shortest path descriptors
@@ -204,16 +188,12 @@ def shortest_path_descriptors(graph_data, filename,pixelSize):
     black_tor_distances = fg_red.shortest_paths(source=redVertex, weights=fg_red.es["weight"])[0]
     white_tor_distances = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
 
-<<<<<<< HEAD
-    black_red_unfiltered_distance = fg_red_unfiltered.shortest_paths(source=redVertex, weights=fg_red_unfiltered.es['weight'])[0]
-=======
     black_red_unfiltered_distance = \
     fg_red_unfiltered.shortest_paths(source=redVertex, weights=fg_red_unfiltered.es['weight'])[0]
 
     # Apply pixelSize only where needed
     distances = [d * pixelSize for d in distances]  # For DISS_f10_D and DISS_wf10_D
     black_red_unfiltered_distance = [d * pixelSize for d in black_red_unfiltered_distance]  # For ABS_wf_D
->>>>>>> dev
 
     f10_count = 0
     summation = 0
@@ -296,31 +276,31 @@ def shortest_path_descriptors(graph_data, filename,pixelSize):
             tort_white_to_blue.append(f'{float(tor)}\n')
             id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
 
-    file = open(f"./results/{filename}_TortuosityBlackToRed.txt", 'w')
+    file = open(f"./test_results/{filename}_TortuosityBlackToRed.txt", 'w')
     file.writelines(tort_black_to_red)
     file.close()
 
-    file = open(f"./results/{filename}_IdTortuosityBlackToRed.txt", 'w')
+    file = open(f"./test_results/{filename}_IdTortuosityBlackToRed.txt", 'w')
     file.writelines(id_tort_black_to_red)
     file.close()
 
-    file = open(f"./results/{filename}_DistancesBlackToGreen.txt", 'w')
+    file = open(f"./test_results/{filename}_DistancesBlackToGreen.txt", 'w')
     file.writelines(dist_black_to_green)
     file.close()
 
-    file = open(f"./results/{filename}_DistancesBlackToRed.txt", 'w')
+    file = open(f"./test_results/{filename}_DistancesBlackToRed.txt", 'w')
     file.writelines(dist_black_to_red)
     file.close()
 
-    file = open(f"./results/{filename}_DistancesWhiteToBlue.txt", 'w')
+    file = open(f"./test_results/{filename}_DistancesWhiteToBlue.txt", 'w')
     file.writelines(dist_white_to_blue)
     file.close()
 
-    file = open(f"./results/{filename}_TortuosityWhiteToBlue.txt", 'w')
+    file = open(f"./test_results/{filename}_TortuosityWhiteToBlue.txt", 'w')
     file.writelines(tort_white_to_blue)
     file.close()
 
-    file = open(f"{filename}_IdTortuosityWhiteToBlue.txt", 'w')
+    file = open(f"./test_results/{filename}_IdTortuosityWhiteToBlue.txt", 'w')
     file.writelines(id_tort_white_to_blue)
     file.close()
     if totalBlacks != 0:
