@@ -1,7 +1,7 @@
 import os
 import sys
 
-sys.path.append(os.path.abspath('../tools/tortuosity'))
+# sys.path.append(os.path.abspath('../tools/tortuosity'))
 
 import tortuosity_histogram as t
 sys.path.append(os.path.abspath('../src'))
