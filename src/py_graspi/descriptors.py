@@ -1,4 +1,6 @@
 import math
+import os
+
 import numpy as np
 from py_graspi import graph as ig
 from py_graspi import graph_data_class as GraphData
@@ -179,9 +181,9 @@ def shortest_path_descriptors(graph_data, filename,pixelSize):
     shortest_path_to_blue = graph_data.shortest_path_to_blue
 
     fg_green, fg_blue, fg_red, fg_red_unfiltered = filterGraph_metavertices(graph)
-    greenVertex = (graph.vs.select(color='green')[0]).index
-    redVertex = (graph.vs.select(color='red')[0]).index
-    blueVertex = (graph.vs.select(color='blue')[0]).index
+    greenVertex = (graph.vs.select(color = 'green')[0]).index
+    redVertex = (graph.vs.select(color = 'red')[0]).index
+    blueVertex = (graph.vs.select(color = 'blue')[0]).index
 
     distances = fg_green.shortest_paths(source=greenVertex, weights=fg_green.es["weight"])[0]
 
@@ -276,31 +278,33 @@ def shortest_path_descriptors(graph_data, filename,pixelSize):
             tort_white_to_blue.append(f'{float(tor)}\n')
             id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
 
-    file = open(f"./test_results/{filename}_TortuosityBlackToRed.txt", 'w')
+    filename = os.path.basename(filename)
+    file = open(f"{filename}_TortuosityBlackToRed.txt", 'w')
+    # file = open(f"./test_results/{filename}_TortuosityBlackToRed.txt", 'w')
     file.writelines(tort_black_to_red)
     file.close()
 
-    file = open(f"./test_results/{filename}_IdTortuosityBlackToRed.txt", 'w')
+    file = open(f"{filename}_IdTortuosityBlackToRed.txt", 'w')
     file.writelines(id_tort_black_to_red)
     file.close()
 
-    file = open(f"./test_results/{filename}_DistancesBlackToGreen.txt", 'w')
+    file = open(f"{filename}_DistancesBlackToGreen.txt", 'w')
     file.writelines(dist_black_to_green)
     file.close()
 
-    file = open(f"./test_results/{filename}_DistancesBlackToRed.txt", 'w')
+    file = open(f"{filename}_DistancesBlackToRed.txt", 'w')
     file.writelines(dist_black_to_red)
     file.close()
 
-    file = open(f"./test_results/{filename}_DistancesWhiteToBlue.txt", 'w')
+    file = open(f"{filename}_DistancesWhiteToBlue.txt", 'w')
     file.writelines(dist_white_to_blue)
     file.close()
 
-    file = open(f"./test_results/{filename}_TortuosityWhiteToBlue.txt", 'w')
+    file = open(f"{filename}_TortuosityWhiteToBlue.txt", 'w')
     file.writelines(tort_white_to_blue)
     file.close()
 
-    file = open(f"./test_results/{filename}_IdTortuosityWhiteToBlue.txt", 'w')
+    file = open(f"{filename}_IdTortuosityWhiteToBlue.txt", 'w')
     file.writelines(id_tort_white_to_blue)
     file.close()
     if totalBlacks != 0:
@@ -309,7 +313,7 @@ def shortest_path_descriptors(graph_data, filename,pixelSize):
     if countBlack_Red_conn != 0:
         graph_data.CT_f_D_tort1 = float(black_tor / countBlack_Red_conn)
     if countWhite_Blue_conn != 0:
-        graph_data.CT_f_A_tort1 = float(white_tor / countWhite_Blue_conn)
+       graph_data.CT_f_A_tort1 = float(white_tor / countWhite_Blue_conn)
     if totalBlacks + totalWhite != 0:
         graph_data.ABS_wf_D = float(total_weighted_black_red / (totalBlacks + totalWhite))
     return graph_data
