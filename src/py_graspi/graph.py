@@ -12,7 +12,6 @@ from py_graspi import graph_data_class as GraphData
 
 import math
 DEBUG = False # debugging mode
-DEBUG2 = False   # for green edges
 pixelSize = 1
 n_flag = 2
 # import tortuosity as t
@@ -122,7 +121,6 @@ def generateGraphAdj(file, PERIODICITY=False):
     blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
 
     # Add Green Interface and it's color
-
     if DEBUG:
         black_green_neighbors = []
 
@@ -249,8 +247,6 @@ def generateGraphAdj(file, PERIODICITY=False):
 
     # Store vertex attributes
     graph_data.graph = g
-    graph_data.black_vertices = black_vertices
-    graph_data.white_vertices = white_vertices
     graph_data.black_green = black_green
     graph_data.black_interface_red = black_interface_red
     graph_data.white_interface_blue = white_interface_blue
@@ -269,9 +265,6 @@ def generateGraphAdj(file, PERIODICITY=False):
         print("Length: ", len(g.neighbors(g.vcount() - 3)))
         print("Nodes connected to red: ", g.vs[g.vcount() - 2]['color'], g.neighbors(g.vcount() - 2))
         print("Length: ", len(g.neighbors(g.vcount() - 2)))
-        # exit()
-
-    if DEBUG2:
         print("new method Green vertex neighbors: ", green_edges_to_add)
         print("new method Green vertex LENGTH: ", len(green_edges_to_add))
         for i in range(len(green_edges_to_add)):
@@ -281,6 +274,7 @@ def generateGraphAdj(file, PERIODICITY=False):
 
         if cnt == len(g.neighbors(green_vertex)):
             print("all vertices stored well!")
+        # exit()
 
     return graph_data
 
@@ -315,7 +309,7 @@ def generateGraphGraphe(file):
 
     # adds green vertex and its color
     g.add_vertices(1)
-    if __debug__:
+    if DEBUG:
         print(len(adjacency_list))
         # exit()
     g.vs[len(adjacency_list)]['color'] = 'green'
@@ -426,22 +420,22 @@ def adjList(fileName):
                             if DEBUG:
                                 first_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("f")
-                            edge_weights.append(1*pixelSize)
+                            edge_weights.append(1)
 
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1: # interface edges
-                                if DEBUG2:
+                                if DEBUG:
                                     print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_green, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3: # gray-white interface
-                                if DEBUG2:
+                                if DEBUG:
                                     print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_LightGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4: # gray-black interface
-                                if DEBUG2:
+                                if DEBUG:
                                     print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_DarkGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_DarkGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
@@ -450,13 +444,13 @@ def adjList(fileName):
                             if DEBUG:
                                 third_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("t")
-                            edge_weights.append(float(math.sqrt(3))*pixelSize)
+                            edge_weights.append(float(math.sqrt(3)))
 
                         else:
                             if DEBUG:
                                 second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("s")
-                            edge_weights.append(float(math.sqrt(2))*pixelSize)
+                            edge_weights.append(float(math.sqrt(2)))
                         neighbors.append(neighbor_vertex)
                 adjacency_list[current_vertex] = neighbors
 
@@ -534,9 +528,8 @@ def adjList(fileName):
         print("Third Order Pairs LENGTH: ", len(third_order_pairs))
         print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
-        # exit()
-    if DEBUG2:
         print("new method Green Edges len : ", len(edges_with_green))
+        # exit()
 
     # return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, edges_with_green
     return graph_data, edges_with_green, edges_with_DarkGreen, edges_with_LightGreen
@@ -905,10 +898,10 @@ def filterGraph_blue_red(graph):
 
 
 def main():
-    global PERIODICITY, n_flag, pixelSize
+    global n_flag, pixelSize
     PERIODICITY = False
     n_flag = 2
-    pixelSize = 1  # Default pixel size
+    pixelSize = 1 # store default value for -s
 
     # Validate and parse command-line arguments
     if len(sys.argv) < 3:
@@ -933,19 +926,13 @@ def main():
                 else:
                     print("Missing value for -p flag.")
                     return
-            elif sys.argv[i] == "-n":
-                if i + 1 < len(sys.argv):
-                    if sys.argv[i + 1] == "2":
-                        n_flag = 2
-                    elif sys.argv[i + 1] == "3":
-                        print("3 Phase not yet implemented.")
-                        return
-                    else:
-                        print("Invalid argument for -n. Use 2 or 3.")
-                        return
-                    i += 2
-                else:
-                    print("Missing value for -n flag.")
+                #The filename should be at sys.argv[2]
+                graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  #generate graph using sys.argv[2]
+            if sys.argv[3] == "-n":
+                if sys.argv[4] == "2": #If phase flag 1
+                    n_flag = 2  #Set n_flag to 2
+                elif sys.argv[4] == "3": #If phase flag 0
+                    print("3 Phase not yet implemented.")
                     return
             elif sys.argv[i] == "-s":
                 if i + 1 < len(sys.argv):
@@ -958,8 +945,11 @@ def main():
                 else:
                     print("Missing value for -s flag.")
                     return
-            else:
-                print(f"Unknown argument: {sys.argv[i]}")
+                #The filename should be at sys.argv[2]
+                graph_data = generateGraphAdj(sys.argv[2], PERIODICITY)  #generate graph using sys.argv[2]
+        if len(sys.argv) == 7:
+            if sys.argv[3] != "-p" or (sys.argv[4] != "0" and sys.argv[4] != "1") or sys.argv[5] != "-n" or (sys.argv[6] != "2" and sys.argv[6] != "3"):
+                print("Incorrect format. Usage: python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) OR -g <INPUT_FILE.graphe>")
                 return
 
         graph_data = generateGraphAdj(filename, PERIODICITY)
@@ -983,9 +973,9 @@ def main():
     filteredGraph = filterGraph(graph_data.graph)
     visualize(filteredGraph, graph_data.is_2D)
 
-    # Debug info
+    #Debugging: print descriptors and connected components if DEBUG is True
     if DEBUG:
-        dic = d.descriptors(graph_data.graph, sys.argv[2], pixelSize)
+        dic = d.compute_descriptors(graph_data.graph)
         print(connectedComponents(filteredGraph))
         for key, value in dic.items():
             print(key, value)

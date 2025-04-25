@@ -1,7 +1,7 @@
 import math
 import numpy as np
 from py_graspi import graph as ig
-import graph_data_class as GraphData
+from py_graspi import graph_data_class as GraphData
 
 
 def compute_descriptors(graph_data, filename,pixelSize):
@@ -276,31 +276,31 @@ def shortest_path_descriptors(graph_data, filename,pixelSize):
             tort_white_to_blue.append(f'{float(tor)}\n')
             id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
 
-    file = open(f"./results/{filename}_TortuosityBlackToRed.txt", 'w')
+    file = open(f"./test_results/{filename}_TortuosityBlackToRed.txt", 'w')
     file.writelines(tort_black_to_red)
     file.close()
 
-    file = open(f"./results/{filename}_IdTortuosityBlackToRed.txt", 'w')
+    file = open(f"./test_results/{filename}_IdTortuosityBlackToRed.txt", 'w')
     file.writelines(id_tort_black_to_red)
     file.close()
 
-    file = open(f"./results/{filename}_DistancesBlackToGreen.txt", 'w')
+    file = open(f"./test_results/{filename}_DistancesBlackToGreen.txt", 'w')
     file.writelines(dist_black_to_green)
     file.close()
 
-    file = open(f"./results/{filename}_DistancesBlackToRed.txt", 'w')
+    file = open(f"./test_results/{filename}_DistancesBlackToRed.txt", 'w')
     file.writelines(dist_black_to_red)
     file.close()
 
-    file = open(f"./results/{filename}_DistancesWhiteToBlue.txt", 'w')
+    file = open(f"./test_results/{filename}_DistancesWhiteToBlue.txt", 'w')
     file.writelines(dist_white_to_blue)
     file.close()
 
-    file = open(f"./results/{filename}_TortuosityWhiteToBlue.txt", 'w')
+    file = open(f"./test_results/{filename}_TortuosityWhiteToBlue.txt", 'w')
     file.writelines(tort_white_to_blue)
     file.close()
 
-    file = open(f"{filename}_IdTortuosityWhiteToBlue.txt", 'w')
+    file = open(f"./test_results/{filename}_IdTortuosityWhiteToBlue.txt", 'w')
     file.writelines(id_tort_white_to_blue)
     file.close()
     if totalBlacks != 0:
