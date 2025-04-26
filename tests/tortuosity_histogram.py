@@ -44,7 +44,7 @@ def find_BTR_tortuosity(g, is_2d, filename, output, title):
     for i in range(len(idOfPixelIn1DArray)):
         vertex_frequency[idOfPixelIn1DArray[i]] = tort[i]
 
-    vertex_frequency = vertex_frequency[:-3]
+    vertex_frequency = vertex_frequency[:-5]
     dimX,dimY,dimZ = coords = find_coords(filename)
     data_2d = np.array(vertex_frequency).reshape(dimY, dimX)
 
@@ -68,7 +68,7 @@ def find_WTB_tortuosity(g, is_2d, filename, output, title):
     for i in range(len(idOfPixelIn1DArray)):
         vertex_frequency[idOfPixelIn1DArray[i]] = tort[i]
 
-    vertex_frequency = vertex_frequency[:-3]
+    vertex_frequency = vertex_frequency[:-5]
     dimX,dimY,dimZ = coords = find_coords(filename)
     data_2d = np.array(vertex_frequency).reshape(dimY, dimX)
 
@@ -84,7 +84,7 @@ def find_WTB_tortuosity(g, is_2d, filename, output, title):
 # Define the function to read the file and extract the numbers
 def read_BTR_file_and_extract_numbers(base_filename):
     base_filename = base_filename[5:-4]
-    file_path = f"../data/data/data_{base_filename}_IdTortuosityBlackToRed.txt"
+    file_path = f"test_results/data_{base_filename}_IdTortuosityBlackToRed.txt"
     # file_path = f"{current_dir}/py_graspi/data/data_{base_filename}_IdTortuosityBlackToRed.txt"
 
     idOfPixelIn1DArray = []
@@ -106,7 +106,7 @@ def read_BTR_file_and_extract_numbers(base_filename):
 
 def read_WTB_file_and_extract_numbers(base_filename):
     base_filename = base_filename[5:-4]
-    file_path = f"../data/data/data_{base_filename}_IdTortuosityWhiteToBlue.txt"
+    file_path = f"test_results/data_{base_filename}_IdTortuosityWhiteToBlue.txt"
     # file_path = f"{current_dir}/py_graspi/data/data_{base_filename}_IdTortuosityWhiteToBlue.txt"
 
     idOfPixelIn1DArray = []

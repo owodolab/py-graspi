@@ -229,11 +229,10 @@ def main():
     input_file = sys.argv[1]
     resize_factor = sys.argv[2]
     resize_factor = float(resize_factor)
-    translate.img_to_txt(input_file,resize_factor)
-    txt_filename = os.path.splitext(os.path.basename(input_file))[0] + ".txt"
+    translate.img_to_txt(input_file, resize_factor)
+    txt_filename = "resized/resized_" + input_file[18:-4] + "_" + str(resize_factor) + "x.txt"
     print("creating graph")
     graph_data = ig.generateGraphAdj(txt_filename)
-
 
     print("graph created")
     print("filtering graph)")

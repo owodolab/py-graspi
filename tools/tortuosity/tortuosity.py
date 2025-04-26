@@ -170,6 +170,14 @@ def read_WTB_file_and_extract_numbers(base_filename):
 def main():
     filename = sys.argv[1]
     graphData  = ig.generateGraphAdj(filename)
+    #First need to delete these green metavertices
+    graph = graphData.graph
+    colors_to_delete = {'LightGreen', 'DarkGreen'}
+    # Find green metavertices with those colors
+    vertices_to_delete = [v.index for v in graph.vs if v['color'] in colors_to_delete]
+    # Delete them
+    graph.delete_vertices(vertices_to_delete)
+    graphData.graph = graph
     # filename = filename[6:]
     # print(filename)
     find_BTR_tortuosity(graphData.graph, graphData.is_2D, filename)
