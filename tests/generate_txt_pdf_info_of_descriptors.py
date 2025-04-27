@@ -1,5 +1,6 @@
 import os
 import sys
+from fileinput import filename
 
 # sys.path.append(os.path.abspath('../tools/tortuosity'))
 
@@ -17,6 +18,7 @@ import math
 current_dir = os.getcwd()
 parent_dir = os.path.dirname(current_dir)
 data_path = f"{parent_dir}/data/data/"
+test_results_path = f"test_results/"
 image_path = f"{parent_dir}/data/images/"
 hist_path = f"{parent_dir}/data/histograms/"
 results_path = f"{parent_dir}/data/results/"
@@ -142,13 +144,13 @@ def main():
         Generates and adds in the descriptor histograms to the pdf
         """
         if PDF:
-            with open(data_path + test_file + "_DistancesWhiteToBlue.txt", "r") as f:
+            with open(test_results_path + test_file + "_DistancesWhiteToBlue.txt", "r") as f:
                 data1 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
                 hist1 = generate_histogram([data1], 25, test_file + "1", "Distance from A to Ca", "Distance",
                                            "Instances", "Blue", 0, 50, 250)
                 pdf.image(hist1, x=80, y=10, w=60)
 
-            with open(data_path + test_file + "_DistanceBlackToRed.txt", "r") as f:
+            with open(test_results_path + test_file + "_DistancesBlackToRed.txt", "r") as f:
                 data2 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
                 hist2 = generate_histogram([data2], 20, test_file + "2", "Distance from D to Am", "Distance",
                                            "Instances", "Red", 0, 20, 200)
@@ -158,19 +160,19 @@ def main():
                                        ["Blue", "Red"], 0, 50, 250)
             pdf.image(hist3, x=80, y=60, w=60)
 
-            with open(data_path + test_file + "_DistanceBlackToGreen.txt", "r") as f:
+            with open(test_results_path + test_file + "_DistancesBlackToGreen.txt", "r") as f:
                 data4 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
                 hist4 = generate_histogram([data4], 12, test_file + "4", "Distance from D to Int", "Distance",
                                            "Instances", "Green", 0, 10, 60)
                 pdf.image(hist4, x=142, y=60, w=60)
 
-            with open(data_path + test_file + "_TortuosityBlackToRed.txt", "r") as f:
+            with open(test_results_path + test_file + "_TortuosityBlackToRed.txt", "r") as f:
                 data5 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
                 hist5 = generate_histogram([data5], 25, test_file + "5", "Tortuosity of D-paths to An", "Tortuosity",
                                            "Instances", "Red", 1, 0.1, 1.5)
                 pdf.image(hist5, x=80, y=110, w=60)
 
-            with open(data_path + test_file + "_TortuosityWhiteToBlue.txt", "r") as f:
+            with open(test_results_path + test_file + "_TortuosityWhiteToBlue.txt", "r") as f:
                 data6 = [float(line.strip()) for line in f if not math.isinf(float(line.strip()))]
                 hist6 = generate_histogram([data6], 25, test_file + "6", "Tortuosity of A-paths to Ca", "Tortuosity",
                                            "Instances", "Blue", 1, 0.1, 1.5)
@@ -179,6 +181,7 @@ def main():
             """
             Generates the heat map of tortuosity between black and red, and white to blue
             """
+            # print("This is the name: ", test_file)
             heat1 = t.find_BTR_tortuosity(graphData.graph, graphData.is_2D, test_file + ".txt",
                                           hist_path + test_file + "7.png", "Tortuosity of D-paths to An")
             pdf.image(hist_path + test_file + "7.png", x=80, y=160, w=60)
