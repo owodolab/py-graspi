@@ -192,7 +192,7 @@ Install ghp-import to host documentation in the project root directory:
    pip install ghp-import
 
 To pull docstrings from Py-Graspi modules, run the following command:
-(Note: docs/source/ is the location of the .rst files, and src/py_graspi is the location of the project modules where sphinx will pull docstrings from.)
+  (Note: docs/source/ is the location of the .rst files, and src/py_graspi is the location of the project modules where sphinx will pull docstrings from.)
 
 .. code-block:: bash
 
