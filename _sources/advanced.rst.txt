@@ -183,7 +183,7 @@ Install Sphinx and all required packages to generate documentation in the projec
 
 .. code-block:: bash
 
-   pip install setuptools sphinx sphinx_rtd_theme sphinxcontrib.details.directive
+   pip install sphinx sphinx_rtd_theme sphinxcontrib.details.directive
 
 Install ghp-import to host documentation in the project root directory:
 
