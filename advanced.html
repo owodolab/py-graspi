@@ -229,12 +229,21 @@ The following will print when the report generation begins:</p>
 </section>
 <section id="generate-api-documentation">
 <h2>Generate API Documentation<a class="headerlink" href="#generate-api-documentation" title="Link to this heading"></a></h2>
-<p>In order to generate an API using sphinx, you need to follow the installation of py-graspi:</p>
-<p>Install ghp-import in the project root directory:</p>
+<p>In order to generate an API using sphinx, you need to follow the installation of py-graspi.</p>
+<p>Install Sphinx and all required packages to generate documentation in the project root directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>setuptools<span class="w"> </span>sphinx<span class="w"> </span>sphinx_rtd_theme<span class="w"> </span>sphinxcontrib.details.directive
+</pre></div>
+</div>
+<p>Install ghp-import to host documentation in the project root directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>ghp-import
 </pre></div>
 </div>
-<p>To generate the rst files into the local html, run this command:</p>
+<p>To pull docstrings from Py-Graspi modules, run the following command:
+(Note: docs/source/ is the location of the .rst files, and src/py_graspi is the location of the project modules where sphinx will pull docstrings from.)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-apidoc<span class="w"> </span>-o<span class="w"> </span>docs/source/<span class="w"> </span>src/py_graspi
+</pre></div>
+</div>
+<p>To generate the local html files using the rst files, run this command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-build<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span>docs/source<span class="w"> </span>docs/build
 </pre></div>
 </div>
