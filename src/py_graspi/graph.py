@@ -406,6 +406,10 @@ def adjList(fileName):
                 elif reshaped_data[current_vertex] == 0:
                     vertex_color[current_vertex] = 'black'
                     black_vertices.append(current_vertex)
+                elif reshaped_data[current_vertex] == 3:
+                    vertex_color[current_vertex] = 'gray'
+                else:
+                    print("not in the color : ", current_vertex, reshaped_data[current_vertex])
 
                 neighbors = []
 
