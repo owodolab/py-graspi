@@ -60,7 +60,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#py_graspi.descriptors.CC_descriptors"><code class="docutils literal notranslate"><span class="pre">CC_descriptors()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#py_graspi.descriptors.shortest_path_descriptors"><code class="docutils literal notranslate"><span class="pre">shortest_path_descriptors()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#py_graspi.descriptors.filterGraph_metavertices"><code class="docutils literal notranslate"><span class="pre">filterGraph_metavertices()</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.DEBUG_MODE"><code class="docutils literal notranslate"><span class="pre">DEBUG_MODE</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.edge_info"><code class="docutils literal notranslate"><span class="pre">edge_info</span></code></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#py_graspi.graph.edge_info.__init__"><code class="docutils literal notranslate"><span class="pre">edge_info.__init__()</span></code></a></li>
 </ul>
@@ -251,13 +250,7 @@ ig.Graph: The filtered graph of vertices of the same color and red metavertex.</
 
 </details><details open="open">
 <summary>
-py-graspi Functions</summary><dl class="py data" id="module-py_graspi.graph">
-<dt class="sig sig-object py" id="py_graspi.graph.DEBUG_MODE">
-<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">DEBUG_MODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#py_graspi.graph.DEBUG_MODE" title="Link to this definition"></a></dt>
-<dd><p>data structure for storing info about newly added edges regarding green_vertex</p>
-</dd></dl>
-
-<dl class="py class">
+py-graspi Functions</summary><dl class="py class" id="module-py_graspi.graph">
 <dt class="sig sig-object py" id="py_graspi.graph.edge_info">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">edge_info</span></span><a class="reference internal" href="_modules/py_graspi/graph.html#edge_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.edge_info" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
@@ -334,19 +327,21 @@ is_2D (bool): This is true if the graph represents a 2D structure, and false if 
 <dl class="py function">
 <dt class="sig sig-object py" id="py_graspi.graph.adjList">
 <span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">adjList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#adjList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.adjList" title="Link to this definition"></a></dt>
-<dd><blockquote>
-<div><p>This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph. It also generates additional
+<dd><p>This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph. It also generates additional
 graph data stored in the graph_data object.
 It also counts the vertices connected to interface edges.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>filename (str): The name of the file containing the graph data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The name of the file containing the graph data.</p>
 </dd>
-<dt>Returns:</dt><dd><p>graph_data (graph_data_class): The graph data.
-edges_with_green({vertex : edge_info}dictionary): Storing edges connected with green vertex</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The graph data.
+edges_with_green({vertex : edge_info}dictionary): Storing edges connected with green vertex)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>graph_data (<a class="reference internal" href="py_graspi.html#py_graspi.graph_data_class.graph_data_class" title="py_graspi.graph_data_class.graph_data_class">graph_data_class</a>)</p>
 </dd>
 </dl>
-</div></blockquote>
-<p>)</p>
 </dd></dl>
 
 <dl class="py function">

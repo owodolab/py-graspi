@@ -97,7 +97,7 @@
 <span class="n">DEBUG_MODE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span>
 
 
-<span class="sd">&#39;&#39;&#39; data structure for storing info about newly added edges regarding green_vertex&#39;&#39;&#39;</span>
+<span class="c1"># data structure for storing info about newly added edges regarding green_vertex</span>
 <div class="viewcode-block" id="edge_info">
 <a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph.edge_info">[docs]</a>
 <span class="k">class</span><span class="w"> </span><span class="nc">edge_info</span><span class="p">():</span>
@@ -111,8 +111,8 @@
 </div>
 
 
-<span class="sd">&#39;&#39;&#39;for updating edge info based on rule &#39;&#39;&#39;</span>
-<span class="sd">&#39;&#39;&#39;green vertex can only connect with interface(first order) vertices&#39;&#39;&#39;</span>
+<span class="c1"># for updating edge info based on rule</span>
+<span class="c1"># green vertex can only connect with interface(first order) vertices</span>
 <div class="viewcode-block" id="store_interface_edges">
 <a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph.store_interface_edges">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">store_interface_edges</span><span class="p">(</span><span class="n">edges_with_green</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">weight</span><span class="p">):</span>
@@ -130,6 +130,8 @@
         
         <span class="n">edges_with_green</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">newEdge</span></div>
 
+
+<span class="sd">&#39;&#39;&#39;********* Constructing the Graph **********&#39;&#39;&#39;</span>
 
 <div class="viewcode-block" id="generateGraph">
 <a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph.generateGraph">[docs]</a>
@@ -433,6 +435,7 @@
 
 
 <span class="sd">&#39;&#39;&#39;---------Function to create edges for graph in specified format --------&#39;&#39;&#39;</span>
+
 <div class="viewcode-block" id="adjList">
 <a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph.adjList">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">adjList</span><span class="p">(</span><span class="n">fileName</span><span class="p">):</span>
@@ -446,8 +449,7 @@
 
 <span class="sd">        Returns:</span>
 <span class="sd">            graph_data (graph_data_class): The graph data.</span>
-<span class="sd">            edges_with_green({vertex : edge_info}dictionary): Storing edges connected with green vertex</span>
-<span class="sd">)</span>
+<span class="sd">            edges_with_green({vertex : edge_info}dictionary): Storing edges connected with green vertex)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">adjacency_list</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">if</span> <span class="n">DEBUG_MODE</span><span class="p">:</span>
@@ -714,6 +716,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">adjvertexColors</span><span class="p">(</span><span class="n">fileName</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function assigns each vertex a color label based on the data in the specified file and returns a list where each index corresponds to a vertex&#39;s color.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        fileName (str): The name of the file containing the vertex color data.</span>
 
@@ -739,11 +742,6 @@
     <span class="k">return</span> <span class="n">labels</span></div>
 
 
-
-
-
-
-
 <div class="viewcode-block" id="visualize">
 <a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph.visualize">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">visualize</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">is_2D</span><span class="p">):</span>
@@ -767,6 +765,7 @@
         <span class="n">ig</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="n">layout</span><span class="p">,</span> <span class="n">vertex_size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">margin</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="w">        </span><span class="sd">&#39;&#39;&#39; ---- generate the labels of each vertex value ---- &#39;&#39;&#39;</span>
+
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">layout</span><span class="p">):</span>
             <span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">vs</span><span class="p">))]</span>
             <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
@@ -824,7 +823,6 @@
 
 
 <span class="sd">&#39;&#39;&#39;**************** Connected Components *******************&#39;&#39;&#39;</span>
-
 
 <div class="viewcode-block" id="connectedComponents">
 <a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph.connectedComponents">[docs]</a>
@@ -903,6 +901,7 @@
 <span class="k">def</span><span class="w"> </span><span class="nf">filterGraph</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function returns a subgraph that is created by filtering the given graph to only contain edges that connect vertices of the same color.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        graph (ig.Graph): The input graph.</span>
 
@@ -925,19 +924,20 @@
 
 
 
-<span class="sd">&#39;&#39;&#39;********* Constructing the Graph **********&#39;&#39;&#39;</span>
 <div class="viewcode-block" id="filterGraph_metavertices">
 <a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph.filterGraph_metavertices">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">filterGraph_metavertices</span><span class="p">(</span><span class="n">graph</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’/cathode metavertex,</span>
 <span class="sd">        and one that contains all the edges that connect the vertices of the same color or involve the ‘red’/anode metavertex.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        graph (ig.Graph): The input graph.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        fg_blue (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ vertex.</span>
-<span class="sd">        fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ vertex.    &quot;&quot;&quot;</span>
+<span class="sd">        fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ vertex.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">edgeList</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">get_edgelist</span><span class="p">()</span>
     <span class="n">keptEdges_blue</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">keptWeights_blue</span> <span class="o">=</span> <span class="p">[]</span>
@@ -978,6 +978,7 @@
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’ cathode metavertex,</span>
 <span class="sd">        and one that contains all the edges that connect the vertices of the same color or involve the ‘red’ anode metavertex.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">        graph (ig.Graph): The input graph.</span>
 
