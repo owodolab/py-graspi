@@ -96,25 +96,31 @@
 <span class="c1"># import tortuosity as t</span>
 <span class="n">DEBUG_MODE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;DEBUG&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;1&#39;</span>
 
+<span class="sd">&#39;&#39;&#39;functions defined in __all__ get added to the documentation.&#39;&#39;&#39;</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;generateGraph&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;generateGraphAdj&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;generateGraphGraphe&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;adjList&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;graphe_adjList&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;adjvertexColors&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;visualize&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;connectedComponents&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;filterGraph&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;filterGraph_metavertices&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;filterGraph_blue_red&quot;</span>
+<span class="p">]</span>
 
-<span class="c1"># data structure for storing info about newly added edges regarding green_vertex</span>
-<div class="viewcode-block" id="edge_info">
-<a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph.edge_info">[docs]</a>
+<span class="sd">&#39;&#39;&#39;data structure for storing info about newly added edges regarding green_vertex&#39;&#39;&#39;</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">edge_info</span><span class="p">():</span>
-<div class="viewcode-block" id="edge_info.__init__">
-<a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph.edge_info.__init__">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">order</span> <span class="o">=</span> <span class="kc">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="kc">None</span></div>
-</div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="kc">None</span>
 
-
-<span class="c1"># for updating edge info based on rule</span>
-<span class="c1"># green vertex can only connect with interface(first order) vertices</span>
-<div class="viewcode-block" id="store_interface_edges">
-<a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph.store_interface_edges">[docs]</a>
+<span class="sd">&#39;&#39;&#39;for updating edge info based on rule</span>
+<span class="sd">green vertex can only connect with interface(first order) vertices&#39;&#39;&#39;</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">store_interface_edges</span><span class="p">(</span><span class="n">edges_with_green</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">weight</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">edges_with_green</span><span class="p">:</span>
         <span class="n">cur_v</span> <span class="o">=</span> <span class="n">edges_with_green</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
@@ -128,8 +134,7 @@
         <span class="n">newEdge</span><span class="o">.</span><span class="n">order</span> <span class="o">=</span> <span class="n">order</span>   <span class="c1">#order = 1,2,3</span>
         <span class="n">newEdge</span><span class="o">.</span><span class="n">weight</span> <span class="o">=</span> <span class="n">weight</span> <span class="o">*</span> <span class="mf">0.5</span>
         
-        <span class="n">edges_with_green</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">newEdge</span></div>
-
+        <span class="n">edges_with_green</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">newEdge</span>
 
 <span class="sd">&#39;&#39;&#39;********* Constructing the Graph **********&#39;&#39;&#39;</span>
 
@@ -1024,8 +1029,6 @@
 
 
 
-<div class="viewcode-block" id="main">
-<a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph.main">[docs]</a>
 <span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
     <span class="k">global</span> <span class="n">n_flag</span><span class="p">,</span> <span class="n">pixelSize</span>
     <span class="n">PERIODICITY</span> <span class="o">=</span> <span class="kc">False</span>
@@ -1105,8 +1108,7 @@
         <span class="n">dic</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">compute_descriptors</span><span class="p">(</span><span class="n">graph_data</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">pixelSize</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">connectedComponents</span><span class="p">(</span><span class="n">filteredGraph</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dic</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
-
+            <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
