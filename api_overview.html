@@ -52,7 +52,38 @@
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiExamples.html">Example of Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pyGraspiDefinitions.html">Basic Definitions</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">API Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.descriptors.compute_descriptors"><code class="docutils literal notranslate"><span class="pre">compute_descriptors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.descriptors.descriptorsToTxt"><code class="docutils literal notranslate"><span class="pre">descriptorsToTxt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.descriptors.readDescriptorsFromTxt"><code class="docutils literal notranslate"><span class="pre">readDescriptorsFromTxt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.descriptors.printDescriptors"><code class="docutils literal notranslate"><span class="pre">printDescriptors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.descriptors.CC_descriptors"><code class="docutils literal notranslate"><span class="pre">CC_descriptors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.descriptors.shortest_path_descriptors"><code class="docutils literal notranslate"><span class="pre">shortest_path_descriptors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.descriptors.filterGraph_metavertices"><code class="docutils literal notranslate"><span class="pre">filterGraph_metavertices()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.DEBUG_MODE"><code class="docutils literal notranslate"><span class="pre">DEBUG_MODE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.edge_info"><code class="docutils literal notranslate"><span class="pre">edge_info</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#py_graspi.graph.edge_info.__init__"><code class="docutils literal notranslate"><span class="pre">edge_info.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.store_interface_edges"><code class="docutils literal notranslate"><span class="pre">store_interface_edges()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.generateGraph"><code class="docutils literal notranslate"><span class="pre">generateGraph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.generateGraphAdj"><code class="docutils literal notranslate"><span class="pre">generateGraphAdj()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.generateGraphGraphe"><code class="docutils literal notranslate"><span class="pre">generateGraphGraphe()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.adjList"><code class="docutils literal notranslate"><span class="pre">adjList()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.graphe_adjList"><code class="docutils literal notranslate"><span class="pre">graphe_adjList()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.adjvertexColors"><code class="docutils literal notranslate"><span class="pre">adjvertexColors()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.visualize"><code class="docutils literal notranslate"><span class="pre">visualize()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.connectedComponents"><code class="docutils literal notranslate"><span class="pre">connectedComponents()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.filterGraph"><code class="docutils literal notranslate"><span class="pre">filterGraph()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.filterGraph_metavertices"><code class="docutils literal notranslate"><span class="pre">filterGraph_metavertices()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph.filterGraph_blue_red"><code class="docutils literal notranslate"><span class="pre">filterGraph_blue_red()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#py_graspi.graph_data_class.graph_data_class"><code class="docutils literal notranslate"><span class="pre">graph_data_class</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#py_graspi.graph_data_class.graph_data_class.__init__"><code class="docutils literal notranslate"><span class="pre">graph_data_class.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#py_graspi.graph_data_class.graph_data_class.compute_shortest_paths"><code class="docutils literal notranslate"><span class="pre">graph_data_class.compute_shortest_paths()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced</a></li>
 </ul>
 
@@ -85,11 +116,442 @@
 <p>Below is the list of all functions available in <strong>py-graspi</strong>:</p>
 <details open="open">
 <summary>
-Descriptor Functions</summary></details><details open="open">
+Descriptor Functions</summary><dl class="py function" id="module-py_graspi.descriptors">
+<dt class="sig sig-object py" id="py_graspi.descriptors.compute_descriptors">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.descriptors.</span></span><span class="sig-name descname"><span class="pre">compute_descriptors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixelSize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/descriptors.html#compute_descriptors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.descriptors.compute_descriptors" title="Link to this definition"></a></dt>
+<dd><p>This function computes all the descriptors for the graph given and saves them  in a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph_data</strong> (<em>GraphData</em>) – The graph data.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – The file used to generate graphs to compute on.</p></li>
+<li><p><strong>pixelsize</strong> (<em>float</em>) – The pixel size of the graph.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A dictionary containing all the descriptors. The dictionary stores the outputted data in key:value pairs, the unique keys are linked to the associated value.</dt><dd><p>The keys of the descriptors are as follow: STAT_n, STAT_e, STAT_n_D, STAT_n_A, STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, ABS_wf_D, ABS_f_D, DISS_f10_D, DISS_wf10_D, CT_f_e_conn, CT_f_conn_D_An, CT_f_conn_A_Ca, CT_e_conn, CT_e_D_An, CT_e_A_Ca, CT_n_D_adj_An, CT_n_A_adj_Ca, CT_f_D_tort1, CT_f_A_tort1.
+For full definitions see the “Descriptors” tab on the Py-Graspi documentation website.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>descriptors_dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.descriptors.descriptorsToTxt">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.descriptors.</span></span><span class="sig-name descname"><span class="pre">descriptorsToTxt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">descriptors_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/descriptors.html#descriptorsToTxt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.descriptors.descriptorsToTxt" title="Link to this definition"></a></dt>
+<dd><p>This function writes a dictionary of descriptors to the specified text file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>descriptors_dict</strong> (<em>dict</em>) – The dictionary of descriptors.</p></li>
+<li><p><strong>fileName</strong> (<em>str</em>) – The name of the file to write to.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.descriptors.readDescriptorsFromTxt">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.descriptors.</span></span><span class="sig-name descname"><span class="pre">readDescriptorsFromTxt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/descriptors.html#readDescriptorsFromTxt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.descriptors.readDescriptorsFromTxt" title="Link to this definition"></a></dt>
+<dd><p>This function reads a text file and returns a dictionary of descriptors to standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fileName</strong> (<em>str</em>) – The name of the file to read from.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.descriptors.printDescriptors">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.descriptors.</span></span><span class="sig-name descname"><span class="pre">printDescriptors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/descriptors.html#printDescriptors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.descriptors.printDescriptors" title="Link to this definition"></a></dt>
+<dd><p>This function prints descriptors to standard output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dict</strong> (<em>dict</em>) – The dictionary of descriptors.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None, but standard outputs descriptors.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.descriptors.CC_descriptors">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.descriptors.</span></span><span class="sig-name descname"><span class="pre">CC_descriptors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/descriptors.html#CC_descriptors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.descriptors.CC_descriptors" title="Link to this definition"></a></dt>
+<dd><p>This function computes the connected component descriptors that correspond to the following descriptors:
+STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, and countWhite_Blue_conn.
+Auxiliary quantities such as, ‘countBlack_Red_conn’ and ‘countWhite_Blue_conn’ are only used to compute CT_f_conn_D_An and CT_f_conn_A_Ca.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph_data</strong> (<a class="reference internal" href="py_graspi.html#py_graspi.graph_data_class.graph_data_class" title="py_graspi.graph_data_class.graph_data_class"><em>graph_data_class</em></a>) – The input graph object.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated graph object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>graph_data (<a class="reference internal" href="py_graspi.html#py_graspi.graph_data_class.graph_data_class" title="py_graspi.graph_data_class.graph_data_class">graph_data_class</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.descriptors.shortest_path_descriptors">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.descriptors.</span></span><span class="sig-name descname"><span class="pre">shortest_path_descriptors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pixelSize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/descriptors.html#shortest_path_descriptors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.descriptors.shortest_path_descriptors" title="Link to this definition"></a></dt>
+<dd><p>This function computes descriptors related to shortest paths with vertex and metavertex colorations that correspond to the following descriptors:
+DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1 and ABS_wf_D.
+The inputs countBlack_Red_conn and countWhite_Blue_conn are stored in the graph_data_class object generated by the ‘CC_descriptors’ function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph_data</strong> (<a class="reference internal" href="py_graspi.html#py_graspi.graph_data_class.graph_data_class" title="py_graspi.graph_data_class.graph_data_class"><em>graph_data_class</em></a>) – The graph data object.</p></li>
+<li><p><strong>filename</strong> (<em>str</em>) – Base filename for output text files storing the results.</p></li>
+<li><p><strong>pixelSize</strong> (<em>float</em>) – The pixel size of the graph in pixels.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated graph data object with shortest path descriptors</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>graph_data (<a class="reference internal" href="py_graspi.html#py_graspi.graph_data_class.graph_data_class" title="py_graspi.graph_data_class.graph_data_class">graph_data_class</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.descriptors.filterGraph_metavertices">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.descriptors.</span></span><span class="sig-name descname"><span class="pre">filterGraph_metavertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/descriptors.html#filterGraph_metavertices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.descriptors.filterGraph_metavertices" title="Link to this definition"></a></dt>
+<dd><p>This function filters a graph by only keeping the edges that connect vertices of the same color and metavertices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filtered graph of vertices of the same color and green metavertex.
+ig.Graph: The filtered graph of vertices of the same color and blue metavertex.
+ig.Graph: The filtered graph of vertices of the same color and green metavertex.
+ig.Graph: The filtered graph of vertices of the same color and red metavertex.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ig.Graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+</details><details open="open">
 <summary>
-py-graspi Functions</summary></details><details open="open">
+py-graspi Functions</summary><dl class="py data" id="module-py_graspi.graph">
+<dt class="sig sig-object py" id="py_graspi.graph.DEBUG_MODE">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">DEBUG_MODE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#py_graspi.graph.DEBUG_MODE" title="Link to this definition"></a></dt>
+<dd><p>data structure for storing info about newly added edges regarding green_vertex</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="py_graspi.graph.edge_info">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">edge_info</span></span><a class="reference internal" href="_modules/py_graspi/graph.html#edge_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.edge_info" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="py_graspi.graph.edge_info.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#edge_info.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.edge_info.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.store_interface_edges">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">store_interface_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">edges_with_green</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#store_interface_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.store_interface_edges" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.generateGraph">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">generateGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PERIODICITY</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#generateGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.generateGraph" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – The name of the file containing graph data.</p></li>
+<li><p><strong>periodicity</strong> (<em>bool</em>) – Boolean representing if graph has periodic boundary conditions</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function generates a graph based on the input so the return type depends on the format of graph data that was given.
+See “generateGraphAdj” if in .txt, or “generateGraphGraphe” if in .graphe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.generateGraphAdj">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">generateGraphAdj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PERIODICITY</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#generateGraphAdj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.generateGraphAdj" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function takes in graph data in the .txt format and constructs the graph with adjacency list representation.
+It also generates additional graph data stored in the graph_data object.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – The name of the file containing the graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The graph data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>graph_data (<a class="reference internal" href="py_graspi.html#py_graspi.graph_data_class.graph_data_class" title="py_graspi.graph_data_class.graph_data_class">graph_data_class</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.generateGraphGraphe">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">generateGraphGraphe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#generateGraphGraphe"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.generateGraphGraphe" title="Link to this definition"></a></dt>
+<dd><p>This function takes in graph data in the .graphe format and constructs the graph with adjacency list representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file</strong> (<em>str</em>) – The name of the file containing graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The graph representation of the given data
+is_2D (bool): This is true if the graph represents a 2D structure, and false if it represents a 3D</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>g (igraph.Graph)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.adjList">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">adjList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#adjList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.adjList" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph. It also generates additional
+graph data stored in the graph_data object.
+It also counts the vertices connected to interface edges.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>filename (str): The name of the file containing the graph data.</p>
+</dd>
+<dt>Returns:</dt><dd><p>graph_data (graph_data_class): The graph data.
+edges_with_green({vertex : edge_info}dictionary): Storing edges connected with green vertex</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.graphe_adjList">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">graphe_adjList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#graphe_adjList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.graphe_adjList" title="Link to this definition"></a></dt>
+<dd><p>This function creates the adjacency list for graph data given in .graphe format, it categorizes neighbors of vertices into first, second, and third order.
+This function is called inside the “generateGraphGraphe” function to help create the necessary information to generate the final graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – The name of the file containing the graph data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The graph data containing graph, is_2D, first_order_neighbors, second_order_neighbors, and third_order_neighbors attributes</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>graph_data (<a class="reference internal" href="py_graspi.html#py_graspi.graph_data_class.graph_data_class" title="py_graspi.graph_data_class.graph_data_class">graph_data_class</a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.adjvertexColors">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">adjvertexColors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileName</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#adjvertexColors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.adjvertexColors" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function assigns each vertex a color label based on the data in the specified file and returns a list where each index corresponds to a vertex’s color.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fileName</strong> (<em>str</em>) – The name of the file containing the vertex color data.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This list contains color labels (‘black’, ‘white’, ‘red’, or ‘blue’) for each vertex or metavertex in the graph.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>labels (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.visualize">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">visualize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_2D</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#visualize"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.visualize" title="Link to this definition"></a></dt>
+<dd><p>This function shows a visualization of the given graph in either 2D or 3D depending on the is_2D boolean.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> (<em>igraph.Graph</em>) – The given graph to visualize.</p></li>
+<li><p><strong>is_2D</strong> (<em>bool</em>) – This is true if the graph represents a 2D structure, and false if it represents a 3D</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This function does not return a value, it performs an action by outputting the visualization of the given graph using plt.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.connectedComponents">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">connectedComponents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#connectedComponents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.connectedComponents" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function identifies the connected components of a filtered graph and returns lists that contain the vertices that are part of the connected components.
+It filters based on ‘black’ vertices that connect to the ‘red’ metavertex and ‘white’ vertices that connect to the ‘blue’ metavertex.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list will contain a list or several lists, depending on how many connected components there are. Each list contains the vertices that are part of the connected component.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>connected_comp (list)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.filterGraph">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">filterGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#filterGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.filterGraph" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function returns a subgraph that is created by filtering the given graph to only contain edges that connect vertices of the same color.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filtered graph with only edges between the same color vertices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>filteredGraph (igraph.Graph)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.filterGraph_metavertices">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">filterGraph_metavertices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#filterGraph_metavertices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.filterGraph_metavertices" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’/cathode metavertex,
+and one that contains all the edges that connect the vertices of the same color or involve the ‘red’/anode metavertex.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ vertex.
+fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ vertex.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>fg_blue (igraph.Graph)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="py_graspi.graph.filterGraph_blue_red">
+<span class="sig-prename descclassname"><span class="pre">py_graspi.graph.</span></span><span class="sig-name descname"><span class="pre">filterGraph_blue_red</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph.html#filterGraph_blue_red"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph.filterGraph_blue_red" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’ cathode metavertex,
+and one that contains all the edges that connect the vertices of the same color or involve the ‘red’ anode metavertex.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph</strong> (<em>ig.Graph</em>) – The input graph.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ metavertex.
+fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ metavertex.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>fg_blue (igraph.Graph)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</details><details open="open">
 <summary>
-Graph Class</summary></details></section>
+Graph Class</summary><dl class="py class" id="module-py_graspi.graph_data_class">
+<dt class="sig sig-object py" id="py_graspi.graph_data_class.graph_data_class">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">py_graspi.graph_data_class.</span></span><span class="sig-name descname"><span class="pre">graph_data_class</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_2D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph_data_class.html#graph_data_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph_data_class.graph_data_class" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to store all graph parameters in a single object, reducing redundant function returns.</p>
+<dl class="simple">
+<dt><strong>Attributes:</strong></dt><dd><ul class="simple">
+<li><p><strong>graph</strong> (<em>ig.Graph</em>): Stores the igraph graph object.</p></li>
+<li><p><strong>is_2D</strong> (<em>bool</em>): Indicates whether the graph is 2D.</p></li>
+<li><p><strong>black_vertices</strong> (<em>list</em>): A list to store black vertices in the graph.</p></li>
+<li><p><strong>white_vertices</strong> (<em>list</em>): A list to store white vertices in the graph.</p></li>
+<li><p><strong>shortest_path_to_red</strong> (<em>Optional[list]</em>): Stores the shortest path to the red vertex.</p></li>
+<li><p><strong>shortest_path_to_blue</strong> (<em>Optional[list]</em>): Stores the shortest path to the blue vertex.</p></li>
+<li><p><strong>black_green</strong> (<em>int</em>): Computed descriptor for black-green interaction.</p></li>
+<li><p><strong>black_interface_red</strong> (<em>int</em>): Computed descriptor for the black-red interface.</p></li>
+<li><p><strong>white_interface_blue</strong> (<em>int</em>): Computed descriptor for the white-blue interface.</p></li>
+<li><p><strong>dim</strong> (<em>int</em>): Dimension descriptor for the graph.</p></li>
+<li><p><strong>interface_edge_comp_paths</strong> (<em>int</em>): Number of interface edges in computed paths.</p></li>
+<li><p><strong>STAT_n_D</strong> (<em>int</em>): Number of black vertices.</p></li>
+<li><p><strong>STAT_n_A</strong> (<em>int</em>): Number of white vertices.</p></li>
+<li><p><strong>STAT_CC_D</strong> (<em>int</em>): Components with at least one black vertex.</p></li>
+<li><p><strong>STAT_CC_A</strong> (<em>int</em>): Components with at least one white vertex.</p></li>
+<li><p><strong>STAT_CC_D_An</strong> (<em>int</em>): Black components connected to red vertex.</p></li>
+<li><p><strong>STAT_CC_A_Ca</strong> (<em>int</em>): White components connected to blue vertex.</p></li>
+<li><p><strong>CT_f_conn_D_An</strong> (<em>float</em>): Fraction of black vertices connected to red.</p></li>
+<li><p><strong>CT_f_conn_A_Ca</strong> (<em>float</em>): Fraction of white vertices connected to blue.</p></li>
+<li><p><strong>CT_n_D_adj_An</strong> (<em>int</em>): Some computed descriptor.</p></li>
+<li><p><strong>CT_n_A_adj_Ca</strong> (<em>int</em>): Another computed descriptor.</p></li>
+<li><p><strong>countBlack_Red_conn</strong> (<em>int</em>): Black vertices in red-connected components.</p></li>
+<li><p><strong>countWhite_Blue_conn</strong> (<em>int</em>): White vertices in blue-connected components.</p></li>
+<li><p><strong>DISS_f10_D</strong> (<em>float</em>): Fraction of black vertices &lt;10px from green.</p></li>
+<li><p><strong>DISS_wf10_D</strong> (<em>float</em>): Weighted fraction of black vertices &lt;10px from green.</p></li>
+<li><p><strong>CT_f_D_tort1</strong> (<em>float</em>): Fraction of black vertices with tortuosity to red &lt; tol.</p></li>
+<li><p><strong>CT_f_A_tort1</strong> (<em>float</em>): Fraction of white vertices with tortuosity to blue &lt; tol.</p></li>
+<li><p><strong>ABS_wf_D</strong> (<em>float</em>): Weighted distance of black vertices from red.</p></li>
+<li><p><strong>redVertex</strong> (<em>Optional[Any]</em>): Reference to the red vertex.</p></li>
+<li><p><strong>blueVertex</strong> (<em>Optional[Any]</em>): Reference to the blue vertex.</p></li>
+<li><p><strong>first_order_neighbors</strong> (<em>list</em>): This is a list of all the first-order pairs.</p></li>
+<li><p><strong>second_order_neighbors</strong> (<em>list</em>): This is a list of all the second-order pairs.</p></li>
+<li><p><strong>third_order_neighbors</strong> (<em>list</em>): This is a list of all the third-order pairs.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>graph</strong> (<em>ig.Graph</em>) – The igraph graph object representing the structure.</p></li>
+<li><p><strong>is_2D</strong> (<em>bool</em>) – Boolean indicating whether the graph is 2D</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="py_graspi.graph_data_class.graph_data_class.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Graph</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_2D</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph_data_class.html#graph_data_class.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph_data_class.graph_data_class.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the graph_data_class object with a graph and its properties.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="py_graspi.graph_data_class.graph_data_class.compute_shortest_paths">
+<span class="sig-name descname"><span class="pre">compute_shortest_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">red_vertex</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blue_vertex</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/py_graspi/graph_data_class.html#graph_data_class.compute_shortest_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#py_graspi.graph_data_class.graph_data_class.compute_shortest_paths" title="Link to this definition"></a></dt>
+<dd><p>Compute and store shortest paths from red and blue vertices.</p>
+</dd></dl>
+
+</dd></dl>
+
+</details></section>
 
 
            </div>

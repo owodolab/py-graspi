@@ -1,0 +1,223 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>py_graspi.graph_data_class &mdash; py-graspi  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+    <link rel="canonical" href="https://owodolab.github.io/py-graspi/_modules/py_graspi/graph_data_class.html" />
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            py-graspi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiFunctionality.html">Functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDescriptors.html">Descriptors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiInputs.html">Inputs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiExamples.html">Example of Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiRepresentation.html">Graph-based representation of microstructure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pyGraspiDefinitions.html">Basic Definitions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api_overview.html">API Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../advanced.html">Advanced</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">py-graspi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">py_graspi.graph_data_class</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for py_graspi.graph_data_class</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span><span class="w"> </span><span class="nn">igraph</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ig</span>
+
+<div class="viewcode-block" id="graph_data_class">
+<a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph_data_class.graph_data_class">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">graph_data_class</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to store all graph parameters in a single object, reducing redundant function returns.</span>
+
+<span class="sd">    **Attributes:**</span>
+<span class="sd">        - **graph** (*ig.Graph*): Stores the igraph graph object.</span>
+<span class="sd">        - **is_2D** (*bool*): Indicates whether the graph is 2D.</span>
+
+<span class="sd">        - **black_vertices** (*list*): A list to store black vertices in the graph.</span>
+<span class="sd">        - **white_vertices** (*list*): A list to store white vertices in the graph.</span>
+<span class="sd">        - **shortest_path_to_red** (*Optional[list]*): Stores the shortest path to the red vertex.</span>
+<span class="sd">        - **shortest_path_to_blue** (*Optional[list]*): Stores the shortest path to the blue vertex.</span>
+
+<span class="sd">        - **black_green** (*int*): Computed descriptor for black-green interaction.</span>
+<span class="sd">        - **black_interface_red** (*int*): Computed descriptor for the black-red interface.</span>
+<span class="sd">        - **white_interface_blue** (*int*): Computed descriptor for the white-blue interface.</span>
+<span class="sd">        - **dim** (*int*): Dimension descriptor for the graph.</span>
+<span class="sd">        - **interface_edge_comp_paths** (*int*): Number of interface edges in computed paths.</span>
+<span class="sd">        - **STAT_n_D** (*int*): Number of black vertices.</span>
+<span class="sd">        - **STAT_n_A** (*int*): Number of white vertices.</span>
+<span class="sd">        - **STAT_CC_D** (*int*): Components with at least one black vertex.</span>
+<span class="sd">        - **STAT_CC_A** (*int*): Components with at least one white vertex.</span>
+<span class="sd">        - **STAT_CC_D_An** (*int*): Black components connected to red vertex.</span>
+<span class="sd">        - **STAT_CC_A_Ca** (*int*): White components connected to blue vertex.</span>
+<span class="sd">        - **CT_f_conn_D_An** (*float*): Fraction of black vertices connected to red.</span>
+<span class="sd">        - **CT_f_conn_A_Ca** (*float*): Fraction of white vertices connected to blue.</span>
+<span class="sd">        - **CT_n_D_adj_An** (*int*): Some computed descriptor.</span>
+<span class="sd">        - **CT_n_A_adj_Ca** (*int*): Another computed descriptor.</span>
+
+<span class="sd">        - **countBlack_Red_conn** (*int*): Black vertices in red-connected components.</span>
+<span class="sd">        - **countWhite_Blue_conn** (*int*): White vertices in blue-connected components.</span>
+
+<span class="sd">        - **DISS_f10_D** (*float*): Fraction of black vertices &lt;10px from green.</span>
+<span class="sd">        - **DISS_wf10_D** (*float*): Weighted fraction of black vertices &lt;10px from green.</span>
+<span class="sd">        - **CT_f_D_tort1** (*float*): Fraction of black vertices with tortuosity to red &lt; tol.</span>
+<span class="sd">        - **CT_f_A_tort1** (*float*): Fraction of white vertices with tortuosity to blue &lt; tol.</span>
+<span class="sd">        - **ABS_wf_D** (*float*): Weighted distance of black vertices from red.</span>
+
+<span class="sd">        - **redVertex** (*Optional[Any]*): Reference to the red vertex.</span>
+<span class="sd">        - **blueVertex** (*Optional[Any]*): Reference to the blue vertex.</span>
+<span class="sd">        - **first_order_neighbors** (*list*): This is a list of all the first-order pairs.</span>
+<span class="sd">        - **second_order_neighbors** (*list*): This is a list of all the second-order pairs.</span>
+<span class="sd">        - **third_order_neighbors** (*list*): This is a list of all the third-order pairs.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        graph (ig.Graph): The igraph graph object representing the structure.</span>
+<span class="sd">        is_2D (bool): Boolean indicating whether the graph is 2D</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="graph_data_class.__init__">
+<a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph_data_class.graph_data_class.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">:</span> <span class="n">ig</span><span class="o">.</span><span class="n">Graph</span><span class="p">,</span> <span class="n">is_2D</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Initialize the graph_data_class object with a graph and its properties. &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">graph</span>  <span class="c1"># Store the igraph graph object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_2D</span> <span class="o">=</span> <span class="n">is_2D</span>  <span class="c1"># Boolean indicating whether the graph is 2D</span>
+
+        <span class="c1"># Store vertex-based attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">black_vertices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">white_vertices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shortest_path_to_red</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shortest_path_to_blue</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Store computed descriptors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">black_green</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">black_interface_red</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">white_interface_blue</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dim</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interface_edge_comp_paths</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STAT_n_D</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">black_vertices</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STAT_n_A</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">white_vertices</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STAT_CC_D</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STAT_CC_A</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STAT_CC_D_An</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">STAT_CC_A_Ca</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CT_f_conn_D_An</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CT_f_conn_A_Ca</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CT_n_D_adj_An</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CT_n_A_adj_Ca</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># intermediates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">countBlack_Red_conn</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">countWhite_Blue_conn</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># shortest path descriptors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DISS_f10_D</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DISS_wf10_D</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CT_f_D_tort1</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">CT_f_A_tort1</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ABS_wf_D</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">redVertex</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blueVertex</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first_order_neighbors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">second_order_neighbors</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">third_order_neighbors</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+
+<div class="viewcode-block" id="graph_data_class.compute_shortest_paths">
+<a class="viewcode-back" href="../../py_graspi.html#py_graspi.graph_data_class.graph_data_class.compute_shortest_paths">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compute_shortest_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">red_vertex</span><span class="p">,</span> <span class="n">blue_vertex</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; Compute and store shortest paths from red and blue vertices. &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shortest_path_to_red</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">shortest_paths</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">red_vertex</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">es</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">shortest_path_to_blue</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">shortest_paths</span><span class="p">(</span><span class="n">source</span><span class="o">=</span><span class="n">blue_vertex</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">es</span><span class="p">[</span><span class="s2">&quot;weight&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span></div>
+</div>
+
+
+
+<span class="c1">######################################</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Olga Wodo, Michael Leung, Wenqi Zheng, Qi Pan, Jerry Zhou, Kevin Martinez.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

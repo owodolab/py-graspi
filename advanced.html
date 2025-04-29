@@ -57,6 +57,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#visualize-graphs">Visualize Graphs</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="#to-run-on-debug-mode">To Run on DEBUG mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-memory-tests">Running Memory Tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#translating-plt-files-to-txt-files">Translating .plt files to .txt files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#translate-image-file-into-rescaled-txt-file">Translate Image File Into Rescaled .txt File</a></li>
@@ -108,6 +109,23 @@
 </pre></div>
 </div>
 </section>
+</section>
+<section id="to-run-on-debug-mode">
+<h2>To Run on DEBUG mode<a class="headerlink" href="#to-run-on-debug-mode" title="Link to this heading"></a></h2>
+<p>To run graph.py on debug mode so that all debug statements are printed to the terminal, set the DEBUG environment to 1 (True)</p>
+<p>If on Windows Powershell,</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>run<span class="w"> </span><span class="nv">$env</span>:DEBUG<span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>If on Windows Command Prompt</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>run<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="nv">DEBUG</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p>If on MacOS/Linux</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>run<span class="w"> </span><span class="nb">export</span><span class="w"> </span><span class="nv">DEBUG</span><span class="o">=</span><span class="m">1</span>
+</pre></div>
+</div>
+<p><strong>After setting the compilation mode to DEBUG mode, you can now run graph.py regularly through command line, which should print out debug statements to the terminal.</strong></p>
 </section>
 <section id="running-memory-tests">
 <h2>Running Memory Tests<a class="headerlink" href="#running-memory-tests" title="Link to this heading"></a></h2>
@@ -229,12 +247,23 @@ The following will print when the report generation begins:</p>
 </section>
 <section id="generate-api-documentation">
 <h2>Generate API Documentation<a class="headerlink" href="#generate-api-documentation" title="Link to this heading"></a></h2>
-<p>In order to generate an API using sphinx, you need to follow the installation of py-graspi:</p>
-<p>Install ghp-import in the project root directory:</p>
+<p>In order to generate an API using sphinx, you need to follow the installation of py-graspi.</p>
+<p>Install Sphinx and all required packages to generate documentation in the project root directory:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>sphinx<span class="w"> </span>sphinx_rtd_theme<span class="w"> </span>setuptools<span class="w"> </span>sphinxcontrib.details.directive
+</pre></div>
+</div>
+<p>Install ghp-import to host documentation in the project root directory:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>ghp-import
 </pre></div>
 </div>
-<p>To generate the rst files into the local html, run this command:</p>
+<div class="line-block">
+<div class="line">To pull docstrings from Py-Graspi modules, run the following command:</div>
+<div class="line">(Note: docs/source/ is the location of the .rst files, and src/py_graspi is the location of the project modules where sphinx will pull docstrings from.)</div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-apidoc<span class="w"> </span>-o<span class="w"> </span>docs/source/<span class="w"> </span>src/py_graspi
+</pre></div>
+</div>
+<p>To generate the local html files using the rst files, run this command:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sphinx-build<span class="w"> </span>-b<span class="w"> </span>html<span class="w"> </span>docs/source<span class="w"> </span>docs/build
 </pre></div>
 </div>
