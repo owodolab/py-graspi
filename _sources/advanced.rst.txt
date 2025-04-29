@@ -177,29 +177,15 @@ You can interact with the plots to find the appropriate visualization.
 Generate API Documentation
 ==============================
 
-In order to generate an API using sphinx, you need to follow the installation of py-graspi.
+In order to generate an API using sphinx, you need to follow the installation of py-graspi:
 
-Install Sphinx and all required packages to generate documentation in the project root directory:
-
-.. code-block:: bash
-
-   pip install sphinx sphinx_rtd_theme setuptools sphinxcontrib.details.directive
-
-Install ghp-import to host documentation in the project root directory:
+Install ghp-import in the project root directory:
 
 .. code-block:: bash
 
    pip install ghp-import
 
-.. line-block::
-    To pull docstrings from Py-Graspi modules, run the following command:
-    (Note: docs/source/ is the location of the .rst files, and src/py_graspi is the location of the project modules where sphinx will pull docstrings from.)
-
-.. code-block:: bash
-
-   sphinx-apidoc -o docs/source/ src/py_graspi
-
-To generate the local html files using the rst files, run this command:
+To generate the rst files into the local html, run this command:
 
 .. code-block:: bash
 
