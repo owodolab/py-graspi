@@ -4,7 +4,7 @@ setup(
     name = "py_graspi",
     author = "Olga Wodo",
     author_email = "olgawodo@buffalo.edu",
-    version = "0.2.0.6",
+    version = "0.2.1.2",
     description = "Graph-based descriptor for microstructure featurization",
     long_description = """\
 # Py-GraSPI (Graph-based Structure Property Identifier)

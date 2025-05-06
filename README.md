@@ -1,5 +1,5 @@
 # py-graspi
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/3d7bf5df17b015612ab1b8261c63d0bbb00a268f?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb) [![PyPi Package](https://img.shields.io/badge/PyPi-package-blue)](https://pypi.org/project/py-graspi/) [![go to documentation](https://img.shields.io/badge/go_to-documentation-purple)](https://owodolab.github.io/py-graspi/)
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/kkevinmartinezz/kaggle_PyGraspi/f0a69f22d3d19c08cb1830682b01b13910c28086?urlpath=lab%2Ftree%2Fpygraspi-test.ipynb) [![PyPi Package](https://img.shields.io/badge/PyPi-package-blue)](https://pypi.org/project/py-graspi/) [![go to documentation](https://img.shields.io/badge/go_to-documentation-purple)](https://owodolab.github.io/py-graspi/)
 
 
 

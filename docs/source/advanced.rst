@@ -18,8 +18,33 @@ To visualize graphs, call the visualize(graph_data, is_2D) function.
     # Visualize the graph (2D)
     ig.visualize(graph_data, true)
 
+To Run on DEBUG mode
+=====================
+
+To run graph.py on debug mode so that all debug statements are printed to the terminal, set the DEBUG environment to 1 (True)
+
+If on Windows Powershell,
+
+.. code-block:: bash
+
+    run $env:DEBUG=1
+
+If on Windows Command Prompt
+
+.. code-block:: bash
+
+    run set DEBUG=1
+
+If on MacOS/Linux
+
+.. code-block:: bash
+
+    run export DEBUG=1
+
+**After setting the compilation mode to DEBUG mode, you can now run graph.py regularly through command line, which should print out debug statements to the terminal.**
+
 Running Memory Tests
-====================
+=====================
 
 To run memory tests, run the following command in the terminal:
 
@@ -177,15 +202,29 @@ You can interact with the plots to find the appropriate visualization.
 Generate API Documentation
 ==============================
 
-In order to generate an API using sphinx, you need to follow the installation of py-graspi:
+In order to generate an API using sphinx, you need to follow the installation of py-graspi.
 
-Install ghp-import in the project root directory:
+Install Sphinx and all required packages to generate documentation in the project root directory:
+
+.. code-block:: bash
+
+   pip install sphinx sphinx_rtd_theme setuptools sphinxcontrib.details.directive
+
+Install ghp-import to host documentation in the project root directory:
 
 .. code-block:: bash
 
    pip install ghp-import
 
-To generate the rst files into the local html, run this command:
+.. line-block::
+    To pull docstrings from Py-Graspi modules, run the following command:
+    (Note: docs/source/ is the location of the .rst files, and src/py_graspi is the location of the project modules where sphinx will pull docstrings from.)
+
+.. code-block:: bash
+
+   sphinx-apidoc -o docs/source/ src/py_graspi
+
+To generate the local html files using the rst files, run this command:
 
 .. code-block:: bash
 
