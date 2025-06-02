@@ -78,7 +78,7 @@ If data is structured (e.g., image), the following options are available
 
 .. code-block:: bash
 
-    python graph.py -a <INPUT_FILE.txt> -p <{0,1}> (default 0-false) -n <{2,3}> (default 2) #Can use flags
+    python graph.py -a <INPUT_FILE.txt> [-s <pixelSize> (default 1)] [-p <{0,1}> (default 0-false)] [-n <{2,3}> (default 2)] #Can use flags
 
 This can be used with both the -p and -n flag, just one of the flags, or none of the flags.
 
@@ -86,10 +86,13 @@ Examples of usage:
 
 .. code-block:: bash
 
-    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -p 0 -n 2 #Both flags
+    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -s 1 -p 0 -n 2 #All flags- Pixel size, Periodicity and Phase flags
+    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -p 0 -n 2 #Periodicity and Phase flag
+    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -s 1 -p 0 #Pixel size and Periodicity flag
+    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -s 1 #Only pixel size flag
     python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -p 1 #Only periodicity flag
     python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -n 3 #Only phase flag
-    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt #No flag
+    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt #No flag (Pixel size default = 1, Periodicity default = 0, Phase default = 2)
 
 Example output when testing .txt with periodicity flag = 1
     .. image:: imgs/periodicity.png
@@ -127,10 +130,12 @@ Using "../" allows access to files that may not be in the src directory.
 
 The remaining parameters are optional, and have the default values set up, if the parameter is not explicitly provided.
 
-- **-a <INPUT_FILE.txt> (row-major order):** This is the option to input information about structured data. With this assumption, neighborhood of each voxel/pixel can be determined as the graph is constructed.
+- :code:`-a <INPUT_FILE.txt>` (row-major order): This is the option to input information about structured data. With this assumption, neighborhood of each voxel/pixel can be determined as the graph is constructed.
 
-- **-g <INPUT_FILE.graphe>:** This is the option to input information about the unstructured data. Input file must provide all information about the graph, this means that neighborhood of each vertex in the graph needs to be determined externally. Meta-vertices and the associated edges need to be defines in the input file. When this option is called, GraSPI reads the text file and initializes the set of vertices and edges from the input file, and need to be in agreement with these defined in the package for a given usage case.
+- :code:`-g <INPUT_FILE.graphe>`: This is the option to input information about the unstructured data. Input file must provide all information about the graph, this means that neighborhood of each vertex in the graph needs to be determined externally. Meta-vertices and the associated edges need to be defines in the input file. When this option is called, GraSPI reads the text file and initializes the set of vertices and edges from the input file, and need to be in agreement with these defined in the package for a given usage case.
 
-- **-p <{0,1}> (default 0-false):** This option specifies if periodicity on the side faces is to be applied (valid only morphology inputted as the array option -a).
+- :code:`-s <pixelSize>` (default 1): This option sets the size of the pixel to compute the length of the shortest paths. If unspecified, all results will be outputted in terms of number of pixels, and need to be rescaled for dimensional analysis.
 
-- **-n <{2,3}> default 2 (black and white, electron-donor and electron accepting material):** This option specifies the number of phases. For three-phase morphology (option -n 3, black, white and grey vertices are read, that correspond to electron-donor, electron-accepting and mixed phase material, respectively).
+- :code:`-p <{0,1}>` (default 0-false): This option specifies if periodicity on the side faces is to be applied (valid only morphology inputted as the array option -a).
+
+- :code:`-n <{2,3}>` (default 2) (black and white, OR electron-donor and electron-accepting material): This option specifies the number of phases. For three-phase morphology (option -n 3, black, white and grey vertices are read, that correspond to electron-donor, electron-accepting and mixed phase material, respectively).

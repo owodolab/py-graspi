@@ -16,8 +16,22 @@ n_flag = 2
 # import tortuosity as t
 DEBUG_MODE = os.environ.get('DEBUG', '0') == '1'
 
+'''functions defined in __all__ get added to the documentation.'''
+__all__ = [
+    "generateGraph",
+    "generateGraphAdj",
+    "generateGraphGraphe",
+    "adjList",
+    "graphe_adjList",
+    "adjvertexColors",
+    "visualize",
+    "connectedComponents",
+    "filterGraph",
+    "filterGraph_metavertices",
+    "filterGraph_blue_red"
+]
 
-''' data structure for storing info about newly added edges regarding green_vertex'''
+'''data structure for storing info about newly added edges regarding green_vertex'''
 class edge_info():
     def __init__(self):
         self.index = None
@@ -25,8 +39,8 @@ class edge_info():
         self.order = None
         self.weight = None
 
-'''for updating edge info based on rule '''
-'''green vertex can only connect with interface(first order) vertices'''
+'''for updating edge info based on rule
+green vertex can only connect with interface(first order) vertices'''
 def store_interface_edges(edges_with_green, index, color, order, weight):
     if index in edges_with_green:
         cur_v = edges_with_green[index]
@@ -41,6 +55,8 @@ def store_interface_edges(edges_with_green, index, color, order, weight):
         newEdge.weight = weight * 0.5
         
         edges_with_green[index] = newEdge
+
+'''********* Constructing the Graph **********'''
 
 def generateGraph(file, PERIODICITY = False):
     """
@@ -335,6 +351,7 @@ def generateGraphGraphe(file):
 
 
 '''---------Function to create edges for graph in specified format --------'''
+
 def adjList(fileName):
     """
         This function creates an adjacency list based on the graph data provided. An adjacency list represents a set of edges in the graph. It also generates additional
@@ -346,8 +363,7 @@ def adjList(fileName):
 
         Returns:
             graph_data (graph_data_class): The graph data.
-            edges_with_green({vertex : edge_info}dictionary): Storing edges connected with green vertex
-)
+            edges_with_green({vertex : edge_info}dictionary): Storing edges connected with green vertex)
     """
     adjacency_list = {}
     if DEBUG_MODE:
@@ -406,6 +422,10 @@ def adjList(fileName):
                 elif reshaped_data[current_vertex] == 0:
                     vertex_color[current_vertex] = 'black'
                     black_vertices.append(current_vertex)
+                elif reshaped_data[current_vertex] == 3:
+                    vertex_color[current_vertex] = 'gray'
+                else:
+                    print("not in the color : ", current_vertex, reshaped_data[current_vertex])
 
                 neighbors = []
 
@@ -604,6 +624,7 @@ def graphe_adjList(filename):
 def adjvertexColors(fileName):
     """
         This function assigns each vertex a color label based on the data in the specified file and returns a list where each index corresponds to a vertex's color.
+
     Args:
         fileName (str): The name of the file containing the vertex color data.
 
@@ -628,11 +649,6 @@ def adjvertexColors(fileName):
 
     return labels
 
-
-
-
-
-
 def visualize(graph, is_2D):
     """
        This function shows a visualization of the given graph in either 2D or 3D depending on the is_2D boolean.
@@ -654,6 +670,7 @@ def visualize(graph, is_2D):
         ig.plot(g, target=ax, layout=layout, vertex_size=15, margin=5)
 
         ''' ---- generate the labels of each vertex value ---- '''
+
         for i, (x, y) in enumerate(layout):
             g.vs['label'] = [i for i in range(len(g.vs))]
             ax.text(
@@ -710,7 +727,6 @@ def visualize(graph, is_2D):
 
 
 '''**************** Connected Components *******************'''
-
 
 def connectedComponents(graph):
     """
@@ -784,6 +800,7 @@ def connectedComponents(graph):
 def filterGraph(graph):
     """
         This function returns a subgraph that is created by filtering the given graph to only contain edges that connect vertices of the same color.
+
     Args:
         graph (ig.Graph): The input graph.
 
@@ -805,17 +822,18 @@ def filterGraph(graph):
     return filteredGraph
 
 
-'''********* Constructing the Graph **********'''
 def filterGraph_metavertices(graph):
     """
         This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’/cathode metavertex,
         and one that contains all the edges that connect the vertices of the same color or involve the ‘red’/anode metavertex.
+
     Args:
         graph (ig.Graph): The input graph.
 
     Returns:
         fg_blue (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘blue’ vertex.
-        fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ vertex.    """
+        fg_red (igraph.Graph): This is a subgraph that only contains the edges that either connect vertices of the same color or involve a ‘red’ vertex.
+    """
     edgeList = graph.get_edgelist()
     keptEdges_blue = []
     keptWeights_blue = []
@@ -853,6 +871,7 @@ def filterGraph_blue_red(graph):
     """
         This function filters the given graph into two subgraphs, one that contains all the edges that connect vertices of the same color or involve the ‘blue’ cathode metavertex,
         and one that contains all the edges that connect the vertices of the same color or involve the ‘red’ anode metavertex.
+
     Args:
         graph (ig.Graph): The input graph.
 

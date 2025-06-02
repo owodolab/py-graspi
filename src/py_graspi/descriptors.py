@@ -30,7 +30,7 @@ def compute_descriptors(graph_data, filename,pixelSize=1):
     graph_data = CC_descriptors(graph_data)
 
     # shortest path descriptors
-    graph_data = shortest_path_descriptors(graph_data,filename,pixelSize)
+    graph_data = shortest_path_descriptors(graph_data, filename, pixelSize)
 
     descriptors_dict["STAT_n"] =  graph_data.STAT_n_A + graph_data.STAT_n_D
     descriptors_dict["STAT_e"] = graph_data.black_green
@@ -279,6 +279,7 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
             id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
 
     filename = os.path.basename(filename)
+    os.makedirs("test_results", exist_ok=True)
     file = open(f"./test_results/{filename}_TortuosityBlackToRed.txt", 'w')
     file.writelines(tort_black_to_red)
     file.close()
@@ -318,6 +319,7 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
     return graph_data
 
 '''--------------- Shortest Path Descriptors ---------------'''
+
 def filterGraph_metavertices(graph):
 
     """
