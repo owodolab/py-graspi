@@ -17,11 +17,11 @@ import math
 
 current_dir = os.getcwd()
 parent_dir = os.path.dirname(current_dir)
-data_path = f"{parent_dir}/data/data/"
+data_path = f"{parent_dir}/data/2phase/2D-morphologies/data/"
 test_results_path = f"test_results/"
-image_path = f"{parent_dir}/data/images/"
-hist_path = f"{parent_dir}/data/histograms/"
-results_path = f"{parent_dir}/data/results/"
+image_path = f"{parent_dir}/data/2phase/2D-morphologies/images/"
+hist_path = f"{parent_dir}/data/2phase/2D-morphologies/histograms/"
+results_path = f"{parent_dir}/data/2phase/2D-morphologies/results/"
 
 
 test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path) if os.path.splitext(file)[0].count("_") == 3]
@@ -199,10 +199,10 @@ def main():
     Outputs the generated pdf to the user.
     """
     if PDF:
-        pdf.output(f"{parent_dir}/data/test_results.pdf")
+        pdf.output(f"{parent_dir}/data/2phase/2D-morphologies/test_results.pdf")
         print("PDF Generated")
-        webbrowser.open_new_tab(f"{parent_dir}/data/test_results.pdf")
-    #result pdf in data/test_results.pdf
+        webbrowser.open_new_tab(f"{parent_dir}/data/2phase/2D-morphologies/test_results.pdf")
+    #result pdf in data/2phase/2D-morphologies/test_results.pdf
 
 if __name__ == "__main__":
     main()

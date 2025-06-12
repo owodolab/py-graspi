@@ -6,7 +6,7 @@ current_dir = os.getcwd()
 
 def find_coords(filename):
     # with open(f"{current_dir}/py_graspi/data/{filename}", "r") as file:
-    with open(f"../data/data/{filename}", "r") as file:
+    with open(f"../data/2phase/2D-morphologies/data/{filename}", "r") as file:
 
         header = file.readline().split(' ')
         dimX, dimY = int(header[0]), int(header[1])

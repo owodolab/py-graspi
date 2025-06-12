@@ -14,9 +14,8 @@ import igraph as ig
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-import src.graph_data_class as GraphData
-
-import src.descriptors as d
+from py_graspi import graph_data_class as GraphData
+from py_graspi import descriptors as d
 import math
 
 DEBUG = False # debugging mode

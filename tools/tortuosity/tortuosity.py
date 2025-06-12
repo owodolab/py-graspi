@@ -117,7 +117,7 @@ def read_BTR_file_and_extract_numbers(base_filename):
             tort(list): list of tortuosity, index matches that of idOfPixelIn1DArray
         """
     base_filename = base_filename[16:-4]
-    file_path = f"../../data/distances/{base_filename}-IdTortuosityBlackToRed.txt"
+    file_path = f"../../data/2phase/2D-morphologies/distances/{base_filename}-IdTortuosityBlackToRed.txt"
     idOfPixelIn1DArray = []
     tort = []
     # Open the file in read mode
@@ -146,7 +146,7 @@ def read_WTB_file_and_extract_numbers(base_filename):
             tort(list): list of tortuosity, index matches that of idOfPixelIn1DArray
         """
     base_filename = base_filename[16:-4]
-    file_path = f"../../data/distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
+    file_path = f"../../data/2phase/2D-morphologies/distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
     # base_filename = base_filename[5:-4]
     # file_path = f"distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
     idOfPixelIn1DArray = []
