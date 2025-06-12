@@ -116,7 +116,7 @@
 </pre></div>
 </div>
 <p>Step 2: For a given morphology (in Graspi input format), generate graph and calculate descriptors</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;data/data_0.5_2.2_001900.txt&quot;</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;data/2phase/2D-morphologies/data_0.5_2.2_001900.txt&quot;</span>
 <span class="n">graph_data</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">generateGraph</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
 <span class="n">descriptors_dict</span> <span class="o">=</span> <span class="n">ig</span><span class="o">.</span><span class="n">compute_descriptors</span><span class="p">(</span><span class="n">graph_data</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
 </pre></div>
@@ -135,7 +135,7 @@
 <section id="command-line-usage">
 <h2>Command Line Usage<a class="headerlink" href="#command-line-usage" title="Link to this heading"></a></h2>
 <p>The user can use Py-GraSPI from the command line. To begin, ensure that the environment is in the src directory.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>src<span class="w"> </span><span class="c1">#Starting at the root directory, cd into the src directory</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>src/py_graspi<span class="w"> </span><span class="c1">#Starting at the root directory (py-graspi), cd into the py_graspi directory</span>
 </pre></div>
 </div>
 <p>To learn the formatting of the command line arguments, the user is encouraged to run</p>
@@ -151,13 +151,13 @@
 </div>
 <p>This can be used with both the -p and -n flag, just one of the flags, or none of the flags.</p>
 <p>Examples of usage:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span>-s<span class="w"> </span><span class="m">1</span><span class="w"> </span>-p<span class="w"> </span><span class="m">0</span><span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c1">#All flags- Pixel size, Periodicity and Phase flags</span>
-python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span>-p<span class="w"> </span><span class="m">0</span><span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c1">#Periodicity and Phase flag</span>
-python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span>-s<span class="w"> </span><span class="m">1</span><span class="w"> </span>-p<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="c1">#Pixel size and Periodicity flag</span>
-python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span>-s<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1">#Only pixel size flag</span>
-python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1">#Only periodicity flag</span>
-python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span>-n<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="c1">#Only phase flag</span>
-python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../data/2D-testFile/testFile-10-2D.txt<span class="w"> </span><span class="c1">#No flag (Pixel size default = 1, Periodicity default = 0, Phase default = 2)</span>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../../data/2phase/2D-testFiles/testFile-10-2D.txt<span class="w"> </span>-s<span class="w"> </span><span class="m">1</span><span class="w"> </span>-p<span class="w"> </span><span class="m">0</span><span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c1">#All flags- Pixel size, Periodicity and Phase flags</span>
+python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../../data/2phase/2D-testFiles/testFile-10-2D.txt<span class="w"> </span>-p<span class="w"> </span><span class="m">0</span><span class="w"> </span>-n<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="c1">#Periodicity and Phase flag</span>
+python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../../data/2phase/2D-testFiles/testFile-10-2D.txt<span class="w"> </span>-s<span class="w"> </span><span class="m">1</span><span class="w"> </span>-p<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="c1">#Pixel size and Periodicity flag</span>
+python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../../data/2phase/2D-testFiles/testFile-10-2D.txt<span class="w"> </span>-s<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1">#Only pixel size flag</span>
+python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../../data/2phase/2D-testFiles/testFile-10-2D.txt<span class="w"> </span>-p<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="c1">#Only periodicity flag</span>
+python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../../data/2phase/2D-testFiles/testFile-10-2D.txt<span class="w"> </span>-n<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="c1">#Only phase flag</span>
+python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w"> </span>../../data/2phase/2D-testFiles/testFile-10-2D.txt<span class="w"> </span><span class="c1">#No flag (Pixel size default = 1, Periodicity default = 0, Phase default = 2)</span>
 </pre></div>
 </div>
 <dl>
@@ -173,7 +173,7 @@ python<span class="w"> </span>graph.py<span class="w"> </span>-a<span class="w">
 </pre></div>
 </div>
 <p>Example of usage:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-g<span class="w"> </span>../data/test_data.graphe
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>graph.py<span class="w"> </span>-g<span class="w"> </span>../../data/2phase/2D-testFiles/test_data.graphe
 </pre></div>
 </div>
 <dl>

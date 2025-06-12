@@ -56,7 +56,7 @@ To run memory tests, run the following command in the terminal:
 
 * Replace "n" with the size of the graph you want. **Note:** n should be between 1-1000 for 2D graphs and 1-100 for 3D graphs. Otherwise, the code will timeout.
 * Replace "dimension" with 2D or 3D specify if you want a 2D or 3D graph.
-* Replace "function" with either generage, filter, or shortest_path to choose which function you want to test memory for.
+* Replace "function" with either generate, filter, or shortest_path to choose which function you want to test memory for.
 
 Example:
 
@@ -147,7 +147,7 @@ The following will print when the report generation begins:
 Tortuosity HeatMap Visualization
 =======================================
 
-In folder tools, you find scrpts to visualize tortuosity:
+In folder tools, you find scripts to visualize tortuosity:
 
 .. code-block:: bash
 
@@ -157,7 +157,7 @@ In folder tools, you find scrpts to visualize tortuosity:
 
 .. code-block:: bash
 
-    python tortuosity.py ../../data/data/data_0.5_2.2_001900.txt
+    python tortuosity.py ../../data/2phase/2D-morphologies/data/data_0.5_2.2_001900.txt
 
 Jupyter NoteBook to Visualize HeatMap
 =========================================
@@ -174,24 +174,24 @@ Run jupyter notebook with following command:
 
     jupyter notebook
 
-Open up `tortuosity.ipynb` under the `py_graspi` directory.
+Open up `tortuosity.ipynb` under the `tools/tortuosity` directory.
 
 Example Visualization
 =========================================
 
 This section explains how to visualize a microscopy image by filtering both it's white and black vertices.
 
-Here, the image "mycelium.png" is from the folder py-graspi/data/images.
+Here, the image "mycelium.png" is from the folder data/2phase/2D-morphologies/images.
 
 .. code-block:: bash
 
-    python myceliumTest.py {pathname of image file} {Resize calculation amount}
+    python img_to_graph.py {pathname of image file} {Resize calculation amount}
 
 **Example:**
 
 .. code-block:: bash
 
-    python myceliumTest.py ../../data/images/data_0.5_2.2_001900.png 0.15
+    python img_to_graph.py ../../data/2phase/2D-morphologies/images/data_0.5_2.2_001900.png 0.15
 
 This creates a truncated version of the mycelium image (for runtime purposes) and outputs the largest subgraph of the following filtered graphs:
    1. The first one is a white only vertex graph

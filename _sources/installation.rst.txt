@@ -56,26 +56,26 @@ Note: You must have pip installed onto your system
 
 .. code-block:: bash
 
-   pip install -r src/requirements.txt
+   pip install -r requirements.txt
 
 4. Now you can create your project using the Py-Graspi API or run the high-throughput execution from the command line.
 
-In the folder py-graspi/tests, you can find the Python file tests.py that shows how to run them.
+In the folder py-graspi/tests, you can find the Python file generate_txt_pdf_info_of_descriptors.py that generates information about data.
 
-Note: You must have Python installed onto your system
+Note: You must have Python installed onto your system. To run generate_txt_pdf_info_of_descriptors.py, must be in the tests directory.
 
 
     a. To generate the txt files:
 
     .. code-block:: bash
 
-        python tests.py txt
+        python generate_txt_pdf_info_of_descriptors.py txt
 
     b. Or to generate pdf report:
 
     .. code-block:: bash
 
-        python tests.py pdf
+        python generate_txt_pdf_info_of_descriptors.py pdf
 
 
 Jupyter Notebook for Py-Graspi source code
@@ -103,7 +103,7 @@ Note: You must have Python installed on your system
 
 .. code-block:: bash
 
-   pip install -r src/requirements.txt
+   pip install -r requirements.txt
 
 4. Install jupyter notebook by running this command:
 
