@@ -229,6 +229,8 @@ def main():
     input_file = sys.argv[1]
     resize_factor = sys.argv[2]
     resize_factor = float(resize_factor)
+    resized_dir = "resized"
+    os.makedirs(resized_dir, exist_ok=True)
     translate.img_to_txt(input_file, resize_factor)
     txt_filename = "resized/resized_" + input_file[18:-4] + "_" + str(resize_factor) + "x.txt"
     print("creating graph")

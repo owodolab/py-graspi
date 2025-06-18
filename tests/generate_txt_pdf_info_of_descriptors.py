@@ -1,10 +1,9 @@
 import os
 import sys
-from fileinput import filename
 
-# sys.path.append(os.path.abspath('../tools/tortuosity'))
-
+sys.path.append(os.path.abspath('../tools/tortuosity'))
 import tortuosity_histogram as t
+
 sys.path.append(os.path.abspath('../src'))
 import py_graspi
 import fpdf
@@ -22,7 +21,6 @@ test_results_path = f"test_results/"
 image_path = f"{parent_dir}/data/2phase/2D-morphologies/images/"
 hist_path = f"{parent_dir}/data/2phase/2D-morphologies/histograms/"
 results_path = f"{parent_dir}/data/2phase/2D-morphologies/results/"
-
 
 test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path) if os.path.splitext(file)[0].count("_") == 3]
 epsilon = 1e-5
@@ -75,6 +73,8 @@ def main():
     parser.add_argument("file_type", choices=["txt", "pdf"])
     args = parser.parse_args()
 
+    for path in [test_results_path, hist_path, results_path]:
+        os.makedirs(path, exist_ok=True)
     """
     Checks if the user wants to generate the txt files or the pdf.
     """
@@ -199,10 +199,10 @@ def main():
     Outputs the generated pdf to the user.
     """
     if PDF:
-        pdf.output(f"{parent_dir}/data/2phase/2D-morphologies/test_results.pdf")
+        pdf.output(f"test_results.pdf")
         print("PDF Generated")
-        webbrowser.open_new_tab(f"{parent_dir}/data/2phase/2D-morphologies/test_results.pdf")
-    #result pdf in data/2phase/2D-morphologies/test_results.pdf
+        webbrowser.open_new_tab(f"test_results.pdf")
+    #result pdf in tests/
 
 if __name__ == "__main__":
     main()

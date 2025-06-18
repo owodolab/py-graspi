@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 sys.path.append(os.path.abspath('../../src'))
 from py_graspi import graph as ig
 
-
 def find_coords(filename):
     """
         find coordinates of file
@@ -116,8 +115,10 @@ def read_BTR_file_and_extract_numbers(base_filename):
             idOfPixelIn1DArray(list): list of id of pixel in 1D array
             tort(list): list of tortuosity, index matches that of idOfPixelIn1DArray
         """
-    base_filename = base_filename[16:-4]
-    file_path = f"../../data/2phase/2D-morphologies/distances/{base_filename}-IdTortuosityBlackToRed.txt"
+    base_filename = os.path.basename(base_filename)
+    base_filename = os.path.splitext(base_filename)[0]  # remove extension
+    #file_path = f"../../data/2phase/2D-morphologies/distances/{base_filename}-IdTortuosityBlackToRed.txt"
+    file_path = f"../../tests/test_results/{base_filename}_IdTortuosityBlackToRed.txt"
     idOfPixelIn1DArray = []
     tort = []
     # Open the file in read mode
@@ -145,10 +146,10 @@ def read_WTB_file_and_extract_numbers(base_filename):
             idOfPixelIn1DArray(list): list of id of pixel in 1D array
             tort(list): list of tortuosity, index matches that of idOfPixelIn1DArray
         """
-    base_filename = base_filename[16:-4]
-    file_path = f"../../data/2phase/2D-morphologies/distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
-    # base_filename = base_filename[5:-4]
-    # file_path = f"distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
+    base_filename = os.path.basename(base_filename)
+    base_filename = os.path.splitext(base_filename)[0]  # remove extension
+    #file_path = f"../../data/2phase/2D-morphologies/distances/{base_filename}-IdTortuosityWhiteToBlue.txt"
+    file_path = f"../../tests/test_results/{base_filename}_IdTortuosityWhiteToBlue.txt"
     idOfPixelIn1DArray = []
     tort = []
 
@@ -178,8 +179,6 @@ def main():
     # Delete them
     graph.delete_vertices(vertices_to_delete)
     graphData.graph = graph
-    # filename = filename[6:]
-    # print(filename)
     find_BTR_tortuosity(graphData.graph, graphData.is_2D, filename)
     find_WTB_tortuosity(graphData.graph, graphData.is_2D, filename)
 
