@@ -92,7 +92,7 @@ Py-GraSPI provide also tool to convert black and white image into txt file and r
 
 .. code-block:: bash
 
-    python img_to_txt.py ../../data/images/data_0.5_2.2_001900.png 0.15
+    python img_to_txt.py ../../data/2phase/2D-morphologies/data/images/data_0.5_2.2_001900.png 0.15
 
 2D & 3D Morphologies Tests
 ========================================

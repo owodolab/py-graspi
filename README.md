@@ -43,7 +43,7 @@ import py_graspi as ig
 Step 2: For a given morphology (in Graspi input format), generate graph and calculate descriptors
 
 ```python
-filename = "data/data_0.5_2.2_001900.txt"
+filename = "data/2phase/2D-morphologies/data/data_0.5_2.2_001900.txt"
 graph_data = ig.generateGraph(filename)
 descriptors_dict = ig.compute_descriptors(graph_data, filename)
 ```
@@ -75,18 +75,18 @@ Follow these steps to manually install the Py-Graspi package.
 
    **Note: You must have Python and pip installed onto your system**
    ```bash
-   pip install -r src/requirements.txt
+   pip install -r requirements.txt
    ```
    
 5. Now you can create your project using the [Py-Graspi API](https://owodolab.github.io/py-graspi/api_overview.html) or run the high-throughput execution from the command line.
    In the folder py-graspi/tests, you can find the Python file tests.py that shows how to run them.
    To generate the txt files:
    ```bash
-   python tests.py txt
+   python generate_txt_pdf_info_of_descriptors.py txt
    ```
    Or to generate pdf report:
    ```bash
-   python tests.py pdf
+   python generate_txt_pdf_info_of_descriptors.py pdf
    ```
 
 
@@ -102,8 +102,8 @@ python graph.py -a {total pathname of test file} -p {periodicity flag 0 or 1} -n
 For example:
 
 ```
-python graph.py -g ../data/test_data.graphe
-python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -p 0 -n 2
+python graph.py -g ../data/2phase/2D-testFiles/test_data.graphe
+python graph.py -a ../data/2phase/2D-testFiles/testFile-10-2D.txt -p 0 -n 2
 ```
 Several other options are available - see the documentation for more details
 
