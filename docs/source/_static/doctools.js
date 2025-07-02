@@ -143,7 +143,7 @@ const Documentation = {
   },
 };
 
-// quick alias for translations
+// quick alias for converters
 const _ = Documentation.gettext;
 
 _ready(Documentation.init);
