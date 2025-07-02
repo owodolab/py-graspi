@@ -1,6 +1,6 @@
-# Translations
+# Converters
 
-This directory contains tools to translate betweenn different data formats.
+This directory contains tools to convert between different data formats.
 
 ### img_to_graph.py
 This tool converts png images to graph based representation of the morphology. It also offers 
