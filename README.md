@@ -79,31 +79,33 @@ Follow these steps to manually install the Py-Graspi package.
    ```
    
 5. Now you can create your project using the [Py-Graspi API](https://owodolab.github.io/py-graspi/api_overview.html) or run the high-throughput execution from the command line.
-   In the folder py-graspi/tests, you can find the Python file tests.py that shows how to run them.
+   In the folder py-graspi/tests, you can find the Python file generate_report.py that shows how to run them.
    To generate the txt files:
    ```bash
-   python generate_txt_pdf_info_of_descriptors.py txt
+   python generate_report.py txt
    ```
    Or to generate pdf report:
    ```bash
-   python generate_txt_pdf_info_of_descriptors.py pdf
+   python generate_report.py pdf
    ```
 
 
 ## Script mode
 
 
-Two formats are accepted by the command line script (igraph_testing.py): txt (stores morphology as a vector in the row-wise notation) and graphe (internal graph format), see documentation for more details. The script can be executed with the following options:
+Two formats are accepted by the command line script (graph.py): txt (stores morphology as a vector in the row-wise notation) and graphe (internal graph format), see documentation for more details. 
+
+The script can be executed with the following options (assuming in the src/py_graspi directory):
   
 ````
-python py_graspi.py -g {total pathname of test file} 
+python graph.py -g {total pathname of test file} 
 python graph.py -a {total pathname of test file} -p {periodicity flag 0 or 1} -n {phase flag}
 ````
 For example:
 
 ```
-python graph.py -g ../data/2phase/2D-testFiles/test_data.graphe
-python graph.py -a ../data/2phase/2D-testFiles/testFile-10-2D.txt -p 0 -n 2
+python graph.py -g ../../data/2phase/2D-testFiles/test_data.graphe
+python graph.py -a ../../data/2phase/2D-testFiles/testFile-10-2D.txt -p 0 -n 2
 ```
 Several other options are available - see the documentation for more details
 
