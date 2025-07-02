@@ -5,19 +5,6 @@ Advanced
 ==============================================
 The Py-GraSPI package also included scripts with advanced functionality mostly for developers.
 
-User Functionality
-==================
-
-Visualize Graphs
-~~~~~~~~~~~~~~~~
-
-To visualize graphs, call the visualize(graph_data, is_2D) function.
-
-.. code-block:: python
-
-    # Visualize the graph (2D)
-    ig.visualize(graph_data, true)
-
 To Run on DEBUG mode
 =====================
 
