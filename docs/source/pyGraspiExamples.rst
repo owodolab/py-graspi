@@ -82,7 +82,7 @@ If data is structured (e.g., image), the following options are available
 
 This can be used with both the -p and -n flag, just one of the flags, or none of the flags.
 
-Examples of usage:
+Examples of usage (assuming in the src/py_graspi directory):
 
 .. code-block:: bash
 
@@ -109,7 +109,7 @@ If graph is constructed externally data can be inputted in the graph format, for
 
     python graph.py -g <INPUT_FILE.graphe> #Cannot use flags
 
-Example of usage:
+Example of usage (assuming in the src/py_graspi directory):
 
 .. code-block:: bash
 
