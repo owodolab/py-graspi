@@ -15,7 +15,7 @@
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=5929fcd5"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/doctools.js?v=dabd2559"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -58,14 +58,13 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#to-run-on-debug-mode">To Run on DEBUG mode</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#running-memory-tests">Running Memory Tests</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#translating-plt-files-to-txt-files">Translating .plt files to .txt files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#converting-plt-files-to-txt-files">Converting .plt files to .txt files</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#translate-image-file-into-rescaled-txt-file">Translate Image File Into Rescaled .txt File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-visualization">Example Visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#d-3d-morphologies-tests">2D &amp; 3D Morphologies Tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-py-graspi-on-the-library-of-morphologies">Running Py-GraSPI on the Library of Morphologies</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#tortuosity-heatmap-visualization">Tortuosity HeatMap Visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#jupyter-notebook-to-visualize-heatmap">Jupyter NoteBook to Visualize HeatMap</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#example-visualization">Example Visualization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#generate-api-documentation">Generate API Documentation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#update-py-pi-package">Update Py-Pi Package</a></li>
 </ul>
@@ -127,26 +126,9 @@
 </div>
 <p><strong>After setting the compilation mode to DEBUG mode, you can now run graph.py regularly through command line, which should print out debug statements to the terminal.</strong></p>
 </section>
-<section id="running-memory-tests">
-<h2>Running Memory Tests<a class="headerlink" href="#running-memory-tests" title="Link to this heading"></a></h2>
-<p>To run memory tests, run the following command in the terminal:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>main.py<span class="w"> </span>n<span class="w"> </span>dimension<span class="w"> </span><span class="k">function</span>
-</pre></div>
-</div>
-<p><strong>Make sure of the following:</strong></p>
-<ul class="simple">
-<li><p>Replace “n” with the size of the graph you want. <strong>Note:</strong> n should be between 1-1000 for 2D graphs and 1-100 for 3D graphs. Otherwise, the code will timeout.</p></li>
-<li><p>Replace “dimension” with 2D or 3D specify if you want a 2D or 3D graph.</p></li>
-<li><p>Replace “function” with either generate, filter, or shortest_path to choose which function you want to test memory for.</p></li>
-</ul>
-<p>Example:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>main.py<span class="w"> </span><span class="m">10</span><span class="w"> </span>2D<span class="w"> </span>generate
-</pre></div>
-</div>
-</section>
-<section id="translating-plt-files-to-txt-files">
-<h2>Translating .plt files to .txt files<a class="headerlink" href="#translating-plt-files-to-txt-files" title="Link to this heading"></a></h2>
-<p>Numerical simulations can be saved using .plt file. Py-GraSPI provides tool to convert the plt file into txt file - following array format, see syntax and the example below:</p>
+<section id="converting-plt-files-to-txt-files">
+<h2>Converting .plt files to .txt files<a class="headerlink" href="#converting-plt-files-to-txt-files" title="Link to this heading"></a></h2>
+<p>Numerical simulations can be saved using .plt file. Py-GraSPI provides tool to convert the plt file into txt file - following array format, see syntax and the example below (assuming in the tools/converters directory):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>plt_to_txt.py<span class="w"> </span><span class="o">[</span>pathname<span class="o">]</span>
 </pre></div>
 </div>
@@ -157,14 +139,33 @@
 </section>
 <section id="translate-image-file-into-rescaled-txt-file">
 <h2>Translate Image File Into Rescaled .txt File<a class="headerlink" href="#translate-image-file-into-rescaled-txt-file" title="Link to this heading"></a></h2>
-<p>Py-GraSPI provide also tool to convert black and white image into txt file and rescale it with assumed ratio (provided as fraction, e.g., 0.5). See syntax and the example:</p>
+<p>Py-GraSPI provide also tool to convert black and white image into txt file and rescale it with assumed ratio (provided as fraction, e.g., 0.5). See syntax and the example (assuming in the tools/converters directory):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>img_to_txt.py<span class="w"> </span><span class="o">{</span>pathname<span class="w"> </span>of<span class="w"> </span>image<span class="w"> </span>file<span class="o">}</span><span class="w"> </span><span class="o">{</span>Resize<span class="w"> </span>calculation<span class="w"> </span>amount<span class="o">}</span>
 </pre></div>
 </div>
 <p><strong>Example:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>img_to_txt.py<span class="w"> </span>../../data/images/data_0.5_2.2_001900.png<span class="w"> </span><span class="m">0</span>.15
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>img_to_txt.py<span class="w"> </span>../../data/2phase/2D-morphologies/data/images/data_0.5_2.2_001900.png<span class="w"> </span><span class="m">0</span>.15
 </pre></div>
 </div>
+</section>
+<section id="example-visualization">
+<h2>Example Visualization<a class="headerlink" href="#example-visualization" title="Link to this heading"></a></h2>
+<p>This section explains how to visualize a microscopy image by filtering both it’s white and black vertices. The tool converts from image to graph.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>img_to_graph.py<span class="w"> </span><span class="o">{</span>pathname<span class="w"> </span>of<span class="w"> </span>image<span class="w"> </span>file<span class="o">}</span><span class="w"> </span><span class="o">{</span>Resize<span class="w"> </span>calculation<span class="w"> </span>amount<span class="o">}</span>
+</pre></div>
+</div>
+<p><strong>Example:</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>img_to_graph.py<span class="w"> </span>../../data/2phase/2D-morphologies/images/data_0.5_2.2_001900.png<span class="w"> </span><span class="m">0</span>.15
+</pre></div>
+</div>
+<dl class="simple">
+<dt>This creates a truncated version of the mycelium image (for runtime purposes) and outputs the largest subgraph of the following filtered graphs:</dt><dd><ol class="arabic simple">
+<li><p>The first one is a white only vertex graph</p></li>
+<li><p>The second one is a black only vertex graph.</p></li>
+</ol>
+</dd>
+</dl>
+<p>You can interact with the plots to find the appropriate visualization.</p>
 </section>
 <section id="d-3d-morphologies-tests">
 <h2>2D &amp; 3D Morphologies Tests<a class="headerlink" href="#d-3d-morphologies-tests" title="Link to this heading"></a></h2>
@@ -224,26 +225,6 @@ The following will print when the report generation begins:</p>
 </pre></div>
 </div>
 <p>Open up <cite>tortuosity.ipynb</cite> under the <cite>tools/tortuosity</cite> directory.</p>
-</section>
-<section id="example-visualization">
-<h2>Example Visualization<a class="headerlink" href="#example-visualization" title="Link to this heading"></a></h2>
-<p>This section explains how to visualize a microscopy image by filtering both it’s white and black vertices.</p>
-<p>Here, the image “mycelium.png” is from the folder data/2phase/2D-morphologies/images.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>img_to_graph.py<span class="w"> </span><span class="o">{</span>pathname<span class="w"> </span>of<span class="w"> </span>image<span class="w"> </span>file<span class="o">}</span><span class="w"> </span><span class="o">{</span>Resize<span class="w"> </span>calculation<span class="w"> </span>amount<span class="o">}</span>
-</pre></div>
-</div>
-<p><strong>Example:</strong></p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>img_to_graph.py<span class="w"> </span>../../data/2phase/2D-morphologies/images/data_0.5_2.2_001900.png<span class="w"> </span><span class="m">0</span>.15
-</pre></div>
-</div>
-<dl class="simple">
-<dt>This creates a truncated version of the mycelium image (for runtime purposes) and outputs the largest subgraph of the following filtered graphs:</dt><dd><ol class="arabic simple">
-<li><p>The first one is a white only vertex graph</p></li>
-<li><p>The second one is a black only vertex graph.</p></li>
-</ol>
-</dd>
-</dl>
-<p>You can interact with the plots to find the appropriate visualization.</p>
 </section>
 <section id="generate-api-documentation">
 <h2>Generate API Documentation<a class="headerlink" href="#generate-api-documentation" title="Link to this heading"></a></h2>
