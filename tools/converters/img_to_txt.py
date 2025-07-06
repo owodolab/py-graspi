@@ -1,4 +1,5 @@
 import sys
+import os
 from logging import DEBUG
 
 from PIL import Image
@@ -26,14 +27,20 @@ def img_to_txt(imageFile, resizeFactor, threshold=127.5):
     dimX = numpyData.shape[1]
 
     # Extract base file name from the image path
-    partOutfile = imageFile.split("/")[-1].split(".")[0]  # Get filename without extension
+    partOutfile = os.path.splitext(os.path.basename(imageFile))[0]  # Get filename without extension
+
+    # Ensure 'resized/' directory exists
+    output_dir = "resized"
+    os.makedirs(output_dir, exist_ok=True)
+
+    newFilename = f"{partOutfile}_{resizeFactor:.2f}x"
+    image_outfile = os.path.join(output_dir, f"{newFilename}.png")
+    text_outfile = os.path.join(output_dir, f"{newFilename}.txt")
 
     # Resize original image
     new_image = image.resize((int(dimX * resizeFactor), int(dimY * resizeFactor)))
-    new_image.save(f"{partOutfile}.png")  # Save resized image with correct name
-
-    image2 = Image.open(f"{partOutfile}.png").convert('L')
-
+    new_image.save(image_outfile)
+    image2 = Image.open(image_outfile).convert('L')
     # Process resized image into numpy array
     numpyData2 = np.asarray(image2)
     dimX = numpyData2.shape[1]
@@ -41,11 +48,9 @@ def img_to_txt(imageFile, resizeFactor, threshold=127.5):
 
     # Convert to boolean numpy array using the threshold
     bool_array = numpyData2 > threshold
-    print(bool_array)
 
     # Save the array as a text file
-    outfile = f"{partOutfile}.txt"
-    with open(outfile, "w") as file:
+    with open(text_outfile, "w") as file:
         file.write(f"{dimX} {dimY}\n")
         for row in bool_array:
             file.write(" ".join(['1' if col else '0' for col in row]) + "\n")

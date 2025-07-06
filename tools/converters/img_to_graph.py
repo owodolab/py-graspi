@@ -232,12 +232,13 @@ def main():
     resized_dir = "resized"
     os.makedirs(resized_dir, exist_ok=True)
     translate.img_to_txt(input_file, resize_factor)
-    txt_filename = "resized/resized_" + input_file[18:-4] + "_" + str(resize_factor) + "x.txt"
+    base_filename = os.path.splitext(os.path.basename(input_file))[0]
+    txt_filename = f"resized/{base_filename}_{resize_factor:.2f}x.txt"
     print("creating graph")
     graph_data = ig.generateGraphAdj(txt_filename)
 
     print("graph created")
-    print("filtering graph)")
+    print("filtering graph")
     whiteFilteredGraph = filter_white_vertices(graph_data.graph)
     lWhiteSubGraph = get_largest_subgraph(whiteFilteredGraph)
     print("graph filtered")
