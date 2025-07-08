@@ -65,8 +65,8 @@ def compute_descriptors(graph_data, filename,pixelSize=1):
     tracemalloc.stop()
     stats = stats[1] - stats[0]
     total_time = end - start
-    descriptors_dict["time"] = total_time
-    descriptors_dict["mem"] = stats
+    descriptors_dict["time_in_seconds"] = total_time
+    descriptors_dict["mem_in_kb"] = stats / 1024
 
     return descriptors_dict
 
