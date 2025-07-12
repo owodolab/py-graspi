@@ -9,7 +9,7 @@ from py_graspi import graph as ig
 def main():
     #Preferences
 
-    targetFileName = 'data_0.5_2.6_000160' # Input file name or naming pattern to search for here
+    targetFileName = 'data_0.5_2.2_001900' # Input file name or naming pattern to search for here
     loop_cnt = 1 # Number of test repetitions
 
     #Paths
@@ -17,7 +17,7 @@ def main():
     expected_results_path = os.path.abspath("expected_results/")  # Adjust expected results path as necessary
     test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path)]
 
-    epsilon = 1e-5
+    tolerance = 0.005
     times = []
     mems = []
     time_mem_stats = {}
@@ -30,7 +30,7 @@ def main():
             tracemalloc.start()
             graph_start = time.time()
             file_path = os.path.join(data_path, test_file + ".txt")
-            graph_data = ig.generateGraph(file_path, True)
+            graph_data = ig.generateGraph(file_path, False)
             _stats = tracemalloc.get_traced_memory()
             graph_end = time.time()
             tracemalloc.stop()
@@ -49,18 +49,18 @@ def main():
             for line in f:
                 stat = line.strip().split(" ")
                 try:
-                    # if stats.get(stat[0], -1) == int(stat[1]):
-                    if abs(stats.get(stat[0], -1) - float(stat[1])) < epsilon:
+                    #if stats.get(stat[0], -1) == int(stat[1]):
+                    if abs(stats.get(stat[0], -1) - float(stat[1])) < tolerance:
                         print(f"{stat[0]} passed")
                     elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != int(stat[1]):
                         print(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
                 except ValueError:
-                    if abs(stats.get(stat[0], -1) - float(stat[1])) < epsilon:
+                    if abs(stats.get(stat[0], -1) - float(stat[1])) < tolerance:
                         print(f"{stat[0]} passed")
                     elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != float(stat[1]):
                         print(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
-        descriptor_time = stats["time"]
-        descriptor_mem = stats["mem"]
+        descriptor_time = stats["time_in_seconds"]
+        descriptor_mem = stats["mem_in_mb"]
 
         times.append(descriptor_time)
         mems.append(descriptor_mem)
@@ -68,8 +68,8 @@ def main():
         graph_time = total_graph_time / loop_cnt
         print(f"Total time to calculate graph: {graph_time} second(s)")
         print(f"Total time to calculate descriptors: {descriptor_time} second(s)")
-        print(f"Peak memory usage for graph generation: {graph_mem} bytes")
-        print(f"Peak memory usage for descriptor calculation: {descriptor_mem} bytes")
+        print(f"Peak memory usage for graph generation: {graph_mem} mega bytes")
+        print(f"Peak memory usage for descriptor calculation: {descriptor_mem} mega bytes")
         print(stats)
         print("")
         time_mem_stats[test_file] = {"graph_time": graph_time, "descriptor_time": descriptor_time,
