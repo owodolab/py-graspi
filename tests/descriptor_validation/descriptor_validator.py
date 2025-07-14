@@ -66,10 +66,10 @@ def main():
         mems.append(descriptor_mem)
 
         graph_time = total_graph_time / loop_cnt
-        print(f"Total time to calculate graph: {graph_time} second(s)")
-        print(f"Total time to calculate descriptors: {descriptor_time} second(s)")
-        print(f"Peak memory usage for graph generation: {graph_mem} mega bytes")
-        print(f"Peak memory usage for descriptor calculation: {descriptor_mem} mega bytes")
+        print(f"Total time to calculate graph: {graph_time:.2f} second(s)")
+        print(f"Total time to calculate descriptors: {descriptor_time:.2f} second(s)")
+        print(f"Peak memory usage for graph generation: {graph_mem / (1024 * 1024):.2f} MB")
+        print(f"Peak memory usage for descriptor calculation: {descriptor_mem:.2f} MB")
         print(stats)
         print("")
         time_mem_stats[test_file] = {"graph_time": graph_time, "descriptor_time": descriptor_time,
