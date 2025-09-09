@@ -39,7 +39,7 @@ Step 2: For a given morphology (in Graspi input format), generate graph and calc
 
 .. code-block:: python
 
-    filename = "data/data_0.5_2.2_001900.txt"
+    filename = "data/2phase/2D-morphologies/data_0.5_2.2_001900.txt"
     graph_data = ig.generateGraph(filename)
     descriptors_dict = ig.compute_descriptors(graph_data, filename)
 
@@ -61,7 +61,7 @@ The user can use Py-GraSPI from the command line. To begin, ensure that the envi
 
 .. code-block:: bash
 
-    cd src #Starting at the root directory, cd into the src directory
+    cd src/py_graspi #Starting at the root directory (py-graspi), cd into the py_graspi directory
 
 To learn the formatting of the command line arguments, the user is encouraged to run
 
@@ -82,17 +82,17 @@ If data is structured (e.g., image), the following options are available
 
 This can be used with both the -p and -n flag, just one of the flags, or none of the flags.
 
-Examples of usage:
+Examples of usage (assuming in the src/py_graspi directory):
 
 .. code-block:: bash
 
-    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -s 1 -p 0 -n 2 #All flags- Pixel size, Periodicity and Phase flags
-    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -p 0 -n 2 #Periodicity and Phase flag
-    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -s 1 -p 0 #Pixel size and Periodicity flag
-    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -s 1 #Only pixel size flag
-    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -p 1 #Only periodicity flag
-    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt -n 3 #Only phase flag
-    python graph.py -a ../data/2D-testFile/testFile-10-2D.txt #No flag (Pixel size default = 1, Periodicity default = 0, Phase default = 2)
+    python graph.py -a ../../data/2phase/2D-testFiles/testFile-10-2D.txt -s 1 -p 0 -n 2 #All flags- Pixel size, Periodicity and Phase flags
+    python graph.py -a ../../data/2phase/2D-testFiles/testFile-10-2D.txt -p 0 -n 2 #Periodicity and Phase flag
+    python graph.py -a ../../data/2phase/2D-testFiles/testFile-10-2D.txt -s 1 -p 0 #Pixel size and Periodicity flag
+    python graph.py -a ../../data/2phase/2D-testFiles/testFile-10-2D.txt -s 1 #Only pixel size flag
+    python graph.py -a ../../data/2phase/2D-testFiles/testFile-10-2D.txt -p 1 #Only periodicity flag
+    python graph.py -a ../../data/2phase/2D-testFiles/testFile-10-2D.txt -n 3 #Only phase flag
+    python graph.py -a ../../data/2phase/2D-testFiles/testFile-10-2D.txt #No flag (Pixel size default = 1, Periodicity default = 0, Phase default = 2)
 
 Example output when testing .txt with periodicity flag = 1
     .. image:: imgs/periodicity.png
@@ -109,11 +109,11 @@ If graph is constructed externally data can be inputted in the graph format, for
 
     python graph.py -g <INPUT_FILE.graphe> #Cannot use flags
 
-Example of usage:
+Example of usage (assuming in the src/py_graspi directory):
 
 .. code-block:: bash
 
-    python graph.py -g ../data/test_data.graphe
+    python graph.py -g ../../data/2phase/2D-testFiles/test_data.graphe
 
 Example output when testing .graphe file
     .. image:: imgs/graphe.png

@@ -5,19 +5,6 @@ Advanced
 ==============================================
 The Py-GraSPI package also included scripts with advanced functionality mostly for developers.
 
-User Functionality
-==================
-
-Visualize Graphs
-~~~~~~~~~~~~~~~~
-
-To visualize graphs, call the visualize(graph_data, is_2D) function.
-
-.. code-block:: python
-
-    # Visualize the graph (2D)
-    ig.visualize(graph_data, true)
-
 To Run on DEBUG mode
 =====================
 
@@ -43,31 +30,10 @@ If on MacOS/Linux
 
 **After setting the compilation mode to DEBUG mode, you can now run graph.py regularly through command line, which should print out debug statements to the terminal.**
 
-Running Memory Tests
-=====================
-
-To run memory tests, run the following command in the terminal:
-
-.. code-block:: bash
-
-    python main.py n dimension function
-
-**Make sure of the following:**
-
-* Replace "n" with the size of the graph you want. **Note:** n should be between 1-1000 for 2D graphs and 1-100 for 3D graphs. Otherwise, the code will timeout.
-* Replace "dimension" with 2D or 3D specify if you want a 2D or 3D graph.
-* Replace "function" with either generage, filter, or shortest_path to choose which function you want to test memory for.
-
-Example:
-
-.. code-block:: bash
-
-    python main.py 10 2D generate
-
-Translating .plt files to .txt files
+Converting .plt files to .txt files
 ========================================
 
-Numerical simulations can be saved using .plt file. Py-GraSPI provides tool to convert the plt file into txt file - following array format, see syntax and the example below:
+Numerical simulations can be saved using .plt file. Py-GraSPI provides tool to convert the plt file into txt file - following array format, see syntax and the example below (assuming in the tools/converters directory):
 
 .. code-block:: bash
 
@@ -82,7 +48,7 @@ Numerical simulations can be saved using .plt file. Py-GraSPI provides tool to c
 Translate Image File Into Rescaled .txt File
 ==========================================================
 
-Py-GraSPI provide also tool to convert black and white image into txt file and rescale it with assumed ratio (provided as fraction, e.g., 0.5). See syntax and the example:
+Py-GraSPI provide also tool to convert black and white image into txt file and rescale it with assumed ratio (provided as fraction, e.g., 0.5). See syntax and the example (assuming in the tools/converters directory):
 
 .. code-block:: bash
 
@@ -92,7 +58,28 @@ Py-GraSPI provide also tool to convert black and white image into txt file and r
 
 .. code-block:: bash
 
-    python img_to_txt.py ../../data/images/data_0.5_2.2_001900.png 0.15
+    python img_to_txt.py ../../data/2phase/2D-morphologies/images/data_0.5_2.2_001900.png 0.15
+
+Example Visualization
+=========================================
+
+This section explains how to visualize a microscopy image by filtering both it's white and black vertices. The tool converts from image to graph.
+
+.. code-block:: bash
+
+    python img_to_graph.py {pathname of image file} {Resize calculation amount}
+
+**Example:**
+
+.. code-block:: bash
+
+    python img_to_graph.py ../../data/2phase/2D-morphologies/images/data_0.5_2.2_001900.png 0.15
+
+This creates a truncated version of the mycelium image (for runtime purposes) and outputs the largest subgraph of the following filtered graphs:
+   1. The first one is a white only vertex graph
+   2. The second one is a black only vertex graph.
+
+You can interact with the plots to find the appropriate visualization.
 
 2D & 3D Morphologies Tests
 ========================================
@@ -147,7 +134,7 @@ The following will print when the report generation begins:
 Tortuosity HeatMap Visualization
 =======================================
 
-In folder tools, you find scrpts to visualize tortuosity:
+In folder tools, you find scripts to visualize tortuosity:
 
 .. code-block:: bash
 
@@ -157,7 +144,7 @@ In folder tools, you find scrpts to visualize tortuosity:
 
 .. code-block:: bash
 
-    python tortuosity.py ../../data/data/data_0.5_2.2_001900.txt
+    python tortuosity.py ../../data/2phase/2D-morphologies/data/data_0.5_2.2_001900.txt
 
 Jupyter NoteBook to Visualize HeatMap
 =========================================
@@ -174,30 +161,7 @@ Run jupyter notebook with following command:
 
     jupyter notebook
 
-Open up `tortuosity.ipynb` under the `py_graspi` directory.
-
-Example Visualization
-=========================================
-
-This section explains how to visualize a microscopy image by filtering both it's white and black vertices.
-
-Here, the image "mycelium.png" is from the folder py-graspi/data/images.
-
-.. code-block:: bash
-
-    python myceliumTest.py {pathname of image file} {Resize calculation amount}
-
-**Example:**
-
-.. code-block:: bash
-
-    python myceliumTest.py ../../data/images/data_0.5_2.2_001900.png 0.15
-
-This creates a truncated version of the mycelium image (for runtime purposes) and outputs the largest subgraph of the following filtered graphs:
-   1. The first one is a white only vertex graph
-   2. The second one is a black only vertex graph.
-
-You can interact with the plots to find the appropriate visualization.
+Open up `tortuosity.ipynb` under the `tools/tortuosity` directory.
 
 Generate API Documentation
 ==============================

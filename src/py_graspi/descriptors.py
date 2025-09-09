@@ -4,6 +4,8 @@ import os
 import numpy as np
 from py_graspi import graph as ig
 from py_graspi import graph_data_class as GraphData
+import time
+import tracemalloc
 
 
 def compute_descriptors(graph_data, filename,pixelSize=1):
@@ -22,6 +24,9 @@ def compute_descriptors(graph_data, filename,pixelSize=1):
     """
 
     descriptors_dict = {}
+
+    start = time.time()
+    tracemalloc.start()
 
     STAT_n_D = len(graph_data.black_vertices)
     STAT_n_A = len(graph_data.white_vertices)
@@ -54,6 +59,14 @@ def compute_descriptors(graph_data, filename,pixelSize=1):
     descriptors_dict["CT_n_A_adj_Ca"] = graph_data.CT_n_A_adj_Ca
     descriptors_dict["CT_f_D_tort1"] = graph_data.CT_f_D_tort1
     descriptors_dict["CT_f_A_tort1"] = graph_data.CT_f_A_tort1
+
+    stats = tracemalloc.get_traced_memory()
+    end = time.time()
+    tracemalloc.stop()
+    stats = stats[1] - stats[0]
+    total_time = end - start
+    descriptors_dict["time_in_seconds"] = total_time
+    descriptors_dict["mem_in_mb"] = stats / (1024 * 1024)
 
     return descriptors_dict
 
