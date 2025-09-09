@@ -99,7 +99,7 @@ The script can be executed with the following options (assuming in the src/py_gr
   
 ````
 python graph.py -g {total pathname of test file} 
-python graph.py -a {total pathname of test file} -p {periodicity flag 0 or 1} -n {phase flag}
+python graph.py -a {total pathname of test file} -p {periodicity flag 0 or 1} -n {number of phases}
 ````
 For example:
 
@@ -109,14 +109,14 @@ python graph.py -a ../../data/2phase/2D-testFiles/testFile-10-2D.txt -p 0 -n 2
 ```
 Several other options are available - see the documentation for more details
 
-  
+ <!-- 
 ## Short videos for Py-Graspi Installation, Notebook Setup, and Testing via Command Line
 Please visit this link: https://drive.google.com/drive/folders/1AECLQXII4kmcBiQuN86RUYXvJG_F9MMq?usp=sharing
 ### Videos
 * **py_graspi_installation**: How to install Py-Graspi and run basic commands.
 * **py_graspi_notebook**: How to utilize our prebuilt notebook to run basic commands of Py-Graspi.
 * **py_graspi_command_line**: How to print out Py-Graspi's calculations of connected components, descriptors, visualizations of the graph, etc, of provided input files via command line.
-
+-->
 # Authors
 - **Olga Wodo** – University at Buffalo  
 - **Baskar Ganapathysubramanian** – Iowa State University  
