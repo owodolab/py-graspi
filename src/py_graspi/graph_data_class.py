@@ -10,6 +10,7 @@ class graph_data_class:
 
         - **black_vertices** (*list*): A list to store black vertices in the graph.
         - **white_vertices** (*list*): A list to store white vertices in the graph.
+        - **gray_vertices** (*list*): A list to store grey vertices in the graph.
         - **shortest_path_to_red** (*Optional[list]*): Stores the shortest path to the red vertex.
         - **shortest_path_to_blue** (*Optional[list]*): Stores the shortest path to the blue vertex.
 
@@ -58,6 +59,7 @@ class graph_data_class:
         # Store vertex-based attributes
         self.black_vertices = []
         self.white_vertices = []
+        self.gray_vertices = []
         self.shortest_path_to_red = None
         self.shortest_path_to_blue = None
 
