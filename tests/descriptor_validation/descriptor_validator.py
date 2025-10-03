@@ -9,11 +9,11 @@ from py_graspi import graph as ig
 def main():
     #Preferences
 
-    targetFileName = 'data_0.5_2.2_001900' # Input file name or naming pattern to search for here
+    targetFileName = '10x10_testing' # Input file name or naming pattern to search for here
     loop_cnt = 1 # Number of test repetitions
 
     #Paths
-    data_path = os.path.abspath("../../data/2phase/2D-morphologies/data/")  # Adjust data path as necessary
+    data_path = os.path.abspath("test_file")  # Adjust data path as necessary
     expected_results_path = os.path.abspath("expected_results/")  # Adjust expected results path as necessary
     test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path)]
 
@@ -30,12 +30,12 @@ def main():
             tracemalloc.start()
             graph_start = time.time()
             file_path = os.path.join(data_path, test_file + ".txt")
-            graph_data = ig.generateGraph(file_path, False)
+            graph_data = ig.generateGraph(file_path, False) #changed to 3 to signal 3 phase
             _stats = tracemalloc.get_traced_memory()
             graph_end = time.time()
             tracemalloc.stop()
             graph_mem = _stats[1] - _stats[0]
-            stats = ds.compute_descriptors(graph_data, file_path)
+            stats = ds.compute_descriptors(graph_data, file_path, 1)  #changed to 3 to signal 3 phase
             total_graph_time += graph_end - graph_start
 
         print(f"\n{test_file} Results")
@@ -49,8 +49,8 @@ def main():
             for line in f:
                 stat = line.strip().split(" ")
                 try:
-                    #if stats.get(stat[0], -1) == int(stat[1]):
-                    if abs(stats.get(stat[0], -1) - float(stat[1])) < tolerance:
+                    if stats.get(stat[0], -1) == int(stat[1]):
+                    #if abs(stats.get(stat[0], -1) - float(stat[1])) < tolerance:
                         print(f"{stat[0]} passed")
                     elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != int(stat[1]):
                         print(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
