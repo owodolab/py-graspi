@@ -8,7 +8,7 @@ import time
 import tracemalloc
 
 
-def compute_descriptors(graph_data, filename,pixelSize=1):
+def compute_descriptors(graph_data, filename,pixelSize=1,n_flag = 2):
     """
     This function computes all the descriptors for the graph given and saves them  in a dictionary.
 
@@ -28,37 +28,66 @@ def compute_descriptors(graph_data, filename,pixelSize=1):
     start = time.time()
     tracemalloc.start()
 
-    STAT_n_D = len(graph_data.black_vertices)
-    STAT_n_A = len(graph_data.white_vertices)
-    graph_data.STAT_n_D = STAT_n_D
-    graph_data.STAT_n_A = STAT_n_A
-    graph_data = CC_descriptors(graph_data)
+    if n_flag == 2: #Active 2 phase mode
+        STAT_n_D = len(graph_data.black_vertices)
+        STAT_n_A = len(graph_data.white_vertices)
+        graph_data.STAT_n_D = STAT_n_D
+        graph_data.STAT_n_A = STAT_n_A
+        graph_data = CC_descriptors(graph_data)
 
-    # shortest path descriptors
-    graph_data = shortest_path_descriptors(graph_data, filename, pixelSize)
+        # shortest path descriptors
+        graph_data = shortest_path_descriptors(graph_data, filename, pixelSize)
 
-    descriptors_dict["STAT_n"] =  graph_data.STAT_n_A + graph_data.STAT_n_D
-    descriptors_dict["STAT_e"] = graph_data.black_green
-    descriptors_dict["STAT_n_D"] = graph_data.STAT_n_D
-    descriptors_dict["STAT_n_A"] = graph_data.STAT_n_A
-    descriptors_dict["STAT_CC_D"] = graph_data.STAT_CC_D
-    descriptors_dict["STAT_CC_A"] = graph_data.STAT_CC_A
-    descriptors_dict["STAT_CC_D_An"] = graph_data.STAT_CC_D_An
-    descriptors_dict["STAT_CC_A_Ca"] = graph_data.STAT_CC_A_Ca
-    descriptors_dict['ABS_wf_D'] = graph_data.ABS_wf_D
-    descriptors_dict["ABS_f_D"] = float(graph_data.STAT_n_D / (graph_data.STAT_n_D + graph_data.STAT_n_A))
-    descriptors_dict["DISS_f10_D"] = graph_data.DISS_f10_D
-    descriptors_dict["DISS_wf10_D"] = graph_data.DISS_wf10_D
-    descriptors_dict["CT_f_e_conn"] = float(graph_data.interface_edge_comp_paths / graph_data.black_green)
-    descriptors_dict["CT_f_conn_D_An"] = graph_data.CT_f_conn_D_An
-    descriptors_dict["CT_f_conn_A_Ca"] = graph_data.CT_f_conn_A_Ca
-    descriptors_dict["CT_e_conn"] = graph_data.interface_edge_comp_paths
-    descriptors_dict["CT_e_D_An"] = graph_data.black_interface_red
-    descriptors_dict["CT_e_A_Ca"] = graph_data.white_interface_blue
-    descriptors_dict["CT_n_D_adj_An"] = graph_data.CT_n_D_adj_An
-    descriptors_dict["CT_n_A_adj_Ca"] = graph_data.CT_n_A_adj_Ca
-    descriptors_dict["CT_f_D_tort1"] = graph_data.CT_f_D_tort1
-    descriptors_dict["CT_f_A_tort1"] = graph_data.CT_f_A_tort1
+        descriptors_dict["STAT_n"] =  graph_data.STAT_n_A + graph_data.STAT_n_D
+        descriptors_dict["STAT_e"] = graph_data.black_green
+        descriptors_dict["STAT_n_D"] = graph_data.STAT_n_D
+        descriptors_dict["STAT_n_A"] = graph_data.STAT_n_A
+        descriptors_dict["STAT_CC_D"] = graph_data.STAT_CC_D
+        descriptors_dict["STAT_CC_A"] = graph_data.STAT_CC_A
+        descriptors_dict["STAT_CC_D_An"] = graph_data.STAT_CC_D_An
+        descriptors_dict["STAT_CC_A_Ca"] = graph_data.STAT_CC_A_Ca
+        descriptors_dict['ABS_wf_D'] = graph_data.ABS_wf_D
+        descriptors_dict["ABS_f_D"] = float(graph_data.STAT_n_D / (graph_data.STAT_n_D + graph_data.STAT_n_A))
+        descriptors_dict["DISS_f10_D"] = graph_data.DISS_f10_D
+        descriptors_dict["DISS_wf10_D"] = graph_data.DISS_wf10_D
+        descriptors_dict["CT_f_e_conn"] = float(graph_data.interface_edge_comp_paths / graph_data.black_green)
+        descriptors_dict["CT_f_conn_D_An"] = graph_data.CT_f_conn_D_An
+        descriptors_dict["CT_f_conn_A_Ca"] = graph_data.CT_f_conn_A_Ca
+        descriptors_dict["CT_e_conn"] = graph_data.interface_edge_comp_paths
+        descriptors_dict["CT_e_D_An"] = graph_data.black_interface_red
+        descriptors_dict["CT_e_A_Ca"] = graph_data.white_interface_blue
+        descriptors_dict["CT_n_D_adj_An"] = graph_data.CT_n_D_adj_An
+        descriptors_dict["CT_n_A_adj_Ca"] = graph_data.CT_n_A_adj_Ca
+        descriptors_dict["CT_f_D_tort1"] = graph_data.CT_f_D_tort1
+        descriptors_dict["CT_f_A_tort1"] = graph_data.CT_f_A_tort1
+
+    else: #Activate 3 phase mode
+        STAT_n_D = len(graph_data.black_vertices)
+        STAT_n_A = len(graph_data.white_vertices)
+        graph_data.STAT_n_D = STAT_n_D
+        graph_data.STAT_n_A = STAT_n_A
+
+        # connected component descriptors TO DO fix up for 3 phase
+        graph_data = CC_descriptors(graph_data)
+
+        # shortest path descriptors TO DO fix up for 3 phase
+        graph_data = shortest_path_descriptors(graph_data, filename, pixelSize)
+
+        descriptors_dict['ABS_wf_D'] = graph_data.ABS_wf_D #from shortest_path descriptors
+        descriptors_dict["DISS_wf10_D"] = graph_data.DISS_wf10_D #from shortest_path descriptors
+        descriptors_dict["DISS_f10_D"] = graph_data.DISS_f10_D
+        #[F DISS] Weighted fraction of grey vertices in 10 distance to grey-white interface TO DO implement this
+        #[F DISS] Fraction of grey vertices in 10 distance to grey-white interface TO DO implement this
+        descriptors_dict["STAT_e"] = graph_data.black_green
+        descriptors_dict["CT_e_conn"] = graph_data.interface_edge_comp_paths
+        descriptors_dict["CT_f_e_conn"] = float(graph_data.interface_edge_comp_paths / graph_data.black_green)
+        descriptors_dict["CT_e_D_An"] = graph_data.black_interface_red
+        descriptors_dict["CT_e_A_Ca"] = graph_data.white_interface_blue
+        descriptors_dict["CT_f_D_tort1"] = graph_data.CT_f_D_tort1
+        descriptors_dict["CT_f_A_tort1"] = graph_data.CT_f_A_tort1
+        #[F CT] Fraction of grey vertices with straight rising paths to top (t=1) TO DO implement this
+        #[F CT] Fraction of grey vertices with straight rising paths to bottom (t=1) TO DO implement this
+
 
     stats = tracemalloc.get_traced_memory()
     end = time.time()
@@ -187,6 +216,7 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
     graph = graph_data.graph
     black_vertices = graph_data.black_vertices
     white_vertices = graph_data.white_vertices
+    gray_vertices = graph_data.gray_vertices
     dim = graph_data.dim
     countBlack_Red_conn = graph_data.countBlack_Red_conn
     countWhite_Blue_conn = graph_data.countWhite_Blue_conn
@@ -199,12 +229,10 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
     blueVertex = (graph.vs.select(color = 'blue')[0]).index
 
     distances = fg_green.shortest_paths(source=greenVertex, weights=fg_green.es["weight"])[0]
+    black_red_unfiltered_distance = fg_red_unfiltered.shortest_paths(source=redVertex, weights=fg_red_unfiltered.es['weight'])[0]
 
     black_tor_distances = fg_red.shortest_paths(source=redVertex, weights=fg_red.es["weight"])[0]
     white_tor_distances = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
-
-    black_red_unfiltered_distance = \
-    fg_red_unfiltered.shortest_paths(source=redVertex, weights=fg_red_unfiltered.es['weight'])[0]
 
     # Apply pixelSize only where needed
     distances = [d * pixelSize for d in distances]  # For DISS_f10_D and DISS_wf10_D
@@ -218,6 +246,7 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
 
     totalBlacks = len(black_vertices)
     totalWhite = len(white_vertices)
+    totalGray = len(gray_vertices)
 
     filename = filename.split('.txt')[0]
 
@@ -327,8 +356,8 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
         graph_data.CT_f_D_tort1 = float(black_tor / countBlack_Red_conn)
     if countWhite_Blue_conn != 0:
        graph_data.CT_f_A_tort1 = float(white_tor / countWhite_Blue_conn)
-    if totalBlacks + totalWhite != 0:
-        graph_data.ABS_wf_D = float(total_weighted_black_red / (totalBlacks + totalWhite))
+    if totalBlacks + totalWhite + totalGray != 0:
+        graph_data.ABS_wf_D = float(total_weighted_black_red / (totalBlacks + totalWhite + totalGray))
     return graph_data
 
 '''--------------- Shortest Path Descriptors ---------------'''
@@ -358,6 +387,7 @@ def filterGraph_metavertices(graph):
     keptEdges_red_unfiltered = []
     keptWeights_red_unfiltered = []
 
+
     #Checks edges and keeps only edges that connect to the same colored vertices
     for edge in edgeList:
         currentNode = edge[0]
@@ -378,10 +408,10 @@ def filterGraph_metavertices(graph):
         if ((color_current == 'green') or (color_toNode == 'green')):
             keptEdges.append(edge)
             keptWeights.append(weight)
-        elif ((color_current == 'blue') or (color_toNode == 'blue')):
+        if ((color_current == 'blue') or (color_toNode == 'blue')):
             keptEdges_blue.append(edge)
             keptWeights_blue.append(weight)
-        elif ((color_current == 'red') or (color_toNode == 'red')) :
+        if ((color_current == 'red') or (color_toNode == 'red')) :
             keptEdges_red.append(edge)
             keptWeights_red.append(weight)
 
