@@ -35,6 +35,8 @@ class graph_data_class:
 
         - **DISS_f10_D** (*float*): Fraction of black vertices <10px from green.
         - **DISS_wf10_D** (*float*): Weighted fraction of black vertices <10px from green.
+        - **DISS_f10_G** (*float*): Fraction of gray vertices <10px from gray-white.
+        - **DISS_wf10_G** (*float*): Weighted fraction of gray vertices <10px from gray-white.
         - **CT_f_D_tort1** (*float*): Fraction of black vertices with tortuosity to red < tol.
         - **CT_f_A_tort1** (*float*): Fraction of white vertices with tortuosity to blue < tol.
         - **ABS_wf_D** (*float*): Weighted distance of black vertices from red.
@@ -87,6 +89,8 @@ class graph_data_class:
         # shortest path descriptors
         self.DISS_f10_D = 0
         self.DISS_wf10_D = 0
+        self.DISS_f10_G = 0
+        self.DISS_wf10_G = 0
         self.CT_f_D_tort1 = 0
         self.CT_f_A_tort1 = 0
         self.ABS_wf_D = 0
