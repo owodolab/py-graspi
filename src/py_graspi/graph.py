@@ -58,30 +58,33 @@ def store_interface_edges(edges_with_green, index, color, order, weight):
 
 '''********* Constructing the Graph **********'''
 
-def generateGraph(file, PERIODICITY = False):
+def generateGraph(file, PERIODICITY = False, n_flag = 2):
     """
         This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.
 
     Args:
         file (str): The name of the file containing graph data.
         periodicity (bool): Boolean representing if graph has periodic boundary conditions
+        n_flag (int): If graph is 2 phase or 3 phase
 
     Returns:
         This function generates a graph based on the input so the return type depends on the format of graph data that was given.
         See “generateGraphAdj” if in .txt, or “generateGraphGraphe” if in .graphe.
     """
     if os.path.splitext(file)[1] == ".txt":
-        return generateGraphAdj(file, PERIODICITY)
+        return generateGraphAdj(file, PERIODICITY,n_flag)
     else:
         return generateGraphGraphe(file)
 
-def generateGraphAdj(file, PERIODICITY=False):
+def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
     """
         This function takes in graph data in the .txt format and constructs the graph with adjacency list representation.
         It also generates additional graph data stored in the graph_data object.
     
     Args:
         file (str): The name of the file containing the graph data.
+        PERIODICITY (bool): Boolean representing if graph has periodic boundary conditions
+        n_flag (int): If graph is 2 phase or 3 phase
 
     Returns:
         graph_data (graph_data_class): The graph data.
@@ -119,7 +122,7 @@ def generateGraphAdj(file, PERIODICITY=False):
             g.es[g.ecount() - 1]['label'] = 'f'
             g.es[g.ecount() - 1]['weight'] = 1
 
-            # add diagnol wrap arounds
+            # add diagonal wrap arounds
             if i - 1 >= 0:
                 g.add_edge(g.vs[i], g.vs[i - 1])
                 g.es[g.ecount() - 1]['label'] = 's'
@@ -260,7 +263,6 @@ def generateGraphAdj(file, PERIODICITY=False):
     white_interface_blue = len(white)  # correct
 
     # Create graph_data_class object
-
     # Store vertex attributes
     graph_data.graph = g
     graph_data.black_green = black_green
@@ -375,11 +377,12 @@ def adjList(fileName):
     edge_weights = []
     black_vertices = []
     white_vertices = []
+    gray_vertices = []
 
     redVertex = None
     blueVertex = None
-
     is_2d = True
+
     with open(fileName, "r") as file:
         header = file.readline().strip().split(' ')
         dimX, dimY = int(header[0]), int(header[1])
@@ -424,6 +427,7 @@ def adjList(fileName):
                     black_vertices.append(current_vertex)
                 elif reshaped_data[current_vertex] == 3:
                     vertex_color[current_vertex] = 'gray'
+                    gray_vertices.append(current_vertex)
                 else:
                     print("not in the color : ", current_vertex, reshaped_data[current_vertex])
 
@@ -530,6 +534,7 @@ def adjList(fileName):
     graph_data.is_2D = is_2d
     graph_data.black_vertices = black_vertices
     graph_data.white_vertices = white_vertices
+    graph_data.gray_vertices = gray_vertices
     graph_data.dim = dim
     graph_data.redVertex = redVertex
     graph_data.blueVertex = blueVertex
@@ -550,7 +555,6 @@ def adjList(fileName):
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         print("new method Green Edges len : ", len(edges_with_green))
         # exit()
-
     # return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, edges_with_green
     return graph_data, edges_with_green, edges_with_DarkGreen, edges_with_LightGreen
 
@@ -951,6 +955,7 @@ def main():
                     if sys.argv[i + 1] == "2":
                         n_flag = 2
                     elif sys.argv[i + 1] == "3":
+                        n_flag = 3
                         print("3 Phase not yet implemented.")
                         return
                     else:
@@ -968,7 +973,7 @@ def main():
                     print("Missing value for -s flag.")
                     return
 
-        graph_data = generateGraphAdj(filename,PERIODICITY)
+        graph_data = generateGraphAdj(filename,PERIODICITY,n_flag)
 
     # Check if -g (unstructured data with .graphe file)
     elif sys.argv[1] == "-g":
