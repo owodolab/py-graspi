@@ -76,7 +76,7 @@ def compute_descriptors(graph_data, filename,pixelSize=1,n_flag = 2):
         descriptors_dict['ABS_wf_D'] = graph_data.ABS_wf_D #from shortest_path descriptors
         descriptors_dict["DISS_wf10_D"] = graph_data.DISS_wf10_D #from shortest_path descriptors
         descriptors_dict["DISS_f10_D"] = graph_data.DISS_f10_D
-        #[F DISS] Weighted fraction of grey vertices in 10 distance to grey-white interface TO DO implement this
+        descriptors_dict["DISS_wf10_G"] = graph_data.DISS_wf10_G #[NEW] Weighted fraction of grey vertices in 10 distance to grey-white interface
         descriptors_dict["DISS_f10_G"] = graph_data.DISS_f10_G #[NEW] Fraction of grey vertices in 10 distance to grey-white interface
         descriptors_dict["STAT_e"] = graph_data.black_green
         descriptors_dict["CT_e_conn"] = graph_data.interface_edge_comp_paths
@@ -223,14 +223,16 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
     shortest_path_to_red = graph_data.shortest_path_to_red
     shortest_path_to_blue = graph_data.shortest_path_to_blue
 
-    fg_green, fg_blue, fg_red, fg_red_unfiltered, fg_lightGreen = filterGraph_metavertices(graph)
+    fg_green, fg_blue, fg_red, fg_red_unfiltered, fg_lightGreen, fg_darkGreen = filterGraph_metavertices(graph)
     greenVertex = (graph.vs.select(color = 'green')[0]).index
     redVertex = (graph.vs.select(color = 'red')[0]).index
     blueVertex = (graph.vs.select(color = 'blue')[0]).index
     lightGreenVertex = (graph.vs.select(color = 'LightGreen')[0]).index
+    darkGreenVertex = (graph.vs.select(color='DarkGreen')[0]).index
 
     distances = fg_green.shortest_paths(source=greenVertex, weights=fg_green.es["weight"])[0]
-    distances_gray = fg_lightGreen.shortest_paths(source=lightGreenVertex, weights=fg_lightGreen.es['weight'])[0]
+    # QUESTION slides say dg and lg, but description says lg only
+    distances_gray = fg_lightGreen.shortest_paths(source=lightGreenVertex, weights=fg_lightGreen.es['weight'])[0] + fg_darkGreen.shortest_paths(source=darkGreenVertex, weights=fg_darkGreen.es['weight'])[0]
 
     black_red_unfiltered_distance = fg_red_unfiltered.shortest_paths(source=redVertex, weights=fg_red_unfiltered.es['weight'])[0]
 
@@ -268,18 +270,15 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
 
     for vertex in gray_vertices:
         distance = distances_gray[vertex]
-        print(str(vertex) + " " + str(distance))
         if distance != float('inf'):
             # summation of weight * distance for DISS_wf10_G
             A1 = 6.265
             B1 = -23.0
             C1 = 17.17
-
             # check if distance is < 10, if yes, increment counter for DISS_f10_D
             if distance > 0 and distance < 10:
                 gray_summation += A1 * math.exp(-((distance - B1) / C1) * ((distance - B1) / C1))
                 gray_f10_count += 1
-
         # computation for ABS_wf_D
         #total_weighted_black_red += math.exp(-1.0 * (black_red) / 100) QUESTION do i need to edit this for 3phase to update? confused.
 
@@ -374,10 +373,11 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
     file.close()
     if totalBlacks != 0:
         graph_data.DISS_f10_D = float(f10_count / totalBlacks)
-        graph_data.DISS_wf10_D = float(summation / totalBlacks)
+        graph_data.DISS_wf10_D = float(summation / totalBlacks) # QUESTION shouldn't it divide by reachable black vertices?
     if totalGray != 0:
         graph_data.DISS_f10_G = float(gray_f10_count / totalGray)
-        #graph_data.DISS_wf10_G = float(gray_summation / totalGray)
+        graph_data.DISS_wf10_G = float(gray_summation / totalGray) #QUESTION should it be dividing by totalGray or only the reachable vertices?
+
     if countBlack_Red_conn != 0:
         graph_data.CT_f_D_tort1 = float(black_tor / countBlack_Red_conn)
     if countWhite_Blue_conn != 0:
@@ -412,6 +412,8 @@ def filterGraph_metavertices(graph):
     keptWeights_red= []
     keptEdges_lightGreen = []
     keptWeights_lightGreen = []
+    keptEdges_darkGreen = []
+    keptWeights_darkGreen = []
     keptEdges_red_unfiltered = []
     keptWeights_red_unfiltered = []
 
@@ -430,10 +432,13 @@ def filterGraph_metavertices(graph):
             keptEdges_blue.append(edge)
             keptEdges_red.append(edge)
             keptEdges_lightGreen.append(edge)
+            keptEdges_darkGreen.append(edge)
             keptWeights.append(weight)
             keptWeights_blue.append(weight)
             keptWeights_red.append(weight)
             keptWeights_lightGreen.append(weight)
+            keptWeights_darkGreen.append(weight)
+
 
         if ((color_current == 'green') or (color_toNode == 'green')):
             keptEdges.append(edge)
@@ -447,6 +452,9 @@ def filterGraph_metavertices(graph):
         if ((color_current == 'LightGreen') or (color_toNode == 'LightGreen')) :
             keptEdges_lightGreen.append(edge)
             keptWeights_lightGreen.append(weight)
+            if ((color_current == 'DarkGreen') or (color_toNode == 'DarkGreen')):
+                keptEdges_darkGreen.append(edge)
+                keptWeights_darkGreen.append(weight)
 
         if((color_current != 'blue') and (color_toNode != 'blue') \
            and (color_current != 'green') and (color_toNode != 'green')):
@@ -466,7 +474,10 @@ def filterGraph_metavertices(graph):
     fg_lightGreen = graph.subgraph_edges(keptEdges_lightGreen, delete_vertices=False)
     fg_lightGreen.es['weight'] = keptWeights_lightGreen
 
+    fg_darkGreen = graph.subgraph_edges(keptEdges_darkGreen, delete_vertices=False)
+    fg_darkGreen.es['weight'] = keptWeights_darkGreen
+
     fg_red_unfiltered = graph.subgraph_edges(keptEdges_red_unfiltered, delete_vertices=False)
     fg_red_unfiltered['weight'] = keptWeights_red_unfiltered
 
-    return filteredGraph_green, fg_blue, fg_red, fg_red_unfiltered, fg_lightGreen
+    return filteredGraph_green, fg_blue, fg_red, fg_red_unfiltered, fg_lightGreen, fg_darkGreen
