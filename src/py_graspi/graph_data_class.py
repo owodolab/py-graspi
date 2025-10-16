@@ -10,7 +10,7 @@ class graph_data_class:
 
         - **black_vertices** (*list*): A list to store black vertices in the graph.
         - **white_vertices** (*list*): A list to store white vertices in the graph.
-        - **gray_vertices** (*list*): A list to store grey vertices in the graph.
+        - **gray_vertices** (*list*): A list to store gray vertices in the graph.
         - **shortest_path_to_red** (*Optional[list]*): Stores the shortest path to the red vertex.
         - **shortest_path_to_blue** (*Optional[list]*): Stores the shortest path to the blue vertex.
 
@@ -32,13 +32,17 @@ class graph_data_class:
 
         - **countBlack_Red_conn** (*int*): Black vertices in red-connected components.
         - **countWhite_Blue_conn** (*int*): White vertices in blue-connected components.
+        - **countGray_Red_conn** (*int*): Gray vertices in red-connected components.
+        - **countGray_Blue_conn** (*int*): Gray vertices in blue-connected components.
 
         - **DISS_f10_D** (*float*): Fraction of black vertices <10px from green.
         - **DISS_wf10_D** (*float*): Weighted fraction of black vertices <10px from green.
-        - **DISS_f10_G** (*float*): Fraction of gray vertices <10px from gray-white.
-        - **DISS_wf10_G** (*float*): Weighted fraction of gray vertices <10px from gray-white.
+        - **DISS_f10_M** (*float*): Fraction of gray vertices <10px from gray-white.
+        - **DISS_wf10_M** (*float*): Weighted fraction of gray vertices <10px from gray-white.
         - **CT_f_D_tort1** (*float*): Fraction of black vertices with tortuosity to red < tol.
         - **CT_f_A_tort1** (*float*): Fraction of white vertices with tortuosity to blue < tol.
+        - **CT_f_M_tort1_An** (*float*): Fraction of gray vertices with tortuosity to red < tol.
+        - **CT_f_M_tort1_Ca** (*float*): Fraction of gray vertices with tortuosity to blue < tol.
         - **ABS_wf_D** (*float*): Weighted distance of black vertices from red.
 
         - **redVertex** (*Optional[Any]*): Reference to the red vertex.
@@ -85,14 +89,18 @@ class graph_data_class:
         # intermediates
         self.countBlack_Red_conn = 0
         self.countWhite_Blue_conn = 0
+        self.countGray_Red_conn = 0
+        self.countGray_Blue_conn = 0
 
         # shortest path descriptors
         self.DISS_f10_D = 0
         self.DISS_wf10_D = 0
-        self.DISS_f10_G = 0
-        self.DISS_wf10_G = 0
+        self.DISS_f10_M = 0
+        self.DISS_wf10_M = 0
         self.CT_f_D_tort1 = 0
         self.CT_f_A_tort1 = 0
+        self.CT_f_M_tort1_An = 0
+        self.CT_f_M_tort1_Ca = 0
         self.ABS_wf_D = 0
 
         self.redVertex = None

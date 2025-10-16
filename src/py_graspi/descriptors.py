@@ -76,17 +76,17 @@ def compute_descriptors(graph_data, filename,pixelSize=1,n_flag = 2):
         descriptors_dict['ABS_wf_D'] = graph_data.ABS_wf_D #from shortest_path descriptors
         descriptors_dict["DISS_wf10_D"] = graph_data.DISS_wf10_D #from shortest_path descriptors
         descriptors_dict["DISS_f10_D"] = graph_data.DISS_f10_D
-        descriptors_dict["DISS_wf10_G"] = graph_data.DISS_wf10_G #[NEW] Weighted fraction of grey vertices in 10 distance to grey-white interface
-        descriptors_dict["DISS_f10_G"] = graph_data.DISS_f10_G #[NEW] Fraction of grey vertices in 10 distance to grey-white interface
+        descriptors_dict["DISS_wf10_M"] = graph_data.DISS_wf10_M #[NEW] Weighted fraction of gray vertices in 10 distance to gray-white interface
+        descriptors_dict["DISS_f10_M"] = graph_data.DISS_f10_M #[NEW] Fraction of gray vertices in 10 distance to gray-white interface
         descriptors_dict["STAT_e"] = graph_data.black_green
         descriptors_dict["CT_e_conn"] = graph_data.interface_edge_comp_paths
         descriptors_dict["CT_f_e_conn"] = float(graph_data.interface_edge_comp_paths / graph_data.black_green)
         descriptors_dict["CT_e_D_An"] = graph_data.black_interface_red
         descriptors_dict["CT_e_A_Ca"] = graph_data.white_interface_blue
-        descriptors_dict["CT_f_D_tort1"] = graph_data.CT_f_D_tort1
-        descriptors_dict["CT_f_A_tort1"] = graph_data.CT_f_A_tort1
-        #[F CT] Fraction of grey vertices with straight rising paths to top (t=1) TO DO implement this
-        #[F CT] Fraction of grey vertices with straight rising paths to bottom (t=1) TO DO implement this
+        descriptors_dict["CT_f_D_tort1"] = graph_data.CT_f_D_tort1 #from shortest_path descriptors
+        descriptors_dict["CT_f_A_tort1"] = graph_data.CT_f_A_tort1 #from shortest_path descriptors
+        descriptors_dict["CT_f_M_tort1_An"] = graph_data.CT_f_M_tort1_An #[NEW] Fraction of gray vertices with straight rising paths to top (t=1)
+        descriptors_dict["CT_f_M_tort1_Ca"] = graph_data.CT_f_M_tort1_Ca #[NEW] Fraction of gray vertices with straight rising paths to bottom (t=1)
 
 
     stats = tracemalloc.get_traced_memory()
@@ -146,8 +146,9 @@ def printDescriptors(dict):
 def CC_descriptors(graph_data):
     """
     This function computes the connected component descriptors that correspond to the following descriptors:
-    STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, and countWhite_Blue_conn.
-    Auxiliary quantities such as, ‘countBlack_Red_conn’ and ‘countWhite_Blue_conn’ are only used to compute CT_f_conn_D_An and CT_f_conn_A_Ca.
+    STAT_CC_D, STAT_CC_A, STAT_CC_D_An, STAT_CC_A_Ca, CT_f_conn_D_An, CT_f_conn_A_Ca, countBlack_Red_conn, countWhite_Blue_conn, countGray_Red_conn, and countGray_Blue_conn.
+    Auxiliary quantities such as, ‘countBlack_Red_conn’ and ‘countWhite_Blue_conn’ are only used to compute CT_f_conn_D_An and CT_f_conn_A_Ca. 'countGray_Red_conn' and 'countGray_Blue_conn'
+    are used to compute CT_f_M_tort1_An and T_f_M_tort1_Ca.
 
     Args:
         graph_data (graph_data_class): The input graph object.
@@ -164,8 +165,12 @@ def CC_descriptors(graph_data):
     countWhite = 0
     countBlack_Red = 0
     countWhite_Blue = 0
+    countGray_Red = 0
+    countGray_Blue = 0
     countBlack_Red_conn = 0
     countWhite_Blue_conn = 0
+    countGray_Red_conn = 0
+    countGray_Blue_conn = 0
 
     if cc is not None:
         for c in cc:
@@ -185,6 +190,16 @@ def CC_descriptors(graph_data):
                 colors = np.array(graph.vs['color'])
                 countWhite_Blue_conn += np.sum(colors[c] == 'white')
 
+            if graph.vs[c][0]['color'] == 'gray' and 'red' in graph.vs[c]['color']:
+                countGray_Red += 1
+                colors = np.array(graph.vs['color'])
+                countGray_Red_conn += np.sum(colors[c] == 'gray')
+
+            if graph.vs[c][0]['color'] == 'gray' and 'blue' in graph.vs[c]['color']:
+                countGray_Blue += 1
+                colors = np.array(graph.vs['color'])
+                countGray_Blue_conn += np.sum(colors[c] == 'gray')
+
     graph_data.STAT_CC_D = countBlack
     graph_data.STAT_CC_A = countWhite
     graph_data.STAT_CC_D_An = countBlack_Red
@@ -195,14 +210,16 @@ def CC_descriptors(graph_data):
         graph_data.CT_f_conn_A_Ca = float(countWhite_Blue_conn / totalWhite)
     graph_data.countBlack_Red_conn = countBlack_Red_conn
     graph_data.countWhite_Blue_conn = countWhite_Blue_conn
+    graph_data.countGray_Red_conn = countGray_Red_conn
+    graph_data.countGray_Blue_conn = countGray_Blue_conn
 
     return graph_data
 
 
-def shortest_path_descriptors(graph_data, filename,pixelSize=1):
+def shortest_path_descriptors(graph_data, filename, pixelSize=1):
     """
         This function computes descriptors related to shortest paths with vertex and metavertex colorations that correspond to the following descriptors:
-        DISS_f10_D, DISS_wf10_D, CT_f_D_tort1, CT_f_A_tort1 and ABS_wf_D.
+        DISS_f10_D, DISS_wf10_D, DISS_f10_M, DISS_wf10_M CT_f_D_tort1, CT_f_A_tort1, CT_f_M_tort1_An, CT_f_M_tort1_Ca and ABS_wf_D.
         The inputs countBlack_Red_conn and countWhite_Blue_conn are stored in the graph_data_class object generated by the ‘CC_descriptors’ function.
 
         Args:
@@ -220,6 +237,8 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
     dim = graph_data.dim
     countBlack_Red_conn = graph_data.countBlack_Red_conn
     countWhite_Blue_conn = graph_data.countWhite_Blue_conn
+    countGray_Red_conn = graph_data.countGray_Red_conn
+    countGray_Blue_conn = graph_data.countGray_Blue_conn
     shortest_path_to_red = graph_data.shortest_path_to_red
     shortest_path_to_blue = graph_data.shortest_path_to_blue
 
@@ -228,17 +247,16 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
     redVertex = (graph.vs.select(color = 'red')[0]).index
     blueVertex = (graph.vs.select(color = 'blue')[0]).index
     lightGreenVertex = (graph.vs.select(color = 'LightGreen')[0]).index
-    darkGreenVertex = (graph.vs.select(color='DarkGreen')[0]).index
 
     distances = fg_green.shortest_paths(source=greenVertex, weights=fg_green.es["weight"])[0]
-    # QUESTION slides say dg and lg, but description says lg only
-    distances_gray = fg_lightGreen.shortest_paths(source=lightGreenVertex, weights=fg_lightGreen.es['weight'])[0] + fg_darkGreen.shortest_paths(source=darkGreenVertex, weights=fg_darkGreen.es['weight'])[0]
+    distances_gray = fg_lightGreen.shortest_paths(source=lightGreenVertex, weights=fg_lightGreen.es['weight'])[0]
 
     black_red_unfiltered_distance = fg_red_unfiltered.shortest_paths(source=redVertex, weights=fg_red_unfiltered.es['weight'])[0]
 
     black_tor_distances = fg_red.shortest_paths(source=redVertex, weights=fg_red.es["weight"])[0]
     white_tor_distances = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
-    #gray_tor_distances =
+    gray_tor_distances_An = fg_red.shortest_paths(source=redVertex, weights=fg_red.es["weight"])[0]
+    gray_tor_distances_Ca = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
 
     # Apply pixelSize only where needed
     distances = [d * pixelSize for d in distances]  # For DISS_f10_D and DISS_wf10_D
@@ -250,6 +268,8 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
     gray_summation = 0
     black_tor = 0
     white_tor = 0
+    gray_tor_top = 0
+    gray_tor_bottom = 0
     total_weighted_black_red = 0
 
     totalBlacks = len(black_vertices)
@@ -265,19 +285,22 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
     dist_white_to_blue = []
     tort_white_to_blue = []
     id_tort_white_to_blue = []
+    id_tort_gray_to_red = []
+    id_tort_gray_to_blue = []
 
     d = []
 
     for vertex in gray_vertices:
         distance = distances_gray[vertex]
         if distance != float('inf'):
-            # summation of weight * distance for DISS_wf10_G
+            # summation of weight * distance for DISS_wf10_M
             A1 = 6.265
             B1 = -23.0
             C1 = 17.17
             # check if distance is < 10, if yes, increment counter for DISS_f10_D
             if distance > 0 and distance < 10:
                 gray_summation += A1 * math.exp(-((distance - B1) / C1) * ((distance - B1) / C1))
+                #gray_summation += math.exp(-distance / 10)
                 gray_f10_count += 1
         # computation for ABS_wf_D
         #total_weighted_black_red += math.exp(-1.0 * (black_red) / 100) QUESTION do i need to edit this for 3phase to update? confused.
@@ -342,6 +365,41 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
             tort_white_to_blue.append(f'{float(tor)}\n')
             id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
 
+    for vertex in gray_vertices:
+        # top, An
+        gray_tor_distance_top = gray_tor_distances_An[vertex]
+        straight_path_top = shortest_path_to_red[vertex]
+
+        if gray_tor_distance_top != float('inf') and straight_path_top != float('inf'):
+            if straight_path_top == 0:
+                tor = 1
+            else:
+                tor = gray_tor_distance_top / straight_path_top
+            tolerance = 1 + (1 / dim)
+
+            if tor < tolerance:
+                tor = 1
+                gray_tor_top += 1
+
+            id_tort_gray_to_red.append(f'{vertex} {float(tor)} {float(gray_tor_distance_top)} {float(straight_path_top)}\n')
+
+        # bottom, Ca
+        gray_tor_distance_bottom = gray_tor_distances_Ca[vertex]
+        straight_path_bottom = shortest_path_to_blue[vertex]
+
+        if gray_tor_distance_bottom != float('inf') and straight_path_bottom != float('inf'):
+            if straight_path_bottom == 0:
+                tor = 1
+            else:
+                tor = gray_tor_distance_bottom / straight_path_bottom
+            tolerance = 1 + (1 / dim)
+
+            if tor < tolerance:
+                tor = 1
+                gray_tor_bottom += 1
+
+            id_tort_gray_to_blue.append(f'{vertex} {float(tor)} {float(gray_tor_distance_bottom)} {float(straight_path_bottom)}\n')
+
     filename = os.path.basename(filename)
     os.makedirs("test_results", exist_ok=True)
     file = open(f"./test_results/{filename}_TortuosityBlackToRed.txt", 'w')
@@ -370,18 +428,29 @@ def shortest_path_descriptors(graph_data, filename,pixelSize=1):
 
     file = open(f"./test_results/{filename}_IdTortuosityWhiteToBlue.txt", 'w')
     file.writelines(id_tort_white_to_blue)
+
+    file = open(f"./test_results/{filename}_IdTortuosityGrayToRed.txt", 'w')
+    file.writelines(id_tort_gray_to_red)
     file.close()
+
+    file = open(f"./test_results/{filename}_IdTortuosityGrayToBlue.txt", 'w')
+    file.writelines(id_tort_gray_to_blue)
+    file.close()
+
     if totalBlacks != 0:
         graph_data.DISS_f10_D = float(f10_count / totalBlacks)
-        graph_data.DISS_wf10_D = float(summation / totalBlacks) # QUESTION shouldn't it divide by reachable black vertices?
+        graph_data.DISS_wf10_D = float(summation / totalBlacks)
     if totalGray != 0:
-        graph_data.DISS_f10_G = float(gray_f10_count / totalGray)
-        graph_data.DISS_wf10_G = float(gray_summation / totalGray) #QUESTION should it be dividing by totalGray or only the reachable vertices?
-
+        graph_data.DISS_f10_M = float(gray_f10_count / totalGray)
+        graph_data.DISS_wf10_M = float(gray_summation / totalGray)
     if countBlack_Red_conn != 0:
         graph_data.CT_f_D_tort1 = float(black_tor / countBlack_Red_conn)
     if countWhite_Blue_conn != 0:
        graph_data.CT_f_A_tort1 = float(white_tor / countWhite_Blue_conn)
+    if countGray_Red_conn != 0:
+        graph_data.CT_f_M_tort1_An = float(gray_tor_top / countGray_Red_conn)
+    if countGray_Blue_conn != 0:
+        graph_data.CT_f_M_tort1_Ca = float(gray_tor_bottom / countGray_Blue_conn)
     if totalBlacks + totalWhite + totalGray != 0:
         graph_data.ABS_wf_D = float(total_weighted_black_red / (totalBlacks + totalWhite + totalGray))
     return graph_data

@@ -751,6 +751,7 @@ def connectedComponents(graph):
     blueVertex = None
     blackCCList = []
     whiteCCList = []
+    grayCCList = []
 
     for vertex in range(vertices - 1, -1, -1):
         color = graph.vs[vertex]['color']
@@ -763,6 +764,7 @@ def connectedComponents(graph):
 
     blackCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'black']
     whiteCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'white']
+    grayCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'gray']
 
     for c in blackCCList:
         passedRed = False
@@ -794,7 +796,22 @@ def connectedComponents(graph):
             if passedBlue and passedRed:
                 break
 
-    connected_comp = whiteCCList + blackCCList
+    for c in grayCCList:
+        passedRed = False
+        passedBlue = False
+        for vertex in c:
+            if not passedRed:
+                if (vertex, redVertex) in edgeList or (redVertex, vertex) in edgeList:
+                    c.append(redVertex)
+                    passedRed = True
+            if not passedBlue:
+                if (vertex, blueVertex) in edgeList or (blueVertex, vertex) in edgeList:
+                    c.append(blueVertex)
+                    passedBlue = True
+            if passedBlue and passedRed:
+                break
+
+    connected_comp = whiteCCList + blackCCList + grayCCList
 
     return connected_comp
 
