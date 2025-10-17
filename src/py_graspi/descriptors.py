@@ -290,21 +290,6 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
 
     d = []
 
-    for vertex in gray_vertices:
-        distance = distances_gray[vertex]
-        if distance != float('inf'):
-            # summation of weight * distance for DISS_wf10_M
-            A1 = 6.265
-            B1 = -23.0
-            C1 = 17.17
-            # check if distance is < 10, if yes, increment counter for DISS_f10_D
-            if distance > 0 and distance < 10:
-                gray_summation += A1 * math.exp(-((distance - B1) / C1) * ((distance - B1) / C1))
-                #gray_summation += math.exp(-distance / 10)
-                gray_f10_count += 1
-        # computation for ABS_wf_D
-        #total_weighted_black_red += math.exp(-1.0 * (black_red) / 100) QUESTION do i need to edit this for 3phase to update? confused.
-
     for vertex in black_vertices:
         distance = distances[vertex]
         black_tor_distance = black_tor_distances[vertex]
@@ -366,6 +351,18 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
             id_tort_white_to_blue.append(f'{vertex} {float(tor)} {float(white_tor_distance)} {float(straight_path)}\n')
 
     for vertex in gray_vertices:
+        distance = distances_gray[vertex]
+        if distance != float('inf'):
+            # summation of weight * distance for DISS_wf10_M
+            A1 = 6.265
+            B1 = -23.0
+            C1 = 17.17
+            # check if distance is < 10, if yes, increment counter for DISS_f10_D
+            if distance > 0 and distance < 10:
+                gray_summation += A1 * math.exp(-((distance - B1) / C1) * ((distance - B1) / C1))
+                # gray_summation += math.exp(-distance / 10)
+                gray_f10_count += 1
+
         # top, An
         gray_tor_distance_top = gray_tor_distances_An[vertex]
         straight_path_top = shortest_path_to_red[vertex]

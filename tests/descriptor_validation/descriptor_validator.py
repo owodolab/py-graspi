@@ -9,33 +9,41 @@ from py_graspi import graph as ig
 def main():
     #Preferences
 
-    targetFileName = '10x10_testing' # Input file name or naming pattern to search for here
+    targetFileName = "6x6_testing" # Input file name or naming pattern to search for here
+    #targetFileName = "10x10_testing"
+    targetFileName = "trial_10"
+    #targetFileName = 'data_0.5_2.2_001900'
     loop_cnt = 1 # Number of test repetitions
 
     #Paths
     data_path = os.path.abspath("test_file")  # Adjust data path as necessary
+    #data_path = os.path.abspath("../../data/2phase/2D-morphologies/data/")
     expected_results_path = os.path.abspath("expected_results/")  # Adjust expected results path as necessary
-    test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path)]
+    #test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path)]
+    test_files = [targetFileName]
+    tolerance = 0.05
 
-    tolerance = 0.005
-    times = []
-    mems = []
-    time_mem_stats = {}
 
     for test_file in test_files:
-        if targetFileName not in test_file:
+        print("Testing " + test_file)
+        times = []
+        mems = []
+        time_mem_stats = {}
+        if targetFileName != test_file:
             continue
         total_graph_time = 0
         for i in range(loop_cnt):
             tracemalloc.start()
             graph_start = time.time()
             file_path = os.path.join(data_path, test_file + ".txt")
+            print("Generating graph for " + test_file)
             graph_data = ig.generateGraph(file_path, False) #changed to 3 to signal 3 phase
             _stats = tracemalloc.get_traced_memory()
             graph_end = time.time()
             tracemalloc.stop()
             graph_mem = _stats[1] - _stats[0]
-            stats = ds.compute_descriptors(graph_data, file_path, 1)  #changed to 3 to signal 3 phase
+            print("Computing descriptors for " + test_file)
+            stats = ds.compute_descriptors(graph_data, file_path, 1,3)  #changed to 3 to signal 3 phase
             total_graph_time += graph_end - graph_start
 
         print(f"\n{test_file} Results")
