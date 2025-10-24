@@ -8,7 +8,7 @@ import time
 import tracemalloc
 
 
-def compute_descriptors(graph_data, filename,pixelSize=1,n_flag = 2):
+def compute_descriptors(graph_data, filename,pixelSize=1,n_flag=2):
     """
     This function computes all the descriptors for the graph given and saves them  in a dictionary.
 
@@ -16,6 +16,7 @@ def compute_descriptors(graph_data, filename,pixelSize=1,n_flag = 2):
         graph_data (GraphData): The graph data.
         filename (str): The file used to generate graphs to compute on.
         pixelsize (float): The pixel size of the graph.
+        n_flag (int): The number of phases
 
     Returns:
         descriptors_dict: A dictionary containing all the descriptors. The dictionary stores the outputted data in key:value pairs, the unique keys are linked to the associated value.
@@ -61,7 +62,7 @@ def compute_descriptors(graph_data, filename,pixelSize=1,n_flag = 2):
         descriptors_dict["CT_f_D_tort1"] = graph_data.CT_f_D_tort1
         descriptors_dict["CT_f_A_tort1"] = graph_data.CT_f_A_tort1
 
-    else: #Activate 3 phase mode
+    if n_flag == 3: #Activate 3 phase mode
         STAT_n_D = len(graph_data.black_vertices)
         STAT_n_A = len(graph_data.white_vertices)
         graph_data.STAT_n_D = STAT_n_D
@@ -292,6 +293,7 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
 
     for vertex in black_vertices:
         distance = distances[vertex]
+        #print(str(vertex) + " " + str(distance))
         black_tor_distance = black_tor_distances[vertex]
         straight_path = shortest_path_to_red[vertex]
         black_red = black_red_unfiltered_distance[vertex]
@@ -320,7 +322,7 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
             C1 = 17.17
 
             # check if distance is < 10, if yes, increment counter for DISS_f10_D
-            if distance > 0 and distance < 10:
+            if distance > 0 and distance <= 10:
                 summation += A1 * math.exp(-((distance - B1) / C1) * ((distance - B1) / C1))
                 f10_count += 1
 
@@ -352,6 +354,7 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
 
     for vertex in gray_vertices:
         distance = distances_gray[vertex]
+        #print(str(vertex) + " " + str(distance))
         if distance != float('inf'):
             # summation of weight * distance for DISS_wf10_M
             A1 = 6.265
@@ -367,7 +370,7 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
         gray_tor_distance_top = gray_tor_distances_An[vertex]
         straight_path_top = shortest_path_to_red[vertex]
 
-        if gray_tor_distance_top != float('inf') and straight_path_top != float('inf'):
+        if gray_tor_distance_top != float('inf') or straight_path_top != float('inf'): #maybe put or
             if straight_path_top == 0:
                 tor = 1
             else:
@@ -384,7 +387,7 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
         gray_tor_distance_bottom = gray_tor_distances_Ca[vertex]
         straight_path_bottom = shortest_path_to_blue[vertex]
 
-        if gray_tor_distance_bottom != float('inf') and straight_path_bottom != float('inf'):
+        if gray_tor_distance_bottom != float('inf') or straight_path_bottom != float('inf'): #exchanged and to or
             if straight_path_bottom == 0:
                 tor = 1
             else:
@@ -518,9 +521,9 @@ def filterGraph_metavertices(graph):
         if ((color_current == 'LightGreen') or (color_toNode == 'LightGreen')) :
             keptEdges_lightGreen.append(edge)
             keptWeights_lightGreen.append(weight)
-            if ((color_current == 'DarkGreen') or (color_toNode == 'DarkGreen')):
-                keptEdges_darkGreen.append(edge)
-                keptWeights_darkGreen.append(weight)
+        if ((color_current == 'DarkGreen') or (color_toNode == 'DarkGreen')):
+            keptEdges_darkGreen.append(edge)
+            keptWeights_darkGreen.append(weight)
 
         if((color_current != 'blue') and (color_toNode != 'blue') \
            and (color_current != 'green') and (color_toNode != 'green')):
@@ -544,6 +547,6 @@ def filterGraph_metavertices(graph):
     fg_darkGreen.es['weight'] = keptWeights_darkGreen
 
     fg_red_unfiltered = graph.subgraph_edges(keptEdges_red_unfiltered, delete_vertices=False)
-    fg_red_unfiltered['weight'] = keptWeights_red_unfiltered
+    fg_red_unfiltered.es['weight'] = keptWeights_red_unfiltered
 
     return filteredGraph_green, fg_blue, fg_red, fg_red_unfiltered, fg_lightGreen, fg_darkGreen
