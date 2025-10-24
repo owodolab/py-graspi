@@ -447,20 +447,17 @@ def adjList(fileName):
                             edge_weights.append(1)
 
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1: # interface edges
-                                if DEBUG_MODE:
-                                    print(current_vertex, neighbor_vertex)
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_green, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3: # gray-white interface
-                                if DEBUG_MODE:
-                                    print(current_vertex, neighbor_vertex)
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_LightGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4: # gray-black interface
-                                if DEBUG_MODE:
-                                    print(current_vertex, neighbor_vertex)
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_DarkGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_DarkGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
@@ -470,11 +467,43 @@ def adjList(fileName):
                             edge_labels.append("t")
                             edge_weights.append(float(math.sqrt(3)))
 
-                        else:
-                            if DEBUG_MODE:
-                                second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # interface edges
+                                if DEBUG_MODE: print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex],3, float(math.sqrt(3)))
+                                store_interface_edges(edges_with_green, neighbor_vertex, reshaped_data[neighbor_vertex],3, float(math.sqrt(3)))
+
+                            if reshaped_data[current_vertex] + reshaped_data[
+                                neighbor_vertex] == 3:  # gray-white interface
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 3, float(math.sqrt(3)))
+                                store_interface_edges(edges_with_LightGreen, neighbor_vertex,reshaped_data[neighbor_vertex], 3, float(math.sqrt(3)))
+
+                            if reshaped_data[current_vertex] + reshaped_data[
+                                neighbor_vertex] == 4:  # gray-black interface
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_DarkGreen, current_vertex,reshaped_data[current_vertex], 3, float(math.sqrt(3)))
+                                store_interface_edges(edges_with_DarkGreen, neighbor_vertex,reshaped_data[neighbor_vertex], 3, float(math.sqrt(3)))
+
+                        elif dist == 2:
+                            if DEBUG_MODE:second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("s")
                             edge_weights.append(float(math.sqrt(2)))
+
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # black-white interface edges
+                                if DEBUG_MODE: print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex],2, float(math.sqrt(2)))
+                                store_interface_edges(edges_with_green, neighbor_vertex, reshaped_data[neighbor_vertex],2, float(math.sqrt(2)))
+
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4:  # gray-white interface
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 2, float(math.sqrt(2)))
+                                store_interface_edges(edges_with_LightGreen, neighbor_vertex,reshaped_data[neighbor_vertex], 2, float(math.sqrt(2)))
+
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3:  # gray-black interface
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_DarkGreen, current_vertex,reshaped_data[current_vertex], 2, float(math.sqrt(2)))
+                                store_interface_edges(edges_with_DarkGreen, neighbor_vertex,reshaped_data[neighbor_vertex], 2, float(math.sqrt(2)))
+
                         neighbors.append(neighbor_vertex)
                 adjacency_list[current_vertex] = neighbors
 
