@@ -284,6 +284,9 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
     dist_black_to_green = []
     dist_black_to_red = []
     dist_white_to_blue = []
+    dist_gray_to_blue = []
+    dist_gray_to_lgreen = []
+    dist_gray_to_red = []
     tort_white_to_blue = []
     id_tort_white_to_blue = []
     id_tort_gray_to_red = []
@@ -354,6 +357,8 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
 
     for vertex in gray_vertices:
         distance = distances_gray[vertex]
+        if distance != float('inf'): #gray to LGreen
+            dist_gray_to_lgreen.append(f'{float(distance)}\n')
         #print(str(vertex) + " " + str(distance))
         if distance != float('inf'):
             # summation of weight * distance for DISS_wf10_M
@@ -370,7 +375,10 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
         gray_tor_distance_top = gray_tor_distances_An[vertex]
         straight_path_top = shortest_path_to_red[vertex]
 
-        if gray_tor_distance_top != float('inf') or straight_path_top != float('inf'): #maybe put or
+        if gray_tor_distance_top != float('inf'):
+            dist_gray_to_red.append(f'{float(gray_tor_distance_top)}\n')
+
+        if gray_tor_distance_top != float('inf') and straight_path_top != float('inf'): #maybe put or
             if straight_path_top == 0:
                 tor = 1
             else:
@@ -387,7 +395,10 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
         gray_tor_distance_bottom = gray_tor_distances_Ca[vertex]
         straight_path_bottom = shortest_path_to_blue[vertex]
 
-        if gray_tor_distance_bottom != float('inf') or straight_path_bottom != float('inf'): #exchanged and to or
+        if gray_tor_distance_bottom != float('inf'):
+            dist_gray_to_blue.append(f'{float(gray_tor_distance_bottom)}\n')
+
+        if gray_tor_distance_bottom != float('inf') and straight_path_bottom != float('inf'):
             if straight_path_bottom == 0:
                 tor = 1
             else:
@@ -422,12 +433,25 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
     file.writelines(dist_white_to_blue)
     file.close()
 
+    file = open(f"./test_results/{filename}_DistancesGrayToBlue.txt", 'w')
+    file.writelines(dist_gray_to_blue)
+    file.close()
+
+    file = open(f"./test_results/{filename}_DistancesGrayToLGreen.txt", 'w')
+    file.writelines(dist_gray_to_lgreen)
+    file.close()
+
+    file = open(f"./test_results/{filename}_DistancesGrayToRed.txt", 'w')
+    file.writelines(dist_gray_to_red)
+    file.close()
+
     file = open(f"./test_results/{filename}_TortuosityWhiteToBlue.txt", 'w')
     file.writelines(tort_white_to_blue)
     file.close()
 
     file = open(f"./test_results/{filename}_IdTortuosityWhiteToBlue.txt", 'w')
     file.writelines(id_tort_white_to_blue)
+    file.close()
 
     file = open(f"./test_results/{filename}_IdTortuosityGrayToRed.txt", 'w')
     file.writelines(id_tort_gray_to_red)
