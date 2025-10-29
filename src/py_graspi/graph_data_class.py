@@ -34,6 +34,8 @@ class graph_data_class:
         - **countWhite_Blue_conn** (*int*): White vertices in blue-connected components.
         - **countGray_Red_conn** (*int*): Gray vertices in red-connected components.
         - **countGray_Blue_conn** (*int*): Gray vertices in blue-connected components.
+        - **whiteCC (*list*): White components in connected components.
+        --**blackCC (*list*): Black components in connected components.
 
         - **DISS_f10_D** (*float*): Fraction of black vertices <10px from green.
         - **DISS_wf10_D** (*float*): Weighted fraction of black vertices <10px from green.
@@ -91,6 +93,8 @@ class graph_data_class:
         self.countWhite_Blue_conn = 0
         self.countGray_Red_conn = 0
         self.countGray_Blue_conn = 0
+        self.whiteCC = []
+        self.blackCC = []
 
         # shortest path descriptors
         self.DISS_f10_D = 0

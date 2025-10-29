@@ -8,7 +8,7 @@ import time
 import tracemalloc
 
 
-def compute_descriptors(graph_data, filename,pixelSize=1,n_flag=2):
+def compute_descriptors(graph_data, filename, pixelSize, n_flag):
     """
     This function computes all the descriptors for the graph given and saves them  in a dictionary.
 
@@ -37,7 +37,7 @@ def compute_descriptors(graph_data, filename,pixelSize=1,n_flag=2):
         graph_data = CC_descriptors(graph_data)
 
         # shortest path descriptors
-        graph_data = shortest_path_descriptors(graph_data, filename, pixelSize)
+        graph_data = shortest_path_descriptors(graph_data, filename, pixelSize, 2)
 
         descriptors_dict["STAT_n"] =  graph_data.STAT_n_A + graph_data.STAT_n_D
         descriptors_dict["STAT_e"] = graph_data.black_green
@@ -72,7 +72,7 @@ def compute_descriptors(graph_data, filename,pixelSize=1,n_flag=2):
         graph_data = CC_descriptors(graph_data)
 
         # shortest path descriptors TO DO fix up for 3 phase
-        graph_data = shortest_path_descriptors(graph_data, filename, pixelSize)
+        graph_data = shortest_path_descriptors(graph_data, filename, pixelSize, n_flag)
 
         descriptors_dict['ABS_wf_D'] = graph_data.ABS_wf_D #from shortest_path descriptors
         descriptors_dict["DISS_wf10_D"] = graph_data.DISS_wf10_D #from shortest_path descriptors
@@ -185,11 +185,13 @@ def CC_descriptors(graph_data):
                 countBlack_Red += 1
                 colors = np.array(graph.vs['color'])
                 countBlack_Red_conn += np.sum(colors[c] == 'black')
+                graph_data.blackCC.append(c)
 
             if graph.vs[c][0]['color'] == 'white' and 'blue' in graph.vs[c]['color']:
                 countWhite_Blue += 1
                 colors = np.array(graph.vs['color'])
                 countWhite_Blue_conn += np.sum(colors[c] == 'white')
+                graph_data.whiteCC.append(c)
 
             if graph.vs[c][0]['color'] == 'gray' and 'red' in graph.vs[c]['color']:
                 countGray_Red += 1
@@ -217,7 +219,7 @@ def CC_descriptors(graph_data):
     return graph_data
 
 
-def shortest_path_descriptors(graph_data, filename, pixelSize=1):
+def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
     """
         This function computes descriptors related to shortest paths with vertex and metavertex colorations that correspond to the following descriptors:
         DISS_f10_D, DISS_wf10_D, DISS_f10_M, DISS_wf10_M CT_f_D_tort1, CT_f_A_tort1, CT_f_M_tort1_An, CT_f_M_tort1_Ca and ABS_wf_D.
@@ -256,6 +258,7 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
 
     black_tor_distances = fg_red.shortest_paths(source=redVertex, weights=fg_red.es["weight"])[0]
     white_tor_distances = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
+    print(white_tor_distances)
     gray_tor_distances_An = fg_red.shortest_paths(source=redVertex, weights=fg_red.es["weight"])[0]
     gray_tor_distances_Ca = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
 
@@ -280,6 +283,9 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
     filename = filename.split('.txt')[0]
 
     tort_black_to_red = []
+    tort_gray_to_red = []
+    tort_gray_to_blue = []
+    tort_white_to_blue = []
     id_tort_black_to_red = []
     dist_black_to_green = []
     dist_black_to_red = []
@@ -287,12 +293,9 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
     dist_gray_to_blue = []
     dist_gray_to_lgreen = []
     dist_gray_to_red = []
-    tort_white_to_blue = []
     id_tort_white_to_blue = []
     id_tort_gray_to_red = []
     id_tort_gray_to_blue = []
-
-    d = []
 
     for vertex in black_vertices:
         distance = distances[vertex]
@@ -388,7 +391,7 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
             if tor < tolerance:
                 tor = 1
                 gray_tor_top += 1
-
+            tort_gray_to_red.append(f'{float(tor)}\n')
             id_tort_gray_to_red.append(f'{vertex} {float(tor)} {float(gray_tor_distance_top)} {float(straight_path_top)}\n')
 
         # bottom, Ca
@@ -408,7 +411,7 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
             if tor < tolerance:
                 tor = 1
                 gray_tor_bottom += 1
-
+            tort_gray_to_blue.append(f'{float(tor)}\n')
             id_tort_gray_to_blue.append(f'{vertex} {float(tor)} {float(gray_tor_distance_bottom)} {float(straight_path_bottom)}\n')
 
     filename = os.path.basename(filename)
@@ -417,8 +420,16 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
     file.writelines(tort_black_to_red)
     file.close()
 
-    file = open(f"./test_results/{filename}_IdTortuosityBlackToRed.txt", 'w')
-    file.writelines(id_tort_black_to_red)
+    file = open(f"./test_results/{filename}_TortuosityWhiteToBlue.txt", 'w')
+    file.writelines(tort_white_to_blue)
+    file.close()
+
+    file = open(f"./test_results/{filename}_TortuosityGrayToBlue.txt", 'w')
+    file.writelines(tort_gray_to_blue)
+    file.close()
+
+    file = open(f"./test_results/{filename}_TortuosityGrayToRed.txt", 'w')
+    file.writelines(tort_gray_to_red)
     file.close()
 
     file = open(f"./test_results/{filename}_DistancesBlackToGreen.txt", 'w')
@@ -445,8 +456,8 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
     file.writelines(dist_gray_to_red)
     file.close()
 
-    file = open(f"./test_results/{filename}_TortuosityWhiteToBlue.txt", 'w')
-    file.writelines(tort_white_to_blue)
+    file = open(f"./test_results/{filename}_IdTortuosityBlackToRed.txt", 'w')
+    file.writelines(id_tort_black_to_red)
     file.close()
 
     file = open(f"./test_results/{filename}_IdTortuosityWhiteToBlue.txt", 'w')
@@ -459,6 +470,20 @@ def shortest_path_descriptors(graph_data, filename, pixelSize=1):
 
     file = open(f"./test_results/{filename}_IdTortuosityGrayToBlue.txt", 'w')
     file.writelines(id_tort_gray_to_blue)
+    file.close()
+
+    file = open(f"./test_results/{filename}_DistancesGreenToBlueViaWhite.txt", 'w')
+    for vertex in graph_data.white_vertices:
+        dist = white_tor_distances[vertex]
+        if dist != float('inf'):
+            file.write(f"{float(dist)}\n")
+    file.close()
+
+    file = open(f"./test_results/{filename}_DistancesGreenToRedViaBlack.txt", 'w')
+    for vertex in graph_data.black_vertices:
+        dist = black_tor_distances[vertex]
+        if dist != float('inf'):
+            file.write(f"{float(dist)}\n")
     file.close()
 
     if totalBlacks != 0:
