@@ -258,7 +258,6 @@ def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
 
     black_tor_distances = fg_red.shortest_paths(source=redVertex, weights=fg_red.es["weight"])[0]
     white_tor_distances = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
-    print(white_tor_distances)
     gray_tor_distances_An = fg_red.shortest_paths(source=redVertex, weights=fg_red.es["weight"])[0]
     gray_tor_distances_Ca = fg_blue.shortest_paths(source=blueVertex, weights=fg_blue.es["weight"])[0]
 
@@ -342,9 +341,8 @@ def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
         white_tor_distance = white_tor_distances[vertex]
         straight_path = shortest_path_to_blue[vertex]
 
-        dist_white_to_blue.append(f'{float(white_tor_distance)}\n')
-
         if white_tor_distance != float('inf') and straight_path != float('inf'):
+            dist_white_to_blue.append(f'{float(white_tor_distance)}\n')
             if straight_path == 0:
                 tor = 1
             else:
@@ -473,14 +471,14 @@ def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
     file.close()
 
     file = open(f"./test_results/{filename}_DistancesGreenToBlueViaWhite.txt", 'w')
-    for vertex in graph_data.white_vertices:
+    for vertex in graph_data.white_green_adj:
         dist = white_tor_distances[vertex]
         if dist != float('inf'):
             file.write(f"{float(dist)}\n")
     file.close()
 
     file = open(f"./test_results/{filename}_DistancesGreenToRedViaBlack.txt", 'w')
-    for vertex in graph_data.black_vertices:
+    for vertex in graph_data.black_green_adj:
         dist = black_tor_distances[vertex]
         if dist != float('inf'):
             file.write(f"{float(dist)}\n")

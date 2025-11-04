@@ -34,6 +34,8 @@ class graph_data_class:
         - **countWhite_Blue_conn** (*int*): White vertices in blue-connected components.
         - **countGray_Red_conn** (*int*): Gray vertices in red-connected components.
         - **countGray_Blue_conn** (*int*): Gray vertices in blue-connected components.
+        - **black_green_adj** (*list*): Black vertices that are adjacent to green vertices.
+        - **white_green_adj** (*list*): White vertices that are adjacent to green vertices.
         - **whiteCC (*list*): White components in connected components.
         --**blackCC (*list*): Black components in connected components.
 
@@ -93,6 +95,8 @@ class graph_data_class:
         self.countWhite_Blue_conn = 0
         self.countGray_Red_conn = 0
         self.countGray_Blue_conn = 0
+        self.black_green_adj = []
+        self.white_green_adj = []
         self.whiteCC = []
         self.blackCC = []
 

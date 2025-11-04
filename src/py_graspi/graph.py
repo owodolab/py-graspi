@@ -1,6 +1,8 @@
 import sys
 import os
 
+from py_graspi.graph_data_class import graph_data_class
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import igraph as ig
@@ -259,6 +261,18 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
     g.es[edge_count:]["label"] = green_edges_labels
     g.es[edge_count:]["weight"] = green_edges_weights
 
+    black_green_adj = []
+    if green_vertex is not None:
+        for neighbor in g.neighbors(green_vertex):
+            if g.vs[neighbor]['color'] == 'black':
+                black_green_adj.append(neighbor)
+
+    white_green_adj = []
+    if green_vertex is not None:
+        for neighbor in g.neighbors(green_vertex):
+            if g.vs[neighbor]['color'] == 'white':
+                white_green_adj.append(neighbor)
+
     black_interface_red = len(black)  # correct
     white_interface_blue = len(white)  # correct
 
@@ -266,11 +280,14 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
     # Store vertex attributes
     graph_data.graph = g
     graph_data.black_green = black_green
+    graph_data.black_green_adj = black_green_adj
+    graph_data.white_green_adj = white_green_adj
     graph_data.black_interface_red = black_interface_red
     graph_data.white_interface_blue = white_interface_blue
     graph_data.interface_edge_comp_paths = interface_edge_comp_paths
     graph_data.CT_n_D_adj_An = CT_n_D_adj_An
     graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
+
 
     if DEBUG_MODE:
         print(g.vs['color'])
@@ -451,12 +468,12 @@ def adjList(fileName):
                                 store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_green, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3: # gray-white interface
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4: # gray-white interface
                                 if DEBUG_MODE:print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_LightGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4: # gray-black interface
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3: # gray-black interface
                                 if DEBUG_MODE:print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_DarkGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_DarkGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
@@ -778,9 +795,6 @@ def connectedComponents(graph):
     cc = fg.connected_components()
     redVertex = None
     blueVertex = None
-    blackCCList = []
-    whiteCCList = []
-    grayCCList = []
 
     for vertex in range(vertices - 1, -1, -1):
         color = graph.vs[vertex]['color']
