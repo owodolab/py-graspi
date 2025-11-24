@@ -5,32 +5,57 @@ import tracemalloc
 sys.path.insert(0, os.path.abspath("../../src"))
 from py_graspi import descriptors as ds
 from py_graspi import graph as ig
-
+'''
+This script generates descriptors for given morphologies and compares against expected value logs with a 0.05 tolerance. 
+To use this script from the command line, run 'python descriptor_validator.py all' to test all files in the given data_path against 
+all the expected value logs in the given expected_results_path. To run a single test, run 'python descriptor_validator.py [name of file]'. 
+For example, to run trial_17, run 'python descriptor_validator.py trial_17'. If no file arguments are provided, the script will default to all. 
+'''
 def main():
-    #Preferences
-
-    targetFileName = "6x6_testing" # Input file name or naming pattern to search for here
-    #targetFileName = "10x10_testing"
-    targetFileName = "trial_10"
+    # Paths
     #targetFileName = 'data_0.5_2.2_001900'
-    loop_cnt = 1 # Number of test repetitions
-
-    #Paths
-    data_path = os.path.abspath("test_file")  # Adjust data path as necessary
     #data_path = os.path.abspath("../../data/2phase/2D-morphologies/data/")
-    expected_results_path = os.path.abspath("expected_results/")  # Adjust expected results path as necessary
-    #test_files = [os.path.splitext(file)[0] for file in os.listdir(data_path)]
-    test_files = [targetFileName]
-    tolerance = 0.05
 
+    # Paths
+    data_path = os.path.abspath("test_file")  # Folder containing all .txt test files
+    expected_results_path = os.path.abspath("expected_results/")
+
+    # CLI handling
+    if len(sys.argv) > 1:
+        # user gave: python descriptor_validator.py trial_17
+        arg = sys.argv[1]
+
+        if arg.lower() == "all":
+            targetFileName = "ALL"
+        else:
+            targetFileName = arg
+    else:
+        # default: if no arguments, run all tests
+        targetFileName = "ALL"
+
+    loop_cnt = 1  # Number of test repetitions
+
+    # Get all files from preset data_path
+    all_files = [
+        os.path.splitext(file)[0]
+        for file in os.listdir(data_path)
+        if file.endswith(".txt")
+    ]
+
+    # Choose whether to run all files or a target file based on CLI input
+    if targetFileName == "ALL":
+        test_files = all_files
+    else:
+        test_files = [targetFileName]
+
+    tolerance = 0.05
 
     for test_file in test_files:
         print("Testing " + test_file)
         times = []
         mems = []
         time_mem_stats = {}
-        if targetFileName != test_file:
-            continue
+
         total_graph_time = 0
         for i in range(loop_cnt):
             tracemalloc.start()
