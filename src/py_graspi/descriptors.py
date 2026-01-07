@@ -273,7 +273,7 @@ def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
     white_tor = 0
     gray_tor_top = 0
     gray_tor_bottom = 0
-    total_weighted_black_red = 0
+    weighted_black_red = 0
 
     totalBlacks = len(black_vertices)
     totalWhite = len(white_vertices)
@@ -331,11 +331,11 @@ def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
                 summation += A1 * math.exp(-((distance - B1) / C1) * ((distance - B1) / C1))
                 f10_count += 1
 
-        if black_tor_distance != float('inf'):
+        if black_red != float('inf'):
+            weighted_black_red += math.exp(-1.0 * float(black_red) / 100) #Logic for ABS_wf_D
             dist_black_to_red.append(f'{float(black_tor_distance)}\n')
-
-        # computation for ABS_wf_D
-        total_weighted_black_red += math.exp(-1.0 * (black_red) / 100)
+    # To check distances, run this
+    # for item in dist_black_to_red: print(item.strip())
 
     for vertex in white_vertices:
         white_tor_distance = white_tor_distances[vertex]
@@ -498,8 +498,10 @@ def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
         graph_data.CT_f_M_tort1_An = float(gray_tor_top / countGray_Red_conn)
     if countGray_Blue_conn != 0:
         graph_data.CT_f_M_tort1_Ca = float(gray_tor_bottom / countGray_Blue_conn)
+        print("num: " + str(gray_tor_bottom))
+        print("denom: " + str(countGray_Blue_conn))
     if totalBlacks + totalWhite + totalGray != 0:
-        graph_data.ABS_wf_D = float(total_weighted_black_red / (totalBlacks + totalWhite + totalGray))
+        graph_data.ABS_wf_D = weighted_black_red/(totalBlacks + totalWhite + totalGray)
     return graph_data
 
 '''--------------- Shortest Path Descriptors ---------------'''
@@ -572,8 +574,10 @@ def filterGraph_metavertices(graph):
             keptEdges_darkGreen.append(edge)
             keptWeights_darkGreen.append(weight)
 
-        if((color_current != 'blue') and (color_toNode != 'blue') \
-           and (color_current != 'green') and (color_toNode != 'green')):
+        if((color_current != 'blue') and (color_toNode != 'blue')
+                and (color_current != 'green') and (color_toNode != 'green')
+                    and (color_current != 'DarkGreen') and (color_toNode != 'DarkGreen')
+                        and (color_current != 'LightGreen') and (color_toNode != 'LightGreen')):
             keptEdges_red_unfiltered.append(edge)
             keptWeights_red_unfiltered.append(weight)
 
