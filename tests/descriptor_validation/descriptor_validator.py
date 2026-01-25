@@ -18,11 +18,12 @@ def main():
 
     # Paths
     data_path = os.path.abspath("test_file")  # Folder containing all .txt test files
-    expected_results_path = os.path.abspath("expected_results/")
+    expected_results_path = os.path.abspath("expected_results_with_periodicity/") #Note, this is what we were previously testing. Update this line for relevancy.
+    periodicity = True #True for with, False for without
 
     # CLI handling
     if len(sys.argv) > 1:
-        # user gave: python descriptor_validator.py trial_17
+        # for example, user gave: python descriptor_validator.py trial_17
         arg = sys.argv[1]
 
         if arg.lower() == "all":
@@ -62,13 +63,14 @@ def main():
             graph_start = time.time()
             file_path = os.path.join(data_path, test_file + ".txt")
             print("Generating graph for " + test_file)
-            graph_data = ig.generateGraph(file_path, False) #changed to 3 to signal 3 phase
+            graph_data = ig.generateGraph(file_path, periodicity)
             _stats = tracemalloc.get_traced_memory()
             graph_end = time.time()
             tracemalloc.stop()
             graph_mem = _stats[1] - _stats[0]
             print("Computing descriptors for " + test_file)
-            stats = ds.compute_descriptors(graph_data, file_path, 1,3)  #changed to 3 to signal 3 phase
+            # NOTE: Below, the 3 specifies to run for 3-phase. For 2-phase testing, MAKRE SURE it's set to 2.
+            stats = ds.compute_descriptors(graph_data, file_path, 1,3)
             total_graph_time += graph_end - graph_start
 
         print(f"\n{test_file} Results")
@@ -83,7 +85,6 @@ def main():
                 stat = line.strip().split(" ")
                 try:
                     if stats.get(stat[0], -1) == int(stat[1]):
-                    #if abs(stats.get(stat[0], -1) - float(stat[1])) < tolerance:
                         print(f"{stat[0]} passed")
                     elif stats.get(stat[0], -1) != -1 and stats.get(stat[0], -1) != int(stat[1]):
                         print(f"{stat[0]} failed - {stats.get(stat[0])} is not the same as expected {stat[1]}")
