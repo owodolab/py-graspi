@@ -68,10 +68,10 @@ def compute_descriptors(graph_data, filename, pixelSize, n_flag):
         graph_data.STAT_n_D = STAT_n_D
         graph_data.STAT_n_A = STAT_n_A
 
-        # connected component descriptors TO DO fix up for 3 phase
+        # connected component descriptors
         graph_data = CC_descriptors(graph_data)
 
-        # shortest path descriptors TO DO fix up for 3 phase
+        # shortest path descriptors
         graph_data = shortest_path_descriptors(graph_data, filename, pixelSize, n_flag)
 
         descriptors_dict['ABS_wf_D'] = graph_data.ABS_wf_D #from shortest_path descriptors
@@ -298,7 +298,6 @@ def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
 
     for vertex in black_vertices:
         distance = distances[vertex]
-        #print(str(vertex) + " " + str(distance))
         black_tor_distance = black_tor_distances[vertex]
         straight_path = shortest_path_to_red[vertex]
         black_red = black_red_unfiltered_distance[vertex]
@@ -334,6 +333,7 @@ def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
         if black_red != float('inf'):
             weighted_black_red += math.exp(-1.0 * float(black_red) / 100) #Logic for ABS_wf_D
             dist_black_to_red.append(f'{float(black_tor_distance)}\n')
+
     # To check distances, run this
     # for item in dist_black_to_red: print(item.strip())
 
@@ -360,7 +360,6 @@ def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
         distance = distances_gray[vertex]
         if distance != float('inf'): #gray to LGreen
             dist_gray_to_lgreen.append(f'{float(distance)}\n')
-        #print(str(vertex) + " " + str(distance))
         if distance != float('inf'):
             # summation of weight * distance for DISS_wf10_M
             A1 = 6.265
@@ -379,7 +378,7 @@ def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
         if gray_tor_distance_top != float('inf'):
             dist_gray_to_red.append(f'{float(gray_tor_distance_top)}\n')
 
-        if gray_tor_distance_top != float('inf') and straight_path_top != float('inf'): #maybe put or
+        if gray_tor_distance_top != float('inf') and straight_path_top != float('inf'):
             if straight_path_top == 0:
                 tor = 1
             else:
@@ -498,8 +497,6 @@ def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
         graph_data.CT_f_M_tort1_An = float(gray_tor_top / countGray_Red_conn)
     if countGray_Blue_conn != 0:
         graph_data.CT_f_M_tort1_Ca = float(gray_tor_bottom / countGray_Blue_conn)
-        print("num: " + str(gray_tor_bottom))
-        print("denom: " + str(countGray_Blue_conn))
     if totalBlacks + totalWhite + totalGray != 0:
         graph_data.ABS_wf_D = weighted_black_red/(totalBlacks + totalWhite + totalGray)
     return graph_data
