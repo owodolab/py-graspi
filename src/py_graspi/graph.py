@@ -15,7 +15,6 @@ from py_graspi import graph_data_class as GraphData
 import math
 pixelSize = 1
 n_flag = 2
-# import tortuosity as t
 DEBUG_MODE = os.environ.get('DEBUG', '0') == '1'
 
 '''functions defined in __all__ get added to the documentation.'''
@@ -93,7 +92,7 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
     """
 
 
-    #get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
+    #get edge adjacency list, edge labels list, and boolean to indicate if its 2D or 3D
     graph_data, green_edges_dic, DarkGreen_dic, LightGreen_dic = adjList(file)
     
     # labels, totalWhite, totalBlack = vertexColors(file)
@@ -106,25 +105,25 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
 
 
     g = graph_data.graph
-
+    shortest_path_to_red = g.distances(source=graph_data.redVertex, weights=g.es['weight'])[0]
+    shortest_path_to_blue = g.distances(source=graph_data.blueVertex, weights=g.es['weight'])[0]
 
     # add color to blue and red metavertices
     g.vs[g.vcount()-2]['color'] = 'blue'
     g.vs[g.vcount()-1]['color'] = 'red'
 
-    shortest_path_to_red = g.distances(source=graph_data.redVertex, weights=g.es['weight'])[0]
-    shortest_path_to_blue = g.distances(source=graph_data.blueVertex, weights=g.es['weight'])[0]
-
+    keptEdges_noGreen = []
+    keptWeights_noGreen = []
 
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY:
         for i in range(0, g.vcount() - 2, dimX):
-            # first add first neighbor wrap around
+            # first, add first neighbor wrap around
             g.add_edge(g.vs[i], g.vs[i + (dimX - 1)])
             g.es[g.ecount() - 1]['label'] = 'f'
             g.es[g.ecount() - 1]['weight'] = 1
 
-            # add diagonal wrap arounds
+            # then, add diagonal wrap arounds
             if i - 1 >= 0:
                 g.add_edge(g.vs[i], g.vs[i - 1])
                 g.es[g.ecount() - 1]['label'] = 's'
@@ -136,7 +135,6 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
                 g.es[g.ecount() - 1]['weight'] = math.sqrt(2)
 
 
- 
     fg_blue, fg_red = filterGraph_blue_red(g)
     redComponent = set(fg_red.subcomponent(graph_data.redVertex, mode="ALL"))
     blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
@@ -151,10 +149,6 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
     CT_n_A_adj_Ca = 0
     # counter for green black interface edges
     black_green = 0
-    # counter for black interface vertices to red
-    black_interface_red = 0
-    # counter for white interface vertices to blue
-    white_interface_blue = 0
     # counter for interface edges for complementary paths
     interface_edge_comp_paths = 0
 
@@ -172,10 +166,6 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
 
         source_vertex_color = g.vs[source_vertex]['color']
         target_vertex_color = g.vs[target_vertex]['color']
-
-        # if source_vertex == 30711 or target_vertex == 30711:
-        #     print("src color:", source_vertex_color)
-        #     print("target color:", target_vertex_color)
 
         if (source_vertex_color == 'blue' or target_vertex_color == 'blue'):
             if (source_vertex_color == 'blue' and target_vertex_color == 'white') \
@@ -220,6 +210,19 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
                 if target_vertex_color == 'black':
                     black_green_neighbors.append(target_vertex)
 
+        if ((source_vertex_color != 'green') and (target_vertex_color != 'green')
+                and (source_vertex_color != 'LightGreen') and (target_vertex_color != 'LightGreen')
+                    and (source_vertex_color != 'DarkGreen') and (target_vertex_color != 'DarkGreen')):
+            keptEdges_noGreen.append(edge)
+            weight = g.es[g.get_eid(source_vertex, target_vertex)]['weight']
+            keptWeights_noGreen.append(weight)
+
+    fg_noGreen = g.subgraph_edges(keptEdges_noGreen, delete_vertices=False)
+    fg_noGreen.es['weight'] = keptWeights_noGreen
+
+    shortest_path_to_blue_noG = fg_noGreen.distances(source=graph_data.blueVertex, weights=g.es['weight'])[0]
+    print(shortest_path_to_blue_noG == shortest_path_to_blue)
+
     edge_count = g.ecount()
 
     # Add Green Interface and it's color
@@ -241,17 +244,17 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
 
     for i in green_edges_dic:
         green_edges_to_add.append([i, green_vertex])
-        green_edges_labels.append("f")  # every edges with green vertex are first order
+        green_edges_labels.append("f")  # every edge with green vertex are first order
         green_edges_weights.append(green_edges_dic[i].weight)
 
     for i in DarkGreen_dic:
         green_edges_to_add.append([i, dark_green])
-        green_edges_labels.append("f")  # every edges with green vertex are first order
+        green_edges_labels.append("f")  # every edge with green vertex are first order
         green_edges_weights.append(DarkGreen_dic[i].weight)
 
     for i in LightGreen_dic:
         green_edges_to_add.append([i, light_green])
-        green_edges_labels.append("f")  # every edges with green vertex are first order
+        green_edges_labels.append("f")  # every edge with green vertex are first order
         green_edges_weights.append(LightGreen_dic[i].weight)
 
     # add green vertex edges at once (without loop)
@@ -273,8 +276,8 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
             if g.vs[neighbor]['color'] == 'white':
                 white_green_adj.append(neighbor)
 
-    black_interface_red = len(black)  # correct
-    white_interface_blue = len(white)  # correct
+    black_interface_red = len(black)
+    white_interface_blue = len(white)
 
     # Create graph_data_class object
     # Store vertex attributes
@@ -287,6 +290,8 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
     graph_data.interface_edge_comp_paths = interface_edge_comp_paths
     graph_data.CT_n_D_adj_An = CT_n_D_adj_An
     graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
+    graph_data.shortest_path_to_blue = shortest_path_to_blue_noG
+    graph_data.shortest_path_to_red = shortest_path_to_red
 
 
     if DEBUG_MODE:
@@ -309,7 +314,6 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
 
         if cnt == len(g.neighbors(green_vertex)):
             print("all vertices stored well!")
-        # exit()
 
     return graph_data
 
@@ -600,7 +604,6 @@ def adjList(fileName):
         print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         print("new method Green Edges len : ", len(edges_with_green))
-        # exit()
     # return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, edges_with_green
     return graph_data, edges_with_green, edges_with_DarkGreen, edges_with_LightGreen
 
