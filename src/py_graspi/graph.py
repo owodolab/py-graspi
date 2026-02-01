@@ -221,7 +221,6 @@ def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
     fg_noGreen.es['weight'] = keptWeights_noGreen
 
     shortest_path_to_blue_noG = fg_noGreen.distances(source=graph_data.blueVertex, weights=g.es['weight'])[0]
-    print(shortest_path_to_blue_noG == shortest_path_to_blue)
 
     edge_count = g.ecount()
 

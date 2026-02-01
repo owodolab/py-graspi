@@ -18,8 +18,9 @@ def main():
 
     # Paths
     data_path = os.path.abspath("test_file")  # Folder containing all .txt test files
-    expected_results_path = os.path.abspath("expected_results_with_periodicity/") #Note, this is what we were previously testing. Update this line for relevancy.
+    expected_results_path = os.path.abspath("expected_results_with_periodicity/") #Note: Update this line for relevancy.
     periodicity = True #True for with, False for without
+    n_phases = 3 #2 for 2-phase testing, 3 for 3-phase testing
 
     # CLI handling
     if len(sys.argv) > 1:
@@ -69,8 +70,8 @@ def main():
             tracemalloc.stop()
             graph_mem = _stats[1] - _stats[0]
             print("Computing descriptors for " + test_file)
-            # NOTE: Below, the 3 specifies to run for 3-phase. For 2-phase testing, MAKRE SURE it's set to 2.
-            stats = ds.compute_descriptors(graph_data, file_path, 1,3)
+            # NOTE: Below, the 3 specifies to run for 3-phase. For 2-phase testing, ensure it's set to 2.
+            stats = ds.compute_descriptors(graph_data, file_path, 1,n_phases)
             total_graph_time += graph_end - graph_start
 
         print(f"\n{test_file} Results")
