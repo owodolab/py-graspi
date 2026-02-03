@@ -1,8 +1,6 @@
 import os
 import sys
 
-from py_graspi.graph import n_flag
-
 sys.path.append(os.path.abspath('../tools/tortuosity'))
 import tortuosity_histogram as t
 
