@@ -8,7 +8,7 @@ import time
 import tracemalloc
 
 
-def compute_descriptors(graph_data, filename, pixelSize, n_flag):
+def compute_descriptors(graph_data, filename, pixelSize=1, n_flag=2):
     """
     This function computes all the descriptors for the graph given and saves them  in a dictionary.
 
@@ -37,7 +37,7 @@ def compute_descriptors(graph_data, filename, pixelSize, n_flag):
         graph_data = CC_descriptors(graph_data)
 
         # shortest path descriptors
-        graph_data = shortest_path_descriptors(graph_data, filename, pixelSize, 2)
+        graph_data = shortest_path_descriptors(graph_data, filename, pixelSize)
 
         descriptors_dict["STAT_n"] =  graph_data.STAT_n_A + graph_data.STAT_n_D
         descriptors_dict["STAT_e"] = graph_data.black_green
@@ -72,7 +72,7 @@ def compute_descriptors(graph_data, filename, pixelSize, n_flag):
         graph_data = CC_descriptors(graph_data)
 
         # shortest path descriptors
-        graph_data = shortest_path_descriptors(graph_data, filename, pixelSize, n_flag)
+        graph_data = shortest_path_descriptors(graph_data, filename, pixelSize)
 
         descriptors_dict['ABS_wf_D'] = graph_data.ABS_wf_D #from shortest_path descriptors
         descriptors_dict["DISS_wf10_D"] = graph_data.DISS_wf10_D #from shortest_path descriptors
@@ -219,7 +219,7 @@ def CC_descriptors(graph_data):
     return graph_data
 
 
-def shortest_path_descriptors(graph_data, filename, pixelSize, n_flag):
+def shortest_path_descriptors(graph_data, filename, pixelSize):
     """
         This function computes descriptors related to shortest paths with vertex and metavertex colorations that correspond to the following descriptors:
         DISS_f10_D, DISS_wf10_D, DISS_f10_M, DISS_wf10_M CT_f_D_tort1, CT_f_A_tort1, CT_f_M_tort1_An, CT_f_M_tort1_Ca and ABS_wf_D.
