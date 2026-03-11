@@ -1,6 +1,8 @@
 import sys
 import os
 
+from py_graspi.graph_data_class import graph_data_class
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import igraph as ig
@@ -13,7 +15,6 @@ from py_graspi import graph_data_class as GraphData
 import math
 pixelSize = 1
 n_flag = 2
-# import tortuosity as t
 DEBUG_MODE = os.environ.get('DEBUG', '0') == '1'
 
 '''functions defined in __all__ get added to the documentation.'''
@@ -58,37 +59,40 @@ def store_interface_edges(edges_with_green, index, color, order, weight):
 
 '''********* Constructing the Graph **********'''
 
-def generateGraph(file, PERIODICITY = False):
+def generateGraph(file, PERIODICITY = False, n_flag = 2):
     """
         This function takes in graph data and determines if it’s in .txt or .graphe format in order to represent the graph using an adjacency list and the correct dimensionality.
 
     Args:
         file (str): The name of the file containing graph data.
         periodicity (bool): Boolean representing if graph has periodic boundary conditions
+        n_flag (int): If graph is 2 phase or 3 phase
 
     Returns:
         This function generates a graph based on the input so the return type depends on the format of graph data that was given.
         See “generateGraphAdj” if in .txt, or “generateGraphGraphe” if in .graphe.
     """
     if os.path.splitext(file)[1] == ".txt":
-        return generateGraphAdj(file, PERIODICITY)
+        return generateGraphAdj(file, PERIODICITY,n_flag)
     else:
         return generateGraphGraphe(file)
 
-def generateGraphAdj(file, PERIODICITY=False):
+def generateGraphAdj(file, PERIODICITY=False, n_flag=2):
     """
         This function takes in graph data in the .txt format and constructs the graph with adjacency list representation.
         It also generates additional graph data stored in the graph_data object.
     
     Args:
         file (str): The name of the file containing the graph data.
+        PERIODICITY (bool): Boolean representing if graph has periodic boundary conditions
+        n_flag (int): If graph is 2 phase or 3 phase
 
     Returns:
         graph_data (graph_data_class): The graph data.
     """
 
 
-    #get edge adjacency list, edge labels list, and boolean to indicate it is's 2D or 3D
+    #get edge adjacency list, edge labels list, and boolean to indicate if its 2D or 3D
     graph_data, green_edges_dic, DarkGreen_dic, LightGreen_dic = adjList(file)
     
     # labels, totalWhite, totalBlack = vertexColors(file)
@@ -101,25 +105,25 @@ def generateGraphAdj(file, PERIODICITY=False):
 
 
     g = graph_data.graph
-
+    shortest_path_to_red = g.distances(source=graph_data.redVertex, weights=g.es['weight'])[0]
+    shortest_path_to_blue = g.distances(source=graph_data.blueVertex, weights=g.es['weight'])[0]
 
     # add color to blue and red metavertices
     g.vs[g.vcount()-2]['color'] = 'blue'
     g.vs[g.vcount()-1]['color'] = 'red'
 
-    shortest_path_to_red = g.distances(source=graph_data.redVertex, weights=g.es['weight'])[0]
-    shortest_path_to_blue = g.distances(source=graph_data.blueVertex, weights=g.es['weight'])[0]
-
+    keptEdges_noGreen = []
+    keptWeights_noGreen = []
 
     # add wrap around edges and it's edge labels if periodicity boolean is set to True.
     if PERIODICITY:
         for i in range(0, g.vcount() - 2, dimX):
-            # first add first neighbor wrap around
+            # first, add first neighbor wrap around
             g.add_edge(g.vs[i], g.vs[i + (dimX - 1)])
             g.es[g.ecount() - 1]['label'] = 'f'
             g.es[g.ecount() - 1]['weight'] = 1
 
-            # add diagnol wrap arounds
+            # then, add diagonal wrap arounds
             if i - 1 >= 0:
                 g.add_edge(g.vs[i], g.vs[i - 1])
                 g.es[g.ecount() - 1]['label'] = 's'
@@ -131,7 +135,6 @@ def generateGraphAdj(file, PERIODICITY=False):
                 g.es[g.ecount() - 1]['weight'] = math.sqrt(2)
 
 
- 
     fg_blue, fg_red = filterGraph_blue_red(g)
     redComponent = set(fg_red.subcomponent(graph_data.redVertex, mode="ALL"))
     blueComponent = set(fg_blue.subcomponent(graph_data.blueVertex, mode="ALL"))
@@ -146,10 +149,6 @@ def generateGraphAdj(file, PERIODICITY=False):
     CT_n_A_adj_Ca = 0
     # counter for green black interface edges
     black_green = 0
-    # counter for black interface vertices to red
-    black_interface_red = 0
-    # counter for white interface vertices to blue
-    white_interface_blue = 0
     # counter for interface edges for complementary paths
     interface_edge_comp_paths = 0
 
@@ -167,10 +166,6 @@ def generateGraphAdj(file, PERIODICITY=False):
 
         source_vertex_color = g.vs[source_vertex]['color']
         target_vertex_color = g.vs[target_vertex]['color']
-
-        # if source_vertex == 30711 or target_vertex == 30711:
-        #     print("src color:", source_vertex_color)
-        #     print("target color:", target_vertex_color)
 
         if (source_vertex_color == 'blue' or target_vertex_color == 'blue'):
             if (source_vertex_color == 'blue' and target_vertex_color == 'white') \
@@ -215,6 +210,18 @@ def generateGraphAdj(file, PERIODICITY=False):
                 if target_vertex_color == 'black':
                     black_green_neighbors.append(target_vertex)
 
+        if ((source_vertex_color != 'green') and (target_vertex_color != 'green')
+                and (source_vertex_color != 'LightGreen') and (target_vertex_color != 'LightGreen')
+                    and (source_vertex_color != 'DarkGreen') and (target_vertex_color != 'DarkGreen')):
+            keptEdges_noGreen.append(edge)
+            weight = g.es[g.get_eid(source_vertex, target_vertex)]['weight']
+            keptWeights_noGreen.append(weight)
+
+    fg_noGreen = g.subgraph_edges(keptEdges_noGreen, delete_vertices=False)
+    fg_noGreen.es['weight'] = keptWeights_noGreen
+
+    shortest_path_to_blue_noG = fg_noGreen.distances(source=graph_data.blueVertex, weights=g.es['weight'])[0]
+
     edge_count = g.ecount()
 
     # Add Green Interface and it's color
@@ -236,17 +243,17 @@ def generateGraphAdj(file, PERIODICITY=False):
 
     for i in green_edges_dic:
         green_edges_to_add.append([i, green_vertex])
-        green_edges_labels.append("f")  # every edges with green vertex are first order
+        green_edges_labels.append("f")  # every edge with green vertex are first order
         green_edges_weights.append(green_edges_dic[i].weight)
 
     for i in DarkGreen_dic:
         green_edges_to_add.append([i, dark_green])
-        green_edges_labels.append("f")  # every edges with green vertex are first order
+        green_edges_labels.append("f")  # every edge with green vertex are first order
         green_edges_weights.append(DarkGreen_dic[i].weight)
 
     for i in LightGreen_dic:
         green_edges_to_add.append([i, light_green])
-        green_edges_labels.append("f")  # every edges with green vertex are first order
+        green_edges_labels.append("f")  # every edge with green vertex are first order
         green_edges_weights.append(LightGreen_dic[i].weight)
 
     # add green vertex edges at once (without loop)
@@ -256,19 +263,35 @@ def generateGraphAdj(file, PERIODICITY=False):
     g.es[edge_count:]["label"] = green_edges_labels
     g.es[edge_count:]["weight"] = green_edges_weights
 
-    black_interface_red = len(black)  # correct
-    white_interface_blue = len(white)  # correct
+    black_green_adj = []
+    if green_vertex is not None:
+        for neighbor in g.neighbors(green_vertex):
+            if g.vs[neighbor]['color'] == 'black':
+                black_green_adj.append(neighbor)
+
+    white_green_adj = []
+    if green_vertex is not None:
+        for neighbor in g.neighbors(green_vertex):
+            if g.vs[neighbor]['color'] == 'white':
+                white_green_adj.append(neighbor)
+
+    black_interface_red = len(black)
+    white_interface_blue = len(white)
 
     # Create graph_data_class object
-
     # Store vertex attributes
     graph_data.graph = g
     graph_data.black_green = black_green
+    graph_data.black_green_adj = black_green_adj
+    graph_data.white_green_adj = white_green_adj
     graph_data.black_interface_red = black_interface_red
     graph_data.white_interface_blue = white_interface_blue
     graph_data.interface_edge_comp_paths = interface_edge_comp_paths
     graph_data.CT_n_D_adj_An = CT_n_D_adj_An
     graph_data.CT_n_A_adj_Ca = CT_n_A_adj_Ca
+    graph_data.shortest_path_to_blue = shortest_path_to_blue_noG
+    graph_data.shortest_path_to_red = shortest_path_to_red
+
 
     if DEBUG_MODE:
         print(g.vs['color'])
@@ -290,7 +313,6 @@ def generateGraphAdj(file, PERIODICITY=False):
 
         if cnt == len(g.neighbors(green_vertex)):
             print("all vertices stored well!")
-        # exit()
 
     return graph_data
 
@@ -375,11 +397,12 @@ def adjList(fileName):
     edge_weights = []
     black_vertices = []
     white_vertices = []
+    gray_vertices = []
 
     redVertex = None
     blueVertex = None
-
     is_2d = True
+
     with open(fileName, "r") as file:
         header = file.readline().strip().split(' ')
         dimX, dimY = int(header[0]), int(header[1])
@@ -424,6 +447,7 @@ def adjList(fileName):
                     black_vertices.append(current_vertex)
                 elif reshaped_data[current_vertex] == 3:
                     vertex_color[current_vertex] = 'gray'
+                    gray_vertices.append(current_vertex)
                 else:
                     print("not in the color : ", current_vertex, reshaped_data[current_vertex])
 
@@ -443,20 +467,17 @@ def adjList(fileName):
                             edge_weights.append(1)
 
                             if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1: # interface edges
-                                if DEBUG_MODE:
-                                    print(current_vertex, neighbor_vertex)
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_green, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3: # gray-white interface
-                                if DEBUG_MODE:
-                                    print(current_vertex, neighbor_vertex)
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4: # gray-white interface
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_LightGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
-                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4: # gray-black interface
-                                if DEBUG_MODE:
-                                    print(current_vertex, neighbor_vertex)
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3: # gray-black interface
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
                                 store_interface_edges(edges_with_DarkGreen, current_vertex, reshaped_data[current_vertex], 1, 1)
                                 store_interface_edges(edges_with_DarkGreen, neighbor_vertex, reshaped_data[neighbor_vertex], 1, 1)
 
@@ -466,11 +487,43 @@ def adjList(fileName):
                             edge_labels.append("t")
                             edge_weights.append(float(math.sqrt(3)))
 
-                        else:
-                            if DEBUG_MODE:
-                                second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # interface edges
+                                if DEBUG_MODE: print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex],3, float(math.sqrt(3)))
+                                store_interface_edges(edges_with_green, neighbor_vertex, reshaped_data[neighbor_vertex],3, float(math.sqrt(3)))
+
+                            if reshaped_data[current_vertex] + reshaped_data[
+                                neighbor_vertex] == 3:  # gray-white interface
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 3, float(math.sqrt(3)))
+                                store_interface_edges(edges_with_LightGreen, neighbor_vertex,reshaped_data[neighbor_vertex], 3, float(math.sqrt(3)))
+
+                            if reshaped_data[current_vertex] + reshaped_data[
+                                neighbor_vertex] == 4:  # gray-black interface
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_DarkGreen, current_vertex,reshaped_data[current_vertex], 3, float(math.sqrt(3)))
+                                store_interface_edges(edges_with_DarkGreen, neighbor_vertex,reshaped_data[neighbor_vertex], 3, float(math.sqrt(3)))
+
+                        elif dist == 2:
+                            if DEBUG_MODE:second_order_pairs.append([min(current_vertex, neighbor_vertex), max(current_vertex, neighbor_vertex)])
                             edge_labels.append("s")
                             edge_weights.append(float(math.sqrt(2)))
+
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 1:  # black-white interface edges
+                                if DEBUG_MODE: print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_green, current_vertex, reshaped_data[current_vertex],2, float(math.sqrt(2)))
+                                store_interface_edges(edges_with_green, neighbor_vertex, reshaped_data[neighbor_vertex],2, float(math.sqrt(2)))
+
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 4:  # gray-white interface
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_LightGreen, current_vertex, reshaped_data[current_vertex], 2, float(math.sqrt(2)))
+                                store_interface_edges(edges_with_LightGreen, neighbor_vertex,reshaped_data[neighbor_vertex], 2, float(math.sqrt(2)))
+
+                            if reshaped_data[current_vertex] + reshaped_data[neighbor_vertex] == 3:  # gray-black interface
+                                if DEBUG_MODE:print(current_vertex, neighbor_vertex)
+                                store_interface_edges(edges_with_DarkGreen, current_vertex,reshaped_data[current_vertex], 2, float(math.sqrt(2)))
+                                store_interface_edges(edges_with_DarkGreen, neighbor_vertex,reshaped_data[neighbor_vertex], 2, float(math.sqrt(2)))
+
                         neighbors.append(neighbor_vertex)
                 adjacency_list[current_vertex] = neighbors
 
@@ -530,6 +583,7 @@ def adjList(fileName):
     graph_data.is_2D = is_2d
     graph_data.black_vertices = black_vertices
     graph_data.white_vertices = white_vertices
+    graph_data.gray_vertices = gray_vertices
     graph_data.dim = dim
     graph_data.redVertex = redVertex
     graph_data.blueVertex = blueVertex
@@ -549,8 +603,6 @@ def adjList(fileName):
         print("Blue Node neighbors: ", adjacency_list[dimZ * dimY * dimX])
         print("Red Node neighbors: ", adjacency_list[dimZ * dimY * dimX + 1])
         print("new method Green Edges len : ", len(edges_with_green))
-        # exit()
-
     # return adjacency_list, edge_labels, edge_weights, vertex_color, black_vertices, white_vertices, is_2d, redVertex, blueVertex, dim, edges_with_green
     return graph_data, edges_with_green, edges_with_DarkGreen, edges_with_LightGreen
 
@@ -745,8 +797,6 @@ def connectedComponents(graph):
     cc = fg.connected_components()
     redVertex = None
     blueVertex = None
-    blackCCList = []
-    whiteCCList = []
 
     for vertex in range(vertices - 1, -1, -1):
         color = graph.vs[vertex]['color']
@@ -759,6 +809,7 @@ def connectedComponents(graph):
 
     blackCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'black']
     whiteCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'white']
+    grayCCList = [c for c in cc if graph.vs[c[0]]['color'] == 'gray']
 
     for c in blackCCList:
         passedRed = False
@@ -790,7 +841,22 @@ def connectedComponents(graph):
             if passedBlue and passedRed:
                 break
 
-    connected_comp = whiteCCList + blackCCList
+    for c in grayCCList:
+        passedRed = False
+        passedBlue = False
+        for vertex in c:
+            if not passedRed:
+                if (vertex, redVertex) in edgeList or (redVertex, vertex) in edgeList:
+                    c.append(redVertex)
+                    passedRed = True
+            if not passedBlue:
+                if (vertex, blueVertex) in edgeList or (blueVertex, vertex) in edgeList:
+                    c.append(blueVertex)
+                    passedBlue = True
+            if passedBlue and passedRed:
+                break
+
+    connected_comp = whiteCCList + blackCCList + grayCCList
 
     return connected_comp
 
@@ -951,6 +1017,7 @@ def main():
                     if sys.argv[i + 1] == "2":
                         n_flag = 2
                     elif sys.argv[i + 1] == "3":
+                        n_flag = 3
                         print("3 Phase not yet implemented.")
                         return
                     else:
@@ -968,7 +1035,7 @@ def main():
                     print("Missing value for -s flag.")
                     return
 
-        graph_data = generateGraphAdj(filename,PERIODICITY)
+        graph_data = generateGraphAdj(filename,PERIODICITY,n_flag)
 
     # Check if -g (unstructured data with .graphe file)
     elif sys.argv[1] == "-g":
